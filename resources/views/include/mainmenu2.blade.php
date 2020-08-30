@@ -1,8 +1,8 @@
 <li <?php if (basename($_SERVER['PHP_SELF'])=="dashboard.php") { echo 'class="active"';} ?>>
-    <a href="dashboard.php"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboard</span></a>
+    <a href="/dashboard"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboard</span></a>
 </li>
 <li <?php if (basename($_SERVER['PHP_SELF'])=="home-page.php" || basename($_SERVER['PHP_SELF'])=="testimonial.php" || basename($_SERVER['PHP_SELF'])=="modifica_slider.php" ) { echo 'class="active"';} ?>>
-    <a href="home-page.php"><i class="fa fa-home"></i> <span class="nav-label">Home page</span></a>
+    <a href="/homepage"><i class="fa fa-home"></i> <span class="nav-label">Home page</span></a>
 </li>
 
 <li <?php if (basename($_SERVER['PHP_SELF'])=="continut.php") { echo 'class="active"';} ?>>
