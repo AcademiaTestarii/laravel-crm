@@ -204,16 +204,21 @@ $page = "cursuri";
                 $(e.element).popover('hide');
             },
             dataSource: [
-
+                    @foreach($classes as $key => $class)
+                {
+                    id: "{{ $key}}",
+                    name: "{{ $class->mainClass->title}}",
+                    location: "{{$class->title}}",
+                    startDate: new Date({{ strftime("%Y, %m-1, %e", strtotime($class->registration_start_date))}}),
+                    endDate: new Date({{ strftime("%Y, %m-1, %e", strtotime($class->registration_end_date))}}),
+                },
+                @endforeach
             ]
         });
-
         $('#save-event').click(function () {
             saveEvent();
         });
     });
-
-
 </script>
 
 

@@ -17,6 +17,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::group(['prefix' => 'crm'], function () {
-    Route::get('dashboard', 'DashboardController@index');
-});
+Route::get('dashboard', 'DashboardController@index');
