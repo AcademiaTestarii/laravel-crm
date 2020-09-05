@@ -239,170 +239,156 @@ if (isset($_POST['salveaza_homepage'])) {
                             </div>
                         </div>
 
-
-                       {{-- <?php $sql_sub = "SELECT * FROM `subcontinut` WHERE `id_continut`=3";
-                        $query_sub = mysqli_query($link, $sql_sub);
-                        if (mysqli_num_rows($query_sub) > 0) {--}}
-                        {{--echo '--}}<div class="ibox-title"><h5>Sub-continut "' . $row3["titlu"] . '" <small>Componente casete homepage</small></h5></div><div class="row"><br />';
-                     {{--   $i = 3;
-                        while ($row_sub = mysqli_fetch_assoc($query_sub)) {
-                        ?>--}}
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Titlu:<br/><small>Apare ca titul
-                                        H2</small></label>
-                                <div class="col-sm-10">
-                                    <input value="<?php /*echo $row_sub["titlu"];*/ ?>"
-                                           name="titlu_sub_<?php /*echo $row_sub["id"]; */?>" type="text"
-                                           class="form-control" required>
+                        <div class="ibox-title"><h5>Sub-continut "{{$contentTesters->title}}" <small>Componente casete
+                                    homepage</small></h5></div>
+                        <div class="row"><br/>
+                            @foreach($contentTesters->subcontents as $key => $subcontet)
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Titlu:<br/><small>Apare ca titul
+                                                H2</small></label>
+                                        <div class="col-sm-10">
+                                            <input value="{{$subcontet->getTitle()}}"
+                                                   name="titlu_sub_{{$subcontet->getId()}}" type="text"
+                                                   class="form-control" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Continut:<br/><small>poate fi
+                                                formatat</small></label>
+                                        <div class="col-sm-10">
+                                            <textarea id="text{{$key+3}}" name="text_sub_{{$subcontet->getId()}}"
+                                                      class="summernote">  {!! $subcontet->getText() !!}
+                                            </textarea>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Continut:<br/><small>poate fi
-                                        formatat</small></label>
-                                <div class="col-sm-10">
-				<textarea id="text<?php /*echo $i;*/ ?>" name="text_sub_<?php/* echo $row_sub["id"];*/ ?>" class="summernote">
-					<?php /*echo $row_sub["text"];*/ ?>
-				</textarea>
-                                </div>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <h5>Sectiunea "Ce spun absolventii"<small></small></h5>
+                        <a class="btn btn-warning pull-right buton" href="testimonial.php">Adauga testimonial</a>
+                    </div>
+                    <div class="ibox-content">
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Data</th>
+                                <th>Nume</th>
+                                <th>Testimonial</th>
+                                <th class="text-center">Activ</th>
+                                <th class="text-center">Sterge</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($testimonials as $testimonial)
+                                <tr>
+                                    <td>{{$testimonial->getId()}}</td>
+                                    <td>{{$testimonial->getCreatedOn()}}</td>
+                                    <td>
+                                        <a href="testimonial.php?id={{$testimonial->getId()}}">{{$testimonial->getName()}}</a>
+                                    </td>
+                                    <td> {!!$testimonial->getTestimonial()!!}</td>
+                                    <td class="text-center">
+                                        <form action="" method="GET">
+                                            <input type="checkbox" @if($testimonial->isActive()) checked
+                                                   @endif name="activ"
+                                                   onChange="this.form.submit()"/>
+                                            <input type="hidden" name="staret" value="{{$testimonial->getId()}}"/>
+                                            <input type="hidden" name="valuet"
+                                                   value="{{$testimonial->isActive()}}"/>
+                                            <input type="hidden" name="idt" value="{{$testimonial->getId()}}"/>
+                                        </form>
+                                    </td>
+                                    <td class="text-center">
+                                        <form action="" method="GET">
+                                            <button class="btn btn-danger btn-xs" onClick="confirmDelete()"
+                                                    type="submit"/>
+                                            Sterge</button>
+                                            <input type="hidden" name="sterget"
+                                                   value="{{$testimonial->getId()}}"/>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="ibox">
+                    <div class="ibox-title">
+                        <h5>Sectiunea "{{$contentCompanies->getTitle()}}" <small></small></h5>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Titlu:<br/><small>Apare ca titul H1</small></label>
+                            <div class="col-sm-10">
+                                <input value="{{$contentCompanies->getTitle()}}" name="titlu_4" type="text"
+                                       class="form-control" required>
                             </div>
                         </div>
-                        <?php /*$i++;
-                        }
-                        }*/ ?>
-
-
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Continut:<br/><small>poate fi formatat</small></label>
+                            <div class="col-sm-10">
+                            <textarea id="text6" name="text_4" class="summernote">
+                                {!!$contentCompanies->getText()!!}
+                            </textarea>
+                            </div>
+                        </div>
+                        <div class="ibox-title"><h5>Sub-continut "{{$contentCompanies->getTitle()}}" <small>Componente
+                                    casete homepage</small></h5></div>
+                        <div class="row"><br/>
+                            @foreach($contentCompanies->subcontents as $key => $subcontet)
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Titlu:<br/><small>Apare ca titul
+                                                H1</small></label>
+                                        <div class="col-sm-10">
+                                            <input value="{{$subcontet->getTitle()}}"
+                                                   name="titlu_sub_{{$subcontet->getId()}}" type="text"
+                                                   class="form-control"
+                                                   required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Continut:<br/><small>poate fi
+                                                formatat</small></label>
+                                        <div class="col-sm-10">
+                                <textarea id="text{{$key+7}}" name="text_sub_{{$subcontet->getId()}}"
+                                          class="summernote">
+                                   {!! $subcontet->getText() !!}
+                                </textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
                     </div>
                 </div>
-    </div>
-    <div class="ibox">
-        <div class="ibox-title">
-            <h5>Sectiunea "Ce spun absolventii"<small></small></h5>
-            <a class="btn btn-warning pull-right buton" href="testimonial.php">Adauga testimonial</a>
-        </div>
-        <div class="ibox-content">
-            <table id="example1" class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Data</th>
-                    <th>Nume</th>
-                    <th>Testimonial</th>
-                    <th class="text-center">Activ</th>
-                    <th class="text-center">Sterge</th>
-                </tr>
-                </thead>
-                <tbody>
-                {{--    <? $list=mysqli_query($link,"SELECT * FROM `testimoniale` ORDER BY `created` DESC");
-                    while ($r_list = mysqli_fetch_array($list)) { ?>--}}
-                <tr>
-                    <td><?php /*echo $r_list['id'];*/?></td>
-                    <td><?php /*echo date("F d, Y",strtotime($r_list["created"]));*/?></td>
-                    <td>
-                        <a href="testimonial.php?id=<?php /*echo $r_list['id'];*/?>"><?php /*echo $r_list['nume'];*/?></a>
-                    </td>
-                    <td><?php /*echo $r_list['testimonial'];*/?></td>
-                    <td class="text-center">
-                        <form action="" method="GET">
-                            <input type="checkbox"
-                                   <?php /*if ($r_list['active']) {echo "checked";}*/?> name="activ"
-                                   onChange="this.form.submit()"/>
-                            <input type="hidden" name="staret" value="<?php /*echo $r_list['id'];*/?>"/>
-                            <input type="hidden" name="valuet" value="<?php /*echo $r_list['active'];*/?>"/>
-                            <input type="hidden" name="idt" value="<?php /*echo $r_list['id'];*/?>"/>
-                        </form>
-                    </td>
-                    <td class="text-center">
-                        <form action="" method="GET">
-                            <button class="btn btn-danger btn-xs" onClick="confirmDelete()" type="submit"/>
-                            Sterge</button>
-                            <input type="hidden" name="sterget" value="<?php /*echo $r_list['id'];*/?>"/>
-                        </form>
-                    </td>
-                </tr>
-                {{--     <? } ?>--}}
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div class="ibox">
-        <?php
-        /* $sql3=mysqli_query($link,"SELECT * FROM `continut` WHERE `id`=4");
-         $row3=mysqli_fetch_array($sql3);*/
-        ?>
-        <div class="ibox-title">
-            <h5>Sectiunea "<?php /*echo $row3["titlu"];*/?>" <small></small></h5>
-        </div>
-        <div class="ibox-content">
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Titlu:<br/><small>Apare ca titul H1</small></label>
-                <div class="col-sm-10">
-                    <input value="<?php /*echo $row3["titlu"];*/?>" name="titlu_4" type="text"
-                           class="form-control"
-                           required>
-                </div>
-            </div>
-            <div class="form-group">
-                <label class="col-sm-2 control-label">Continut:<br/><small>poate fi formatat</small></label>
-                <div class="col-sm-10">
-				<textarea id="text6" name="text_4" class="summernote">
-					<?php /*echo $row3["text"];*/?>
-				</textarea>
-                </div>
-            </div>
-            {{--   <?php 	$sql_sub="SELECT * FROM `subcontinut` WHERE `id_continut`=4";
-               $query_sub=mysqli_query($link,$sql_sub);
-               if (mysqli_num_rows($query_sub)>0) {
-               echo '<div class="ibox-title"><h5>Sub-continut "'.$row3["titlu"].'" <small>Componente casete homepage</small></h5></div><div class="row"><br />';
-               $i=7;
-               while ($row_sub=mysqli_fetch_assoc($query_sub)) {
-               ?>--}}
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">Titlu:<br/><small>Apare ca titul
-                            H1</small></label>
-                    <div class="col-sm-10">
-                        <input value="<?php /*echo $row_sub["titlu"];*/?>"
-                               name="titlu_sub_<?php /*echo $row_sub["id"];*/?>" type="text"
-                               class="form-control"
-                               required>
+                <div class="ibox">
+                    <div class="ibox-content">
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <center>
+                                    <button class="btn btn-warning" type="submit" name="salveaza_homepage">Salveaza
+                                    </button>
+                                </center>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">Continut:<br/><small>poate fi
-                            formatat</small></label>
-                    <div class="col-sm-10">
-				<textarea id="text<?php /*echo $i;*/?>" name="text_sub_<?php /*echo $row_sub["id"];*/?>"
-                          class="summernote">
-					<?php /*echo $row_sub["text"];*/?>
-				</textarea>
-                    </div>
-                </div>
-            </div>
-            {{--    <?php $i++;} } ?>--}}
-
+            </form>
+            <br/><br/><br/>
+        </section>
+        <!-- /.content -->
+        <div class="footer">
+            @include('include/footer')
         </div>
     </div>
-</div>
-<div class="ibox">
-    <div class="ibox-content">
-        <div class="form-group">
-            <div class="col-sm-12">
-                <center>
-                    <button class="btn btn-warning" type="submit" name="salveaza_homepage">Salveaza</button>
-                </center>
-            </div>
-        </div>
-    </div>
-</div>
-</form>
-<br/><br/><br/>
-</section>
-<!-- /.content -->
-<div class="footer">
-    @include('include/footer')
-</div>
-</div>
 </div>
 <!-- Main scripts -->
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>

@@ -10,6 +10,7 @@ class Content extends Model
 
     const ID_HOMEPAGE = 1;
     const ID_TESTERS = 3;
+    const ID_COMPANIES = 4;
 
     public function subcontents()
     {
