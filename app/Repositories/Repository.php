@@ -117,7 +117,6 @@ class Repository implements RepositoryInterface
         return $this->model->updateOrCreate($matchingData, $data);
     }
 
-
     /**
      * @param string $where
      * @param array $in
@@ -137,5 +136,15 @@ class Repository implements RepositoryInterface
         }
 
         return $model->whereNotIn($where, $in)->get();
+    }
+
+    /**
+     * @param array $matchingData
+     * @param array $data
+     * @return mixed
+     */
+    public function update(array $data)
+    {
+        return $this->model->update($data);
     }
 }

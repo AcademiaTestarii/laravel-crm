@@ -2,38 +2,6 @@
 $today = getdate();
 $page = "home-page";
 
-// stare bannere
-if (isset($_GET['stare']) AND is_numeric($_GET['stare'])) {
-    /* if ($_GET['value']==1){
-         $sql_update_stare=mysqli_query($link,"UPDATE `slider` SET `active`=0 WHERE `id`=".$_GET['id']);
-     } else {
-         $sql_update_stare=mysqli_query($link,"UPDATE `slider` SET `active`=1 WHERE `id`=".$_GET['id']);
-     }
-     header ("Location:home-page.php");*/
-}
-
-// sterge
-if (isset($_GET['sterge']) AND is_numeric($_GET['sterge'])) {
-    /*  $sql_sterge=mysqli_query($link,"DELETE FROM `slider` WHERE `id`=".$_GET['sterge']);
-      header ("Location:home-page.php");*/
-}
-
-// testimonial
-if (isset($_GET['staret']) AND is_numeric($_GET['staret'])) {
-    /*if ($_GET['valuet']==1){
-        $sql_update_stare=mysqli_query($link,"UPDATE `testimoniale` SET `active`=0 WHERE `id`=".$_GET['idt']);
-    } else {
-        $sql_update_stare=mysqli_query($link,"UPDATE `testimoniale` SET `active`=1 WHERE `id`=".$_GET['idt']);
-    }
-    header ("Location:home-page.php");*/
-}
-
-// sterge
-if (isset($_GET['sterget']) AND is_numeric($_GET['sterget'])) {
-    /*    $sql_sterge=mysqli_query($link,"DELETE FROM `testimoniale` WHERE `id`=".$_GET['sterget']);
-        header ("Location:home-page.php");*/
-}
-
 // salvare
 if (isset($_POST['salveaza_homepage'])) {
 
@@ -147,7 +115,7 @@ if (isset($_POST['salveaza_homepage'])) {
                                     <form action="" method="GET">
                                         <input type="checkbox" @if($slider->isActive()) checked @endif name="activ"
                                                onChange="this.form.submit()"/>
-                                        <input type="hidden" name="stare" value="{{$slider->getId()}}"/>
+                                        <input type="hidden" name="status" value="{{$slider->getId()}}"/>
                                         <input type="hidden" name="value" value="{{$slider->getActiveStatus()}}"/>
                                         <input type="hidden" name="id" value="{{$slider->getId()}}"/>
                                     </form>
@@ -156,7 +124,7 @@ if (isset($_POST['salveaza_homepage'])) {
                                     <form action="" method="GET">
                                         <button class="btn btn-danger btn-xs" onClick="confirmDelete()" type="submit"/>
                                         Sterge</button>
-                                        <input type="hidden" name="sterge" value="{{$slider->getId()}}"/>
+                                        <input type="hidden" name="delete_banner" value="{{$slider->getId()}}"/>
                                     </form>
                                 </td>
                             </tr>
@@ -298,7 +266,7 @@ if (isset($_POST['salveaza_homepage'])) {
                                             <input type="checkbox" @if($testimonial->isActive()) checked
                                                    @endif name="activ"
                                                    onChange="this.form.submit()"/>
-                                            <input type="hidden" name="staret" value="{{$testimonial->getId()}}"/>
+                                            <input type="hidden" name="statust" value="{{$testimonial->getId()}}"/>
                                             <input type="hidden" name="valuet"
                                                    value="{{$testimonial->isActive()}}"/>
                                             <input type="hidden" name="idt" value="{{$testimonial->getId()}}"/>
@@ -309,7 +277,7 @@ if (isset($_POST['salveaza_homepage'])) {
                                             <button class="btn btn-danger btn-xs" onClick="confirmDelete()"
                                                     type="submit"/>
                                             Sterge</button>
-                                            <input type="hidden" name="sterget"
+                                            <input type="hidden" name="delete_testimonial"
                                                    value="{{$testimonial->getId()}}"/>
                                         </form>
                                     </td>
@@ -342,7 +310,7 @@ if (isset($_POST['salveaza_homepage'])) {
                         <div class="ibox-title"><h5>Sub-continut "{{$contentCompanies->getTitle()}}" <small>Componente
                                     casete homepage</small></h5></div>
                         <div class="row"><br/>
-                            @foreach($contentCompanies->subcontents as $key => $subcontet)
+                            @foreach($contentCompanies->subcontents as $k => $subcontet)
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">Titlu:<br/><small>Apare ca titul
@@ -358,7 +326,7 @@ if (isset($_POST['salveaza_homepage'])) {
                                         <label class="col-sm-2 control-label">Continut:<br/><small>poate fi
                                                 formatat</small></label>
                                         <div class="col-sm-10">
-                                <textarea id="text{{$key+7}}" name="text_sub_{{$subcontet->getId()}}"
+                                <textarea id="text{{$k+7}}" name="text_sub_{{$subcontet->getId()}}"
                                           class="summernote">
                                    {!! $subcontet->getText() !!}
                                 </textarea>

@@ -19,3 +19,4 @@ Route::get('/', function () {
 
 Route::get('dashboard', 'DashboardController@index');
 Route::get('homepage', 'HomepageController@index');
+Route::post('homepage', 'HomepageController@index');

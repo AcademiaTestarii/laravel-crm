@@ -4,10 +4,14 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Slider extends Model
 {
+    use SoftDeletes;
+
     protected $table = 'slider';
+    protected $fillable = ['active'];
 
     public function getId()
     {

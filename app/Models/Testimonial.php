@@ -4,9 +4,14 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Testimonial extends Model
 {
+    use SoftDeletes;
+
+    protected $fillable = ['is_active'];
+
     public function getId()
     {
         return $this->getAttribute('id');

@@ -7,6 +7,8 @@ use App\Repositories\ActivityRepository;
 use App\Repositories\ContentRepository;
 use App\Repositories\SliderRepository;
 use App\Repositories\TestimonialRepository;
+use Illuminate\Http\Request;
+
 
 class HomepageController extends Controller
 {
@@ -27,8 +29,44 @@ class HomepageController extends Controller
         $this->testimonialRepository = $testimonialRepository;
     }
 
-    public function index()
+    public function index(Request $request)
     {
+        if ($request->get('status')) {
+            $this->sliderRepository
+                ->findOneBy([
+                    'id' => $request->get('id')
+                ])
+                ->update([
+                    'active' => ($request->get('value') == 1) ? 0 : 1
+                ]);
+        }
+
+        if ($request->get('delete_banner')) {
+            $this->sliderRepository
+                ->findOneBy([
+                    'id' => $request->get('delete_banner')
+                ])
+                ->delete();
+        }
+
+        if ($request->get('idt')) {
+            $this->testimonialRepository
+                ->findOneBy([
+                    'id' => $request->get('idt')
+                ])
+                ->update([
+                    'is_active' => ($request->get('valuet') == 1) ? 0 : 1
+                ]);
+        }
+
+        if ($request->get('delete_testimonial')) {
+            $this->testimonialRepository
+                ->findOneBy([
+                    'id' => $request->get('delete_testimonial')
+                ])
+                ->delete();
+        }
+
         $contentHomepage = $this->contentRepository->findOneBy(['id' => Content::ID_HOMEPAGE]);
         $contentTesters = $this->contentRepository->findOneBy(['id' => Content::ID_TESTERS]);
         $contentCompanies = $this->contentRepository->findOneBy(['id' => Content::ID_COMPANIES]);
