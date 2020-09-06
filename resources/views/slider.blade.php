@@ -112,35 +112,31 @@ $page = "slider";
 
     <title>Academia testarii CRM | Bannere</title>
 
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{asset('font-awesome/css/font-awesome.css')}}" rel="stylesheet">
 
-    <link href="css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="{{asset('css/plugins/iCheck/custom.css')}}" rel="stylesheet">
 
-    <link href="css/plugins/fullcalendar/fullcalendar.css" rel="stylesheet">
-    <link href="css/plugins/fullcalendar/fullcalendar.print.css" rel='stylesheet' media='print'>
+    <link href="{{asset('css/plugins/fullcalendar/fullcalendar.css')}}" rel="stylesheet">
+    <link href="{{asset('css/plugins/fullcalendar/fullcalendar.print.css')}}" rel='stylesheet' media='print'>
 
-    <link href="css/animate.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    <link href="{{asset('css/animate.css')}}" rel="stylesheet">
+    <link href="{{asset('css/style.css')}}" rel="stylesheet">
 
 </head>
-
 <body>
-
 <div id="wrapper">
-
     <nav class="navbar-default navbar-static-side" role="navigation">
         <div class="sidebar-collapse">
             <ul class="nav metismenu" id="side-menu">
                 <li class="nav-header">
-                    <?php include("include.user.php");?>
+                    @include('include/user')
                     <div class="logo-element">
                         AT+
                     </div>
                 </li>
-                <?php include("include.mainmenu2.php");?>
+                @include('include/mainmenu2')
             </ul>
-
         </div>
     </nav>
 
@@ -150,11 +146,6 @@ $page = "slider";
                 <div class="navbar-header">
                     <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i>
                     </a>
-                    <!--form role="search" class="navbar-form-custom" action="search_results.php">
-                        <div class="form-group">
-                            <input type="text" placeholder="Cautare ..." class="form-control" name="top-search" id="top-search">
-                        </div>
-                    </form-->
                 </div>
                 <?php include("include.panoucontrol.php")?>
             </nav>
@@ -180,8 +171,6 @@ $page = "slider";
 
         <!-- Main content -->
         <section class="wrapper wrapper-content">
-
-
             <div class="ibox">
                 <div class="ibox-title">
                     <h5>Adaugare banner prima pagina <small></small></h5>
@@ -270,28 +259,28 @@ $page = "slider";
         </section><!-- /.container-frluid -->
 
         <div class="footer">
-        <?php include("include.footer.php");?>
+            @include('include/footer')
         </div>
-
     </div>
 </div>
 
 <!-- Mainly scripts -->
-<script src="js/plugins/fullcalendar/moment.min.js"></script>
-<script src="js/jquery-2.1.1.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
-<script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+<script src="{{asset('js/plugins/fullcalendar/moment.min.js')}}"></script>
+<script src="{{asset('js/jquery-2.1.1.js')}}"></script>
+<script src="{{asset('js/bootstrap.min.js')}}"></script>
+<script src="{{asset('js/plugins/metisMenu/jquery.metisMenu.js')}}"></script>
+<script src="{{asset('js/plugins/slimscroll/jquery.slimscroll.min.js')}}"></script>
 
 <!-- Custom and plugin javascript -->
-<script src="js/inspinia.js"></script>
-<script src="js/plugins/pace/pace.min.js"></script>
+<!-- Custom and plugin javascript -->
+<script src="{{asset('js/inspinia.js')}}"></script>
+<script src="{{asset('js/plugins/pace/pace.min.js')}}"></script>
 
 <!-- jQuery UI custom -->
-<script src="js/jquery-ui.custom.min.js"></script>
+<script src="{{asset('js/jquery-ui.custom.min.js')}}"></script>
 
 <!-- iCheck -->
-<script src="js/plugins/iCheck/icheck.min.js"></script>
+<script src="{{asset('js/plugins/iCheck/icheck.min.js')}}"></script>
 
 </body>
 
