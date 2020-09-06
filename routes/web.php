@@ -20,3 +20,5 @@ Route::get('/', function () {
 Route::get('dashboard', 'DashboardController@index');
 Route::get('homepage', 'HomepageController@index')->name('homepage');
 Route::post('homepage', 'HomepageController@updateHomepage');
+
+Route::get('slider_edit', 'SliderController@index');

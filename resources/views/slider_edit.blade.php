@@ -1,24 +1,4 @@
 <?php
-
-/*if (isset($_GET['id']) && is_numeric($_GET['id'])) {
-    $id=$_GET['id'];
-    $sql=mysqli_query($link,"SELECT * FROM `slider` WHERE `id`=".$id);
-    if (mysqli_num_rows($sql)>0) {
-        // edit
-        $row=mysqli_fetch_array($sql);
-        $submit="edit";
-        $pagetitle="Editeaza banner";
-    } else {
-        header ("Location: home-page.php");
-    }
-    $new=FALSE;
-} else {
-// add
-    $new=TRUE;
-    $submit="addnew";
-    $pagetitle="Addauga banner";
-}
-
 /* Remove image */
 /*if (isset($_GET['removeimage'])) {
     $removeimage = $_GET['removeimage'];
@@ -68,38 +48,39 @@ WHERE `id`=".$_POST['id2update']);
 
 /* Add new */
 if (isset($_POST['addnew'])) {
-/*   if (isset($_POST['active'])) { $active=1;} else {$active=0;}
-   mysqli_query($link,"INSERT INTO `slider`
-(`active`,`title`,`description1`,`description2`,`link`,`buton`)
-VALUES
-(".$active.",'".$_POST['title']."','".$_POST['description1']."','".$_POST['description2']."','".$_POST['link']."','".$_POST['buton']."')
-");
-   $last_id = mysqli_insert_id($link);
+    /*   if (isset($_POST['active'])) { $active=1;} else {$active=0;}
+       mysqli_query($link,"INSERT INTO `slider`
+    (`active`,`title`,`description1`,`description2`,`link`,`buton`)
+    VALUES
+    (".$active.",'".$_POST['title']."','".$_POST['description1']."','".$_POST['description2']."','".$_POST['link']."','".$_POST['buton']."')
+    ");
+       $last_id = mysqli_insert_id($link);
 
-   if ($_FILES['image']!="") {
-       include('class.upload/class.upload.php');
-       $handle = new upload($_FILES['image']);
-       if ($handle->uploaded) {
-           $handle->image_resize			= true;
-           $handle->image_x				= 1920;
-           $handle->image_ratio_y			= true;
-           // path
-           $handle->process(dirname( __FILE__ )."/../images/slider/");
-           $img_name = $handle->file_dst_name;
-           if ($handle->processed) {
-               mysqli_query($link,"UPDATE `slider` SET `image`='".$img_name."' WHERE `id`=".$last_id);
-               $handle->clean();
+       if ($_FILES['image']!="") {
+           include('class.upload/class.upload.php');
+           $handle = new upload($_FILES['image']);
+           if ($handle->uploaded) {
+               $handle->image_resize			= true;
+               $handle->image_x				= 1920;
+               $handle->image_ratio_y			= true;
+               // path
+               $handle->process(dirname( __FILE__ )."/../images/slider/");
+               $img_name = $handle->file_dst_name;
+               if ($handle->processed) {
+                   mysqli_query($link,"UPDATE `slider` SET `image`='".$img_name."' WHERE `id`=".$last_id);
+                   $handle->clean();
+               } else {
+                   echo "Process Error: Something went wrong: ".$handle->error;
+                   $handle->clean();
+               }
            } else {
-               echo "Process Error: Something went wrong: ".$handle->error;
+               echo "File Error: Something went wrong: ".$handle->error;
                $handle->clean();
            }
-       } else {
-           echo "File Error: Something went wrong: ".$handle->error;
-           $handle->clean();
-       }
-   } // end image upload
-   header ("Location: home-page.php");
-}*/
+       } // end image upload
+       header ("Location: home-page.php");
+    }*/
+}
 $page = "slider";
 ?>
         <!DOCTYPE html>
@@ -147,7 +128,7 @@ $page = "slider";
                     <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i>
                     </a>
                 </div>
-                <?php include("include.panoucontrol.php")?>
+                @include('include/controlpanel')
             </nav>
         </div>
         <div class="row wrapper border-bottom white-bg page-heading">
@@ -155,16 +136,16 @@ $page = "slider";
                 <h2>Bannere</h2>
                 <ol class="breadcrumb">
                     <li>
-                        <a href="dashboard.php">Home</a>
+                        <a href="/dashboard">Home</a>
                     </li>
                     <li class="active">
-                        <a href="slider.php"><strong>Bannere</strong></a>
+                        <a href="/slider"><strong>Bannere</strong></a>
                     </li>
                 </ol>
             </div>
             <div class="col-sm-6">
                 <div class="title-action">
-                    <a class="btn btn-primary" href="modifica_slider.php">Adauga banner nou</a>
+                    <a class="btn btn-primary" href="/slider_edit">Adauga banner nou</a>
                 </div>
             </div>
         </div>
@@ -185,74 +166,76 @@ $page = "slider";
                                     <div class="box-body">
                                         <div class="checkbox">
                                             <label>
-                                                <input name="active" type="checkbox" <? if (($row["active"]) == 1) {
-                                                    echo "checked";
-                                                }?> /> Activ
+                                                <input name="active" type="checkbox"
+                                                       @if($slider && $slider->isActive()) checked @endif />
+                                                Activ
                                             </label>
                                         </div>
                                         <div class="form-group">
                                             <label>Prima linie</label>
                                             <input type="text" class="form-control" name="title"
-                                                   value="<?php echo $row["title"];?>" placeholder="Titlu"/>
+                                                   value="@if($slider) {{$slider->getTitle()}} @endif"
+                                                   placeholder="Titlu"/>
                                         </div>
                                         <div class="form-group">
                                             <label>A doua linie</label>
                                             <input type="text" class="form-control" name="description1"
-                                                   value="<?php echo $row["description1"];?>"
+                                                   value="@if($slider) {{$slider->getDescription1()}} @endif"
                                                    placeholder="Descriere principala"/>
                                         </div>
                                         <div class="form-group">
                                             <label>Descriere secundara lunga</label>
                                             <input type="text" class="form-control" name="description2"
-                                                   value="<?php echo $row["description2"];?>"
+                                                   value="@if($slider) {{$slider->getDescription2()}} @endif"
                                                    placeholder="Descriere secundara"/>
                                         </div>
                                         <div class="form-group">
                                             <label>Text buton</label>
                                             <input type="text" class="form-control" name="buton"
-                                                   value="<?php echo $row["buton"];?>" placeholder="Enter ..."/>
+                                                   value="@if($slider) {{$slider->getButtonName()}} @endif"
+                                                   placeholder="Enter ..."/>
                                         </div>
                                         <div class="form-group">
                                             <label>Link <small>(copiaza link din browser, trebuie sa aiba "http://" in
                                                     fata)</small></label>
                                             <input type="text" class="form-control" name="link"
-                                                   value="<?php echo $row["link"];?>" placeholder="Enter ..."/>
+                                                   value="@if($slider) {{$slider->getLink()}} @endif"
+                                                   placeholder="Enter ..."/>
                                         </div>
                                         <div class="form-group">
-                                            <? if ($row["image"] != "") { ?>
-                                            <p class="help-block"><img style="width:50%;"
-                                                                       src="../images/slider/<?php echo $row['image'];?>"/>
-                                            </p>
-                                            <a class="btn btn-primary btn-sm"
-                                               href="modifica_slider.php?removeimage=<?php echo $row['id'];?>"><i
-                                                        class="glyphicon glyphicon-trash"></i> &nbsp Sterge imagine</a>
-                                            <? } else {?>
-                                            <label for="image">Imagine <small>(va fi redimensionata automat, latimea
-                                                    minima: 1920px)</small></label><br/>
-                                            <div class="inputBtnSection">
-                                                <input id="uploadFile" class="disableInputField"
-                                                       placeholder="Selecteaza o imagine" disabled="disabled"/>
-                                                <label class="fileUpload">
-                                                    <input id="image" name="image" type="file" class="upload"/>
-                                                </label>
-                                            </div>
-
-                                            <? } ?>
+                                            @if($slider && $slider->getImage())
+                                                <p class="help-block"><img style="width:50%;"
+                                                                           src="{{$slider->getImage()}}"/>
+                                                </p>
+                                                <a class="btn btn-primary btn-sm"
+                                                   href="slider_edit.php?removeimage={{$slider->getId()}}"><i
+                                                            class="glyphicon glyphicon-trash"></i> &nbsp Sterge imagine</a>
+                                            @else
+                                                <label for="image">Imagine <small>(va fi redimensionata automat, latimea
+                                                        minima: 1920px)</small></label><br/>
+                                                <div class="inputBtnSection">
+                                                    <input id="uploadFile" class="disableInputField"
+                                                           placeholder="Selecteaza o imagine" disabled="disabled"/>
+                                                    <label class="fileUpload">
+                                                        <input id="image" name="image" type="file" class="upload"/>
+                                                    </label>
+                                                </div>
+                                            @endif
                                         </div>
                                     </div><!-- /.box-body -->
                                 </div><!-- /.box -->
                             </div>
                             <div class="col-md-12">
                                 <div class="box-footer">
-                                    <input type="hidden" name="id2update" value="<?php echo $row['id'];?>"/>
-                                    <button type="submit" name="<?php echo $submit;?>"
+                                    <input type="hidden" name="id2update"
+                                           value="@if($slider) {{$slider->getId()}} @endif"/>
+                                    <button type="submit" name="@if($slider) edit @else addnew @endif"
                                             class="btn btn-block btn-primary"><i class="fa fa-save"></i> Salveaza
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </form>
-
                 </div>
             </div>
 

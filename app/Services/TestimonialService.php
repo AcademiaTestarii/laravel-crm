@@ -13,7 +13,6 @@ class TestimonialService
         $this->testimonialRepository = $testimonialRepository;
     }
 
-
     public function updateActiveStatus(int $id, $value)
     {
         return $this->testimonialRepository

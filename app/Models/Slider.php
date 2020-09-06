@@ -42,6 +42,22 @@ class Slider extends Model
         return $this->getAttribute('active');
     }
 
+    public function getDescription1() {
+        return $this->getAttribute('description1');
+    }
+
+    public function getDescription2() {
+        return $this->getAttribute('description2');
+    }
+
+    public function getButtonName() {
+        return $this->getAttribute('button');
+    }
+
+    public function getLink() {
+        return $this->getAttribute('link');
+    }
+
     public function isActive()
     {
         if ($this->getActiveStatus() == 1) {
