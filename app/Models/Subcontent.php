@@ -8,6 +8,8 @@ class Subcontent extends Model
 {
     protected $table = 'subcontent';
 
+    protected $fillable = ['title', 'text', 'image'];
+
     public function content()
     {
         return $this->belongsTo(Content::class);

@@ -8,6 +8,8 @@ class Activity extends Model
 {
     protected $table = 'activities';
 
+    protected $fillable = ['followers', 'classes', 'graduates', 'recommandations'];
+
     public function getId()
     {
         return $this->getAttribute('id');

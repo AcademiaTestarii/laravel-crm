@@ -1,38 +1,13 @@
 <?php
 $today = getdate();
 $page = "home-page";
-
-// salvare
-if (isset($_POST['salveaza_homepage'])) {
-
-    /* mysqli_query($link,"UPDATE `continut` SET `titlu`='".mysqli_real_escape_string($link,trim($_POST['titlu_1']))."', `text`='".mysqli_real_escape_string($link,trim($_POST['text_1']))."' WHERE `id`=1");
-     mysqli_query($link,"UPDATE `activitate` SET `folowers`=".$_POST['followers'].", `cursuri`=".$_POST['cursuri'].", `absolventi`=".$_POST['absolventi'].", `recomandari`=".$_POST['recomandari']." WHERE `id`=1");
-
-     mysqli_query($link,"UPDATE `continut` SET `titlu`='".mysqli_real_escape_string($link,trim($_POST['titlu_3']))."', `text`='".mysqli_real_escape_string($link,trim($_POST['text_3']))."' WHERE `id`=3");
-     $sub=mysqli_query($link,"SELECT `id` FROM `subcontinut` WHERE `id_continut`=3");
-     while ($row_sub=mysqli_fetch_assoc($sub)) {
-         $idsub=$row_sub['id'];
-         $titlu=$_POST['titlu_sub_'.$idsub];
-         $text=$_POST['text_sub_'.$idsub];
-         mysqli_query($link,"UPDATE `subcontinut` SET `titlu`='".mysqli_real_escape_string($link,trim($titlu))."', `text`='".mysqli_real_escape_string($link,trim($text))."' WHERE `id`=".$idsub);
-     }
-     unset($idsub);
-
-     mysqli_query($link,"UPDATE `continut` SET `titlu`='".mysqli_real_escape_string($link,trim($_POST['titlu_4']))."', `text`='".mysqli_real_escape_string($link,trim($_POST['text_4']))."' WHERE `id`=4");
-     $sub=mysqli_query($link,"SELECT `id` FROM `subcontinut` WHERE `id_continut`=4");
-     while ($row_sub=mysqli_fetch_assoc($sub)) {
-         $idsub=$row_sub['id'];
-         $titlu=$_POST['titlu_sub_'.$idsub];
-         $text=$_POST['text_sub_'.$idsub];
-         mysqli_query($link,"UPDATE `subcontinut` SET `titlu`='".mysqli_real_escape_string($link,trim($titlu))."', `text`='".mysqli_real_escape_string($link,trim($text))."' WHERE `id`=".$idsub);
-     }*/
-}
 ?>
-        <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Academia Testarii CRM | Modificare continut {{ $contentHomepage->getName() }} </title>
     <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('font-awesome/css/font-awesome.css')}}" rel="stylesheet">
@@ -124,7 +99,7 @@ if (isset($_POST['salveaza_homepage'])) {
                                     <form action="" method="GET">
                                         <button class="btn btn-danger btn-xs" onClick="confirmDelete()" type="submit"/>
                                         Sterge</button>
-                                        <input type="hidden" name="delete_banner" value="{{$slider->getId()}}"/>
+                                        <input type="hidden" name="delete_banner_id" value="{{$slider->getId()}}"/>
                                     </form>
                                 </td>
                             </tr>
@@ -135,6 +110,7 @@ if (isset($_POST['salveaza_homepage'])) {
             </div>
 
             <form id="form" method="post" class="form-horizontal" action="" enctype="multipart/form-data">
+                @csrf
                 <div class="ibox">
                     <div class="ibox-title">
                         <h5>Sectiunea "{!!$contentHomepage->getTitle()!!}"<small></small></h5>
@@ -143,7 +119,7 @@ if (isset($_POST['salveaza_homepage'])) {
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Titlu:<br/><small>Apare ca titul H1</small></label>
                             <div class="col-sm-10">
-                                <input value="{!!$contentHomepage->getTitle()!!}" name="titlu_1" type="text"
+                                <input value="{!!$contentHomepage->getTitle()!!}" name="title_1" type="text"
                                        class="form-control" required>
                             </div>
                         </div>
@@ -170,17 +146,17 @@ if (isset($_POST['salveaza_homepage'])) {
                             </div>
                             <div class="col-sm-3">
                                 <label class="control-label">Numar Cursuri:</label>
-                                <input value="{{$activity->getNumberOfClasses()}}" name="cursuri" type="number"
+                                <input value="{{$activity->getNumberOfClasses()}}" name="classes" type="number"
                                        class="form-control" required>
                             </div>
                             <div class="col-sm-3">
                                 <label class="control-label">Numar Absolventi:</label>
-                                <input value="{{$activity->getNumberOfGraduates()}}" name="absolventi"
+                                <input value="{{$activity->getNumberOfGraduates()}}" name="graduates"
                                        type="number" class="form-control" required>
                             </div>
                             <div class="col-sm-3">
                                 <label class="control-label">Numar Recomandari:</label>
-                                <input value="{{$activity->getNumberOfRecommandations()}}" name="recomandari"
+                                <input value="{{$activity->getNumberOfRecommandations()}}" name="recommandations"
                                        type="number" class="form-control" required>
                             </div>
                         </div>
@@ -194,7 +170,7 @@ if (isset($_POST['salveaza_homepage'])) {
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Titlu:<br/><small>Apare ca titul H2</small></label>
                             <div class="col-sm-10">
-                                <input value="{{$contentTesters->getTitle()}}" name="titlu_3" type="text"
+                                <input value="{{$contentTesters->getTitle()}}" name="title_3" type="text"
                                        class="form-control" required>
                             </div>
                         </div>
@@ -217,7 +193,7 @@ if (isset($_POST['salveaza_homepage'])) {
                                                 H2</small></label>
                                         <div class="col-sm-10">
                                             <input value="{{$subcontet->getTitle()}}"
-                                                   name="titlu_sub_{{$subcontet->getId()}}" type="text"
+                                                   name="title_sub_{{$subcontet->getId()}}" type="text"
                                                    class="form-control" required>
                                         </div>
                                     </div>
@@ -277,7 +253,7 @@ if (isset($_POST['salveaza_homepage'])) {
                                             <button class="btn btn-danger btn-xs" onClick="confirmDelete()"
                                                     type="submit"/>
                                             Sterge</button>
-                                            <input type="hidden" name="delete_testimonial"
+                                            <input type="hidden" name="delete_testimonial_id"
                                                    value="{{$testimonial->getId()}}"/>
                                         </form>
                                     </td>
@@ -295,7 +271,7 @@ if (isset($_POST['salveaza_homepage'])) {
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Titlu:<br/><small>Apare ca titul H1</small></label>
                             <div class="col-sm-10">
-                                <input value="{{$contentCompanies->getTitle()}}" name="titlu_4" type="text"
+                                <input value="{{$contentCompanies->getTitle()}}" name="title_4" type="text"
                                        class="form-control" required>
                             </div>
                         </div>
@@ -317,7 +293,7 @@ if (isset($_POST['salveaza_homepage'])) {
                                                 H1</small></label>
                                         <div class="col-sm-10">
                                             <input value="{{$subcontet->getTitle()}}"
-                                                   name="titlu_sub_{{$subcontet->getId()}}" type="text"
+                                                   name="title_sub_{{$subcontet->getId()}}" type="text"
                                                    class="form-control"
                                                    required>
                                         </div>
@@ -342,7 +318,7 @@ if (isset($_POST['salveaza_homepage'])) {
                         <div class="form-group">
                             <div class="col-sm-12">
                                 <center>
-                                    <button class="btn btn-warning" type="submit" name="salveaza_homepage">Salveaza
+                                    <button class="btn btn-warning" type="submit" name="save_homepage">Salveaza
                                     </button>
                                 </center>
                             </div>
