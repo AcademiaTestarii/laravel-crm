@@ -1,7 +1,9 @@
 /public/storage
+/public/slider
 /vendor
 .env
 .phpunit.result.cache
 Homestead.json
 Homestead.yaml
 .idea
+/storage

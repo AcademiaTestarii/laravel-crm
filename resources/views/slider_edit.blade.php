@@ -1,51 +1,4 @@
 <?php
-/* Remove image */
-/*if (isset($_GET['removeimage'])) {
-    $removeimage = $_GET['removeimage'];
-    $picsql = mysqli_query($link,"SELECT * FROM `slider` WHERE `id`=".$removeimage);
-    $pic=mysqli_fetch_array($picsql);
-    unlink(dirname( __FILE__ )."/../images/slider/".$pic['image']);
-    mysqli_query($link,"UPDATE `slider` SET `image`=NULL WHERE `id`=".$removeimage);
-    header ("Location: modifica_slider.php?id=".$pic['id']);
-}*/
-
-/* Edit */
-if (isset($_POST['edit'])) {/*
-    if (isset($_POST['active'])) { $active=1;} else {$active=0;}
-    mysqli_query($link,"UPDATE `slider` SET
-`active`=".$active.",
-`title`='".$_POST['title']."',
-`description1`='".$_POST['description1']."',
-`description2`='".$_POST['description2']."',
-`link`='".$_POST['link']."',
-`buton`='".$_POST['buton']."'
-WHERE `id`=".$_POST['id2update']);
-
-    if ($_FILES['image']!="") {
-        include('class.upload/class.upload.php');
-        $handle = new upload($_FILES['image']);
-        if ($handle->uploaded) {
-            $handle->image_resize			= true;
-            $handle->image_x				= 1920;
-            $handle->image_ratio_y			= true;
-            // path
-            $handle->process(dirname( __FILE__ )."/../images/slider/");
-            $img_name = $handle->file_dst_name;
-            if ($handle->processed) {
-                mysqli_query($link,"UPDATE `slider` SET `image`='".$img_name."' WHERE `id`=".$_POST['id2update']);
-                $handle->clean();
-            } else {
-                echo "Process Error: Something went wrong: ".$handle->error;
-                $handle->clean();
-            }
-        } else {
-            echo "File Error: Something went wrong: ".$handle->error;
-            $handle->clean();
-        }
-    } // end image upload
-    header ("Location: modifica_slider.php?id=".$_POST['id2update']);*/
-}
-
 /* Add new */
 if (isset($_POST['addnew'])) {
     /*   if (isset($_POST['active'])) { $active=1;} else {$active=0;}
@@ -85,25 +38,18 @@ $page = "slider";
 ?>
         <!DOCTYPE html>
 <html>
-
 <head>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Academia testarii CRM | Bannere</title>
-
     <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('font-awesome/css/font-awesome.css')}}" rel="stylesheet">
-
     <link href="{{asset('css/plugins/iCheck/custom.css')}}" rel="stylesheet">
-
     <link href="{{asset('css/plugins/fullcalendar/fullcalendar.css')}}" rel="stylesheet">
     <link href="{{asset('css/plugins/fullcalendar/fullcalendar.print.css')}}" rel='stylesheet' media='print'>
-
     <link href="{{asset('css/animate.css')}}" rel="stylesheet">
     <link href="{{asset('css/style.css')}}" rel="stylesheet">
-
 </head>
 <body>
 <div id="wrapper">
@@ -159,6 +105,7 @@ $page = "slider";
                 <div class="ibox-content">
 
                     <form role="form" action="" method="POST" enctype="multipart/form-data">
+                        @csrf
                         <div class="row">
                             <div class="col-md-12">
                                 <!-- general form elements -->
@@ -191,7 +138,7 @@ $page = "slider";
                                         </div>
                                         <div class="form-group">
                                             <label>Text buton</label>
-                                            <input type="text" class="form-control" name="buton"
+                                            <input type="text" class="form-control" name="button"
                                                    value="@if($slider) {{$slider->getButtonName()}} @endif"
                                                    placeholder="Enter ..."/>
                                         </div>
@@ -208,7 +155,7 @@ $page = "slider";
                                                                            src="{{$slider->getImage()}}"/>
                                                 </p>
                                                 <a class="btn btn-primary btn-sm"
-                                                   href="slider_edit.php?removeimage={{$slider->getId()}}"><i
+                                                   href="/slider_remove_image?id={{$slider->getId()}}"><i
                                                             class="glyphicon glyphicon-trash"></i> &nbsp Sterge imagine</a>
                                             @else
                                                 <label for="image">Imagine <small>(va fi redimensionata automat, latimea

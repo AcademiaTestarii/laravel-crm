@@ -68,7 +68,7 @@ class HomepageController extends Controller
         ]);
     }
 
-    public function updateHomepage(Request $request)
+    public function update(Request $request)
     {
         $requestData = $request->all();
 
