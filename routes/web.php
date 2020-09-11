@@ -24,3 +24,7 @@ Route::post('homepage', 'HomepageController@update');
 Route::get('slider_edit', 'SliderController@index')->name('slider');
 Route::get('slider_remove_image', 'SliderController@removeImage');
 Route::post('slider_edit', 'SliderController@update');
+
+
+Route::get('testimonial_edit', 'TestimonialController@index')->name('testimonial');
+Route::post('testimonial_edit', 'TestimonialController@update');

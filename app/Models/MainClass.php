@@ -15,4 +15,9 @@ class MainClass extends Model
     {
         return $this->hasMany(ClassGroup::class);
     }
+
+    public function getTitle()
+    {
+        return $this->getAttribute('title');
+    }
 }

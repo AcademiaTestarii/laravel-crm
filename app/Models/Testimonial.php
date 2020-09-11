@@ -10,7 +10,7 @@ class Testimonial extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['is_active'];
+    protected $fillable = ['is_active', 'name', 'position', 'testimonial', 'class'];
 
     public function getId()
     {
@@ -20,6 +20,16 @@ class Testimonial extends Model
     public function getName()
     {
         return $this->getAttribute('name');
+    }
+
+    public function getPosition()
+    {
+        return $this->getAttribute('position');
+    }
+
+    public function getClass()
+    {
+        return $this->getAttribute('class');
     }
 
     public function getTestimonial()

@@ -214,7 +214,7 @@ $page = "home-page";
                 <div class="ibox">
                     <div class="ibox-title">
                         <h5>Sectiunea "Ce spun absolventii"<small></small></h5>
-                        <a class="btn btn-warning pull-right buton" href="testimonial.php">Adauga testimonial</a>
+                        <a class="btn btn-warning pull-right buton" href="/testimonial_edit">Adauga testimonial</a>
                     </div>
                     <div class="ibox-content">
                         <table id="example1" class="table table-bordered table-striped">
@@ -234,7 +234,7 @@ $page = "home-page";
                                     <td>{{$testimonial->getId()}}</td>
                                     <td>{{$testimonial->getCreatedOn()}}</td>
                                     <td>
-                                        <a href="testimonial.php?id={{$testimonial->getId()}}">{{$testimonial->getName()}}</a>
+                                        <a href="/testimonial_edit?id={{$testimonial->getId()}}">{{$testimonial->getName()}}</a>
                                     </td>
                                     <td> {!!$testimonial->getTestimonial()!!}</td>
                                     <td class="text-center">
