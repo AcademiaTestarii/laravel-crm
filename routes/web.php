@@ -27,4 +27,5 @@ Route::post('slider_edit', 'SliderController@update');
 
 
 Route::get('testimonial_edit', 'TestimonialController@index')->name('testimonial');
+Route::get('testimonials', 'TestimonialController@all')->name('testimonials');
 Route::post('testimonial_edit', 'TestimonialController@update');

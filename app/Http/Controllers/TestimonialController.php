@@ -60,4 +60,13 @@ class TestimonialController extends Controller
 
         return redirect()->route('testimonial', ['id' => $testimonialId]);
     }
+
+    public function all(Request $request)
+    {
+        $testimonials = $this->testimonialRepository->allOrderedBy('name');
+
+        return view('testimonials')->with([
+            'testimonials' => $testimonials
+        ]);
+    }
 }

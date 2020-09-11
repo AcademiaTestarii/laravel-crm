@@ -1,26 +1,4 @@
-<?php
-/* Edit */
-/*if (isset($_POST['edit'])) {
-    mysqli_query($link,"UPDATE `testimoniale` SET
-`nume`='".$_POST['nume']."',
-`pozitie`='".$_POST['pozitie']."',
-`testimonial`='".trim(mysqli_real_escape_string($link,$_POST['testimonial']))."',
-`curs`='".$_POST['curs']."'
-WHERE `id`=".$_POST['id2update']);
-    header ("Location: testimoniale.php");
-}
-
-/* Add new */
-/*if (isset($_POST['addnew'])) {
-    mysqli_query($link,"INSERT INTO `testimoniale` (`nume`,`pozitie`,`testimonial`,`curs`)
-VALUES
-('".$_POST['nume']."','".$_POST['pozitie']."','".trim(mysqli_real_escape_string($link,$_POST['testimonial']))."','".$_POST['curs']."')");
-    $last_id = mysqli_insert_id($link);
-    header ("Location: testimoniale.php");
-}*/
-
-?>
-        <!DOCTYPE html>
+ <!DOCTYPE html>
 <html>
 <head>
 
@@ -74,7 +52,7 @@ VALUES
                 <h2>@if($testimonial) Modifica @else Adauga @endif testimonial</h2>
                 <ol class="breadcrumb">
                     <li><a href="/dashboard">Home</a></li>
-                    <li class="active"><a href="/testimonials"><strong>Testimonial</strong></a></li>
+                    <li class="active"><a href="/testimonials"><strong>Testimoniale</strong></a></li>
                 </ol>
             </div>
             <div class="col-sm-4">
