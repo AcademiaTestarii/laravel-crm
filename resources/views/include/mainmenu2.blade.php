@@ -6,7 +6,7 @@
 </li>
 
 <li <?php if (basename($_SERVER['PHP_SELF'])=="continut.php") { echo 'class="active"';} ?>>
-    <a href="continut.php?id=2"><i class="fa fa-user-secret"></i> <span class="nav-label">Despre noi</span></a>
+    <a href="/content?id=2"><i class="fa fa-user-secret"></i> <span class="nav-label">Despre noi</span></a>
 </li>
 
 <li <?php if (basename($_SERVER['PHP_SELF'])=="cursuri.php" || basename($_SERVER['PHP_SELF'])=="curs.php" || basename($_SERVER['PHP_SELF'])=="vizualizare_curs.php" || basename($_SERVER['PHP_SELF'])=="adauga_curs.php") { echo 'class="active"';} ?>>
