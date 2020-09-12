@@ -31,3 +31,4 @@ Route::get('testimonials', 'TestimonialController@all')->name('testimonials');
 Route::post('testimonial_edit', 'TestimonialController@update');
 
 Route::get('content', 'ContentController@index')->name('content');
+Route::post('content', 'ContentController@update');

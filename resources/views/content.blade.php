@@ -1,31 +1,4 @@
-<?php
-/* Edit */
-/*if (isset($_POST['edit'])) {
-    mysqli_query($link,"UPDATE `continut` SET
-`titlu`='".$_POST['titlu']."',
-`text`='".trim(mysqli_real_escape_string($link,$_POST['text']))."'
-WHERE `id`=".$_POST['id2update']);
-
-    foreach ($_POST as $key=>$value) {
-        if (substr($key, 0, 10)=="titlu_sub_") {
-            $id_sub=substr($key, 10, 15);
-            mysqli_query($link,"UPDATE `subcontinut` SET
-		`titlu`='".trim($value)."'
-		WHERE `id`=".$id_sub);
-        }
-
-        if (substr($key, 0, 9)=="text_sub_") {
-            $id_sub2=substr($key, 9, 15);
-            mysqli_query($link,"UPDATE `subcontinut` SET
-		`text`='".trim(mysqli_real_escape_string($link,$value))."'
-		WHERE `id`=".$id_sub2);
-        }
-    }
-
-    header ("Location: continut.php?id=".$id);
-}*/
-?>
-        <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
 
@@ -101,6 +74,7 @@ WHERE `id`=".$_POST['id2update']);
                 <div class="ibox-content">
 
                     <form id="form" method="post" class="form-horizontal" action="" enctype="multipart/form-data">
+                        @csrf
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Titlu:<br/><small>Apare ca titul H1</small></label>
                             <div class="col-sm-10">
@@ -127,13 +101,13 @@ WHERE `id`=".$_POST['id2update']);
                         <?php
                         $counter = 2;
                         ?>
-                        @foreach($content->subcontents as $key => $subcontent)
+                        @foreach($content->subcontents as $subcontent)
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Titlu:<br/><small>Apare ca titul
                                         H1</small></label>
                                 <div class="col-sm-10">
                                     <input value="{{$subcontent->getTitle()}}"
-                                           name="titlu_sub_{{$subcontent->getId()}}" type="text"
+                                           name="title_sub_{{$subcontent->getId()}}" type="text"
                                            class="form-control" required>
                                 </div>
                             </div>
@@ -155,7 +129,8 @@ WHERE `id`=".$_POST['id2update']);
                         @endforeach
                         <div class="form-group">
                             <div class="col-sm-4 col-sm-offset-2">
-                                <input type="hidden" name="id2update" value="@if($content) {{$content->getId()}} @endif"/>
+                                <input type="hidden" name="id2update"
+                                       value="@if($content) {{$content->getId()}} @endif"/>
                                 <button class="btn btn-white" type="reset">Reseteaza</button>
                                 <button class="btn btn-primary" type="submit" name="@if($content) edit @endif">
                                     Salveaza
