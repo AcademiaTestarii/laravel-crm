@@ -26,7 +26,7 @@ class SliderController extends Controller
             $slider = $this->sliderRepository->findOneBy(['id' => $request->get('id')]);
         }
 
-        return view('slider_edit')->with(['slider' => $slider]);
+        return view('slider')->with(['slider' => $slider]);
     }
 
     /**

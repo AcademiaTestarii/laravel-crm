@@ -31,7 +31,7 @@ class TestimonialController extends Controller
 
         $mainClasses = $this->mainClassRepository->allOrderedBy();
 
-        return view('testimonial_edit')->with([
+        return view('testimonial')->with([
             'testimonial' => $testimonial,
             'mainClasses' => $mainClasses
         ]);

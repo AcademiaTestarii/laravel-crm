@@ -151,7 +151,7 @@
 <!-- Main scripts -->
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-<
+
 <script src="{{asset('js/bootstrap.min.js')}}"></script>
 <script src="{{asset('js/plugins/metisMenu/jquery.metisMenu.js')}}"></script>
 <script src="{{asset('js/plugins/slimscroll/jquery.slimscroll.min.js')}}"></script>

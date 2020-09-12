@@ -57,7 +57,7 @@
             </div>
             <div class="col-sm-4">
                 <div class="title-action">
-                    <a class="btn btn-primary" href="/testimonial_edit">Adauga testimonial</a>
+                    <a class="btn btn-primary" href="/testimonial">Adauga testimonial</a>
                 </div>
             </div>
         </div>

@@ -61,7 +61,7 @@ $page = "home-page";
             <div class="ibox">
                 <div class="ibox-title">
                     <h5>Sectiunea "Banere prima pagina"<small></small></h5>
-                    <a class="btn btn-warning pull-right buton" href="/slider_edit">Adauga banner nou</a>
+                    <a class="btn btn-warning pull-right buton" href="/slider">Adauga banner nou</a>
                 </div>
                 <div class="ibox-content">
                     <table id="example1" class="table table-bordered table-striped">
@@ -81,7 +81,7 @@ $page = "home-page";
                                 <td>{{$slider->getId()}}</td>
                                 <td>{{$slider->getCreatedAtDate()}}</td>
                                 <td>
-                                    <a href="/slider_edit?id={{$slider->getId()}}">{{$slider->getTitle()}}</a>
+                                    <a href="/slider?id={{$slider->getId()}}">{{$slider->getTitle()}}</a>
                                 </td>
                                 <td>
                                     <img src="{{ $slider->getImage()}}" width="200px"/>
@@ -214,7 +214,7 @@ $page = "home-page";
                 <div class="ibox">
                     <div class="ibox-title">
                         <h5>Sectiunea "Ce spun absolventii"<small></small></h5>
-                        <a class="btn btn-warning pull-right buton" href="/testimonial_edit">Adauga testimonial</a>
+                        <a class="btn btn-warning pull-right buton" href="/testimonial">Adauga testimonial</a>
                     </div>
                     <div class="ibox-content">
                         <table id="example1" class="table table-bordered table-striped">
@@ -234,7 +234,7 @@ $page = "home-page";
                                     <td>{{$testimonial->getId()}}</td>
                                     <td>{{$testimonial->getCreatedOn()}}</td>
                                     <td>
-                                        <a href="/testimonial_edit?id={{$testimonial->getId()}}">{{$testimonial->getName()}}</a>
+                                        <a href="/testimonial?id={{$testimonial->getId()}}">{{$testimonial->getName()}}</a>
                                     </td>
                                     <td> {!!$testimonial->getTestimonial()!!}</td>
                                     <td class="text-center">

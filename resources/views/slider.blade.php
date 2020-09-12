@@ -1,42 +1,4 @@
-<?php
-/* Add new */
-if (isset($_POST['addnew'])) {
-    /*   if (isset($_POST['active'])) { $active=1;} else {$active=0;}
-       mysqli_query($link,"INSERT INTO `slider`
-    (`active`,`title`,`description1`,`description2`,`link`,`buton`)
-    VALUES
-    (".$active.",'".$_POST['title']."','".$_POST['description1']."','".$_POST['description2']."','".$_POST['link']."','".$_POST['buton']."')
-    ");
-       $last_id = mysqli_insert_id($link);
-
-       if ($_FILES['image']!="") {
-           include('class.upload/class.upload.php');
-           $handle = new upload($_FILES['image']);
-           if ($handle->uploaded) {
-               $handle->image_resize			= true;
-               $handle->image_x				= 1920;
-               $handle->image_ratio_y			= true;
-               // path
-               $handle->process(dirname( __FILE__ )."/../images/slider/");
-               $img_name = $handle->file_dst_name;
-               if ($handle->processed) {
-                   mysqli_query($link,"UPDATE `slider` SET `image`='".$img_name."' WHERE `id`=".$last_id);
-                   $handle->clean();
-               } else {
-                   echo "Process Error: Something went wrong: ".$handle->error;
-                   $handle->clean();
-               }
-           } else {
-               echo "File Error: Something went wrong: ".$handle->error;
-               $handle->clean();
-           }
-       } // end image upload
-       header ("Location: home-page.php");
-    }*/
-}
-$page = "slider";
-?>
-        <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -91,7 +53,7 @@ $page = "slider";
             </div>
             <div class="col-sm-6">
                 <div class="title-action">
-                    <a class="btn btn-primary" href="/slider_edit">Adauga banner nou</a>
+                    <a class="btn btn-primary" href="/slider">Adauga banner nou</a>
                 </div>
             </div>
         </div>

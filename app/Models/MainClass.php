@@ -13,7 +13,7 @@ class MainClass extends Model
 
     public function classGroup()
     {
-        return $this->hasMany(ClassGroup::class);
+        return $this->hasMany(Classes::class);
     }
 
     public function getTitle()

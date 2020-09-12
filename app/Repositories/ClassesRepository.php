@@ -2,17 +2,17 @@
 
 namespace App\Repositories;
 
-use App\Models\ClassGroup;
+use App\Models\Classes;
 
-class ClassGroupRepository extends Repository
+class ClassesRepository extends Repository
 {
     protected $model;
 
     /**
      * ClassGroupRepository constructor.
-     * @param ClassGroup $classGroup
+     * @param Classes $classGroup
      */
-    public function __construct(ClassGroup $classGroup)
+    public function __construct(Classes $classGroup)
     {
         $this->model = $classGroup;
     }

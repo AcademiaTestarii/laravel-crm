@@ -49,7 +49,7 @@
             </div>
             <div class="col-sm-4">
                 <div class="title-action">
-                    <a class="btn btn-primary" href="/testimonial_edit">Adauga testimonial</a>
+                    <a class="btn btn-primary" href="/testimonial">Adauga testimonial</a>
                 </div>
             </div>
         </div>
@@ -63,7 +63,7 @@
                                 <h4 class="media-heading">{{$testimonial->getName()}}></h4>
                                 <p>{!! $testimonial->getTestimonial()!!}</p>
                                 <div class="hr-line-dashed"></div>
-                                <a class="btn btn-primary" href="/testimonial_edit?id={{$testimonial->getId()}}">Detalii
+                                <a class="btn btn-primary" href="/testimonial?id={{$testimonial->getId()}}">Detalii
                                     testimonial</a>
                             </div>
                         </div>

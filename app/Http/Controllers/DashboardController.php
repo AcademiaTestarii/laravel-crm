@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Repositories\ClassGroupRepository;
+use App\Repositories\ClassesRepository;
 
 class DashboardController extends Controller
 {
-    protected $classGroupRepository;
+    protected $classesRepository;
 
-    public function __construct(ClassGroupRepository $classGroupRepository)
+    public function __construct(ClassesRepository $classGroupRepository)
     {
-        $this->classGroupRepository = $classGroupRepository;
+        $this->classesRepository = $classGroupRepository;
     }
 
     public function index()
     {
-        $classes = $this->classGroupRepository->allOrderedBy('registration_start_date');
+        $classes = $this->classesRepository->allOrderedBy('registration_start_date');
 
         return view('dashboard')->with(['classes' => $classes]);
     }
