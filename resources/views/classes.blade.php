@@ -81,7 +81,7 @@ $querystatus="";*/
             </div>
             <div class="col-sm-4">
                 <div class="title-action">
-                    <a class="btn btn-primary" href="/classes">Adauga curs nou</a>
+                    <a class="btn btn-primary" href="/class">Adauga curs nou</a>
                 </div>
             </div>
         </div>
@@ -93,7 +93,6 @@ $querystatus="";*/
                     <div class="row">
                         <form method="GET"
                               action="/classes">
-
                             <div class="col-sm-3">
                                 <div class="form-group">
                                     <label class="control-label" for="curs">Curs</label>
@@ -209,12 +208,12 @@ $querystatus="";*/
                                             <td class="text-center">
 
                                                 <a class="btn btn-info btn-xs"
-                                                   href="curs.php?id={{$class->getId()}}&id_main={{$mainClass->getId()}}">Editare</a>
+                                                   href="/class?id={{$class->getId()}}&id_main={{$mainClass->getId()}}">Editare</a>
 
                                             </td>
                                             <td class="text-center">
                                                 <a class="btn btn-success btn-xs"
-                                                   href="curs.php?id={{$class->getId()}}&duplicat=1&id_main={{$mainClass->getId()}}">Duplicat</a>
+                                                   href="class?id={{$class->getId()}}&duplicat=1&id_main={{$mainClass->getId()}}">Duplicat</a>
                                             </td>
                                             <td class="text-center">
                                                 <form action="" method="GET">

@@ -34,3 +34,4 @@ Route::get('content', 'ContentController@index')->name('content');
 Route::post('content', 'ContentController@update');
 
 Route::get('classes', 'ClassesController@index')->name('classes');
+Route::get('class', 'ClassesController@get');

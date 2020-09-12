@@ -126,6 +126,19 @@ class ClassesController extends Controller
         ]);
     }
 
+    public function get(Request $request)
+    {
+        $class = null;
+
+        if ($request->get('id')) {
+            $content = $this->classesRepository->findOneBy(['id' => $request->get('id')]);
+        }
+
+        return view('class')->with([
+            'class' => $class
+        ]);
+    }
+
     /**
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
