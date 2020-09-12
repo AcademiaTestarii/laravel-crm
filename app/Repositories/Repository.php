@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Repositories\Contracts\RepositoryInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class Repository implements RepositoryInterface
 {
@@ -146,5 +147,18 @@ class Repository implements RepositoryInterface
     public function update(array $data)
     {
         return $this->model->update($data);
+    }
+
+    public function findAllWithRelationsBy(string $relationName, array $relationFields, array $orderBy = [])
+    {
+        $model = $this->model;
+
+        $model = $model->whereHas($relationName, function ($query) use ($relationFields, $orderBy) {
+            foreach ($relationFields as $relationField => $criteria) {
+               return $query->where($relationField, $criteria['operator'], $criteria['value']);
+            }
+        })->with($relationName);
+
+        return $model->get();
     }
 }

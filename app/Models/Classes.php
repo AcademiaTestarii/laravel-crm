@@ -29,6 +29,11 @@ class Classes extends Model
         return $this->getAttribute('id');
     }
 
+    public function getMainClassId()
+    {
+        return $this->getAttribute('main_class_id');
+    }
+
     public function getTitle()
     {
         return $this->getAttribute('title');

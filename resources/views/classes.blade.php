@@ -17,36 +17,6 @@ $querystatus="";*/
     $sql_sterge=mysqli_query($link,"DELETE FROM `cursuri` WHERE `id`=".$_GET['sterge']);
     header ("Location:cursuri.php");
 }*/
-// filtru curs
-//todo: get main class
-/*if (isset($_GET['curs']) AND is_numeric($_GET['curs'])) {
-    if ($_GET['curs']!="0") {
-        $querycurs=" AND `id_curs_main`=".$_GET['curs'];
-    } else {
-        $querycurs="";
-    }
-} else {
-    $querycurs="";
-}*/
-// filtru data
-/*$querydata="AND `start_inscriere` > '2020-01-01' AND `end_inscriere` < '2020-12-31'";
-if (isset($_GET['start']) AND isset($_GET['end'])) {
-    $querydata="AND `start_inscriere` > STR_TO_DATE('".$_GET['start']."','%m/%d/%Y') AND `end_inscriere` < STR_TO_DATE('".$_GET['end']."','%m/%d/%Y')";
-} else {
-    //$querydata="AND `start_inscriere` > '2020-01-01' AND `end_inscriere` < '2020-12-31'";
-}*/
-
-/*if (isset($_GET['status']) AND isset($_GET['status'])) {
-    if ($_GET['status']==1) {
-        $querystatus="";
-    } elseif ($_GET['status']==2) {
-        $querystatus="AND `start_inscriere`>NOW()";
-    } elseif ($_GET['status']==3) {
-        $querystatus="AND `start_inscriere`<NOW()";
-    } else {
-        $querystatus="";
-    }
-}*/
 
 ?><!DOCTYPE html>
 <html>
@@ -103,7 +73,7 @@ if (isset($_GET['start']) AND isset($_GET['end'])) {
         </div>
         <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-8">
-                <h2>Cursuri <? echo date("Y");?></h2>
+                <h2>Cursuri <?php echo date("Y");?></h2>
                 <ol class="breadcrumb">
                     <li><a href="/dashboard">Home</a></li>
                     <li class="active"><strong>Cursuri <? echo date("Y");?></strong></li>
@@ -122,19 +92,19 @@ if (isset($_GET['start']) AND isset($_GET['end'])) {
                 <div class="ibox-content">
                     <div class="row">
                         <form method="GET"
-                              action="<?php echo "https://" . $_SERVER["HTTP_HOST"] . $_SERVER["REQUEST_URI"];?>">
-                            @csrf
+                              action="/classes">
+
                             <div class="col-sm-3">
                                 <div class="form-group">
                                     <label class="control-label" for="curs">Curs</label>
-                                    <select name="curs" id="curs" class="form-control">
+                                    <select name="id" id="curs" class="form-control">
                                         <option value="0">-- Toate --</option>
                                         @foreach($filterMainClasses as $filterMainClass)
                                             <option value="{{$filterMainClass->getId()}}"
                                                     @if($selectedMainClass && $filterMainClass->getId() == $selectedMainClass->getid())
                                                     selected="selected"
                                                     @endif
-                                            >{{$filterMainClass->getTitle()}}</option>
+                                            >{!! $filterMainClass->getTitle()!!}</option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -199,7 +169,7 @@ if (isset($_GET['start']) AND isset($_GET['end'])) {
                                 <tr class="group">
                                     <td colspan="10"><strong>{{$mainClass->getTitle()}}</strong></td>
                                 </tr>
-                                @if($mainClass->classes)
+                                @if(!is_null($mainClass->classes->first()))
                                     @foreach($mainClass->classes as $class)
                                         <tr @if($class->getRegistrationStartDate()->toDateString()
                                         < (new \Carbon\Carbon())->toDateString())
