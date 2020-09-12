@@ -4,21 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Repositories\ClassesRepository;
 use App\Repositories\MainClassRepository;
+use App\Repositories\TrainerRepository;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class ClassesController extends Controller
 {
     protected $classesRepository;
     protected $mainClassRepository;
+    protected $trainerRepository;
 
     public function __construct(
         ClassesRepository $classGroupRepository,
-        MainClassRepository $mainClassRepository
+        MainClassRepository $mainClassRepository,
+        TrainerRepository $trainerRepository
     ) {
         $this->classesRepository = $classGroupRepository;
         $this->mainClassRepository = $mainClassRepository;
+        $this->trainerRepository = $trainerRepository;
     }
 
     /**
@@ -129,13 +132,23 @@ class ClassesController extends Controller
     public function get(Request $request)
     {
         $class = null;
+        $pageTitle = 'Adaugare';
 
         if ($request->get('id')) {
-            $content = $this->classesRepository->findOneBy(['id' => $request->get('id')]);
+            $class = $this->classesRepository->findOneBy(['id' => $request->get('id')]);
+            $pageTitle = "Modificare";
         }
 
+        if ($request->get('duplicate')) {
+            $pageTitle = 'Duplicat';
+        }
+
+        $trainers = $this->trainerRepository->allOrderedBy('name');
+
         return view('class')->with([
-            'class' => $class
+            'class' => $class,
+            'pageTitle' => $pageTitle,
+            'trainers' => $trainers
         ]);
     }
 

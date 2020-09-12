@@ -64,7 +64,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && isset($_GET['id_main']) && 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Academia Testarii CRM | <?php /*echo $pagetitle;*/?> Cursuri</title>
+    <title>Academia Testarii CRM | {{$pageTitle}} Cursuri</title>
 
     <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('font-awesome/css/font-awesome.css')}}" rel="stylesheet">
@@ -103,14 +103,15 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && isset($_GET['id_main']) && 
         <div class="row border-bottom">
             <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
                 <div class="navbar-header">
-                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i>
+                    </a>
                 </div>
                 @include('include/controlpanel')
             </nav>
         </div>
         <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-8">
-                <h2><?php /*echo $pagetitle;*/?> Curs</h2>
+                <h2>{{$pageTitle}} Curs</h2>
                 <ol class="breadcrumb">
                     <li><a href="/dashboard">Home</a></li>
                     <li class="active"><a href="/classes"><strong>Cursuri</strong></a></li>
@@ -123,33 +124,50 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && isset($_GET['id_main']) && 
 
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5><?php/* echo $pagetitle;*/?> curs<small></small></h5>
+                    <h5>{{$pageTitle}} curs<small></small></h5>
                 </div>
                 <div class="ibox-content">
 
-                    <form id="form" method="post" class="form-horizontal" action="action_curs.php" enctype="multipart/form-data">
-                        <input type="hidden" name="action" value="<?php /*echo $action;*/?>" />
-                        <input type="hidden" name="id" value="<?php /*echo $row['id'];*/?>" />
-                        <input type="hidden" name="id_curs_main" value="<?php /*echo $row['id_curs_main'];*/?>" />
+                    <form id="form" method="post" class="form-horizontal" action="action_curs.php"
+                          enctype="multipart/form-data">
+                        <input type="hidden" name="action" value="<?php /*echo $action;*/?>"/>
+                        <input type="hidden" name="id" value="{{$class->getId()}}"/>
+                        <input type="hidden" name="id_curs_main" value="{{$class->getMainClassId()}}"/>
 
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Stare curs:</label>
-                            <div class="col-sm-2"><label> <input type="checkbox" name="activ" <?php /*echo $activ;*/?> value="1"> Publicat <small>apare pe site </small></label></div>
-                            <div class="col-sm-2"><label> <input type="checkbox" name="weekend" <?php /*echo $weekend;*/?> value="1"> Weekend </label></div>
-                            <div class="col-sm-2"><label> <input type="checkbox" name="bucuresti" <?php/* echo $bucuresti;*/?> value="1"> Online </label></div>
+                            <div class="col-sm-2"><label> <input type="checkbox" name="activ"
+                                                                 @if($class->isActive()) checked="checked"
+                                                                 @endif value="1"> Publicat <small>apare pe
+                                        site </small></label></div>
+                            <div class="col-sm-2"><label> <input type="checkbox" name="weekend"
+                                                                 @if($class->isInWeekend()) checked="checked"
+                                                                 @endif value="1"> Weekend </label></div>
+                            <div class="col-sm-2"><label> <input type="checkbox" name="bucuresti"
+                                                                 @if($class->isBucharestLocated()) checked="checked"
+                                                                 @endif value="1"> Online </label></div>
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Titlu curs:<br /><small>Apare in meniu, in casete, etc</small></label>
-                            <div class="col-sm-4"><input disabled value="<?php /*echo $row['titlu_main'];*/?>" name="titlu_main" type="text" class="form-control" required></div>
-                            <label class="col-sm-2 control-label">Suplimentar:<br /><small>Iterare, nu apare pe site</small></label>
-                            <div class="col-sm-4"><input value="<?php /*echo $row['titlu'];*/?>" name="titlu" type="text" class="form-control" required></div>
+                            <label class="col-sm-2 control-label">Titlu curs:<br/><small>Apare in meniu, in casete,
+                                    etc</small></label>
+                            <div class="col-sm-4"><input disabled value="{{$class->mainClass->getTitle()}}"
+                                                         name="titlu_main" type="text" class="form-control" required>
+                            </div>
+                            <label class="col-sm-2 control-label">Suplimentar:<br/><small>Iterare, nu apare pe
+                                    site</small></label>
+                            <div class="col-sm-4"><input value="{{$class->getTitle()}}" name=" titlu" type="text"
+                                                         class="form-control" required>
+                            </div>
                         </div>
                         <div class="hr-line-dashed"></div>
 
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Descriere scurta:<br /><small>Slogan curs</small></label>
-                            <div class="col-sm-10"><input value="<?php /*echo $row['descriere_scurta'];*/?>" name="descriere_scurta" type="text" class="form-control" required></div>
+                            <label class="col-sm-2 control-label">Descriere scurta:<br/><small>Slogan
+                                    curs</small></label>
+                            <div class="col-sm-10"><input value="{{$class->getShortDescription()}}"
+                                                          name="descriere_scurta" type="text" class="form-control"
+                                                          required></div>
                         </div>
                         <div class="hr-line-dashed"></div>
 
@@ -157,7 +175,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && isset($_GET['id_main']) && 
                             <label class="col-sm-2 control-label">Descriere lunga:</label>
                             <div class="col-sm-10">
 						<textarea id="text1" name="descriere">
-							<?php /*echo $row['descriere'];*/?>
+							{!! $class->getDescription() !!}
                         </textarea>
                             </div>
                         </div>
@@ -168,18 +186,23 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && isset($_GET['id_main']) && 
 
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Numar cursanti:</label>
-                            <div class="col-sm-10"><input value="<?php /*echo $row['cursanti'];*/?>" name="cursanti" type="text" placeholder="doar cifre" class="form-control" required></div>
+                            <div class="col-sm-10"><input value="{{$class->getStudents()}}" name="cursanti"
+                                                          type="text" placeholder="doar cifre" class="form-control"
+                                                          required></div>
                         </div>
                         <div class="hr-line-dashed"></div>
 
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Pret curs/cursant:</label>
-                            <div class="col-sm-10"><input value="<?php /*echo $row['pret'];*/?>" name="pret" type="text" placeholder="doar cifre" class="form-control" required></div>
+                            <div class="col-sm-10"><input value="{{$class->getPrice()}}" name="pret" type="text"
+                                                          placeholder="doar cifre" class="form-control" required></div>
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Pret redus/cursant:</label>
-                            <div class="col-sm-10"><input value="<?php /*echo $row['pret_redus'];*/?>" name="pret_redus" type="text" placeholder="doar cifre" class="form-control"></div>
+                            <div class="col-sm-10"><input value="{{$class->getDiscountPrice()}}" name="pret_redus"
+                                                          type="text" placeholder="doar cifre" class="form-control">
+                            </div>
                         </div>
 
 
@@ -190,7 +213,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && isset($_GET['id_main']) && 
                             <label class="col-sm-2 control-label">Cui se adresează:</label>
                             <div class="col-sm-10">
 						<textarea id="text2" name="cui">
-							<?php /*echo $row['cui'];*/?>
+							{!! $class->getForWhomDescription()!!}
 						</textarea>
                             </div>
                         </div>
@@ -200,7 +223,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && isset($_GET['id_main']) && 
                             <label class="col-sm-2 control-label">Ce vei învăța:</label>
                             <div class="col-sm-10">
 						<textarea id="text3" name="ce">
-							<?php /*echo $row['ce'];*/?>
+							{!! $class->getAboutDescription() !!}
 						</textarea>
                             </div>
                         </div>
@@ -210,7 +233,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && isset($_GET['id_main']) && 
                             <label class="col-sm-2 control-label">Costuri:</label>
                             <div class="col-sm-10">
 						<textarea id="text4" name="costuri">
-							<?php /*echo $row['costuri'];*/?>
+							{!! $class->getCostDescription() !!}
 						</textarea>
                             </div>
                         </div>
@@ -219,7 +242,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && isset($_GET['id_main']) && 
                             <label class="col-sm-2 control-label">Resurse curs:</label>
                             <div class="col-sm-10">
 						<textarea id="text14" name="resurse">
-							<?php/* echo $row['resurse'];*/?>
+							{!! $class->getResourcesDescription() !!}
 						</textarea>
                             </div>
                         </div>
@@ -231,7 +254,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && isset($_GET['id_main']) && 
                             <label class="col-sm-2 control-label">Structura curs:</label>
                             <div class="col-sm-10">
 						<textarea id="text5" name="structura">
-							<?php /*echo $row['structura'];*/?>
+							{!! $class->getStructureDescription() !!}
                         </textarea>
                             </div>
                         </div>
@@ -239,7 +262,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && isset($_GET['id_main']) && 
                             <label class="col-sm-2 control-label">Cerinte minime de participare:</label>
                             <div class="col-sm-10">
 						<textarea id="text15" name="cerinte">
-							<?php /*echo $row['cerinte'];*/?>
+							{!! $class->getRequirementsDescription() !!}
                         </textarea>
                             </div>
                         </div>
@@ -251,19 +274,18 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && isset($_GET['id_main']) && 
                             <label class="col-sm-2 control-label">Programa curs:</label>
                             <div class="col-sm-10">
 						<textarea id="text6" name="programa">
-							<?php /*echo $row['programa'];*/?>
+							{!! $class->getSchedule() !!}
                         </textarea>
                             </div>
                         </div>
                         <div class="ibox-title">
-
                             <h5>Reduceri<small></small></h5>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Early Bird:</label>
                             <div class="col-sm-10">
 						<textarea id="text7" name="early">
-							<?php /*echo $row['early'];*/?>
+							{!! $class->getEarlyDescription() !!}
                         </textarea>
                             </div>
                         </div>
@@ -273,7 +295,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && isset($_GET['id_main']) && 
                             <label class="col-sm-2 control-label">Loyalty:</label>
                             <div class="col-sm-10">
 						<textarea id="text8" name="loyality">
-							<?php /*echo $row['loyality'];*/?>
+							{!! $class->getLoyalityDescription() !!}
                         </textarea>
                             </div>
                         </div>
@@ -283,7 +305,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && isset($_GET['id_main']) && 
                             <label class="col-sm-2 control-label">Friends will be friends:</label>
                             <div class="col-sm-10">
 						<textarea id="text9" name="friends">
-							<?php/* echo $row['friends'];*/?>
+								{!! $class->getFriendsDescription() !!}
                         </textarea>
                             </div>
                         </div>
@@ -293,7 +315,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && isset($_GET['id_main']) && 
                             <label class="col-sm-2 control-label">Company discount:</label>
                             <div class="col-sm-10">
 						<textarea id="text10" name="discount">
-							<?php /*echo $row['discount'];*/?>
+							{!! $class->getDiscountDescription() !!}
                         </textarea>
                             </div>
                         </div>
@@ -305,14 +327,14 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && isset($_GET['id_main']) && 
                             <label class="col-sm-2 control-label">Trainer:</label>
                             <div class="col-sm-10">
                                 <select class="select2 form-control" name="trainer">
-                                   {{-- <option>-- Alege --</option>
-                                    <?php 	$sql_trainer=mysqli_query($link,"SELECT * FROM `trainer` ORDER BY `nume` ASC");
-                                    while ($row_trainer=mysqli_fetch_assoc($sql_trainer)) {
-                                    $sql_exista=mysqli_query($link,"SELECT * FROM `trainer_curs` WHERE `id_trainer`=".$row_trainer['id']." AND `id_curs`=".$id);
-                                    if (mysqli_num_rows($sql_exista)>0){$selected="selected";}
-                                    ?>
-                                    <option value="<?php echo $row_trainer['id'];?>" <?php echo $selected;?>><?php echo $row_trainer['nume'];?></option>
-                                    <?php $selected=""; } ?>--}}
+                                    <option>-- Alege --</option>
+                                    @foreach($trainers as $trainer)
+                                        <option value="{{$trainer->getId()}}"
+                                                @if(in_array($class->getId(), $trainer->classTrainers->pluck('class_id')->toArray()))
+                                                selected="selected"
+                                                @endif
+                                        >{{$trainer->getName()}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -321,15 +343,17 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && isset($_GET['id_main']) && 
                             <h5>Data desfasurare</h5>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Calendar: <br /><small>ll/zz/yyyy</small></label>
+                            <label class="col-sm-2 control-label">Calendar: <br/><small>ll/zz/yyyy</small></label>
                             <div class="col-sm-10">
                                 <input type="text" name="desfasurare" id="mdp-demo" class="form-control" value="">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Loc desfasurare: <br /><small>Online sau o locatie</small></label>
+                            <label class="col-sm-2 control-label">Loc desfasurare: <br/><small>Online sau o
+                                    locatie</small></label>
                             <div class="col-sm-10">
-                                <input type="text" name="desfasurarecurs" id="desfasurarecurs" class="form-control" value="<?php /*echo $row['desfasurare'];*/?>">
+                                <input type="text" name="desfasurarecurs" id="desfasurarecurs" class="form-control"
+                                       value="{{$class->getDeployment()}}">
                             </div>
                         </div>
 
@@ -339,17 +363,22 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && isset($_GET['id_main']) && 
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Fisier PDF:<br></label>
                             <div class="col-sm-10">
-                               {{-- <? if ($row["pdf_programa"]!="") { ?>
-                                <p class="help-block"><a href="../documente/<?php echo $row['pdf_programa'];?>" target="_blank" /><?php/* echo $row['pdf_programa'];*/?></a></p>
-                                <a class="btn btn-primary btn-sm" href="<?php echo basename($_SERVER["REQUEST_URI"]);?>&removeprograma=<?php /*echo $row['id'];*/?>"><i class="glyphicon glyphicon-trash"></i> &nbsp; Sterge programa</a>
-                                <? } else { ?>
-                                <div class="inputBtnSection">
-                                    <input id="uploadFile" class="disableInputField" placeholder="Selecteaza un fisier" disabled="disabled" />
-                                    <label class="fileUpload">
-                                        <input id="filepdf" name="filepdf" type="file" class="upload" />
-                                    </label>
-                                </div>
-                                <? } ?>--}}
+                                @if($class->getSchedulePdf())
+                                    <p class="help-block"><a href="{{$class->getSchedulePdf()}}"
+                                                             target="_blank"/>{{$class->schedule_pdf}}</a></p>
+                                    <a class="btn btn-primary btn-sm"
+                                       href="<?php echo basename($_SERVER["REQUEST_URI"]);?>&removeprograma=<?php /*echo $row['id'];*/?>"><i
+                                                class="glyphicon glyphicon-trash"></i> &nbsp; Sterge programa</a>
+
+                                @else
+                                    <div class="inputBtnSection">
+                                        <input id="uploadFile" class="disableInputField"
+                                               placeholder="Selecteaza un fisier" disabled="disabled"/>
+                                        <label class="fileUpload">
+                                            <input id="filepdf" name="filepdf" type="file" class="upload"/>
+                                        </label>
+                                    </div>
+                                @endif
                             </div>
                         </div>
 
@@ -357,19 +386,25 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && isset($_GET['id_main']) && 
                             <h5>Imagine curs</h5>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">Imagine:<br><small>va fi redimensionata automat, latimea minima: 800px</small></label>
+                            <label class="col-sm-2 control-label">Imagine:<br><small>va fi redimensionata automat,
+                                    latimea minima: 800px</small></label>
                             <div class="col-sm-10">
-                                <? /*if ($row["imagine"]!="") {*/ ?>
-                                <p class="help-block"><img src="../images/cursuri/<?php /*echo $row['imagine'];*/?>" width="250" /></p>
-                                <a class="btn btn-primary btn-sm" href="<?php echo basename($_SERVER["REQUEST_URI"]);?>&removeimage=<?php /*echo $row['id'];*/?>"><i class="glyphicon glyphicon-trash"></i> &nbsp; Sterge imaginea</a>
-                                <? /*} else { */?>
-                                <div class="inputBtnSection">
-                                    <input id="uploadImage" class="disableInputField" placeholder="Selecteaza o imagine" disabled="disabled" />
-                                    <label class="fileUpload">
-                                        <input id="image" name="image" type="file" class="upload" />
-                                    </label>
-                                </div>
-                                <?// } ?>
+                                @if($class->getImage())
+                                    <p class="help-block"><img src="{{$class->getImage()}}"
+                                                               width="250"/></p>
+                                    <a class="btn btn-primary btn-sm"
+                                       href="<?php echo basename($_SERVER["REQUEST_URI"]);?>&removeimage={{$class->getId()}}"><i
+                                                class="glyphicon glyphicon-trash"></i> &nbsp; Sterge imaginea</a>
+                                @else
+                                    <div class="inputBtnSection">
+                                        <input id="uploadImage" class="disableInputField"
+                                               placeholder="Selecteaza o imagine"
+                                               disabled="disabled"/>
+                                        <label class="fileUpload">
+                                            <input id="image" name="image" type="file" class="upload"/>
+                                        </label>
+                                    </div>
+                                @endif
                             </div>
                         </div>
                         <div class="hr-line-dashed"></div>
@@ -381,7 +416,6 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && isset($_GET['id_main']) && 
                     </form>
                 </div>
             </div>
-
         </section>
         <!-- /.content -->
 
@@ -434,7 +468,7 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && isset($_GET['id_main']) && 
     })
 </script>
 <script>
-    $(document).ready(function(){
+    $(document).ready(function () {
 
         // Perioada inscriere
         $('input[name="perioada"]').daterangepicker();
@@ -444,9 +478,8 @@ if (isset($_GET['id']) && is_numeric($_GET['id']) && isset($_GET['id_main']) && 
         var y = today.getFullYear();
 
         $('#mdp-demo').multiDatesPicker({
-
-            addDates: [<?php /*echo $desfasurare*/;?>],
-            numberOfMonths: [3,4],
+            addDates: [{{$class->getDeployment()}}],
+            numberOfMonths: [3, 4],
             defaultDate: '1/1/2020'
         });
 
