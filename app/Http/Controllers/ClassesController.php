@@ -3,15 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\ClassesRepository;
+use App\Repositories\MainClassRepository;
 use Illuminate\Http\Request;
 
 class ClassesController extends Controller
 {
     protected $classesRepository;
+    protected $mainClassRepository;
 
-    public function __construct(ClassesRepository $classGroupRepository)
-    {
+    public function __construct(
+        ClassesRepository $classGroupRepository,
+        MainClassRepository $mainClassRepository
+    ) {
         $this->classesRepository = $classGroupRepository;
+        $this->mainClassRepository = $mainClassRepository;
     }
 
     /**
@@ -20,14 +25,19 @@ class ClassesController extends Controller
      */
     public function index(Request $request)
     {
-        $classes = null;
+        $selectedMainClass = null;
+        $filterMainClasses = $mainClasses = $this->mainClassRepository->allOrderedBy('order');
 
         if ($request->get('id')) {
-            $classes = $this->classesRepository->findOneBy(['id' => $request->get('id')]);
+            $selectedMainClass = $this->mainClassRepository->findOneBy(['id' => $request->get('id')]);
+            $mainClasses = [$this->mainClassRepository->findOneBy(['id' => $request->get('id')])];
         }
 
+
         return view('classes')->with([
-            'classes' => $classes
+            'selectedMainClass' => $selectedMainClass,
+            'filterMainClasses' => $filterMainClasses,
+            'mainClasses' => $mainClasses
         ]);
     }
 

@@ -18,6 +18,7 @@ $querystatus="";*/
     header ("Location:cursuri.php");
 }*/
 // filtru curs
+//todo: get main class
 /*if (isset($_GET['curs']) AND is_numeric($_GET['curs'])) {
     if ($_GET['curs']!="0") {
         $querycurs=" AND `id_curs_main`=".$_GET['curs'];
@@ -128,14 +129,13 @@ if (isset($_GET['start']) AND isset($_GET['end'])) {
                                     <label class="control-label" for="curs">Curs</label>
                                     <select name="curs" id="curs" class="form-control">
                                         <option value="0">-- Toate --</option>
-                                        <?php
-                                       /* $sql_main_select = "SELECT * FROM `curs_main` ORDER BY `order` ASC";
-                                        $query_main_select = mysqli_query($link, $sql_main_select);
-                                        while ($row_main_select = mysqli_fetch_assoc($query_main_select)) {*/ ?>
-                                        <option value="<?php /*echo $row_main_select['id_curs_main'];*/?>"
-                                        <?php /*echo(isset($_GET['curs']) && $_GET['curs'] == $row_main_select['id_curs_main'] ? "selected=\"\"" : ""); */?>
-                                        ><?php /*echo $row_main_select['titlu_main'];*/?></option>
-                                        <?php //} ?>
+                                        @foreach($filterMainClasses as $filterMainClass)
+                                            <option value="{{$filterMainClass->getId()}}"
+                                                    @if($selectedMainClass && $filterMainClass->getId() == $selectedMainClass->getid())
+                                                    selected="selected"
+                                                    @endif
+                                            >{{$filterMainClass->getTitle()}}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -195,78 +195,70 @@ if (isset($_GET['start']) AND isset($_GET['end'])) {
                             </tr>
                             </thead>
                             <tbody>
-                            <?php
-                         /*   $sql_main = "SELECT * FROM `curs_main` WHERE 1=1 " . $querycurs . " ORDER BY `order` ASC";
-                            $query_main = mysqli_query($link, $sql_main);
-                            while ($row_main = mysqli_fetch_assoc($query_main)) {*/ ?>
+                            @foreach($mainClasses as $mainClass)
+                                <tr class="group">
+                                    <td colspan="10"><strong>{{$mainClass->getTitle()}}</strong></td>
+                                </tr>
+                                @if($mainClass->classes)
+                                    @foreach($mainClass->classes as $class)
+                                        <tr @if($class->getRegistrationStartDate()->toDateString()
+                                        < (new \Carbon\Carbon())->toDateString())
+                                            class="warning"
+                                                @endif>
+                                            <td>{{$class->getId()}}</td>
+                                            <td>
+                                                <strong>{{$class->getTitle()}}
+                                                    @if($class->isInWeekend()) (Weekend) @endif
+                                                </strong>
+                                            </td>
+                                            <td>
+                                                @if(is_null($class->getRegistrationStartDate()))
+                                                    TBA
+                                                @else
+                                                    {{ $class->getRegistrationStartDate()->formatLocalized("%e %B, %Y")}}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if(is_null($class->getRegistrationEndDate()))
+                                                    TBA
+                                                @else
+                                                    {{ $class->getRegistrationEndDate()->formatLocalized("%e %B, %Y")}}
+                                                @endif
+                                            </td>
+                                            <td class="text-center">
+                                                {{$class->classStudents->count()}}
+                                                / {{$class->getStudents() }}
+                                            </td>
+                                            <td class="text-center">
+                                                @if($class->isBucharestLocated()) On-line @else Bucuresti @endif
+                                            </td>
+                                            <td class="text-center">
+                                                <a class="btn btn-primary btn-xs"
+                                                   href="vizualizare_curs.php?id={{$class->getId()}}">Cursanti</a>
+                                            </td>
+                                            <td class="text-center">
 
-                            <tr class="group">
-                                <td colspan="10"><strong><?php /*echo $row_main['titlu_main'];*/?></strong></td>
-                            </tr>
+                                                <a class="btn btn-info btn-xs"
+                                                   href="curs.php?id={{$class->getId()}}&id_main={{$mainClass->getId()}}">Editare</a>
 
-                            <?php
-                           /* $sql = "SELECT * FROM `cursuri` LEFT JOIN `curs_main` ON `cursuri`.`parent`=`curs_main`.id_curs_main WHERE `cursuri`.`parent`=" . $row_main['id_curs_main'] . " " . $querydata . " " . $querystatus . " ORDER BY `cursuri`.`start_inscriere` ASC";
-                            $query = mysqli_query($link, $sql);
-
-                            while ($row = mysqli_fetch_assoc($query)) {
-                            if ($row['start_inscriere'] != "0000-00-00" && $row['start_inscriere'] < $today) {
-                                $class = "class=\"warning\"";
-                                $vechi = true;
-                            } else {
-                                $class = "";
-                                $vechi = false;
-                            }
-                            $sql_cursanti = mysqli_query($link, "SELECT COUNT(`id`) AS `cursanti` FROM `cursant_curs` WHERE `id_curs`=" . $row['id']);
-                            $inscrisi = mysqli_fetch_assoc($sql_cursanti);
-                            $datesSql = mysqli_query($link, "SELECT MIN(`data`) AS `start`, MAX(`data`) AS `end` FROM `date_cursuri` WHERE `id_curs`=" . $row['id']);
-                            $datesRow = mysqli_fetch_assoc($datesSql);*/
-
-                            ?>
-                            <tr <?php /*echo $class;*/?>>
-                                <td><?php /*echo $row['id'];*/?></td>
-                                <td>
-                                    <strong><?php /*echo $row['titlu'];*/?> <?php /*echo $row['weekend'] == 1 ? "(Weekend)" : "";*/?></strong>
-                                </td>
-                                <td><?php /*if ($datesRow['start'] == "0000-00-00" OR $datesRow['start'] == NULL) {
-                                        echo "TBA";
-                                    } else {
-                                        echo strftime("%e %B, %Y", strtotime($datesRow['start']));
-                                    }*/?></td>
-                                <td><?php /*if ($datesRow['end'] == "0000-00-00" OR $datesRow['end'] == NULL) {
-                                        echo "TBA";
-                                    } else {
-                                        echo strftime("%e %B, %Y", strtotime($datesRow['end']));
-                                    }*/?></td>
-                                <td class="text-center"><?php /*echo $inscrisi['cursanti'];*/?>
-                                    / <?php /*echo $row['cursanti'];*/?></td>
-                                <td class="text-center"><?php /*echo $row['bucuresti'] == 1 ? "On-line" : "Bucuresti";*/?></td>
-                                <td class="text-center">
-                                    <a class="btn btn-primary btn-xs"
-                                       href="vizualizare_curs.php?id=<?php /*echo $row['id'];*/?>">Cursanti</a>
-                                </td>
-                                <td class="text-center">
-
-                                    <a class="btn btn-info btn-xs"
-                                       href="curs.php?id=<?php /*echo $row['id'];*/?>&id_main=<?php /*echo $row['id_curs_main'];*/?>">Editare</a>
-
-                                </td>
-                                <td class="text-center">
-                                    <a class="btn btn-success btn-xs"
-                                       href="curs.php?id=<?php /*echo $row['id'];*/?>&duplicat=1&id_main=<?php /*echo $row['id_curs_main'];*/?>">Duplicat</a>
-                                </td>
-                                <td class="text-center">
-                                    <form action="" method="GET">
-                                        <button class="btn btn-danger btn-xs" onClick="confirmDelete()" type="submit"/>
-                                        Sterge</button>
-                                        <input type="hidden" name="sterge" value="<?php /*echo $row['id'];*/?>"/>
-                                    </form>
-                                </td>
-                            </tr>
-                            <?php
-//}
-//}
-?>
-
+                                            </td>
+                                            <td class="text-center">
+                                                <a class="btn btn-success btn-xs"
+                                                   href="curs.php?id={{$class->getId()}}&duplicat=1&id_main={{$mainClass->getId()}}">Duplicat</a>
+                                            </td>
+                                            <td class="text-center">
+                                                <form action="" method="GET">
+                                                    <button class="btn btn-danger btn-xs" onClick="confirmDelete()"
+                                                            type="submit"/>
+                                                    Sterge</button>
+                                                    <input type="hidden" name="sterge"
+                                                           value="{{$class->getId()}}"/>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                @endif
+                            @endforeach
                             </tbody>
                         </table>
                     </div>
@@ -274,7 +266,6 @@ if (isset($_GET['start']) AND isset($_GET['end'])) {
             </div><!-- /.box -->
         </section>
         <!-- /.content -->
-
         <div class="footer">
             @include('include/footer')
         </div>

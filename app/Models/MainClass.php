@@ -11,7 +11,7 @@ class MainClass extends Model
         return $this->getAttribute('id');
     }
 
-    public function classGroup()
+    public function classes()
     {
         return $this->hasMany(Classes::class);
     }
