@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class ClassStudent extends Model
 {
+    public $timestamps = false;
     protected $table = 'class_students';
+    protected $guarded = ['id'];
 
     public function classes()
     {
@@ -26,6 +28,11 @@ class ClassStudent extends Model
     public function getStudentId()
     {
         return $this->getAttribute('student_id');
+    }
+
+    public function getClassId()
+    {
+        return $this->getAttribute('class_id');
     }
 
     public function getNote()

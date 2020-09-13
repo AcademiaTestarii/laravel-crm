@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\ClassesRepository;
+use App\Repositories\ClassStudentRepository;
 use App\Repositories\MainClassRepository;
 use App\Repositories\TrainerRepository;
 use App\Services\ClassService;
@@ -15,17 +16,20 @@ class ClassesController extends Controller
     protected $mainClassRepository;
     protected $trainerRepository;
     protected $classService;
+    protected $classStudentRepository;
 
     public function __construct(
         ClassesRepository $classGroupRepository,
         MainClassRepository $mainClassRepository,
         TrainerRepository $trainerRepository,
-        ClassService $classService
+        ClassService $classService,
+        ClassStudentRepository $classStudentRepository
     ) {
         $this->classesRepository = $classGroupRepository;
         $this->mainClassRepository = $mainClassRepository;
         $this->trainerRepository = $trainerRepository;
         $this->classService = $classService;
+        $this->classStudentRepository = $classStudentRepository;
     }
 
     /**
@@ -210,8 +214,45 @@ class ClassesController extends Controller
         return redirect()->route('class', ['id' => $class->getId()]);
     }
 
-    public function getDetails($classId) {
+    public function getDetails($classId, Request $request)
+    {
         $class = $this->classesRepository->findOneBy(['id' => $classId]);
+
+        if ($request->get('delete')) {
+            $this->classStudentRepository->findOneBy([
+                'class_id' => $request->get('class'),
+                'student_id' => $request->get('delete'),
+            ])->delete();
+        }
+
+        return view('class_details')->with([
+            'class' => $class,
+        ]);
+    }
+
+    public function getNote(Request $request)
+    {
+        $classStudent = $this->classStudentRepository->findOneBy([
+            'class_id' => $request->get('class'),
+            'student_id' => $request->get('student'),
+        ]);
+
+        return view('inline_note')->with([
+            'classStudent' => $classStudent,
+        ]);
+    }
+
+    public function updateNote(Request $request)
+    {
+        $class = $this->classesRepository->findOneBy(['id' =>  $request->get('class')]);
+
+        $this->classStudentRepository->findOneBy([
+            'class_id' => $request->get('class'),
+            'student_id' => $request->get('student'),
+        ])
+            ->update([
+                'note' => $request->get('note')
+            ]);
 
         return view('class_details')->with([
             'class' => $class,
