@@ -1,44 +1,4 @@
-<?php
-/*
-// mutare cursant
-if (isset($_POST['curs']) && isset($_POST['cursant']) && isset($_POST['cursnou'])) {
-    $cursnou=trim(mysqli_real_escape_string($link,$_POST['cursnou']));
-    if ($cursnou!="--") {
-        $sql_update_cursnou="UPDATE `cursant_curs` SET `id_curs` ='".$cursnou."' WHERE `id_cursant`=".$_POST['cursant']." AND `id_curs`=".$_POST['curs'];
-        mysqli_query($link,$sql_update_cursnou);
-    }
-}
-
-$sql_inscrisi=mysqli_query($link,"SELECT * FROM `cursant_curs` LEFT JOIN `cursanti` ON `cursant_curs`.`id_cursant`=`cursanti`.`id` WHERE `cursant_curs`.`id_curs`=".$row['id']);
-$cati=mysqli_num_rows($sql_inscrisi);
-if ($cati > 0) {$sunt_studenti=true;} else {$sunt_studenti=false;}
-
-// mesaj studenti
-if (isset($_POST['trimite_mesaj']) && $sunt_studenti && $_POST['subiect_mesaj']!="" && $_POST['mesaj']!="") {
-
-    require_once('../includes/phpmailer/class.phpmailer.php');
-    $mail->CharSet = 'UTF-8';
-    $mail->Encoding = 'base64';
-    $mail = new PHPMailer();
-
-    $mail->SetFrom( "office@academiatestarii.ro" ,"Academia Testării" );
-    $mail->AddReplyTo( "contact@academiatestarii.ro" ,"Academia Testării" );
-
-    while ($row_emails=mysqli_fetch_array($sql_inscrisi)) {
-
-        $mail->AddAddress( $row_emails['email'] , $row_emails['nume']." ".$row_emails['prenume'] );
-        $mail->Subject = $_POST['subiect_mesaj'];
-        $message = $_POST['mesaj'];
-        $body = $message;
-        $mail->MsgHTML( $body );
-        $sendEmail = $mail->Send();
-        $mail->clearAddresses();
-    }
-    header ("Location:vizualizare_curs.php?id=".$id);
-}
-*/
-?>
-        <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -203,7 +163,7 @@ if (isset($_POST['trimite_mesaj']) && $sunt_studenti && $_POST['subiect_mesaj']!
                                                             <td>{{$classStudent->student->getPhone()}}</td>
                                                             <td>{{$classStudent->getPaymentStatus()}}</td>
                                                             <td class="text-center">
-                                                                <button href="inline.mutacursant.php?cursant={{$classStudent->getStudentId()}}&curs={{$class->getId()}}"
+                                                                <button href="/inline_move_student?student={{$classStudent->getStudentId()}}&class={{$class->getId()}}"
                                                                         class="btn btn-warning btn-xs ajax-popup-link">
                                                                     Muta
                                                                 </button>
@@ -393,7 +353,8 @@ if (isset($_POST['trimite_mesaj']) && $sunt_studenti && $_POST['subiect_mesaj']!
                                                                                         <input type="hidden"
                                                                                                name="student"
                                                                                                value="{{$classStudent->getId()}} "/>
-                                                                                        <input type="hidden" name="class"
+                                                                                        <input type="hidden"
+                                                                                               name="class"
                                                                                                value="{{$class->getId()}}"/>
                                                                                     </form>
                                                                                 </div>

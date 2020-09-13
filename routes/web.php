@@ -40,6 +40,7 @@ Route::get('class_details/{classId}', 'ClassesController@getDetails')->name('cla
 Route::post('class_details/{classId}', 'ClassesController@updateDetails');
 
 Route::get('inline_note', 'ClassesController@getNote');
+Route::get('inline_move_student', 'ClassesController@getMoveStudent');
 
 Route::get('feedback/{id}', 'FeedbackController@getDetails');
 Route::get('certificate/{id}', 'FeedbackController@getCertificateDetails');

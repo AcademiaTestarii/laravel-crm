@@ -69,14 +69,16 @@ class Repository implements RepositoryInterface
     /**
      * @param array $criteria
      * @param string $operator
+     * @param string $orderBy
+     * @param string $order
      * @return mixed
      */
-    public function findAllBy(array $criteria, string $operator = '=')
+    public function findAllBy(array $criteria, string $operator = '=', string $orderBy = 'id', string $order = 'ASC')
     {
         $model = $this->model;
 
         foreach ($criteria as $column => $value) {
-            $model = $model->where($column, $operator, $value);
+            $model = $model->where($column, $operator, $value)->orderBy($orderBy, $order);
         }
 
         return $model->get();

@@ -246,16 +246,43 @@ class ClassesController extends Controller
         ]);
     }
 
+    public function getMoveStudent(Request $request)
+    {
+        $classStudent = $this->classStudentRepository->findOneBy([
+            'class_id' => $request->get('class'),
+            'student_id' => $request->get('student'),
+        ]);
+
+        $mainClasses = $this->mainClassRepository->findAllBy(
+            ['is_active' => 1],
+            '=',
+            'order'
+        );
+
+        return view('inline_move_student')->with([
+            'classStudent' => $classStudent,
+            'mainClasses' => $mainClasses
+        ]);
+    }
+
     public function updateDetails(Request $request)
     {
         $class = $this->classesRepository->findOneBy(['id' => $request->get('class')]);
-
         if ($request->get('note')) {
             $this->classStudentRepository->findOneBy([
                 'class_id' => $request->get('class'),
                 'student_id' => $request->get('student'),
             ])->update([
                 'note' => $request->get('note')
+            ]);
+        }
+
+        if ($request->get('move_student')) {
+            $this->classStudentRepository->findOneBy([
+                'class_id' => $request->get('class'),
+                'student_id' => $request->get('move_student'),
+            ])->update([
+                'class_id' => $request->get('new_class')
             ]);
         }
 

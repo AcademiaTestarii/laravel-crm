@@ -146,7 +146,7 @@
                             <tbody>
                             @foreach($mainClasses as $mainClass)
                                 <tr class="group">
-                                    <td colspan="10"><strong>{{$mainClass->getTitle()}}</strong></td>
+                                    <td colspan="10"><strong>{!! $mainClass->getTitle()!!}</strong></td>
                                 </tr>
                                 @if(!is_null($mainClass->classes->first()))
                                     @foreach($mainClass->classes as $class)
