@@ -220,7 +220,7 @@ $querystatus="";*/
                                                     <button class="btn btn-danger btn-xs" onClick="confirmDelete()"
                                                             type="submit"/>
                                                     Sterge</button>
-                                                    <input type="hidden" name="sterge"
+                                                    <input type="hidden" name="delete"
                                                            value="{{$class->getId()}}"/>
                                                 </form>
                                             </td>

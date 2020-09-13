@@ -40,6 +40,12 @@ class ClassesController extends Controller
 
         $query = [];
 
+        if ($request->get('delete')) {
+            $this->classesRepository
+                ->findOneBy(['id' => $request->get('delete')])
+                ->delete();
+        }
+
         if ($request->get('id')) {
             $query['main_class_id'] = [
                 'value' => $request->get('id'),

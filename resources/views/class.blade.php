@@ -438,12 +438,13 @@
     })
 </script>
 <?php
-$classDates = [];
+$classDates = "";
 if ($class) {
     $classDates = $class->classDates->pluck('date')->toArray();
     $classDates = array_map(function ($item) {
         return "'" . strftime("%m/%d/%Y", strtotime($item)) . "'";
     }, $classDates);
+    $classDates = implode(",", $classDates);
 }
 ?>
 <script>
@@ -456,7 +457,7 @@ if ($class) {
         var y = today.getFullYear();
 
         $('#mdp-demo').multiDatesPicker({
-            addDates: [<?php echo implode(",", $classDates);?>],
+            addDates: [<?php echo $classDates;?>],
             numberOfMonths: [3, 4],
             defaultDate: '1/1/2020'
         });
