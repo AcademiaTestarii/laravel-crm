@@ -155,15 +155,15 @@ class ClassesController extends Controller
                 ]);
         }
 
-        if ($request->get('duplicate')) {
-            $pageTitle = 'Duplicat';
-            $action = 'duplicate';
-        }
-
         if ($request->get('id')) {
             $class = $this->classesRepository->findOneBy(['id' => $request->get('id')]);
             $pageTitle = "Modificare";
             $action = 'edit';
+        }
+
+        if ($request->get('duplicate')) {
+            $pageTitle = 'Duplicat';
+            $action = 'duplicate';
         }
 
         $trainers = $this->trainerRepository->allOrderedBy('name');
@@ -189,6 +189,15 @@ class ClassesController extends Controller
         }
 
         if ($request->get('action') == 'add') {
+            $class = $this->classService->create($request);
+        }
+
+        if ($request->get('action') == 'duplicate') {
+            $duplicatedClass = $this->classesRepository->findOneBy(['id' => $request->get('id')]);
+            $request->request->add([
+                'image' => $duplicatedClass->image,
+                'filepdf' => $duplicatedClass->schedule_pdf,
+            ]);
             $class = $this->classService->create($request);
         }
 

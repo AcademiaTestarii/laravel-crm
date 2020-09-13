@@ -213,7 +213,7 @@ $querystatus="";*/
                                             </td>
                                             <td class="text-center">
                                                 <a class="btn btn-success btn-xs"
-                                                   href="class?id={{$class->getId()}}&duplicat=1&id_main={{$mainClass->getId()}}">Duplicat</a>
+                                                   href="class?id={{$class->getId()}}&duplicate=1&id_main={{$mainClass->getId()}}">Duplicat</a>
                                             </td>
                                             <td class="text-center">
                                                 <form action="" method="GET">

@@ -73,7 +73,7 @@
                         @csrf
                         <input type="hidden" name="action" value="{{$action}}"/>
                         <input type="hidden" name="id" value="@if($class) {{$class->getId()}} @endif"/>
-                        <input type="hidden" name="id_curs_main"
+                        <input type="hidden" name="main_class_id"
                                value="@if($class) {{$class->getMainClassId()}} @endif"/>
 
                         <div class="form-group">

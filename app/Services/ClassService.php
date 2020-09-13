@@ -74,6 +74,7 @@ class ClassService
         $registrationDates = explode(',', $request->get('deployment'));
 
         $class = $classRepository->create([
+            'main_class_id' => ($request->get('main_class_id')) ? $request->get('main_class_id') : null,
             'title' => $request->get('title'),
             'short_description' => $request->get('short_description'),
             'description' => $request->get('description'),
@@ -98,8 +99,13 @@ class ClassService
             'is_planned' => ($request->get('planned')) ? 1 : 0,
             'is_bucharest_located' => ($request->get('bucharest')) ? 1 : 0,
             'deployment' => $request->get('deploymentCourse'),
-            'image' => ($request->file('image')) ? $request->file('image')->getClientOriginalName() : null,
-            'schedule_pdf' => ($request->file('filepdf')) ? $request->file('filepdf')->getClientOriginalName() : null,
+            'image' => ($request->file('image'))
+                ? $request->file('image')->getClientOriginalName()
+                : ($request->get('image')) ? $request->get('image') : null,
+
+            'schedule_pdf' => ($request->file('filepdf'))
+                ? $request->file('filepdf')->getClientOriginalName()
+                : ($request->get('filepdf')) ? $request->get('filepdf') : null,
         ]);
 
         $class->classTrainer()->create([
