@@ -77,17 +77,18 @@ class ClassesController extends Controller
 
         if ($request->get('status')) {
             $status = $request->get('status');
-            if ($status == 2) {
-                $query['registration_end_date'] = [
-                    'value' => (new  Carbon())->format("Y-m-d"),
-                    'operator' => '>'
-                ];
-            }
 
-            if ($status == 3) {
-                $query['registration_end_date'] = [
+            if ($status == 2) {
+                $query['registration_start_date'] = [
                     'value' => (new  Carbon())->format("Y-m-d"),
                     'operator' => '<'
+                ];
+            }
+            
+            if ($status == 3) {
+                $query['registration_start_date'] = [
+                    'value' => (new  Carbon())->format("Y-m-d"),
+                    'operator' => '>'
                 ];
             }
         }
@@ -123,15 +124,16 @@ class ClassesController extends Controller
 
                 if ($request->get('status')) {
                     $status = $request->get('status');
-                    if ($status == "2") {
-                        if ($class->getRegistrationEndDate()->format("Y-m-d") < (new  Carbon())->format("Y-m-d")
+
+                    if ($status == 2) {
+                        if ($class->getRegistrationStartDate()->format("Y-m-d") < (new  Carbon())->format("Y-m-d")
                         ) {
                             $mainClass->classes->forget($key);
                         }
                     }
 
                     if ($status == 3) {
-                        if ($class->getRegistrationEndDate()->format("Y-m-d") > (new  Carbon())->format("Y-m-d")
+                        if ($class->getRegistrationStartDate()->format("Y-m-d") > (new  Carbon())->format("Y-m-d")
                         ) {
                             $mainClass->classes->forget($key);
                         }
