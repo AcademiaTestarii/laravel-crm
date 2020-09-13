@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Repositories\ClassesRepository;
 use App\Repositories\ClassStudentRepository;
+use App\Repositories\FeedbackRepository;
 use App\Repositories\MainClassRepository;
 use App\Repositories\TrainerRepository;
 use App\Services\ClassService;
@@ -17,19 +18,22 @@ class ClassesController extends Controller
     protected $trainerRepository;
     protected $classService;
     protected $classStudentRepository;
+    protected $feedbackRepository;
 
     public function __construct(
         ClassesRepository $classGroupRepository,
         MainClassRepository $mainClassRepository,
         TrainerRepository $trainerRepository,
         ClassService $classService,
-        ClassStudentRepository $classStudentRepository
+        ClassStudentRepository $classStudentRepository,
+        FeedbackRepository $feedbackRepository
     ) {
         $this->classesRepository = $classGroupRepository;
         $this->mainClassRepository = $mainClassRepository;
         $this->trainerRepository = $trainerRepository;
         $this->classService = $classService;
         $this->classStudentRepository = $classStudentRepository;
+        $this->feedbackRepository = $feedbackRepository;
     }
 
     /**
@@ -242,17 +246,34 @@ class ClassesController extends Controller
         ]);
     }
 
-    public function updateNote(Request $request)
+    public function updateDetails(Request $request)
     {
-        $class = $this->classesRepository->findOneBy(['id' =>  $request->get('class')]);
+        $class = $this->classesRepository->findOneBy(['id' => $request->get('class')]);
 
-        $this->classStudentRepository->findOneBy([
-            'class_id' => $request->get('class'),
-            'student_id' => $request->get('student'),
-        ])
-            ->update([
+        if ($request->get('note')) {
+            $this->classStudentRepository->findOneBy([
+                'class_id' => $request->get('class'),
+                'student_id' => $request->get('student'),
+            ])->update([
                 'note' => $request->get('note')
             ]);
+        }
+
+        if ($request->get('grade')) {
+            $this->feedbackRepository->create([
+                'class_id' => $request->get('class'),
+                'student_id' => $request->get('student'),
+                'organization_jira_zephyr_plus' => $request->get('organization_jira_zephyr_plus'),
+                'organization_jira_zephyr_minus' => $request->get('organization_jira_zephyr_minus'),
+                'test_cases_plus' => $request->get('test_cases_plus'),
+                'test_cases_minus' => $request->get('test_cases_minus'),
+                'defects_plus' => $request->get('defects_plus'),
+                'defects_minus' => $request->get('defects_minus'),
+                'traceability_plus' => $request->get('traceability_plus'),
+                'traceability_minus' => $request->get('traceability_minus'),
+                'link' => $this->feedbackRepository->generatePassword(),
+            ]);
+        }
 
         return view('class_details')->with([
             'class' => $class,

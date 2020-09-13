@@ -25,6 +25,10 @@ class AddTimestampsToContentTable extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+
+        Schema::table('feedback', function (Blueprint $table) {
+            $table->timestamps();
+        });
     }
 
     /**
@@ -39,6 +43,10 @@ class AddTimestampsToContentTable extends Migration
         });
 
         Schema::table('subcontent', function (Blueprint $table) {
+            $table->dropColumn(['created_at', 'updated_at']);
+        });
+
+        Schema::table('feedback', function (Blueprint $table) {
             $table->dropColumn(['created_at', 'updated_at']);
         });
 

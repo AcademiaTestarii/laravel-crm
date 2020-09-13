@@ -36,28 +36,7 @@ if (isset($_POST['trimite_mesaj']) && $sunt_studenti && $_POST['subiect_mesaj']!
     }
     header ("Location:vizualizare_curs.php?id=".$id);
 }
-
-// calificativ
-if (isset($_POST['acorda_calificativ'])) {
-    $linkfeedback=generatePassword();
-    $sql_insert=(mysqli_query($link,"
-	INSERT INTO `feedback` (`id_cursant`,`id_curs`,`scor`,`organizare_jira_zephyr_plus`,`organizare_jira_zephyr_minus`,`test_cases_plus`,`test_cases_minus`,`defects_plus`,`defects_minus`,`traceability_plus`,`traceability_minus`,`link`)
-	VALUES
-	(".$_POST['cursant'].",
-	".$_POST['curs'].",
-	".$_POST['nota'].",
-	'".trim(mysqli_real_escape_string($link,$_POST['good_organizare']))."',
-	'".trim(mysqli_real_escape_string($link,$_POST['bad_organizare']))."',
-	'".trim(mysqli_real_escape_string($link,$_POST['good_cases']))."',
-	'".trim(mysqli_real_escape_string($link,$_POST['bad_cases']))."',
-	'".trim(mysqli_real_escape_string($link,$_POST['good_defects']))."',
-	'".trim(mysqli_real_escape_string($link,$_POST['bad_defects']))."',
-	'".trim(mysqli_real_escape_string($link,$_POST['good_trace']))."',
-	'".trim(mysqli_real_escape_string($link,$_POST['bad_trace']))."',
-	'".$linkfeedback."')
-	"));
-    header ("Location:vizualizare_curs.php?id=".$_POST['curs']);
-}*/
+*/
 ?>
         <!DOCTYPE html>
 <html>
@@ -93,7 +72,6 @@ if (isset($_POST['acorda_calificativ'])) {
 <body>
 
 <div id="wrapper">
-
     <nav class="navbar-default navbar-static-side" role="navigation">
         <div class="sidebar-collapse">
             <ul class="nav metismenu" id="side-menu">
@@ -269,7 +247,7 @@ if (isset($_POST['acorda_calificativ'])) {
                                                                                                         <input type="radio"
                                                                                                                id="inlineRadio1"
                                                                                                                value="1"
-                                                                                                               name="nota">
+                                                                                                               name="grade">
                                                                                                         <label for="inlineRadio1">
                                                                                                             1 </label>
                                                                                                     </div>
@@ -277,7 +255,7 @@ if (isset($_POST['acorda_calificativ'])) {
                                                                                                         <input type="radio"
                                                                                                                id="inlineRadio2"
                                                                                                                value="2"
-                                                                                                               name="nota">
+                                                                                                               name="grade">
                                                                                                         <label for="inlineRadio2">
                                                                                                             2 </label>
                                                                                                     </div>
@@ -285,7 +263,7 @@ if (isset($_POST['acorda_calificativ'])) {
                                                                                                         <input type="radio"
                                                                                                                id="inlineRadio3"
                                                                                                                value="3"
-                                                                                                               name="nota">
+                                                                                                               name="grade">
                                                                                                         <label for="inlineRadio3">
                                                                                                             3 </label>
                                                                                                     </div>
@@ -293,7 +271,7 @@ if (isset($_POST['acorda_calificativ'])) {
                                                                                                         <input type="radio"
                                                                                                                id="inlineRadio4"
                                                                                                                value="4"
-                                                                                                               name="nota">
+                                                                                                               name="grade">
                                                                                                         <label for="inlineRadio4">
                                                                                                             4 </label>
                                                                                                     </div>
@@ -301,7 +279,7 @@ if (isset($_POST['acorda_calificativ'])) {
                                                                                                         <input type="radio"
                                                                                                                id="inlineRadio5"
                                                                                                                value="5"
-                                                                                                               name="nota">
+                                                                                                               name="grade">
                                                                                                         <label for="inlineRadio5">
                                                                                                             5 </label>
                                                                                                     </div>
@@ -309,7 +287,7 @@ if (isset($_POST['acorda_calificativ'])) {
                                                                                                         <input type="radio"
                                                                                                                id="inlineRadio6"
                                                                                                                value="6"
-                                                                                                               name="nota">
+                                                                                                               name="grade">
                                                                                                         <label for="inlineRadio6">
                                                                                                             6 </label>
                                                                                                     </div>
@@ -325,7 +303,7 @@ if (isset($_POST['acorda_calificativ'])) {
                                                                                                         <input type="radio"
                                                                                                                id="inlineRadio8"
                                                                                                                value="8"
-                                                                                                               name="nota">
+                                                                                                               name="grade">
                                                                                                         <label for="inlineRadio8">
                                                                                                             8 </label>
                                                                                                     </div>
@@ -333,7 +311,7 @@ if (isset($_POST['acorda_calificativ'])) {
                                                                                                         <input type="radio"
                                                                                                                id="inlineRadio9"
                                                                                                                value="9"
-                                                                                                               name="nota">
+                                                                                                               name="grade">
                                                                                                         <label for="inlineRadio9">
                                                                                                             9 </label>
                                                                                                     </div>
@@ -341,7 +319,7 @@ if (isset($_POST['acorda_calificativ'])) {
                                                                                                         <input type="radio"
                                                                                                                id="inlineRadio10"
                                                                                                                value="10"
-                                                                                                               name="nota">
+                                                                                                               name="grade">
                                                                                                         <label for="inlineRadio10">
                                                                                                             10 </label>
                                                                                                     </div>
@@ -356,12 +334,12 @@ if (isset($_POST['acorda_calificativ'])) {
                                                                                             <div class="col-md-6">Good
                                                                                                 points
                                                                                                 <textarea
-                                                                                                        name="good_organizare"></textarea>
+                                                                                                        name="organization_jira_zephyr_plus"></textarea>
                                                                                             </div>
                                                                                             <div class="col-md-6">To
                                                                                                 improve
                                                                                                 <textarea
-                                                                                                        name="bad_organizare"></textarea>
+                                                                                                        name="organization_jira_zephyr_minus"></textarea>
                                                                                             </div>
                                                                                         </div>
                                                                                         <div class="form-group">
@@ -370,11 +348,11 @@ if (isset($_POST['acorda_calificativ'])) {
                                                                                                     Cases</h4></div>
                                                                                             <div class="col-md-6">Good
                                                                                                 points<textarea
-                                                                                                        name="good_cases"></textarea>
+                                                                                                        name="test_cases_plus"></textarea>
                                                                                             </div>
                                                                                             <div class="col-md-6">To
                                                                                                 improve<textarea
-                                                                                                        name="bad_cases"></textarea>
+                                                                                                        name="test_cases_minus"></textarea>
                                                                                             </div>
                                                                                         </div>
                                                                                         <div class="form-group">
@@ -383,11 +361,11 @@ if (isset($_POST['acorda_calificativ'])) {
                                                                                             </div>
                                                                                             <div class="col-md-6">Good
                                                                                                 points<textarea
-                                                                                                        name="good_defects"></textarea>
+                                                                                                        name="defects_plus"></textarea>
                                                                                             </div>
                                                                                             <div class="col-md-6">To
                                                                                                 improve<textarea
-                                                                                                        name="bad_defects"></textarea>
+                                                                                                        name="defects_minus"></textarea>
                                                                                             </div>
                                                                                         </div>
                                                                                         <div class="form-group">
@@ -396,26 +374,26 @@ if (isset($_POST['acorda_calificativ'])) {
                                                                                             </div>
                                                                                             <div class="col-md-6">Good
                                                                                                 points<textarea
-                                                                                                        name="good_trace"></textarea>
+                                                                                                        name="traceability_plus"></textarea>
                                                                                             </div>
                                                                                             <div class="col-md-6">To
                                                                                                 improve<textarea
-                                                                                                        name="bad_trace"></textarea>
+                                                                                                        name="traceability_minus"></textarea>
                                                                                             </div>
                                                                                         </div>
                                                                                         <div class="form-group">
                                                                                             <div class="col-md-12 mt-20 text-center">
                                                                                                 <button class="btn btn-info btn-sm"
                                                                                                         type="submit"
-                                                                                                        name="acorda_calificativ"/>
+                                                                                                        name="feedback"/>
                                                                                                 Salvează
                                                                                                 calificativ</button>
                                                                                             </div>
                                                                                         </div>
                                                                                         <input type="hidden"
-                                                                                               name="cursant"
+                                                                                               name="student"
                                                                                                value="{{$classStudent->getId()}} "/>
-                                                                                        <input type="hidden" name="curs"
+                                                                                        <input type="hidden" name="class"
                                                                                                value="{{$class->getId()}}"/>
                                                                                     </form>
                                                                                 </div>
