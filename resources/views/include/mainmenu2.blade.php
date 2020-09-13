@@ -10,7 +10,7 @@
 </li>
 
 <li <?php if (basename($_SERVER['PHP_SELF'])=="cursuri.php" || basename($_SERVER['PHP_SELF'])=="curs.php" || basename($_SERVER['PHP_SELF'])=="vizualizare_curs.php" || basename($_SERVER['PHP_SELF'])=="adauga_curs.php") { echo 'class="active"';} ?>>
-    <a href="/classes"><i class="fa fa-laptop"></i> <span class="nav-label">Cursuri</span></a>
+    <a href="/classes_list"><i class="fa fa-laptop"></i> <span class="nav-label">Cursuri</span></a>
 </li>
 
 <li <?php if (basename($_SERVER['PHP_SELF'])=="cursanti.php") { echo 'class="active"';} ?>>

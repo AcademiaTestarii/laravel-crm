@@ -92,7 +92,7 @@ $querystatus="";*/
                 <div class="ibox-content">
                     <div class="row">
                         <form method="GET"
-                              action="/classes">
+                              action="/classes_list">
                             <div class="col-sm-3">
                                 <div class="form-group">
                                     <label class="control-label" for="curs">Curs</label>

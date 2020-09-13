@@ -4,10 +4,14 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Classes extends Model
 {
+    use SoftDeletes;
+
     protected $table = 'classes';
+    protected $guarded = ['id'];
 
     public function mainClass()
     {
@@ -17,6 +21,16 @@ class Classes extends Model
     public function classStudents()
     {
         return $this->hasMany(ClassStudent::class, 'class_id');
+    }
+
+    public function classDates()
+    {
+        return $this->hasMany(ClassDate::class, 'class_id');
+    }
+
+    public function classTrainer()
+    {
+        return $this->hasOne(ClassTrainer::class, 'class_id');
     }
 
     public function getStudents()

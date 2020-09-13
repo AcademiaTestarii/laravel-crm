@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class ClassTrainer extends Model
 {
     protected $table = 'class_trainers';
+    public $timestamps = false;
+    protected $fillable = ['class_id', 'trainer_id'];
 
     public function classes()
     {

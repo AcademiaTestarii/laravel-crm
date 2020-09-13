@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Repositories\ClassesRepository;
 use App\Repositories\MainClassRepository;
 use App\Repositories\TrainerRepository;
+use App\Services\ClassService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -13,15 +14,18 @@ class ClassesController extends Controller
     protected $classesRepository;
     protected $mainClassRepository;
     protected $trainerRepository;
+    protected $classService;
 
     public function __construct(
         ClassesRepository $classGroupRepository,
         MainClassRepository $mainClassRepository,
-        TrainerRepository $trainerRepository
+        TrainerRepository $trainerRepository,
+        ClassService $classService
     ) {
         $this->classesRepository = $classGroupRepository;
         $this->mainClassRepository = $mainClassRepository;
         $this->trainerRepository = $trainerRepository;
+        $this->classService = $classService;
     }
 
     /**
@@ -133,14 +137,33 @@ class ClassesController extends Controller
     {
         $class = null;
         $pageTitle = 'Adaugare';
+        $action = 'add';
+
+        if ($request->get('removeimage')) {
+            $this->classesRepository
+                ->findOneBy(['id' => $request->get('id')])
+                ->update([
+                    'image' => null
+                ]);
+        }
+
+        if ($request->get('removepdf')) {
+            $this->classesRepository
+                ->findOneBy(['id' => $request->get('id')])
+                ->update([
+                    'schedule_pdf' => null
+                ]);
+        }
 
         if ($request->get('id')) {
             $class = $this->classesRepository->findOneBy(['id' => $request->get('id')]);
             $pageTitle = "Modificare";
+            $action = 'edit';
         }
 
         if ($request->get('duplicate')) {
             $pageTitle = 'Duplicat';
+            $action = 'duplicate';
         }
 
         $trainers = $this->trainerRepository->allOrderedBy('name');
@@ -148,39 +171,23 @@ class ClassesController extends Controller
         return view('class')->with([
             'class' => $class,
             'pageTitle' => $pageTitle,
-            'trainers' => $trainers
+            'trainers' => $trainers,
+            'action' => $action
         ]);
     }
 
     /**
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
     public function update(Request $request)
     {
-        /*$contentId = $request->get('id');
-
-        if (!$contentId) {
-            $contentId = $this->contentRepository->create([])->getId();
+        if ($request->get('action') == 'edit') {
+            $class = $this->classesRepository->findOneBy(['id' => $request->get('id')]);
+            $this->classService->update($class, $request);
         }
 
-        $this->contentRepository
-            ->findOneBy(['id' => $contentId])
-            ->update([
-                'title' => $request->get('title'),
-                'text' => $request->get('text')
-            ]);
-
-        for ($i = 6; $i < 15; $i++) {
-            if ($request->get('title_sub_' . $i)) {
-                $this->subcontentRepository->findOneBy(['id' => $i])
-                    ->update([
-                        'title' => $request->get('title_sub_' . $i),
-                        'text' => $request->get('text_sub_' . $i)
-                    ]);
-            }
-        }
-
-        return redirect()->route('content', ['id' => $contentId]);*/
+        return redirect()->route('class', ['id' => $class->getId()]);
     }
 }
