@@ -41,3 +41,4 @@ Route::post('class_details/{classId}', 'ClassesController@updateNote');
 Route::get('inline_note', 'ClassesController@getNote');
 
 Route::get('feedback/{id}', 'FeedbackController@getDetails');
+Route::get('certificate/{id}', 'FeedbackController@getCertificateDetails');

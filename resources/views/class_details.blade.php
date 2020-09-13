@@ -1,11 +1,5 @@
 <?php
-// notita
-/*if (isset($_POST['curs']) && isset($_POST['cursant']) && isset($_POST['notita'])) {
-    $notita=trim(mysqli_real_escape_string($link,$_POST['notita']));
-    $sql_update_notita="UPDATE `cursant_curs` SET `notita` ='".$notita."' WHERE `id_cursant`=".$_POST['cursant']." AND `id_curs`=".$_POST['curs'];
-    mysqli_query($link,$sql_update_notita);
-}
-
+/*
 // mutare cursant
 if (isset($_POST['curs']) && isset($_POST['cursant']) && isset($_POST['cursnou'])) {
     $cursnou=trim(mysqli_real_escape_string($link,$_POST['cursnou']));
@@ -13,12 +7,6 @@ if (isset($_POST['curs']) && isset($_POST['cursant']) && isset($_POST['cursnou']
         $sql_update_cursnou="UPDATE `cursant_curs` SET `id_curs` ='".$cursnou."' WHERE `id_cursant`=".$_POST['cursant']." AND `id_curs`=".$_POST['curs'];
         mysqli_query($link,$sql_update_cursnou);
     }
-}
-
-// sterge
-if (isset($_GET['sterge']) AND is_numeric($_GET['sterge'])) {
-    $sql_sterge=mysqli_query($link,"DELETE FROM `cursant_curs` WHERE `id_cursant`=".$_GET['sterge']." AND `id_curs`=".$_GET['curs']);
-    header ("Location:vizualizare_curs.php?id=".$_GET['curs']);
 }
 
 $sql_inscrisi=mysqli_query($link,"SELECT * FROM `cursant_curs` LEFT JOIN `cursanti` ON `cursant_curs`.`id_cursant`=`cursanti`.`id` WHERE `cursant_curs`.`id_curs`=".$row['id']);
@@ -441,7 +429,7 @@ if (isset($_POST['acorda_calificativ'])) {
                                                                         </div>
                                                                     </div>
                                                                 @else
-                                                                    <a href="/feedback/id={{$classStudent->student->getFeedback($class->getId())[0]->getLink()}}"
+                                                                    <a href="/feedback/{{$classStudent->student->getFeedback($class->getId())[0]->getLink()}}"
                                                                        class="btn btn-warning btn-xs"
                                                                        target="_blank">Calificativ</a>
                                                                 @endif
@@ -468,7 +456,6 @@ if (isset($_POST['acorda_calificativ'])) {
                                                 @endif
                                                 </tbody>
                                             </table>
-
                                         </div>
                                     </div>
                                 </div>

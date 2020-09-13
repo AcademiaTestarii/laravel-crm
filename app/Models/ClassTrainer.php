@@ -15,7 +15,7 @@ class ClassTrainer extends Model
         return $this->belongsTo(Classes::class);
     }
 
-    public function trainers()
+    public function trainer()
     {
         return $this->belongsTo(Trainer::class);
     }
