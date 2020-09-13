@@ -37,3 +37,5 @@ Route::get('class', 'ClassesController@get')->name('class');
 Route::post('class', 'ClassesController@update');
 
 Route::get('class_details/{classId}', 'ClassesController@getDetails')->name('class_details');
+
+Route::get('feedback/{id}', 'FeedbackController@getDetails');

@@ -165,7 +165,28 @@ class Classes extends Model
             return null;
         }
         return (new Carbon($this->getAttribute('registration_end_date')));
+    }
 
+    public function getBugdet()
+    {
+        return number_format($this->getAttribute('students') * $this->getAttribute('price'));
+    }
+
+    public function getRealBugdet()
+    {
+        if ($this->classStudents->isNotEmpty()) {
+            return number_format($this->classStudents->count() * $this->getAttribute('price'));
+        }
+
+        return 0;
+    }
+
+    public function getOccupancyRate()
+    {
+        if ($this->classStudents->isNotEmpty()) {
+            return number_format($this->classStudents->count() / $this->getAttribute('students') * 100, 0);
+        }
+        return 0;
     }
 
     public function isInWeekend()

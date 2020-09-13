@@ -92,7 +92,7 @@ if (isset($_POST['acorda_calificativ'])) {
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Academia Testarii CRM | Vizualizare curs: <?php /*echo $row['titlu_main'];*/?> <?php /*echo $row['titlu'];*/?></title>
+    <title>Academia Testarii CRM | Vizualizare curs: {{$class->mainClass->getTitle()}} {{$class->getTitle()}}</title>
 
     <!-- Magnific Popup core CSS file -->
     <link href="{{asset('js/magnific-popup.css')}}" rel="stylesheet">
@@ -102,9 +102,10 @@ if (isset($_POST['acorda_calificativ'])) {
     <link href="{{asset('css/plugins/summernote/summernote.css')}}" rel="stylesheet">
     <link href="{{asset('css/plugins/summernote/summernote-bs3.css')}}" rel="stylesheet">
     <link href=="{{asset('css/plugins/jQueryUI/jquery-ui.css')}}" rel="stylesheet">
-    <link href=="{{asset('js/plugins/Multiple-Dates-Picker-for-jQuery-UI-latest/jquery-ui.multidatespicker.css')}}" rel="stylesheet">
+    <link href=="{{asset('js/plugins/Multiple-Dates-Picker-for-jQuery-UI-latest/jquery-ui.multidatespicker.css')}}"
+          rel="stylesheet">
     <link href=="{{asset('css/plugins/daterangepicker/daterangepicker-bs3.css')}}" rel="stylesheet">
-    <link href=="{{asset('css/plugins/select2/select2.min.css')}}"> rel="stylesheet">
+    <link href=="{{asset('css/plugins/select2/select2.min.css')}}" rel="stylesheet">
     <link href="{{asset('css/animate.css')}}" rel="stylesheet">
     <link href="{{asset('css/style.css')}}" rel="stylesheet">
     <link href="{{asset('css/plugins/iCheck/custom.css')}}" rel="stylesheet">
@@ -138,14 +139,16 @@ if (isset($_POST['acorda_calificativ'])) {
         <div class="row border-bottom">
             <nav class="navbar navbar-static-top  " role="navigation" style="margin-bottom: 0">
                 <div class="navbar-header">
-                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i>
+                    </a>
                 </div>
                 @include('include/controlpanel')
             </nav>
         </div>
         <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-sm-12">
-                <h2><?php /*echo $row['titlu_main'];*/?>: <?php /*echo $row['titlu'];*/?> din <?php /*echo strftime("%e %B, %Y", strtotime($row['start_inscriere']));*/?></h2>
+                <h2> {{$class->mainClass->getTitle()}}: {{$class->getTitle()}}
+                    din {{ $class->getRegistrationStartDate()->formatLocalized("%e %B, %Y")}}</h2>
                 <ol class="breadcrumb">
                     <li>
                         <a href="/dashboard">Home</a>
@@ -154,8 +157,8 @@ if (isset($_POST['acorda_calificativ'])) {
                         <a href="/classes_list">Cursuri</a>
                     </li>
                     <li class="active">
-                        <strong><?php /*echo $row['titlu_main'];*/?>: <?php /*echo $row['titlu'];*/?> din
-                            <?php /*echo strftime("%e %B, %Y", strtotime($row['start_inscriere']))*/;?></strong>
+                        <strong>{{$class->mainClass->getTitle()}}: {{$class->getTitle()}} din
+                            {{ $class->getRegistrationStartDate()->formatLocalized("%e %B, %Y")}}</strong>
                     </li>
                 </ol>
             </div>
@@ -167,36 +170,40 @@ if (isset($_POST['acorda_calificativ'])) {
                         <div class="ibox-content">
                             <div class="row">
                                 <div class="col-lg-12">
-                                    <?php /*if ($sunt_studenti) {*/ ?>
-                                    <div class="m-b-md">
-                                        <button type="button" class="btn btn-warning btn-xs pull-right" data-toggle="modal" data-target="#mesaj">Adrese email cursanti</button>
-                                    </div>
-                                    <?php //} ?>
+                                    @if($class->classStudents->isNotEmpty())
+                                        <div class="m-b-md">
+                                            <button type="button" class="btn btn-warning btn-xs pull-right"
+                                                    data-toggle="modal" data-target="#mesaj">Adrese email cursanti
+                                            </button>
+                                        </div>
+                                    @endif
                                     <dl class="dl-horizontal">
-                                        <dt>Status:</dt> <dd><span class="label label-primary">Activ</span></dd>
+                                        <dt>Status:</dt>
+                                        <dd><span class="label label-primary">Activ</span></dd>
                                     </dl>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-lg-5">
                                     <dl class="dl-horizontal">
-
                                         <dt>Obiectiv:</dt>
-                                        <dd>  <?php/* echo $row['cursanti'];*/?></dd>
+                                        <dd> {{$class->getStudents()}}</dd>
                                         <dt>Cursanti inscrisi:</dt>
-                                        <?php /*if ($sunt_studenti) {*/ ?>
-                                        <dd> <?php/* echo $cati;*/?></dd>
-                                        <?php/* } else {*/ ?>
-                                        <dd> 0 </dd>
-                                        <?php //} ?>
+                                        @if($class->classStudents->isNotEmpty())
+                                            <dd>{{$class->classStudents->count()}}</dd>
+                                        @else
+                                            <dd> 0</dd>
+                                        @endif
                                     </dl>
                                 </div>
                                 <div class="col-lg-7" id="cluster_info">
-                                    <dl class="dl-horizontal" >
+                                    <dl class="dl-horizontal">
                                         <dt>Obiectiv buget:</dt>
-                                        <dd><?php /*echo number_format($row['cursanti']*$row['pret'])*/;?></dd>
+                                        <dd>{{$class->getBugdet()}}</dd>
                                         <dt>Realizat:</dt>
-                                        <dd><?php /*echo number_format($cati*$row['pret']);*/?></dd>
+                                        <dd>
+                                            {{$class->getRealBugdet()}}
+                                        </dd>
                                     </dl>
                                 </div>
                             </div>
@@ -206,7 +213,8 @@ if (isset($_POST['acorda_calificativ'])) {
                                         <dt>Rata ocupare:</dt>
                                         <dd>
                                             <div class="progress progress-striped active m-b-sm">
-                                                <div style="width: <?php /*echo number_format($cati/$row['cursanti']*100,0);*/?>%" class="progress-bar"></div>
+                                                <div style="width: {{$class->getOccupancyRate()}}%"
+                                                     class="progress-bar"></div>
                                             </div>
                                         </dd>
                                     </dl>
@@ -235,152 +243,243 @@ if (isset($_POST['acorda_calificativ'])) {
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                <?php
-                                               /* if ($sunt_studenti) {
-                                                while ($row_cursanti=mysqli_fetch_array($sql_inscrisi)) {
-                                                $sql_feeback=mysqli_query($link,"SELECT * FROM `feedback` WHERE `id_cursant`=".$row_cursanti['id']." AND `id_curs`=".$id);
-                                                if (mysqli_num_rows($sql_feeback)>0) {$arefeed=true;$feed=mysqli_fetch_assoc($sql_feeback);} else {$arefeed=false;}
-
-                                                if ($row_cursanti['rata1']==0 && $row_cursanti['rata2']==0 && $row_cursanti['integral']==0) {$plata="Plata in asteptare";$class="class=\"warning\"";}
-                                                elseif ($row_cursanti['rata1']==1 && $row_cursanti['rata2']==0 && $row_cursanti['integral']==0) {$plata="Rata 1 platita";$class="";}
-                                                elseif ($row_cursanti['rata1']==1 && $row_cursanti['rata2']==1 && $row_cursanti['integral']==1) {$plata="Achitat integral";$class="";}
-                                                else {$plata="";$class="";}*/
-                                                ?>
-                                                <tr <?php/* echo $class;*/?>>
-                                                    <td><?php /*echo $row_cursanti['nume'];*/?> <?php /*echo $row_cursanti['prenume'];*/?></td>
-                                                    <td><?php/* echo $row_cursanti['data_inscriere'];*/?></td>
-                                                    <td><?php /*echo $row_cursanti['email'];*/?></td>
-                                                    <td><?php /*echo $row_cursanti['telefon'];*/?></td>
-                                                    <td><?php /*echo $plata;*/?></td>
-                                                    <td class="text-center">
-                                                        <button href="inline.mutacursant.php?cursant=<?php /*echo $row_cursanti['id_cursant'];*/?>&curs=<?php /*echo $id;*/?>" class="btn btn-warning btn-xs ajax-popup-link">Muta</button>
-                                                        <!--a href="" class="btn btn-info btn-xs" data-toggle="modal" data-target="#facturi">Facturi</a-->
-                                                    </td>
-                                                    <td class="text-center">
-                                                        <?php /*if (!$arefeed) {*/ ?>
-                                                        <button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#calificativ<?php /*echo $row_cursanti['id'];*/?>">Calificativ</button>
-                                                        <div class="modal inmodal" id="calificativ<?php /*echo $row_cursanti['id'];*/?>" tabindex="-1" role="dialog"  aria-hidden="true">
-                                                            <div class="modal-dialog">
-                                                                <div class="modal-content animated fadeIn">
-                                                                    <div class="modal-header">
-                                                                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Inchide</span></button>
-                                                                        <i class="fa fa-star-half-o modal-icon"></i>
-                                                                        <h4 class="modal-title">Acordă calificativ pentru <br /><?php /*echo $row_cursanti['nume'];*/?> <?php /*echo $row_cursanti['prenume'];*/?></h4>
-                                                                        <small> </small>
-                                                                    </div>
-                                                                    <div class="modal-body">
-                                                                        <form method="POST" class="calificativ" action="">
-                                                                            <div class="form-group">
-                                                                                <div class="col-md-12 form-horizontal">
-                                                                                    <fieldset>
-                                                                                        <h4>Notă</h4>
-                                                                                        <div class="radio radio-inline">
-                                                                                            <input type="radio" id="inlineRadio1" value="1" name="nota">
-                                                                                            <label for="inlineRadio1"> 1 </label>
+                                                @if($class->classStudents->isNotEmpty())
+                                                    @foreach($class->classStudents as $classStudent)
+                                                        <tr @if($classStudent->getPaymentStatus()=='Plata in asteptare') class="warning" @endif>
+                                                            <td>{{$classStudent->student->getLastName()}} {{$classStudent->student->getFirstName()}}</td>
+                                                            <td>{{$classStudent->student->getRegistrationDate()}} </td>
+                                                            <td>{{$classStudent->student->getEmail()}}</td>
+                                                            <td>{{$classStudent->student->getPhone()}}</td>
+                                                            <td>{{$classStudent->getPaymentStatus()}}</td>
+                                                            <td class="text-center">
+                                                                <button href="inline.mutacursant.php?cursant={{$classStudent->getStudentId()}}&curs={{$class->getId()}}"
+                                                                        class="btn btn-warning btn-xs ajax-popup-link">
+                                                                    Muta
+                                                                </button>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                @if($classStudent->student->getFeedback($class->getId())->isEmpty())
+                                                                    <button type="button" class="btn btn-success btn-xs"
+                                                                            data-toggle="modal"
+                                                                            data-target="#calificativ{{$classStudent->getId()}}">
+                                                                        Calificativ
+                                                                    </button>
+                                                                    <div class="modal inmodal"
+                                                                         id="calificativ{{$classStudent->getId()}}"
+                                                                         tabindex="-1" role="dialog" aria-hidden="true">
+                                                                        <div class="modal-dialog">
+                                                                            <div class="modal-content animated fadeIn">
+                                                                                <div class="modal-header">
+                                                                                    <button type="button" class="close"
+                                                                                            data-dismiss="modal"><span
+                                                                                                aria-hidden="true">&times;</span><span
+                                                                                                class="sr-only">Inchide</span>
+                                                                                    </button>
+                                                                                    <i class="fa fa-star-half-o modal-icon"></i>
+                                                                                    <h4 class="modal-title">Acordă
+                                                                                        calificativ
+                                                                                        pentru
+                                                                                        <br/>{{$classStudent->student->getLastName()}} {{$classStudent->student->getFirstName()}}
+                                                                                    </h4>
+                                                                                    <small> </small>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <form method="POST"
+                                                                                          class="calificativ"
+                                                                                          action="">
+                                                                                        <div class="form-group">
+                                                                                            <div class="col-md-12 form-horizontal">
+                                                                                                <fieldset>
+                                                                                                    <h4>Notă</h4>
+                                                                                                    <div class="radio radio-inline">
+                                                                                                        <input type="radio"
+                                                                                                               id="inlineRadio1"
+                                                                                                               value="1"
+                                                                                                               name="nota">
+                                                                                                        <label for="inlineRadio1">
+                                                                                                            1 </label>
+                                                                                                    </div>
+                                                                                                    <div class="radio radio-inline">
+                                                                                                        <input type="radio"
+                                                                                                               id="inlineRadio2"
+                                                                                                               value="2"
+                                                                                                               name="nota">
+                                                                                                        <label for="inlineRadio2">
+                                                                                                            2 </label>
+                                                                                                    </div>
+                                                                                                    <div class="radio radio-inline">
+                                                                                                        <input type="radio"
+                                                                                                               id="inlineRadio3"
+                                                                                                               value="3"
+                                                                                                               name="nota">
+                                                                                                        <label for="inlineRadio3">
+                                                                                                            3 </label>
+                                                                                                    </div>
+                                                                                                    <div class="radio radio-inline">
+                                                                                                        <input type="radio"
+                                                                                                               id="inlineRadio4"
+                                                                                                               value="4"
+                                                                                                               name="nota">
+                                                                                                        <label for="inlineRadio4">
+                                                                                                            4 </label>
+                                                                                                    </div>
+                                                                                                    <div class="radio radio-inline">
+                                                                                                        <input type="radio"
+                                                                                                               id="inlineRadio5"
+                                                                                                               value="5"
+                                                                                                               name="nota">
+                                                                                                        <label for="inlineRadio5">
+                                                                                                            5 </label>
+                                                                                                    </div>
+                                                                                                    <div class="radio radio-inline">
+                                                                                                        <input type="radio"
+                                                                                                               id="inlineRadio6"
+                                                                                                               value="6"
+                                                                                                               name="nota">
+                                                                                                        <label for="inlineRadio6">
+                                                                                                            6 </label>
+                                                                                                    </div>
+                                                                                                    <div class="radio radio-inline">
+                                                                                                        <input type="radio"
+                                                                                                               id="inlineRadio7"
+                                                                                                               value="7"
+                                                                                                               name="nota">
+                                                                                                        <label for="inlineRadio7">
+                                                                                                            7 </label>
+                                                                                                    </div>
+                                                                                                    <div class="radio radio-inline">
+                                                                                                        <input type="radio"
+                                                                                                               id="inlineRadio8"
+                                                                                                               value="8"
+                                                                                                               name="nota">
+                                                                                                        <label for="inlineRadio8">
+                                                                                                            8 </label>
+                                                                                                    </div>
+                                                                                                    <div class="radio radio-inline">
+                                                                                                        <input type="radio"
+                                                                                                               id="inlineRadio9"
+                                                                                                               value="9"
+                                                                                                               name="nota">
+                                                                                                        <label for="inlineRadio9">
+                                                                                                            9 </label>
+                                                                                                    </div>
+                                                                                                    <div class="radio radio-inline">
+                                                                                                        <input type="radio"
+                                                                                                               id="inlineRadio10"
+                                                                                                               value="10"
+                                                                                                               name="nota">
+                                                                                                        <label for="inlineRadio10">
+                                                                                                            10 </label>
+                                                                                                    </div>
+                                                                                                </fieldset>
+                                                                                            </div>
                                                                                         </div>
-                                                                                        <div class="radio radio-inline">
-                                                                                            <input type="radio" id="inlineRadio2" value="2" name="nota">
-                                                                                            <label for="inlineRadio2"> 2 </label>
+                                                                                        <div class="form-group">
+                                                                                            <div class="col-md-12"><h4>
+                                                                                                    Organizare
+                                                                                                    JIRA & Zephyr</h4>
+                                                                                            </div>
+                                                                                            <div class="col-md-6">Good
+                                                                                                points
+                                                                                                <textarea
+                                                                                                        name="good_organizare"></textarea>
+                                                                                            </div>
+                                                                                            <div class="col-md-6">To
+                                                                                                improve
+                                                                                                <textarea
+                                                                                                        name="bad_organizare"></textarea>
+                                                                                            </div>
                                                                                         </div>
-                                                                                        <div class="radio radio-inline">
-                                                                                            <input type="radio" id="inlineRadio3" value="3" name="nota">
-                                                                                            <label for="inlineRadio3"> 3 </label>
+                                                                                        <div class="form-group">
+                                                                                            <div class="col-md-12"><h4>
+                                                                                                    Test
+                                                                                                    Cases</h4></div>
+                                                                                            <div class="col-md-6">Good
+                                                                                                points<textarea
+                                                                                                        name="good_cases"></textarea>
+                                                                                            </div>
+                                                                                            <div class="col-md-6">To
+                                                                                                improve<textarea
+                                                                                                        name="bad_cases"></textarea>
+                                                                                            </div>
                                                                                         </div>
-                                                                                        <div class="radio radio-inline">
-                                                                                            <input type="radio" id="inlineRadio4" value="4" name="nota">
-                                                                                            <label for="inlineRadio4"> 4 </label>
+                                                                                        <div class="form-group">
+                                                                                            <div class="col-md-12"><h4>
+                                                                                                    Defects</h4>
+                                                                                            </div>
+                                                                                            <div class="col-md-6">Good
+                                                                                                points<textarea
+                                                                                                        name="good_defects"></textarea>
+                                                                                            </div>
+                                                                                            <div class="col-md-6">To
+                                                                                                improve<textarea
+                                                                                                        name="bad_defects"></textarea>
+                                                                                            </div>
                                                                                         </div>
-                                                                                        <div class="radio radio-inline">
-                                                                                            <input type="radio" id="inlineRadio5" value="5" name="nota">
-                                                                                            <label for="inlineRadio5"> 5 </label>
+                                                                                        <div class="form-group">
+                                                                                            <div class="col-md-12"><h4>
+                                                                                                    Traceability</h4>
+                                                                                            </div>
+                                                                                            <div class="col-md-6">Good
+                                                                                                points<textarea
+                                                                                                        name="good_trace"></textarea>
+                                                                                            </div>
+                                                                                            <div class="col-md-6">To
+                                                                                                improve<textarea
+                                                                                                        name="bad_trace"></textarea>
+                                                                                            </div>
                                                                                         </div>
-                                                                                        <div class="radio radio-inline">
-                                                                                            <input type="radio" id="inlineRadio6" value="6" name="nota">
-                                                                                            <label for="inlineRadio6"> 6 </label>
+                                                                                        <div class="form-group">
+                                                                                            <div class="col-md-12 mt-20 text-center">
+                                                                                                <button class="btn btn-info btn-sm"
+                                                                                                        type="submit"
+                                                                                                        name="acorda_calificativ"/>
+                                                                                                Salvează
+                                                                                                calificativ</button>
+                                                                                            </div>
                                                                                         </div>
-                                                                                        <div class="radio radio-inline">
-                                                                                            <input type="radio" id="inlineRadio7" value="7" name="nota">
-                                                                                            <label for="inlineRadio7"> 7 </label>
-                                                                                        </div>
-                                                                                        <div class="radio radio-inline">
-                                                                                            <input type="radio" id="inlineRadio8" value="8" name="nota">
-                                                                                            <label for="inlineRadio8"> 8 </label>
-                                                                                        </div>
-                                                                                        <div class="radio radio-inline">
-                                                                                            <input type="radio" id="inlineRadio9" value="9" name="nota">
-                                                                                            <label for="inlineRadio9"> 9 </label>
-                                                                                        </div>
-                                                                                        <div class="radio radio-inline">
-                                                                                            <input type="radio" id="inlineRadio10" value="10" name="nota">
-                                                                                            <label for="inlineRadio10"> 10 </label>
-                                                                                        </div>
-                                                                                    </fieldset>
+                                                                                        <input type="hidden"
+                                                                                               name="cursant"
+                                                                                               value="{{$classStudent->getId()}} "/>
+                                                                                        <input type="hidden" name="curs"
+                                                                                               value="{{$class->getId()}}"/>
+                                                                                    </form>
+                                                                                </div>
+                                                                                <div class="modal-footer">
+                                                                                    <button type="button"
+                                                                                            class="btn btn-white"
+                                                                                            data-dismiss="modal">Inchide
+                                                                                    </button>
                                                                                 </div>
                                                                             </div>
-                                                                            <div class="form-group">
-                                                                                <div class="col-md-12"><h4>Organizare JIRA & Zephyr</h4></div>
-                                                                                <div class="col-md-6">Good points <textarea name="good_organizare"></textarea></div>
-                                                                                <div class="col-md-6">To improve <textarea name="bad_organizare"></textarea></div>
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <div class="col-md-12"><h4>Test Cases</h4></div>
-                                                                                <div class="col-md-6">Good points<textarea name="good_cases"></textarea></div>
-                                                                                <div class="col-md-6">To improve<textarea name="bad_cases"></textarea></div>
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <div class="col-md-12"><h4>Defects</h4></div>
-                                                                                <div class="col-md-6">Good points<textarea name="good_defects"></textarea></div>
-                                                                                <div class="col-md-6">To improve<textarea name="bad_defects"></textarea></div>
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <div class="col-md-12"><h4>Traceability</h4></div>
-                                                                                <div class="col-md-6">Good points<textarea name="good_trace"></textarea></div>
-                                                                                <div class="col-md-6">To improve<textarea name="bad_trace"></textarea></div>
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <div class="col-md-12 mt-20 text-center"><button class="btn btn-info btn-sm" type="submit" name="acorda_calificativ" />Salvează calificativ</button></div>
-                                                                            </div>
-                                                                            <input type="hidden" name="cursant" value="<?php /*echo $row_cursanti['id'];*/?>" />
-                                                                            <input type="hidden" name="curs" value="<?php /*echo $id;*/?>" />
-                                                                        </form>
+                                                                        </div>
                                                                     </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button" class="btn btn-white" data-dismiss="modal">Inchide</button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <?php
-                                                        //}
-                                                        //else { ?>
-                                                        <a href="../feedback.php?id=<?php /*echo $feed['link'];*/?>" class="btn btn-warning btn-xs" target="_blank">Calificativ</a>
-                                                        <?php //} ?>
-                                                    </td>
-                                                    <td class="text-center">
-                                                        <?php
-                                                       /* $sql_notita=mysqli_query($link,"SELECT `notita` FROM `cursant_curs` WHERE `id_cursant`=".$row_cursanti['id_cursant']." AND `id_curs`=".$id." AND `notita`!=''");
-                                                        if (mysqli_num_rows($sql_notita)>0) {
-                                                            $butonnotita="btn-primary";
-                                                        } else {
-                                                            $butonnotita="btn-info";
-                                                        }*/
-                                                        ?>
-                                                        <button href="inline.notita.php?cursant=<?php /*echo $row_cursanti['id_cursant'];*/?>&curs=<?php /*echo $id;*/?>" class="btn <?php /*echo $butonnotita;*/?> btn-xs ajax-popup-link">Notita</button>
-                                                    </td>
-                                                    <td class="text-center">
-                                                        <form action="" method="GET">
-                                                            <button class="btn btn-danger btn-xs" onClick="confirmDelete()" type="submit" />Sterge</button>
-                                                            <input type="hidden" name="sterge" value="<?php/* echo $row_cursanti['id_cursant'];*/?>" />
-                                                            <input type="hidden" name="curs" value="<?php /*echo $id;*/?>" />
-                                                        </form>
-                                                    </td>
-                                                </tr>
-                                                <?php
-                                                /*$arefeed=false;*/
-//}
-//}
-?>
+                                                                @else
+                                                                    <a href="/feedback/id={{$classStudent->student->getFeedback($class->getId())[0]->getLink()}}"
+                                                                       class="btn btn-warning btn-xs"
+                                                                       target="_blank">Calificativ</a>
+                                                                @endif
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <button href="inline.notita.php?cursant={{$classStudent->getStudentId()}}&curs={{$class->getId()}}"
+                                                                        class="btn @if(!is_null($classStudent->getNote())) btn-primary @else btn-info @endif btn-xs ajax-popup-link">
+                                                                    Notita
+                                                                </button>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <form action="" method="GET">
+                                                                    <button class="btn btn-danger btn-xs"
+                                                                            onClick="confirmDelete()" type="submit"/>
+                                                                    Sterge</button>
+                                                                    <input type="hidden" name="sterge"
+                                                                           value="{{$classStudent->getStudentId()}}"/>
+                                                                    <input type="hidden" name="curs"
+                                                                           value="{{$class->getId()}}"/>
+                                                                </form>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                @endif
                                                 </tbody>
                                             </table>
 
@@ -400,54 +499,54 @@ if (isset($_POST['acorda_calificativ'])) {
 </div>
 
 <!-- Modals -->
-<?php /*if ($sunt_studenti) {*/ ?>
-<div class="modal inmodal" id="mesaj" tabindex="-1" role="dialog"  aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content animated fadeIn">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Inchide</span></button>
-                <i class="fa fa-envelope-o modal-icon"></i>
-                <h4 class="modal-title">Lista email-uri cursanti</h4>
-            </div>
-            <div class="modal-body">
-                <div class="ibox-content">
-                    <?php
-                  /*  $emails="";
-                    $sql_cursanti="SELECT * FROM `cursant_curs` LEFT JOIN `cursanti` ON `cursant_curs`.`id_cursant`=`cursanti`.`id` WHERE `cursant_curs`.`id_curs`=".$id;
-                    $query_cursanti=mysqli_query($link,$sql_cursanti);
-                    while ($row_cursanti=mysqli_fetch_assoc($query_cursanti)) {
-                        $emails.=$row_cursanti['email']."; ";
-                    }
-                    echo $emails;*/
-                    ?>
+@if($class->classStudents->isNotEmpty())
+    <div class="modal inmodal" id="mesaj" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content animated fadeIn">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                                aria-hidden="true">&times;</span><span
+                                class="sr-only">Inchide</span></button>
+                    <i class="fa fa-envelope-o modal-icon"></i>
+                    <h4 class="modal-title">Lista email-uri cursanti</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="ibox-content">
+                        @foreach($class->classStudents as $classStudent)
+                            {{$classStudent->student->getEmail()}};
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="modal inmodal" id="facturi" tabindex="-1" role="dialog"  aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content animated fadeIn">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Inchide</span></button>
-                <i class="fa fa-credit-card modal-icon"></i>
-                <h4 class="modal-title">Trimite facturi</h4>
-                <small>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</small>
-            </div>
-            <div class="modal-body">
-                <p><strong>Lorem Ipsum is simply dummy</strong> text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-white" data-dismiss="modal">Inchide</button>
+    <div class="modal inmodal" id="facturi" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content animated fadeIn">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                                aria-hidden="true">&times;</span><span
+                                class="sr-only">Inchide</span></button>
+                    <i class="fa fa-credit-card modal-icon"></i>
+                    <h4 class="modal-title">Trimite facturi</h4>
+                    <small>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</small>
+                </div>
+                <div class="modal-body">
+                    <p><strong>Lorem Ipsum is simply dummy</strong> text of the printing and typesetting industry. Lorem
+                        Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer
+                        took
+                        a galley of type and scrambled it to make a type specimen book. It has survived not only five
+                        centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal">Inchide</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
-
-<?php //} ?>
+@endif
 <!-- /Modals -->
-
 <div id="test-popup" class="white-popup mfp-hide">
 
 </div>
