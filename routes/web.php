@@ -25,7 +25,6 @@ Route::get('slider', 'SliderController@index')->name('slider');
 Route::get('slider_remove_image', 'SliderController@removeImage');
 Route::post('slider', 'SliderController@update');
 
-
 Route::get('testimonial', 'TestimonialController@index')->name('testimonial');
 Route::get('testimonials', 'TestimonialController@all')->name('testimonials');
 Route::post('testimonial', 'TestimonialController@update');
@@ -36,3 +35,5 @@ Route::post('content', 'ContentController@update');
 Route::get('classes_list', 'ClassesController@index')->name('classes');
 Route::get('class', 'ClassesController@get')->name('class');
 Route::post('class', 'ClassesController@update');
+
+Route::get('class_details/{classId}', 'ClassesController@getDetails')->name('class_details');

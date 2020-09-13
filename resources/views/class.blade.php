@@ -13,10 +13,10 @@
     <link href="{{asset('css/plugins/toastr/toastr.min.css')}}" rel="stylesheet">
     <link href="{{asset('css/plugins/summernote/summernote.css')}}" rel="stylesheet">
     <link href="{{asset('css/plugins/summernote/summernote-bs3.css')}}" rel="stylesheet">
-    <script src="{{asset('css/plugins/jQueryUI/jquery-ui.css')}}"></script>
-    <script src="{{asset('js/plugins/Multiple-Dates-Picker-for-jQuery-UI-latest/jquery-ui.multidatespicker.css')}}"></script>
-    <script src="{{asset('css/plugins/daterangepicker/daterangepicker-bs3.css')}}"></script>
-    <script src="{{asset('css/plugins/select2/select2.min.css')}}"></script>
+    <link href="{{asset('css/plugins/jQueryUI/jquery-ui.css')}}" rel="stylesheet">
+    <link href="{{asset('js/plugins/Multiple-Dates-Picker-for-jQuery-UI-latest/jquery-ui.multidatespicker.css')}}" rel="stylesheet">
+    <link href="{{asset('css/plugins/daterangepicker/daterangepicker-bs3.css')}}" rel="stylesheet">
+    <link href="{{asset('css/plugins/select2/select2.min.css')}}" rel="stylesheet">
 
     <link href="{{asset('css/animate.css')}}" rel="stylesheet">
     <link href="{{asset('css/style.css')}}" rel="stylesheet">

@@ -209,4 +209,12 @@ class ClassesController extends Controller
 
         return redirect()->route('class', ['id' => $class->getId()]);
     }
+
+    public function getDetails($classId) {
+        $class = $this->classesRepository->findOneBy(['id' => $classId]);
+
+        return view('class_details')->with([
+            'class' => $class,
+        ]);
+    }
 }

@@ -1,24 +1,4 @@
-<?php
-/*include("../__connect.php");
-$page = "cursuri";
-$today = date("Y-m-d");
-$querystatus="";*/
-// stare
-/*if (isset($_GET['stare']) AND is_numeric($_GET['stare'])) {
-    if ($_GET['value']==1){
-        $sql_update_stare=mysqli_query($link,"UPDATE `cursuri` SET `activ`=0 WHERE `id`=".$_GET['id']);
-    } else {
-        $sql_update_stare=mysqli_query($link,"UPDATE `cursuri` SET `activ`=1 WHERE `id`=".$_GET['id']);
-    }
-    header ("Location:cursuri.php");
-}*/
-// sterge
-/*if (isset($_GET['sterge']) AND is_numeric($_GET['sterge'])) {
-    $sql_sterge=mysqli_query($link,"DELETE FROM `cursuri` WHERE `id`=".$_GET['sterge']);
-    header ("Location:cursuri.php");
-}*/
-
-?><!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -32,8 +12,8 @@ $querystatus="";*/
 
     <!-- Toastr style -->
     <link href="{{asset('css/plugins/toastr/toastr.min.css')}}" rel="stylesheet">
-    <script src="{{asset('css/plugins/daterangepicker/daterangepicker-bs3.css')}}"></script>
-    <script src="{{asset('css/plugins/datapicker/datepicker3.css')}}"></script>
+    <link href="{{asset('css/plugins/daterangepicker/daterangepicker-bs3.css')}}" rel="stylesheet">
+    <link href="{{asset('css/plugins/datapicker/datepicker3.css')}}" rel="stylesheet">
     <link href="{{asset('css/animate.css')}}" rel="stylesheet">
     <link href="{{asset('css/style.css')}}" rel="stylesheet">
 
@@ -203,7 +183,7 @@ $querystatus="";*/
                                             </td>
                                             <td class="text-center">
                                                 <a class="btn btn-primary btn-xs"
-                                                   href="vizualizare_curs.php?id={{$class->getId()}}">Cursanti</a>
+                                                   href="/class_details/{{$class->getId()}}">Cursanti</a>
                                             </td>
                                             <td class="text-center">
 
