@@ -84,7 +84,7 @@ class ClassesController extends Controller
                     'operator' => '<'
                 ];
             }
-            
+
             if ($status == 3) {
                 $query['registration_start_date'] = [
                     'value' => (new  Carbon())->format("Y-m-d"),
