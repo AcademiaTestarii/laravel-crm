@@ -1,4 +1,4 @@
-<li <?php if (basename($_SERVER['PHP_SELF'])=="dashboard.php") { echo 'class="active"';} ?>>
+<li <?php if (basename($_SERVER['PHP_SELF'])=="dashboard") { echo 'class="active"';} ?>>
     <a href="/dashboard"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboard</span></a>
 </li>
 <li <?php if (basename($_SERVER['PHP_SELF'])=="home-page.php" || basename($_SERVER['PHP_SELF'])=="testimonial.php" || basename($_SERVER['PHP_SELF'])=="modifica_slider.php" ) { echo 'class="active"';} ?>>
@@ -14,7 +14,7 @@
 </li>
 
 <li <?php if (basename($_SERVER['PHP_SELF'])=="cursanti.php") { echo 'class="active"';} ?>>
-    <a href="cursanti.php"><i class="fa fa-users"></i> <span class="nav-label">Cursanti</span></a>
+    <a href="/students"><i class="fa fa-users"></i> <span class="nav-label">Cursanti</span></a>
 </li>
 
 <li <?php if (basename($_SERVER['PHP_SELF'])=="comunicare.php") { echo 'class="active"';} ?>>
@@ -28,10 +28,6 @@
 <li <?php if (basename($_SERVER['PHP_SELF'])=="parteneri.php" || basename($_SERVER['PHP_SELF'])=="partener.php") { echo 'class="active"';} ?>>
     <a href="parteneri.php"><i class="fa fa-user"></i> <span class="nav-label">Parteneri</span></a>
 </li>
-
-<!--li <?php if (basename($_SERVER['PHP_SELF'])=="clienti.php") { echo 'class="active"';} ?>>
-                    <a href="clienti.php"><i class="fa fa-users"></i> <span class="nav-label">Cursanti</span></a>
-                </li-->
 
 <li <?php if (basename($_SERVER['PHP_SELF'])=="blog.php" || basename($_SERVER['PHP_SELF'])=="modifica_blog.php" || basename($_SERVER['PHP_SELF'])=="adauga_blog.php") { echo 'class="active"';} ?>>
     <a href="blog.php"><i class="fa fa-newspaper-o"></i> <span class="nav-label">Blog</span></a>
