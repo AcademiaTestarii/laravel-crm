@@ -44,7 +44,7 @@
                         </div>
                     </form>
                 </div>
-                @include('include/mainmenu2')
+                @include('include/controlpanel')
             </nav>
         </div>
         <div class="row wrapper border-bottom white-bg page-heading">

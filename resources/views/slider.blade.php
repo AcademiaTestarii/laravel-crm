@@ -47,13 +47,13 @@
                         <a href="/dashboard">Home</a>
                     </li>
                     <li class="active">
-                        <a href="/slider"><strong>Bannere</strong></a>
+                        <a href="/sliders"><strong>Bannere</strong></a>
                     </li>
                 </ol>
             </div>
             <div class="col-sm-6">
                 <div class="title-action">
-                    <a class="btn btn-primary" href="/slider">Adauga banner nou</a>
+                    <a class="btn btn-primary" href="/sliders">Adauga banner nou</a>
                 </div>
             </div>
         </div>

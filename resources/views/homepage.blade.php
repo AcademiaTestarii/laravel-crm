@@ -61,7 +61,7 @@ $page = "home-page";
             <div class="ibox">
                 <div class="ibox-title">
                     <h5>Sectiunea "Banere prima pagina"<small></small></h5>
-                    <a class="btn btn-warning pull-right buton" href="/slider">Adauga banner nou</a>
+                    <a class="btn btn-warning pull-right buton" href="/sliders">Adauga banner nou</a>
                 </div>
                 <div class="ibox-content">
                     <table id="example1" class="table table-bordered table-striped">
@@ -81,7 +81,7 @@ $page = "home-page";
                                 <td>{{$slider->getId()}}</td>
                                 <td>{{$slider->getCreatedAtDate()}}</td>
                                 <td>
-                                    <a href="/slider?id={{$slider->getId()}}">{{$slider->getTitle()}}</a>
+                                    <a href="/sliders?id={{$slider->getId()}}">{{$slider->getTitle()}}</a>
                                 </td>
                                 <td>
                                     <img src="{{ $slider->getImage()}}" width="200px"/>

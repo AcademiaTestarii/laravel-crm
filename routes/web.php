@@ -21,9 +21,9 @@ Route::get('dashboard', 'DashboardController@index');
 Route::get('homepage', 'HomepageController@index')->name('homepage');
 Route::post('homepage', 'HomepageController@update');
 
-Route::get('slider', 'SliderController@index')->name('slider');
+Route::get('sliders', 'SliderController@index')->name('slider');
 Route::get('slider_remove_image', 'SliderController@removeImage');
-Route::post('slider', 'SliderController@update');
+Route::post('sliders', 'SliderController@update');
 
 Route::get('testimonial', 'TestimonialController@index')->name('testimonial');
 Route::get('testimonials', 'TestimonialController@all')->name('testimonials');
