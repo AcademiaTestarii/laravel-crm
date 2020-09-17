@@ -20,6 +20,11 @@ class Feedback extends Model
         return $this->belongsTo(Classes::class, 'class_id');
     }
 
+    public function getId()
+    {
+        return $this->getAttribute('id');
+    }
+
     public function getLink()
     {
         return $this->getAttribute('link');
