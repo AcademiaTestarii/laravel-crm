@@ -46,3 +46,4 @@ Route::get('feedback/{id}', 'FeedbackController@getDetails');
 Route::get('certificate/{id}', 'FeedbackController@getCertificateDetails');
 
 Route::get('students', 'StudentController@index')->name('students');
+Route::get('communication', 'CommunicationController@index')->name('communication');

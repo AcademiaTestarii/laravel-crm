@@ -6,7 +6,6 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Feedback participare
         pentru {{$feedback->student->getLastName()}} {{$feedback->student->getFirstName()}}</title>
     <base href="https://www.academiatestarii.ro">

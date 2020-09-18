@@ -16,6 +16,11 @@ class MainClass extends Model
         return $this->hasMany(Classes::class);
     }
 
+    public function classesOrderByDate()
+    {
+        return $this->hasMany(Classes::class)->orderBy('registration_start_date');
+    }
+
     public function getTitle()
     {
         return $this->getAttribute('title');

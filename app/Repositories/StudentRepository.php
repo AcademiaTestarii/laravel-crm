@@ -27,4 +27,23 @@ class StudentRepository extends Repository
     {
         return $this->model->orderBy('is_active', 'DESC')->orderBy('last_name')->get();
     }
+
+    public function allQueryBy($filter)
+    {
+        if (empty($filter)) {
+            return $this->model->all();
+        }
+
+        return $this->model->where(function ($query) use ($filter) {
+            if (isset($filter['class'])) {
+                return $query->whereHas('classStudents')->where('class_id', $filter['class']);
+            }
+            if (isset($filter['main_class'])) {
+                return $query->whereHas('classStudents')->where(function($q) use ($filter) {
+                    return $q->whereHas('class')->where('main_class_id', $filter['main_class']);
+                });
+            }
+
+        })->get();
+    }
 }
