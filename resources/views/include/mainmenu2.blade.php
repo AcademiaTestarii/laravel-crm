@@ -22,7 +22,7 @@
 </li>
 
 <li <?php if (basename($_SERVER['PHP_SELF'])=="traineri.php" || basename($_SERVER['PHP_SELF'])=="trainer.php") { echo 'class="active"';} ?>>
-    <a href="traineri.php"><i class="fa fa-user"></i> <span class="nav-label">Traineri/Staff</span></a>
+    <a href="/trainers_list"><i class="fa fa-user"></i> <span class="nav-label">Traineri/Staff</span></a>
 </li>
 
 <li <?php if (basename($_SERVER['PHP_SELF'])=="parteneri.php" || basename($_SERVER['PHP_SELF'])=="partener.php") { echo 'class="active"';} ?>>

@@ -23,4 +23,40 @@ class Trainer extends Model
     {
         return $this->getAttribute('name');
     }
+
+    public function getTitle()
+    {
+        return $this->getAttribute('title');
+    }
+
+    public function getEmail()
+    {
+        return $this->getAttribute('email');
+    }
+
+
+    public function getImage()
+    {
+        if (!is_null($this->getAttribute('picture'))) {
+            return asset('/') . 'trainers/' . $this->getAttribute('picture');
+        }
+
+        return null;
+    }
+
+    public function getBio()
+    {
+        return $this->getAttribute('bio');
+    }
+
+    public function getLinkedin()
+    {
+        return $this->getAttribute('linkedin');
+    }
+
+    public function getPhone()
+    {
+        return $this->getAttribute('phone');
+    }
+
 }
