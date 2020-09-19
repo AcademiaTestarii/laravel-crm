@@ -8,6 +8,7 @@ class Trainer extends Model
 {
     //  use SoftDeletes;
     protected $table = 'trainer';
+    protected $guarded = ['id'];
 
     public function classTrainers()
     {

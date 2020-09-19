@@ -49,10 +49,11 @@ class TrainerController extends Controller
      */
     public function update(Request $request)
     {
-        /* if ($request->file('image')) {
-             $file = $request->file('image');
-             $file->storeAs('slider', $request->file('image')->getClientOriginalName(), ['disk' => 'storage']);
-         }*/
+        //  dump($request->all()); exit;
+        if ($request->file('image')) {
+            $file = $request->file('image');
+            $file->storeAs('trainers', $request->file('image')->getClientOriginalName(), ['disk' => 'storage']);
+        }
 
         $trainerId = $request->get('id');
 
@@ -60,23 +61,32 @@ class TrainerController extends Controller
             $trainerId = $this->trainerRepository->create([])->getId();
         }
 
+        $this->trainerRepository
+            ->findOneBy(['id' => $trainerId])
+            ->update([
+                'name' => $request->get('name'),
+                'phone' => $request->get('phone'),
+                'email' => $request->get('email'),
+                'linkedin' => $request->get('linkedin'),
+                'title' => $request->get('title'),
+                'bio' => $request->get('bio'),
+                'is_staff' => 0,
+                'picture' => ($request->file('image')) ? $request->file('image')->getClientOriginalName() : null,
+            ]);
 
-        /*   $this->trainerRepository
-               ->findOneBy(['id' => $trainerId])
-               ->update([
-                   'title' => $request->get('title'),
-                   'description1' => $request->get('description1'),
-                   'description2' => $request->get('description2'),
-                   'link' => $request->get('link'),
-                   'active' => ($request->get('active') == 'on') ? 1 : 0,
-                   'button' => $request->get('button'),
-                   'image' => ($request->file('image')) ? $request->file('image')->getClientOriginalName() : null,
-               ]);*/
+        return redirect()->route('trainer', ['id' => $trainerId]);
+    }
 
-        $trainer = null;
+    public function removeImage(Request $request)
+    {
+        if ($request->get('id')) {
+            $this->trainerRepository
+                ->findOneBy(['id' => $request->get('id')])
+                ->update([
+                    'picture' => null
+                ]);
+        }
 
-        return view('trainer')->with([
-            'trainer' => $trainer
-        ]);
+        return redirect()->route('trainer', ['id' => $request->get('id')]);
     }
 }

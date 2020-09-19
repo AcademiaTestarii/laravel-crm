@@ -1,104 +1,4 @@
-<?php
-/*include("../__connect.php");
-$page = "trainer";
-$today = getdate();
-
-if (isset($_GET['id']) && is_numeric($_GET['id'])) {
-    $id=$_GET['id'];
-    $sql=mysqli_query($link,"SELECT * FROM `trainer` WHERE `id`=".$id);
-    if (mysqli_num_rows($sql)>0) {
-        // edit
-        $row=mysqli_fetch_array($sql);
-        $submit="edit";
-        $pagetitle="Modifica";
-    } else {
-        header ("Location: traineri.php");
-    }
-    $new=FALSE;
-} else {*/
-// add
-/*    $new=TRUE;
-    $submit="addnew";
-    $pagetitle="Addauga";
-}*/
-
-/* Remove image */
-/*if (isset($_GET['removeimage'])) {
-    $removeimage = $_GET['removeimage'];
-    $picsql = mysqli_query($link,"SELECT * FROM `trainer` WHERE `id`=".$removeimage);
-    $pic=mysqli_fetch_array($picsql);
-    unlink(dirname( __FILE__ )."/../images/traineri/".$pic['image']);
-    mysqli_query($link,"UPDATE `trainer` SET `poza`=NULL WHERE `id`=".$removeimage);
-    header ("Location: trainer.php?id=".$pic['id']);
-}*/
-
-/* Edit */
-/*if (isset($_POST['edit'])) {
-    mysqli_query($link,"UPDATE `trainer` SET
-`nume`='".$_POST['nume']."',
-`telefon`='".$_POST['telefon']."',
-`email`='".$_POST['email']."',
-`linkedin`='".$_POST['linkedin']."',
-`titlu`='".$_POST['titlu']."',
-`bio`='".trim(mysqli_real_escape_string($link,$_POST['bio']))."'
-WHERE `id`=".$_POST['id2update']);
-
-    if ($_FILES['image']!="") {
-        include('class.upload/class.upload.php');
-        $handle = new upload($_FILES['image']);
-        if ($handle->uploaded) {
-            $handle->image_resize			= true;
-            $handle->image_x				= 350;
-            $handle->image_ratio_y			= true;
-            // path
-            $handle->process(dirname( __FILE__ )."/../images/traineri/");
-            $img_name = $handle->file_dst_name;
-            if ($handle->processed) {
-                mysqli_query($link,"UPDATE `trainer` SET `poza`='".$img_name."' WHERE `id`=".$_POST['id2update']);
-                $handle->clean();
-            } else {
-                echo "Process Error: Something went wrong: ".$handle->error;
-                $handle->clean();
-            }
-        } else {
-            echo "File Error: Something went wrong: ".$handle->error;
-            $handle->clean();
-        }
-    } // end image upload
-    header ("Location: traineri.php");
-}*/
-
-/* Add new */
-/*if (isset($_POST['addnew'])) {
-    mysqli_query($link,"INSERT INTO `trainer` (`nume`,`telefon`,`email`,`linkedin`,`titlu`,`bio`) VALUES ('".$_POST['nume']."','".$_POST['telefon']."','".$_POST['email']."','".$_POST['linkedin']."','".$_POST['titlu']."','".trim(mysqli_real_escape_string($link,$_POST['bio']))."')");
-    $last_id = mysqli_insert_id($link);
-
-    if ($_FILES['image']!="") {
-        include('class.upload/class.upload.php');
-        $handle = new upload($_FILES['image']);
-        if ($handle->uploaded) {
-            $handle->image_resize			= true;
-            $handle->image_x				= 350;
-            $handle->image_ratio_y			= true;
-            // path
-            $handle->process(dirname( __FILE__ )."/../images/traineri/");
-            $img_name = $handle->file_dst_name;
-            if ($handle->processed) {
-                mysqli_query($link,"UPDATE `trainer` SET `poza`='".$img_name."' WHERE `id`=".$last_id);
-                $handle->clean();
-            } else {
-                echo "Process Error: Something went wrong: ".$handle->error;
-                $handle->clean();
-            }
-        } else {
-            echo "File Error: Something went wrong: ".$handle->error;
-            $handle->clean();
-        }
-    } // end image upload
-    header ("Location: traineri.php");
-}*/
-?>
-        <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 
 <head>
@@ -123,7 +23,6 @@ WHERE `id`=".$_POST['id2update']);
     <link href="{{asset('css/style.css')}}" rel="stylesheet">
 
 </head>
-
 <body>
 
 <div id="wrapper">
@@ -153,7 +52,7 @@ WHERE `id`=".$_POST['id2update']);
         </div>
         <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-8">
-                <h2>$pageTitle Trainer</h2>
+                <h2>{{$pageTitle}} Trainer</h2>
                 <ol class="breadcrumb">
                     <li><a href="/dashboard">Home</a></li>
                     <li class="active"><a href="/trainer_list"><strong>Traineri</strong></a></li>
@@ -171,16 +70,16 @@ WHERE `id`=".$_POST['id2update']);
 
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h5>$pageTitle trainer<small></small></h5>
+                    <h5>{{$pageTitle}} trainer<small></small></h5>
                 </div>
                 <div class="ibox-content">
-
-                    <form id="form" method="post" class="form-horizontal" action="" enctype="multipart/form-data">
+                    <form id="form" method="POST" class="form-horizontal" action="" enctype="multipart/form-data">
+                        @csrf
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Nume complet:<br/><small>Apare in meniu, in casete,
                                     etc</small></label>
                             <div class="col-sm-10">
-                                <input value="{{$trainer->getName()}}" name="nume" type="text" class="form-control"
+                                <input value="@if($trainer) {{$trainer->getName()}} @endif" name="name" type="text" class="form-control"
                                        required>
                             </div>
                         </div>
@@ -189,7 +88,7 @@ WHERE `id`=".$_POST['id2update']);
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Pozitie/Titlu:<br/><small>pozitia, titulatura</small></label>
                             <div class="col-sm-10">
-                                <input value="{{$trainer->getTitle()}}" name="titlu" type="text" class="form-control"
+                                <input value="@if($trainer) {{$trainer->getTitle()}} @endif" name="title" type="text" class="form-control"
                                        required>
                             </div>
                         </div>
@@ -200,21 +99,21 @@ WHERE `id`=".$_POST['id2update']);
                             <div class="form-group col-md-3">
                                 <label class="col-sm-2 control-label">Telefon:<br/></label>
                                 <div class="col-sm-10">
-                                    <input value="{{$trainer->getPhone()}}" name="telefon" type="text"
+                                    <input value="@if($trainer) {{$trainer->getPhone()}} @endif" name="phone" type="text"
                                            class="form-control">
                                 </div>
                             </div>
                             <div class="form-group col-md-3">
                                 <label class="col-sm-2 control-label">Email:<br/></label>
                                 <div class="col-sm-10">
-                                    <input value="{{$trainer->getEmail()}}" name="email" type="email"
+                                    <input value="@if($trainer) {{$trainer->getEmail()}} @endif" name="email" type="email"
                                            class="form-control">
                                 </div>
                             </div>
                             <div class="form-group col-md-3">
                                 <label class="col-sm-2 control-label">LinkedIN:<br/></label>
                                 <div class="col-sm-10">
-                                    <input value="{{$trainer->getLinkedin()}}" name="linkedin" type="text"
+                                    <input value="@if($trainer) {{$trainer->getLinkedin()}} @endif" name="linkedin" type="text"
                                            class="form-control">
                                 </div>
                             </div>
@@ -227,7 +126,7 @@ WHERE `id`=".$_POST['id2update']);
                                     trainer</small></label>
                             <div class="col-sm-10">
 						<textarea id="text1" name="bio" class="summernote">
-							{!! $trainer->getBio() !!}
+							@if($trainer) {!! $trainer->getBio() !!} @endif
                         </textarea>
                             </div>
                         </div>
@@ -236,10 +135,10 @@ WHERE `id`=".$_POST['id2update']);
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Poza trainer:</label>
                             <div class="col-sm-10">
-                                @if($trainer->getImage())
+                                @if($trainer && $trainer->getImage())
                                     <p class="help-block"><img src="{{$trainer->getImage()}}"/></p>
                                     <a class="btn btn-primary btn-sm"
-                                       href="/trainer?removeimage={{$trainer->getId()}}"><i
+                                       href="/trainer/removeimage?id={{$trainer->getId()}}"><i
                                                 class="glyphicon glyphicon-trash"></i> &nbsp Sterge poza</a>
                                 @else
                                     <label for="poza">Poza <small>(Latime: 350px, Inaltime: 462px)</small></label><br/>
@@ -258,7 +157,7 @@ WHERE `id`=".$_POST['id2update']);
 
                         <div class="form-group">
                             <div class="col-sm-4 col-sm-offset-2">
-                                <input type="hidden" name="id2update" value="{{$trainer->getId()}}"/>
+                                <input type="hidden" name="id2update" value="@if($trainer) {{$trainer->getId()}} @endif"/>
                                 <button class="btn btn-white" type="reset">Reseteaza</button>
                                 <button class="btn btn-primary" type="submit" name="<?php /*echo $submit;*/?>">Salveaza
                                 </button>
