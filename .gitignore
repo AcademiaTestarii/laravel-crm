@@ -2,6 +2,7 @@
 /public/slider
 /public/partners
 /public/trainers
+/public/blog_posts
 /vendor
 .env
 .phpunit.result.cache

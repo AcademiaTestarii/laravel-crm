@@ -13,6 +13,11 @@ class Blog extends Model
     protected $table = 'news';
     protected $guarded = ['id'];
 
+    public function blogImages()
+    {
+        return $this->hasMany(BlogImage::class, 'news_id');
+    }
+
     public function getId()
     {
         return $this->getAttribute('id');

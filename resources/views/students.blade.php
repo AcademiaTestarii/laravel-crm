@@ -294,10 +294,6 @@
                                                             @endif
                                                         @else
                                                             <p>Nu are notite.</p>
-                                                    {{--<button href="/inline_note?student={{$student->getId()}}&class={{$student->classStudents->getClassId()}}"
-                                                            class="btn btn-info btn-xs ajax-popup-link">
-                                                        Adauga/Modifica
-                                                    </button>--}}
                                                     @endif
                                                 </div>
                                             </div>

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BlogImage;
+use App\Repositories\BlogImageRepository;
 use App\Repositories\BlogRepository;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -9,10 +11,12 @@ use Illuminate\Http\Request;
 class BlogController extends Controller
 {
     protected $blogRepository;
+    protected $blogImageRepository;
 
-    public function __construct(BlogRepository $blogRepository)
+    public function __construct(BlogRepository $blogRepository, BlogImageRepository $blogImageRepository)
     {
         $this->blogRepository = $blogRepository;
+        $this->blogImageRepository = $blogImageRepository;
     }
 
     /**
@@ -78,6 +82,33 @@ class BlogController extends Controller
 
     public function update($blogId, Request $request)
     {
+        if ($request->get('default_image')) {
+            $blogImages = $this->blogImageRepository
+                ->findAllBy(['news_id' => $blogId]);
+
+            foreach ($blogImages as $blogImage) {
+                $blogImage->update([
+                    'is_default' => 0
+                ]);
+            }
+
+            $this->blogImageRepository
+                ->findOneBy(['id' => $request->get('default_image')])
+                ->update([
+                    'is_default' => 1
+                ]);
+
+            if ($request->get('gallery')) {
+                foreach ($request->get('gallery') as $galleryImage) {
+                    $this->blogImageRepository
+                        ->findOneBy(['id' => $galleryImage])
+                        ->delete();
+                }
+            }
+
+            return redirect()->route('blog', ['id' => $blogId]);
+        }
+
         $this->blogRepository
             ->findOneBy(['id' => $blogId])
             ->update([
@@ -90,6 +121,22 @@ class BlogController extends Controller
             ]);
 
         return redirect()->route('blog', ['id' => $blogId]);
+    }
+
+    public function uploadImage($blogId, Request $request)
+    {
+        $file = $request->file('file');
+        $file->storeAs('news', $request->file('file')->getClientOriginalName(), ['disk' => 'storage']);
+
+        $this->blogImageRepository
+            ->create([
+                'image' => ($request->file('file')) ? $request->file('file')->getClientOriginalName() : null,
+                'news_id' => $blogId,
+                'is_default' => 0
+            ]);
+
+        return true;
+
     }
 
 }

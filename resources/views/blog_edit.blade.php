@@ -89,7 +89,7 @@
                                                     <label>
                                                         <input name="is_active"
                                                                type="checkbox"
-                                                        @if($blog->isActive()) checked @endif /> Activ
+                                                               @if($blog->isActive()) checked @endif /> Activ
                                                     </label>&nbsp;&nbsp;&nbsp;&nbsp;
                                                 </div>
 
@@ -153,43 +153,40 @@
 
                             <div class="tab-pane" id="tab_2">
                                 <div id="dropzone">
-                                    <form action="upload_images_blog.php?id={{$blog->getId()}}" class="dropzone"
+                                    <form action="/blog/{{$blog->getId()}}/uploadImage" class="dropzone"
                                           id="noutati_dropzone">
+                                        @csrf
                                         <div class="dz-message">Trage fisierele aici sau click pentru upload.<br> <span
                                                     class="note">(Se pot selecta multiple fisiere si la drag si la upload)</span>
                                         </div>
-
                                     </form>
                                 </div>
-                                <?php /*$select_images_query = "SELECT * FROM `imagini_noutati` WHERE `id_noutate` = " . $id;
-
-                                $select_images = mysqli_query($link, $select_images_query);
-                                if ($select_images->num_rows != 0) {*/ ?>
-                                <hr/>
-                                <form method="post" action="sterge_imagini_blog.php?id={{$blog->getId()}}">
-                                    <div class="row">
-                                        <?php/* while ($image = mysqli_fetch_assoc($select_images)) {*/ ?>
-
-                                        <div class="col-md-2 pb-30">
-                                            <input type="checkbox" name="galerie[]"
-                                                   value="<?php/* echo $image['id_imagine']; */?>"/> Sterge
-                                            <img class="img-responsive thumbnail"
-                                                 src="../images/blog/<?php /*echo $image['imagine'];*/ ?>">
-                                            <input type="radio" name="imagine_principala"
-                                                   value="<?php /*echo $image['id_imagine']; */?>" <?php /*if ($image['imagine_principala'] == 1) echo "checked"; */?>>
-                                            Imagine principala
+                                @if($blog->blogImages->isNotEmpty())
+                                    <hr/>
+                                    <form method="post" action="/blog/{{$blog->getId()}}">
+                                        @csrf
+                                        <div class="row">
+                                            @foreach($blog->blogImages as $blogImage)
+                                                <div class="col-md-2 pb-30">
+                                                    <input type="checkbox" name="gallery[]"
+                                                           value="{{$blogImage->getId()}}"/> Sterge
+                                                    <img class="img-responsive thumbnail"
+                                                         src="{{$blogImage->getImage()}}">
+                                                    <input type="radio" name="default_image"
+                                                           value="{{$blogImage->getId()}}"
+                                                           @if($blogImage->isDefault()) checked @endif >
+                                                    Imagine principala
+                                                </div>
+                                            @endforeach
+                                            <div class="col-md-12">
+                                                <button class="btn btn-block btn-danger" type="submit"
+                                                        name="delete_gallery">Sterge imaginile selectate / Modifica
+                                                    imaginea principala
+                                                </button>
+                                            </div>
                                         </div>
-
-                                        <?php //} ?>
-                                        <div class="col-md-12">
-                                            <button class="btn btn-block btn-danger" type="submit"
-                                                    name="sterge_galerie">Sterge imaginile selectate / Modifica
-                                                imaginea principala
-                                            </button>
-                                        </div>
-                                    </div>
-                                </form>
-                                <?php// } ?>
+                                    </form>
+                                @endif
                             </div>
                             <!-- /.tab-pane -->
                         </div>
@@ -349,7 +346,6 @@
             availableTags: sampleTags,
             removeConfirmation: true
         });
-
     });
 </script>
 </body>
