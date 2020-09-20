@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\BlogRepository;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class BlogController extends Controller
@@ -41,65 +42,54 @@ class BlogController extends Controller
         ]);
     }
 
-    public function getTrainer(Request $request)
+    public function getBlogData()
     {
-       /* $trainer = null;
-        $pageTitle = 'Adauga';
-
-        if ($request->get('id')) {
-            $trainer = $this->blogRepository->findOneBy(['id' => $request->get('id')]);
-            $pageTitle = 'Modifica';
-        }
-
-        return view('trainer')->with([
-            'trainer' => $trainer,
-            'pageTitle' => $pageTitle
-        ]);*/
+        return view('blog_add');
     }
 
     /**
      * @param Request $request
      * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
      */
-    public function update(Request $request)
+    public function add(Request $request)
     {
-    /*    if ($request->file('image')) {
-            $file = $request->file('image');
-            $file->storeAs('trainers', $request->file('image')->getClientOriginalName(), ['disk' => 'storage']);
-        }
-
-        $trainerId = $request->get('id');
-
-        if (!$trainerId) {
-            $trainerId = $this->blogRepository->create([])->getId();
-        }
-
-        $this->blogRepository
-            ->findOneBy(['id' => $trainerId])
-            ->update([
-                'name' => $request->get('name'),
-                'phone' => $request->get('phone'),
-                'email' => $request->get('email'),
-                'linkedin' => $request->get('linkedin'),
+        $blog = $this->blogRepository
+            ->create([
                 'title' => $request->get('title'),
-                'bio' => $request->get('bio'),
-                'is_staff' => 0,
-                'picture' => ($request->file('image')) ? $request->file('image')->getClientOriginalName() : null,
+                'text' => $request->get('short_description'),
+                'keywords' => $request->get('keywords'),
+                'date' => (new Carbon($request->get('date')))->format("Y-m-d"),
+                'added_on' => (new Carbon())->toDateTimeString(),
+                'is_active' => ($request->get('active')) ? 1 : 0
             ]);
 
-        return redirect()->route('trainer', ['id' => $trainerId]);*/
+        return redirect()->route('blog', ['id' => $blog->getId()]);
     }
 
-    public function removeImage(Request $request)
+    public function getBlog($blogId)
     {
-       /* if ($request->get('id')) {
-            $this->blogRepository
-                ->findOneBy(['id' => $request->get('id')])
-                ->update([
-                    'picture' => null
-                ]);
-        }
+        $blog = $this->blogRepository->findOneBy(['id' => $blogId]);
 
-        return redirect()->route('trainer', ['id' => $request->get('id')]);*/
+        return view('blog_edit')->with([
+            'blog' => $blog
+        ]);
     }
+
+    public function update($blogId, Request $request)
+    {
+        $this->blogRepository
+            ->findOneBy(['id' => $blogId])
+            ->update([
+                'title' => $request->get('title'),
+                'text' => $request->get('short_description'),
+                'keywords' => $request->get('keywords'),
+                'date' => (new Carbon($request->get('date')))->format("Y-m-d"),
+                'added_on' => (new Carbon())->toDateTimeString(),
+                'is_active' => ($request->get('is_active')) ? 1 : 0
+            ]);
+
+        return redirect()->route('blog', ['id' => $blogId]);
+    }
+
 }

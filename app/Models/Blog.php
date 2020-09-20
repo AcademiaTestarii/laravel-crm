@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -34,7 +35,10 @@ class Blog extends Model
 
     public function getDate()
     {
-        return $this->getAttribute('date');
+        if (is_null($this->getAttribute('date'))) {
+            return null;
+        }
+        return (new Carbon($this->getAttribute('date')));
     }
 
     public function getAddedOn()
