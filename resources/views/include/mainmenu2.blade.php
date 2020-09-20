@@ -26,7 +26,7 @@
 </li>
 
 <li <?php if (basename($_SERVER['PHP_SELF'])=="parteneri.php" || basename($_SERVER['PHP_SELF'])=="partener.php") { echo 'class="active"';} ?>>
-    <a href="parteneri.php"><i class="fa fa-user"></i> <span class="nav-label">Parteneri</span></a>
+    <a href="/partners_list"><i class="fa fa-user"></i> <span class="nav-label">Parteneri</span></a>
 </li>
 
 <li <?php if (basename($_SERVER['PHP_SELF'])=="blog.php" || basename($_SERVER['PHP_SELF'])=="modifica_blog.php" || basename($_SERVER['PHP_SELF'])=="adauga_blog.php") { echo 'class="active"';} ?>>

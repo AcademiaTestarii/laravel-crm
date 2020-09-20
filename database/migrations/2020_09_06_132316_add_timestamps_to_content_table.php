@@ -33,6 +33,11 @@ class AddTimestampsToContentTable extends Migration
         Schema::table('trainers', function (Blueprint $table) {
             $table->timestamps();
         });
+
+        Schema::table('partners', function (Blueprint $table) {
+            $table->timestamps();
+            $table->softDeletes();
+        });
     }
 
     /**
@@ -59,6 +64,10 @@ class AddTimestampsToContentTable extends Migration
         });
 
         Schema::table('classes', function (Blueprint $table) {
+            $table->dropColumn(['created_at', 'updated_at', 'deleted_at']);
+        });
+
+        Schema::table('partners', function (Blueprint $table) {
             $table->dropColumn(['created_at', 'updated_at', 'deleted_at']);
         });
     }

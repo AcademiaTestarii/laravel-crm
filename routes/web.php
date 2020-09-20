@@ -52,3 +52,8 @@ Route::get('trainers_list', 'TrainerController@index')->name('trainers');
 Route::get('trainer', 'TrainerController@getTrainer')->name('trainer');
 Route::post('trainer', 'TrainerController@update');
 Route::get('trainer/removeimage', 'TrainerController@removeImage');
+
+Route::get('partners_list', 'PartnerController@index')->name('partners');
+Route::get('partner', 'PartnerController@getTrainer')->name('partner');
+Route::post('partner', 'PartnerController@update');
+Route::get('partner/removeimage', 'PartnerController@removeImage');
