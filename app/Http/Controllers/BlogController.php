@@ -18,12 +18,26 @@ class BlogController extends Controller
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
-        $blogData = $this->blogRepository->allOrderedBy('added_on', 'DESC');
+        if ($request->get('delete')) {
+            $this->blogRepository
+                ->findOneBy(['id' => $request->get('delete')])
+                ->delete();
+        }
+
+        if ($request->get('state')) {
+            $this->blogRepository
+                ->findOneBy(['id' => $request->get('id')])
+                ->update([
+                    'is_active' => $request->get('state')
+                ]);
+        }
+
+        $blogNews = $this->blogRepository->allOrderedBy('added_on', 'DESC');
 
         return view('blog')->with([
-            'blogData' => $blogData
+            'blogNews' => $blogNews
         ]);
     }
 
