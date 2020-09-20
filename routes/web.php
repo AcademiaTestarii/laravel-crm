@@ -57,3 +57,6 @@ Route::get('partners_list', 'PartnerController@index')->name('partners');
 Route::get('partner', 'PartnerController@getPartner')->name('partner');
 Route::post('partner', 'PartnerController@update');
 Route::get('partner/removeimage', 'PartnerController@removeImage');
+
+
+Route::get('blog', 'BlogController@index')->name('blog');

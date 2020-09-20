@@ -30,5 +30,5 @@
 </li>
 
 <li <?php if (basename($_SERVER['PHP_SELF'])=="blog.php" || basename($_SERVER['PHP_SELF'])=="modifica_blog.php" || basename($_SERVER['PHP_SELF'])=="adauga_blog.php") { echo 'class="active"';} ?>>
-    <a href="blog.php"><i class="fa fa-newspaper-o"></i> <span class="nav-label">Blog</span></a>
+    <a href="/blog"><i class="fa fa-newspaper-o"></i> <span class="nav-label">Blog</span></a>
 </li>

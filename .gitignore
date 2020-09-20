@@ -1,5 +1,7 @@
 /public/storage
 /public/slider
+/public/partners
+/public/trainers
 /vendor
 .env
 .phpunit.result.cache
