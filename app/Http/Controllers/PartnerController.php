@@ -43,7 +43,7 @@ class PartnerController extends Controller
             $pageTitle = 'Modifica';
         }
 
-        return view('trainer')->with([
+        return view('partner')->with([
             'partner' => $partner,
             'pageTitle' => $pageTitle
         ]);
@@ -71,16 +71,12 @@ class PartnerController extends Controller
             ->findOneBy(['id' => $partnerId])
             ->update([
                 'name' => $request->get('name'),
-                'phone' => $request->get('phone'),
-                'email' => $request->get('email'),
-                'linkedin' => $request->get('linkedin'),
-                'title' => $request->get('title'),
-                'bio' => $request->get('bio'),
-                'is_staff' => 0,
-                'picture' => ($request->file('image')) ? $request->file('image')->getClientOriginalName() : null,
+                'logo' => ($request->file('image')) ? $request->file('image')->getClientOriginalName() : null,
+                'description' => $request->get('description'),
+                'url' => $request->get('url')
             ]);
 
-        return redirect()->route('trainer', ['id' => $partnerId]);
+        return redirect()->route('partner', ['id' => $partnerId]);
     }
 
     public function removeImage(Request $request)
@@ -89,7 +85,7 @@ class PartnerController extends Controller
             $this->partnerRepository
                 ->findOneBy(['id' => $request->get('id')])
                 ->update([
-                    'picture' => null
+                    'logo' => null
                 ]);
         }
 

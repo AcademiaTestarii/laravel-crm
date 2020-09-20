@@ -1,17 +1,4 @@
-<?php
-/*include("../__connect.php");
-$page = "parteneri";
-$today = date("Y-m-d");
-// sterge
-if (isset($_GET['sterge']) AND is_numeric($_GET['sterge'])) {
-    $picsql = mysqli_query($link,"SELECT * FROM `parteneri` WHERE `id_parteneri`=".$_GET['sterge']);
-    $pic=mysqli_fetch_array($picsql);
-    unlink(dirname( __FILE__ )."/../images/parteneri/".$pic['logo_parteneri']);
-    mysqli_query($link,"DELETE FROM `parteneri` WHERE `id_parteneri`=".$_GET['sterge']);
-    header ("Location:parteneri.php");
-}
-*/?><!--
-      -->  <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
 

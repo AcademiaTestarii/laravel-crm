@@ -49,7 +49,6 @@ class TrainerController extends Controller
      */
     public function update(Request $request)
     {
-        //  dump($request->all()); exit;
         if ($request->file('image')) {
             $file = $request->file('image');
             $file->storeAs('trainers', $request->file('image')->getClientOriginalName(), ['disk' => 'storage']);
