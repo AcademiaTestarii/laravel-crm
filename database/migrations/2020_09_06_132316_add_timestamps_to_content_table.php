@@ -30,7 +30,7 @@ class AddTimestampsToContentTable extends Migration
             $table->timestamps();
         });
 
-        Schema::table('trainers', function (Blueprint $table) {
+        Schema::table('trainer', function (Blueprint $table) {
             $table->timestamps();
         });
 
@@ -69,7 +69,7 @@ class AddTimestampsToContentTable extends Migration
             $table->dropColumn(['created_at', 'updated_at']);
         });
 
-        Schema::table('trainers', function (Blueprint $table) {
+        Schema::table('trainer', function (Blueprint $table) {
             $table->dropColumn(['created_at', 'updated_at']);
         });
 

@@ -14,456 +14,387 @@ class ImportDatabaseStructure extends Migration
     public function up()
     {
         \Illuminate\Support\Facades\DB::statement(
-            "DROP TABLE IF EXISTS `activities`;"
+            "RENAME TABLE activitate TO activities;"
         );
 
         \Illuminate\Support\Facades\DB::statement("
-        CREATE TABLE `activities` (
-          `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-          `followers` int(10) unsigned DEFAULT NULL,
-          `classes` int(10) unsigned DEFAULT NULL,
-          `graduates` int(10) unsigned DEFAULT NULL,
-          `recommandations` int(10) unsigned DEFAULT NULL,
-          PRIMARY KEY (`id`)
-        ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+         ALTER TABLE activities CHANGE `folowers` `followers` int(10) unsigned DEFAULT null;
         ");
 
         \Illuminate\Support\Facades\DB::statement("
-        DROP TABLE IF EXISTS `class_dates`;
+         ALTER TABLE activities CHANGE `cursuri` `classes` int(10) unsigned DEFAULT null;
         ");
 
         \Illuminate\Support\Facades\DB::statement("
-                CREATE TABLE `class_dates` (
-          `id` int(6) NOT NULL AUTO_INCREMENT,
-          `class_id` int(6) DEFAULT NULL,
-          `date` date DEFAULT NULL,
-          PRIMARY KEY (`id`)
-        ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+       ALTER TABLE activities CHANGE `absolventi` `graduates` int(10) unsigned DEFAULT null;
         ");
 
         \Illuminate\Support\Facades\DB::statement("
-        DROP TABLE IF EXISTS `class_students`;
+     ALTER TABLE activities CHANGE `recomandari` `recommandations` int(10) unsigned DEFAULT null;
+        ");
+
+        \Illuminate\Support\Facades\DB::statement(
+            "RENAME TABLE date_cursuri TO class_dates;"
+        );
+
+        \Illuminate\Support\Facades\DB::statement("
+     ALTER TABLE class_dates CHANGE `id_curs` `class_id` int(6) DEFAULT null;
         ");
 
         \Illuminate\Support\Facades\DB::statement("
-        CREATE TABLE `class_students` (
-  `id` int(6) unsigned NOT NULL AUTO_INCREMENT,
-  `student_id` int(6) unsigned NOT NULL,
-  `class_id` int(6) unsigned NOT NULL,
-  `payment_method` text,
-  `payment_type` text,
-  `sign_up_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `invoice` text,
-  `payment1` int(11) unsigned DEFAULT '0',
-  `payment2` int(11) unsigned DEFAULT '0',
-  `payment3` int(11) unsigned DEFAULT '0',
-  `payment_full` int(11) unsigned DEFAULT '0',
-  `note` text,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+     ALTER TABLE class_dates CHANGE `data` `date` DATE DEFAULT null;
+        ");
+
+        \Illuminate\Support\Facades\DB::statement(
+            "RENAME TABLE cursant_curs TO class_students;"
+        );
+
+        \Illuminate\Support\Facades\DB::statement("
+     ALTER TABLE class_students CHANGE `id_cursant` `student_id` int(6) unsigned;
         ");
 
         \Illuminate\Support\Facades\DB::statement("
-        DROP TABLE IF EXISTS `class_trainers`;
+     ALTER TABLE class_students CHANGE `id_curs` `class_id` int(6) unsigned;
         ");
 
         \Illuminate\Support\Facades\DB::statement("
-        CREATE TABLE `class_trainers` (
-  `id` int(6) NOT NULL AUTO_INCREMENT,
-  `trainer_id` int(6) NOT NULL,
-  `class_id` int(6) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+     ALTER TABLE class_students CHANGE `modalitate_plata` `payment_method` text default null;
         ");
 
         \Illuminate\Support\Facades\DB::statement("
-        DROP TABLE IF EXISTS `classes`;
-        ");
-        \Illuminate\Support\Facades\DB::statement("
-        CREATE TABLE `classes` (
-  `id` int(6) unsigned NOT NULL AUTO_INCREMENT,
-  `main_class_id` int(6) unsigned DEFAULT '0',
-  `title` text,
-  `short_description` text,
-  `description` text,
-  `registration_start_date` date DEFAULT NULL,
-  `registration_end_date` date DEFAULT NULL,
-  `students` int(6) unsigned DEFAULT '0',
-  `price` int(6) unsigned DEFAULT '0',
-  `discount_price` int(11) DEFAULT '0',
-  `for_whom_description` text,
-  `about_description` text,
-  `cost_description` text,
-  `resources_description` mediumtext,
-  `structure_description` text,
-  `requirements_description` text,
-  `early_description` text,
-  `loyality_description` text,
-  `friends_description` text,
-  `discount_description` text,
-  `schedule` text,
-  `schedule_pdf` text,
-  `image` text,
-  `weekend` int(1) unsigned DEFAULT '0',
-  `is_active` int(1) unsigned DEFAULT '0',
-  `is_planned` int(1) unsigned DEFAULT '0',
-  `is_bucharest_located` int(1) unsigned DEFAULT '1',
-  `deployment` text NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+     ALTER TABLE class_students CHANGE `tip_plata` `payment_type` text default null;
         ");
 
         \Illuminate\Support\Facades\DB::statement("
-        DROP TABLE IF EXISTS `comments`;
+     ALTER TABLE class_students CHANGE `data_inscriere` `sign_up_date` TIMESTAMP;
         ");
 
         \Illuminate\Support\Facades\DB::statement("
-        CREATE TABLE `comments` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `article_id` int(10) unsigned DEFAULT NULL,
-  `reply_id` int(10) unsigned DEFAULT NULL,
-  `name` mediumtext,
-  `email` mediumtext,
-  `comment` text,
-  `is_active` int(10) unsigned DEFAULT '1',
-  `added_on` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+     ALTER TABLE class_students CHANGE `factura` `invoice` TEXT default null;
         ");
 
         \Illuminate\Support\Facades\DB::statement("
-        DROP TABLE IF EXISTS `content`;
+     ALTER TABLE class_students CHANGE `rata1` `payment1` int(11) unsigned default 0 null;
         ");
 
         \Illuminate\Support\Facades\DB::statement("
-        CREATE TABLE `content` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` text,
-  `title` text,
-  `text` text,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+     ALTER TABLE class_students CHANGE `rata2` `payment2` int(11) unsigned default 0 null;
         ");
 
         \Illuminate\Support\Facades\DB::statement("
-        DROP TABLE IF EXISTS `db_module`;
-        ");
-        \Illuminate\Support\Facades\DB::statement("
-        CREATE TABLE `db_module` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `last_name` text NOT NULL,
-  `first_name` text NOT NULL,
-  `email` text NOT NULL,
-  `occupation` text NOT NULL,
-  `phone` text NOT NULL,
-  `date_of_birth` text NOT NULL,
-  `education` text NOT NULL,
-  `foreign_languages` text NOT NULL,
-  `period` text NOT NULL,
-  `module` int(11) NOT NULL,
-  `english` int(11) NOT NULL,
-  `office` int(11) NOT NULL,
-  `web` int(11) NOT NULL,
-  `user` int(11) NOT NULL,
-  `status` int(11) NOT NULL,
-  `payment_type` int(11) NOT NULL,
-  `payment_method` int(11) NOT NULL,
-  `gdpr` int(11) DEFAULT NULL,
-  `newsletter` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+     ALTER TABLE class_students CHANGE `rata3` `payment3` int(11) unsigned default 0 null;
         ");
 
         \Illuminate\Support\Facades\DB::statement("
-        DROP TABLE IF EXISTS `feedback`;
+     ALTER TABLE class_students CHANGE `integral` `payment_full` int(11) unsigned default 0 null;
         ");
 
         \Illuminate\Support\Facades\DB::statement("
-        CREATE TABLE `feedback` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `student_id` int(10) unsigned DEFAULT NULL,
-  `class_id` int(10) unsigned DEFAULT NULL,
-  `staff` int(10) unsigned DEFAULT NULL,
-  `score` int(2) unsigned DEFAULT '0',
-  `organization_jira_zephyr_plus` text,
-  `organization_jira_zephyr_minus` text,
-  `test_cases_plus` text,
-  `test_cases_minus` text,
-  `defects_plus` text,
-  `defects_minus` text,
-  `traceability_plus` text,
-  `traceability_minus` text,
-  `link` varchar(12) DEFAULT NULL,
-  `granted_on` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+     ALTER TABLE class_students CHANGE `notita` `note` text default null;
+        ");
+
+        \Illuminate\Support\Facades\DB::statement(
+            "RENAME TABLE trainer_curs TO class_trainers;"
+        );
+
+        \Illuminate\Support\Facades\DB::statement("
+     ALTER TABLE class_trainers CHANGE `id_trainer` `trainer_id` int(6);
         ");
 
         \Illuminate\Support\Facades\DB::statement("
-        DROP TABLE IF EXISTS `invoices`;
+     ALTER TABLE class_trainers CHANGE `id_curs` `class_id` int(6);
+        ");
+
+        \Illuminate\Support\Facades\DB::statement(
+            "RENAME TABLE cursuri TO classes;"
+        );
+
+        \Illuminate\Support\Facades\DB::statement("
+     ALTER TABLE classes CHANGE 
+     `parent` `main_class_id` int(6) unsigned default 0 null,
+      CHANGE `titlu` `title` text default null,
+     CHANGE `descriere_scurta` `short_description` text default null,
+     CHANGE `descriere` `description` text default null,
+    CHANGE  `start_inscriere` `registration_start_date` DATE default null,
+    CHANGE  `end_inscriere` `registration_end_date` DATE default null,
+    CHANGE `cursanti` `students` int(6) unsigned default 0 null,
+    CHANGE `pret` `price` int(6) unsigned default 0 null,
+    CHANGE `pret_redus` `discount_price` int(11)  default 0 null,
+    CHANGE   `cui` `for_whom_description` text default null,
+     CHANGE  `ce` `about_description` text default null,
+     CHANGE  `costuri` `cost_description` text default null,
+    CHANGE   `resurse` `resources_description` mediumtext default null,
+    CHANGE   `structura` `structure_description` text default null,
+    CHANGE   `cerinte` `requirements_description` text default null,
+    CHANGE   `early` `early_description` text default null,
+     CHANGE  `loyality` `loyality_description` text default null,
+     CHANGE  `friends` `friends_description` text default null,
+     CHANGE  `discount` `discount_description` text default null,
+     CHANGE  `programa` `schedule` text default null,
+     CHANGE  `pdf_programa` `schedule_pdf` text default null,
+     CHANGE  `imagine` `image` text default null,
+     CHANGE  `activ` `is_active` int(1) unsigned default 0 null,
+     CHANGE  `planificat` `is_planned` int(1) unsigned default 0 null,
+     CHANGE  `bucuresti` `is_bucharest_located` int(1) unsigned default 0 null,
+     CHANGE  `desfasurare` `deployment` text default null
+        ");
+
+        \Illuminate\Support\Facades\DB::statement(
+            "RENAME TABLE comentarii TO comments;"
+        );
+
+        \Illuminate\Support\Facades\DB::statement(
+            "alter TABLE comments DROP PRIMARY KEY,
+ CHANGE `id_comentariu` `id` int(10) unsigned not null auto_increment,
+     ADD CONSTRAINT `comments_id_pk` PRIMARY KEY (`id`)"
+        );
+
+        \Illuminate\Support\Facades\DB::statement("
+     ALTER TABLE comments 
+     CHANGE `id_articol` `article_id` int(10) unsigned null,
+     CHANGE `id_reply` `reply_id` int(10) unsigned null,
+    CHANGE `nume` `name` mediumtext default null,
+    CHANGE `comentariu` `comment` text default null,
+    CHANGE `activ` `is_active` int(10) unsigned default 1,
+    CHANGE `adaugat` `added_on` TIMESTAMP
+        ");
+
+        \Illuminate\Support\Facades\DB::statement(
+            "RENAME TABLE continut TO content;"
+        );
+
+        \Illuminate\Support\Facades\DB::statement("
+     ALTER TABLE content 
+     CHANGE `nume` `name` text null,
+     CHANGE `titlu` `title` text null
         ");
 
         \Illuminate\Support\Facades\DB::statement("
-        CREATE TABLE `invoices` (
-  `id` int(10) unsigned DEFAULT NULL,
-  `class_id` int(10) unsigned DEFAULT NULL,
-  `student_id` int(10) unsigned DEFAULT NULL,
-  `invoice` text,
-  `is_paid` int(10) unsigned DEFAULT '0',
-  `issued_on` datetime DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+     ALTER TABLE db_module 
+     CHANGE `nume` `last_name` text not null,
+     CHANGE `prenume` `first_name` text not null,
+     CHANGE `profesie` `occupation` text not null,
+     CHANGE `telefon` `phone` text not null,
+     CHANGE `data` `date_of_birth` text not null,
+     CHANGE `educatie` `education` text not null,
+     CHANGE `limbi-straine` `foreign_languages` text not null,
+     CHANGE `perioada` `period` text not null,
+     CHANGE `modul` `module` int(11) not null,
+     CHANGE `engleza` `english` int(11) not null,
+     CHANGE `tip_plata` `payment_type` int(11) not null,
+     CHANGE `mod_plata` `payment_method` int(11) not null
+        ");
+
+
+        \Illuminate\Support\Facades\DB::statement(
+            "alter TABLE feedback DROP PRIMARY KEY,
+ CHANGE `id_feedback` `id` int(10) unsigned not null auto_increment,
+     ADD CONSTRAINT `feedback_id_pk` PRIMARY KEY (`id`)"
+        );
+
+        \Illuminate\Support\Facades\DB::statement("
+     ALTER TABLE feedback 
+     CHANGE `id_cursant` `student_id` int(10) unsigned default null,
+     CHANGE `id_curs` `class_id` int(10) unsigned default null,
+    CHANGE `acordat` `granted_on` TIMESTAMP
+        ");
+
+        \Illuminate\Support\Facades\DB::statement(
+            "RENAME TABLE facturi TO invoices;"
+        );
+
+        \Illuminate\Support\Facades\DB::statement("
+     ALTER TABLE invoices 
+     CHANGE `id_cursant` `student_id` int(10) unsigned default null,
+     CHANGE `id_curs` `class_id` int(10) unsigned default null,
+    CHANGE `factura` `invoice` TEXT default null,
+    CHANGE `achitata` `is_paid` INT(10) unsigned DEFAULT 0 null,
+    CHANGE `data_emiterii` `issued_on` DATETIME null
+        ");
+
+        \Illuminate\Support\Facades\DB::statement(
+            "RENAME TABLE curs_main TO main_classes;"
+        );
+
+        \Illuminate\Support\Facades\DB::statement(
+            "alter TABLE main_classes DROP PRIMARY KEY,
+ CHANGE `id_curs_main` `id` int(10) unsigned not null auto_increment,
+     ADD CONSTRAINT `main_classes_id_pk` PRIMARY KEY (`id`)"
+        );
+
+        \Illuminate\Support\Facades\DB::statement("
+     ALTER TABLE main_classes 
+     CHANGE `titlu_main` `title` TEXT  null,
+     CHANGE `activ_main` `is_active` int(10) unsigned default 1,
+    CHANGE `nou` `is_new` int(10) unsigned default 0
+        ");
+
+        \Illuminate\Support\Facades\DB::statement(
+            "RENAME TABLE noutati TO news;"
+        );
+
+        \Illuminate\Support\Facades\DB::statement(
+            "alter TABLE news DROP PRIMARY KEY,
+        CHANGE `id_noutate` `id` int(11) unsigned not null auto_increment,
+        ADD CONSTRAINT `news_id_pk` PRIMARY KEY (`id`)"
+        );
+
+        \Illuminate\Support\Facades\DB::statement("
+     ALTER TABLE news 
+     CHANGE `titlu` `title` mediumtext null,
+     CHANGE `cuvinte_cheie` `keywords` mediumtext null,
+     CHANGE `data_articol` `date` DATE default null,
+     CHANGE `adaugat` `added_on` timestamp,
+     CHANGE `active` `is_active` tinyint(4) unsigned DEFAULT '0',
+     CHANGE `vizualizari` `views` int(10) unsigned DEFAULT NULL
+        ");
+
+
+        \Illuminate\Support\Facades\DB::statement(
+            "RENAME TABLE imagini_noutati TO news_images;"
+        );
+
+        \Illuminate\Support\Facades\DB::statement(
+            "alter TABLE news_images DROP PRIMARY KEY,
+        CHANGE `id_imagine` `id` int(10) unsigned not null auto_increment,
+        ADD CONSTRAINT `news_images_id_pk` PRIMARY KEY (`id`)"
+        );
+
+        \Illuminate\Support\Facades\DB::statement("
+     ALTER TABLE news_images 
+     CHANGE `imagine` `image` mediumtext null,
+     CHANGE `id_noutate` `news_id` int(10) unsigned DEFAULT NULL,
+     CHANGE `imagine_principala` `is_default` int(11) unsigned DEFAULT '1'
+        ");
+
+        \Illuminate\Support\Facades\DB::statement(
+            "RENAME TABLE parteneri TO partners;"
+        );
+
+        \Illuminate\Support\Facades\DB::statement(
+            "alter TABLE partners DROP PRIMARY KEY,
+        CHANGE `id_parteneri` `id` int(11) unsigned not null auto_increment,
+        ADD CONSTRAINT `partners_id_pk` PRIMARY KEY (`id`)"
+        );
+
+        \Illuminate\Support\Facades\DB::statement("
+     ALTER TABLE partners 
+     CHANGE `nume_parteneri`  `name` text null,
+     CHANGE `logo_parteneri` `logo` text,
+     CHANGE `descriere_parteneri` `description` text,
+     CHANGE `link_parteneri` `url` text
+        ");
+
+        \Illuminate\Support\Facades\DB::statement(
+            "RENAME TABLE perioade TO periods;"
+        );
+
+        \Illuminate\Support\Facades\DB::statement("
+     ALTER TABLE periods 
+     CHANGE `modul`  `module_id` int(11) NOT NULL,
+     CHANGE `perioada` `period` varchar(200) NOT NULL DEFAULT ''
+        ");
+
+        \Illuminate\Support\Facades\DB::statement(
+            "RENAME TABLE cursanti TO students;"
+        );
+
+        \Illuminate\Support\Facades\DB::statement("
+     ALTER TABLE students 
+     CHANGE `nume`   `last_name` text,
+     CHANGE `prenume`   `first_name` text,
+     CHANGE `data_nastere`  `date_of_birth` date DEFAULT NULL,
+     CHANGE `pozitie` `job_title` text,
+     CHANGE `companie` `company` text,
+     CHANGE `telefon` `phone` text,
+     CHANGE `educatie`  `education` text,
+     CHANGE `engleza`  `english` text,
+     CHANGE `alta_limba`     `other_language` text,
+     CHANGE `poza` `photo` text,
+     CHANGE `adresa` `address` text,
+     CHANGE `localitate` `city` text,
+     CHANGE `judet` `county` text,
+     CHANGE `data_inregistrare` `registration_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+     CHANGE `parola` `password` varchar(32) DEFAULT NULL,
+     CHANGE `cod_confirmare` `confirmation_code` varchar(12) DEFAULT NULL,
+     CHANGE `cod_resetare` `reset_code` varchar(12) DEFAULT NULL,
+     CHANGE `activitate` `activity` datetime DEFAULT NULL,
+     CHANGE `resetare` `reset` datetime DEFAULT NULL,
+     CHANGE `activ` `is_active` int(1) unsigned NOT NULL DEFAULT '0',
+     CHANGE `notificari` `notifications` int(1) unsigned NOT NULL DEFAULT '1',
+     CHANGE `promotii` `promotions` int(1) unsigned NOT NULL DEFAULT '1'
+        ");
+
+
+        \Illuminate\Support\Facades\DB::statement(
+            "RENAME table subcontinut TO subcontent;"
+        );
+
+        \Illuminate\Support\Facades\DB::statement("
+     ALTER TABLE subcontent 
+     CHANGE `id_continut`  `content_id` int(6) DEFAULT NULL,
+     CHANGE `titlu` `title` text,
+     CHANGE `imagine` `image` text
+        ");
+
+
+        \Illuminate\Support\Facades\DB::statement(
+            "RENAME table testimoniale TO testimonials;"
+        );
+
+        \Illuminate\Support\Facades\DB::statement("
+     ALTER TABLE testimonials 
+     CHANGE `nume`    `name` text,
+     CHANGE `pozitie`   `position` text,
+     CHANGE `curs`   `class` int(6) unsigned DEFAULT '0',
+     CHANGE `created` `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+     CHANGE `active`    `is_active` tinyint(1) unsigned DEFAULT '0'
         ");
 
         \Illuminate\Support\Facades\DB::statement("
-        DROP TABLE IF EXISTS `main_classes`;
-        ");
-        \Illuminate\Support\Facades\DB::statement("
-        CREATE TABLE `main_classes` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `title` text,
-  `is_active` int(10) unsigned DEFAULT '1',
-  `order` int(10) unsigned DEFAULT '0',
-  `is_new` int(10) unsigned DEFAULT '0',
-  `url_string_short` text,
-  `url_string_full` text,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+     ALTER TABLE trainer 
+     CHANGE `nume`   `name` text,
+     CHANGE `telefon`   `phone` text,
+     CHANGE `titlu`  `title` text,
+     CHANGE `poza`  `picture` varchar(256) DEFAULT NULL,
+     CHANGE `staff`    `is_staff` int(1) unsigned DEFAULT '0'
         ");
 
         \Illuminate\Support\Facades\DB::statement("
-DROP TABLE IF EXISTS `news`;
+     ALTER TABLE trash 
+     CHANGE `mod_plata`  `payment_method` int(10) unsigned DEFAULT NULL,
+     CHANGE `id_curs`  `class_id` int(10) unsigned DEFAULT NULL
         ");
 
         \Illuminate\Support\Facades\DB::statement("
-        CREATE TABLE `news` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `title` mediumtext,
-  `text` mediumtext,
-  `keywords` mediumtext,
-  `date` date DEFAULT NULL,
-  `added_on` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `is_active` tinyint(4) unsigned DEFAULT '0',
-  `views` int(10) unsigned DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+     ALTER TABLE users 
+     CHANGE `fname`    `first_name` varchar(255) NOT NULL DEFAULT '',
+     CHANGE `lname`  `last_name` varchar(255)  NOT NULL DEFAULT ''
         ");
 
-        \Illuminate\Support\Facades\DB::statement("
-        DROP TABLE IF EXISTS `news_images`;
-        ");
-        \Illuminate\Support\Facades\DB::statement("
-        
-CREATE TABLE `news_images` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `image` mediumtext CHARACTER SET latin1,
-  `news_id` int(10) unsigned DEFAULT NULL,
-  `is_default` int(11) unsigned DEFAULT '1',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-        ");
+        \Illuminate\Support\Facades\DB::statement(
+            "RENAME table useri_inscrisi TO users_signed_up;"
+        );
 
         \Illuminate\Support\Facades\DB::statement("
-        DROP TABLE IF EXISTS `partners`;
+     ALTER TABLE users_signed_up 
+     CHANGE `perioada`  `period` text NOT NULL,
+     CHANGE `modul`   `module` int(11) NOT NULL,
+     CHANGE `mod_plata`  `payment_method` int(11) NOT NULL
         ");
 
-        \Illuminate\Support\Facades\DB::statement("
-        
-CREATE TABLE `partners` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` text,
-  `logo` text,
-  `description` text,
-  `url` text,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-        ");
+        \Illuminate\Support\Facades\DB::statement(
+            "alter TABLE wp_posts DROP PRIMARY KEY,
+        CHANGE `ID` `id` bigint(20) unsigned not null auto_increment,
+        ADD CONSTRAINT `wp_posts_id_pk` PRIMARY KEY (`id`)"
+        );
 
         \Illuminate\Support\Facades\DB::statement("
-        DROP TABLE IF EXISTS `periods`;
-        ");
-
-        \Illuminate\Support\Facades\DB::statement("
-        CREATE TABLE `periods` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `module_id` int(11) NOT NULL,
-  `name` varchar(200) NOT NULL,
-  `period` varchar(200) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-        ");
-
-        \Illuminate\Support\Facades\DB::statement("
-        DROP TABLE IF EXISTS `slider`;
-        ");
-
-        \Illuminate\Support\Facades\DB::statement("
-        
-CREATE TABLE `slider` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `image` varchar(128) DEFAULT NULL,
-  `title` varchar(128) DEFAULT NULL,
-  `description1` text,
-  `description2` text,
-  `link` varchar(256) DEFAULT NULL,
-  `button` varchar(256) DEFAULT NULL,
-  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `active` int(1) unsigned DEFAULT '0',
-  KEY `id` (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COMMENT='home page slider';
-        ");
-
-        \Illuminate\Support\Facades\DB::statement("
-        DROP TABLE IF EXISTS `students`;
-        ");
-
-        \Illuminate\Support\Facades\DB::statement("
-        CREATE TABLE `students` (
-  `id` int(6) unsigned NOT NULL AUTO_INCREMENT,
-  `last_name` text,
-  `first_name` text,
-  `email` text,
-  `date_of_birth` date DEFAULT NULL,
-  `job_title` text,
-  `company` text,
-  `phone` text,
-  `education` text,
-  `english` text,
-  `other_language` text,
-  `ms_office` text,
-  `web` text,
-  `photo` text,
-  `cnp` text,
-  `address` text,
-  `city` text,
-  `county` text,
-  `registration_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `password` varchar(32) DEFAULT NULL,
-  `confirmation_code` varchar(12) DEFAULT NULL,
-  `reset_code` varchar(12) DEFAULT NULL,
-  `activity` datetime DEFAULT NULL,
-  `reset` datetime DEFAULT NULL,
-  `is_active` int(1) unsigned NOT NULL DEFAULT '0',
-  `notifications` int(1) unsigned NOT NULL DEFAULT '1',
-  `promotions` int(1) unsigned NOT NULL DEFAULT '1',
-  `newsletter` int(1) unsigned NOT NULL DEFAULT '1',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-        ");
-
-        \Illuminate\Support\Facades\DB::statement("
-        DROP TABLE IF EXISTS `subcontent`;
-        ");
-
-        \Illuminate\Support\Facades\DB::statement("
-        CREATE TABLE `subcontent` (
-  `id` int(6) NOT NULL AUTO_INCREMENT,
-  `content_id` int(6) DEFAULT NULL,
-  `title` text,
-  `text` text,
-  `image` text,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-        ");
-
-        \Illuminate\Support\Facades\DB::statement("
-        DROP TABLE IF EXISTS `testimonials`;
-        ");
-
-        \Illuminate\Support\Facades\DB::statement("
-        CREATE TABLE `testimonials` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `name` text,
-  `position` text,
-  `testimonial` text,
-  `class` int(6) unsigned DEFAULT '0',
-  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `is_active` tinyint(1) unsigned DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-        ");
-
-        \Illuminate\Support\Facades\DB::statement("
-        DROP TABLE IF EXISTS `trainer`;
-        ");
-
-        \Illuminate\Support\Facades\DB::statement("
-        
-CREATE TABLE `trainer` (
-  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `name` text,
-  `phone` text,
-  `email` text,
-  `linkedin` text,
-  `title` text,
-  `bio` text,
-  `picture` varchar(256) DEFAULT NULL,
-  `is_staff` int(1) unsigned DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-        ");
-
-        \Illuminate\Support\Facades\DB::statement("
-DROP TABLE IF EXISTS `trash`;
-        ");
-
-        \Illuminate\Support\Facades\DB::statement("
-CREATE TABLE `trash` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `email` text,
-  `status` int(10) unsigned DEFAULT NULL,
-  `payment_method` int(10) unsigned DEFAULT NULL,
-  `class_id` int(10) unsigned DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-        ");
-
-        \Illuminate\Support\Facades\DB::statement("
-        DROP TABLE IF EXISTS `users`;
-        ");
-
-        \Illuminate\Support\Facades\DB::statement("
-        CREATE TABLE `users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(255) CHARACTER SET latin1 NOT NULL,
-  `password` varchar(255) CHARACTER SET latin1 NOT NULL,
-  `first_name` varchar(255) CHARACTER SET latin1 NOT NULL DEFAULT '',
-  `last_name` varchar(255) CHARACTER SET latin1 NOT NULL DEFAULT '',
-  `email` varchar(255) CHARACTER SET latin1 NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-        ");
-
-        \Illuminate\Support\Facades\DB::statement("
-        DROP TABLE IF EXISTS `users_signed_up`;
-        ");
-
-        \Illuminate\Support\Facades\DB::statement("
-        CREATE TABLE `users_signed_up` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `email` varchar(255) NOT NULL,
-  `period` text NOT NULL,
-  `status` int(11) NOT NULL,
-  `module` int(11) NOT NULL,
-  `payment_method` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-        ");
-
-        \Illuminate\Support\Facades\DB::statement("
-        DROP TABLE IF EXISTS `wp_posts`;
-        ");
-
-        \Illuminate\Support\Facades\DB::statement("
-        CREATE TABLE `wp_posts` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `last_name` mediumtext COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `first_name` mediumtext COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
-  `phone` varchar(200) COLLATE utf8mb4_unicode_520_ci NOT NULL DEFAULT '',
-  `post_title` mediumtext COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  `period` mediumtext COLLATE utf8mb4_unicode_520_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci;
+     ALTER TABLE  wp_posts
+     CHANGE `nume`   `last_name` mediumtext  NOT NULL,
+     CHANGE `prenume`     `first_name` mediumtext  NOT NULL,
+     CHANGE `telefon`    `phone` varchar(200)  NOT NULL DEFAULT '',
+     CHANGE `perioada`   `period` mediumtext NOT NULL
         ");
     }
 

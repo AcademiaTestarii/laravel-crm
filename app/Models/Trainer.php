@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Trainer extends Model
 {
-    //  use SoftDeletes;
     protected $table = 'trainer';
     protected $guarded = ['id'];
 
