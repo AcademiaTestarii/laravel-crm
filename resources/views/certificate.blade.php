@@ -1,21 +1,6 @@
-<?php
-/*include("__connect.php");
-if (isset($_GET['id']) && strlen($_GET['id'])==12 && ctype_alnum($_GET['id'])) {
-$id=mysqli_real_escape_string($link,$_GET['id']);
-$sql="
-SELECT * FROM `feedback`
-LEFT JOIN `cursanti` ON `feedback`.`id_cursant`=`cursanti`.`id`
-LEFT JOIN `cursuri` ON `feedback`.`id_curs`=`cursuri`.`id`
-LEFT JOIN `curs_main` ON `cursuri`.`parent`=`curs_main`.`id_curs_main`
-WHERE `link`='".$id."'";
-$query=mysqli_query($link,$sql);
-if (mysqli_num_rows($query)>0) {
-$row=mysqli_fetch_assoc($query);
-*/?>
 @if($feedback)
         <!DOCTYPE html>
 <html>
-
 <head>
 
     <meta charset="utf-8">

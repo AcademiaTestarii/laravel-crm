@@ -169,7 +169,7 @@
                                                                 </button>
                                                             </td>
                                                             <td class="text-center">
-                                                                @if($classStudent->student->getFeedback($class->getId())->isEmpty())
+                                                                @if(!$classStudent->student->feedback($class->getId()))
                                                                     <button type="button" class="btn btn-success btn-xs"
                                                                             data-toggle="modal"
                                                                             data-target="#calificativ{{$classStudent->getId()}}">
@@ -352,7 +352,7 @@
                                                                                         </div>
                                                                                         <input type="hidden"
                                                                                                name="student"
-                                                                                               value="{{$classStudent->getId()}} "/>
+                                                                                               value="{{$classStudent->getStudentId()}} "/>
                                                                                         <input type="hidden"
                                                                                                name="class"
                                                                                                value="{{$class->getId()}}"/>
@@ -368,7 +368,7 @@
                                                                         </div>
                                                                     </div>
                                                                 @else
-                                                                    <a href="/feedback/{{$classStudent->student->getFeedback($class->getId())[0]->getLink()}}"
+                                                                    <a href="/feedback/{{$classStudent->student->feedback($class->getId())->getLink()}}"
                                                                        class="btn btn-warning btn-xs"
                                                                        target="_blank">Calificativ</a>
                                                                 @endif

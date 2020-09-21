@@ -269,6 +269,7 @@ class ClassesController extends Controller
 
     public function updateDetails(Request $request)
     {
+
         $class = $this->classesRepository->findOneBy(['id' => $request->get('class')]);
         if ($request->get('note')) {
             $this->classStudentRepository->findOneBy([
@@ -290,6 +291,7 @@ class ClassesController extends Controller
 
         if ($request->get('grade')) {
             $this->feedbackRepository->create([
+                'score' => $request->get('grade'),
                 'class_id' => $request->get('class'),
                 'student_id' => $request->get('student'),
                 'organization_jira_zephyr_plus' => $request->get('organization_jira_zephyr_plus'),

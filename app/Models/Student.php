@@ -24,9 +24,9 @@ class Student extends Model
         return $this->hasMany(Feedback::class, 'student_id');
     }
 
-    public function getFeedback($classId)
+    public function feedback($classId)
     {
-        return $this->feedbacks->where('class_id', $classId);
+        return $this->hasOne(Feedback::class, 'student_id')->where('class_id', $classId)->first();
     }
 
     public function getId()
