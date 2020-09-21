@@ -43,7 +43,7 @@
                 <div class="navbar-header">
                     <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i>
                     </a>
-                    <form role="search" class="navbar-form-custom" action="search_results.php">
+                    <form role="search" class="navbar-form-custom" action="/search">
                         <div class="form-group">
                             <input type="text" placeholder="Cautare ..." class="form-control" name="top-search"
                                    id="top-search">

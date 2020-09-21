@@ -64,3 +64,5 @@ Route::get('blog/{id}', 'BlogController@getBlog')->name('blog');
 Route::post('blog/{id}', 'BlogController@update');
 Route::post('blog', 'BlogController@add');
 Route::post('blog/{id}/uploadImage', 'BlogController@uploadImage');
+
+Route::get('search', 'SearchController@index');
