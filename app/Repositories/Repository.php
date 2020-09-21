@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Repositories\Contracts\RepositoryInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class Repository implements RepositoryInterface
 {
@@ -68,14 +69,16 @@ class Repository implements RepositoryInterface
     /**
      * @param array $criteria
      * @param string $operator
+     * @param string $orderBy
+     * @param string $order
      * @return mixed
      */
-    public function findAllBy(array $criteria, string $operator = '=')
+    public function findAllBy(array $criteria, string $operator = '=', string $orderBy = 'id', string $order = 'ASC')
     {
         $model = $this->model;
 
         foreach ($criteria as $column => $value) {
-            $model = $model->where($column, $operator, $value);
+            $model = $model->where($column, $operator, $value)->orderBy($orderBy, $order);
         }
 
         return $model->get();
@@ -117,7 +120,6 @@ class Repository implements RepositoryInterface
         return $this->model->updateOrCreate($matchingData, $data);
     }
 
-
     /**
      * @param string $where
      * @param array $in
@@ -137,5 +139,28 @@ class Repository implements RepositoryInterface
         }
 
         return $model->whereNotIn($where, $in)->get();
+    }
+
+    /**
+     * @param array $matchingData
+     * @param array $data
+     * @return mixed
+     */
+    public function update(array $data)
+    {
+        return $this->model->update($data);
+    }
+
+    public function findAllWithRelationsBy(string $relationName, array $relationFields, array $orderBy = [])
+    {
+        $model = $this->model;
+
+        $model = $model->whereHas($relationName, function ($query) use ($relationFields, $orderBy) {
+            foreach ($relationFields as $relationField => $criteria) {
+               return $query->where($relationField, $criteria['operator'], $criteria['value']);
+            }
+        })->with($relationName);
+
+        return $model->get();
     }
 }

@@ -1,7 +1,12 @@
 /public/storage
+/public/slider
+/public/partners
+/public/trainers
+/public/blog_posts
 /vendor
 .env
 .phpunit.result.cache
 Homestead.json
 Homestead.yaml
 .idea
+/storage

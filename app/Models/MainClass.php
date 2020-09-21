@@ -11,8 +11,18 @@ class MainClass extends Model
         return $this->getAttribute('id');
     }
 
-    public function classGroup()
+    public function classes()
     {
-        return $this->hasMany(ClassGroup::class);
+        return $this->hasMany(Classes::class);
+    }
+
+    public function classesOrderByDate()
+    {
+        return $this->hasMany(Classes::class)->orderBy('registration_start_date');
+    }
+
+    public function getTitle()
+    {
+        return $this->getAttribute('title');
     }
 }
