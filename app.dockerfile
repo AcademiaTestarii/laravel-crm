@@ -4,6 +4,7 @@ COPY . /var/www
 
 WORKDIR /var/www
 
+RUN apt-get update && apt-get install git
 
 RUN apt-get update && apt-get install -y libmcrypt-dev \
   mysql-client libmagickwand-dev --no-install-recommends \
