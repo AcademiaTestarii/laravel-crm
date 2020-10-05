@@ -1,7 +1,7 @@
 FROM php:7.3-fpm
 
 # Copy composer.lock and composer.json
-COPY composer.lock* composer.json* /var/www/
+COPY . /var/www
 
 # Set working directory
 WORKDIR /var/www
@@ -30,20 +30,15 @@ RUN pecl install -o -f redis \
   &&  rm -rf /tmp/pear \
   &&  docker-php-ext-enable redis
 
-# Install composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+RUN curl --silent --show-error https://getcomposer.org/installer | php \
+  && php composer.phar install --no-dev --no-scripts
 
-# Add user for laravel application
-RUN groupadd -g 1000 www && useradd -u 1000 -ms /bin/bash -g www www && composer update
+RUN chown -R www-data:www-data \
+  /var/www/storage \
+  /var/www/bootstrap/cache
 
 # Copy existing application directory contents
 COPY ./ /var/www
-
-# Copy existing application directory permissions
-COPY --chown=www:www . /var/www
-
-# Change current user to www
-USER www
 
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000
