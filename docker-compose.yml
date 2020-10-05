@@ -2,6 +2,8 @@ version: "2"
 services:
   webserver:
     image: nginx:alpine
+    networks:
+      - default
     volumes:
       - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
     ports:
@@ -13,3 +15,5 @@ services:
       context: .
       dockerfile: ./docker/php/Dockerfile
     working_dir: /var/www
+    networks:
+      - default
