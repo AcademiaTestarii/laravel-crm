@@ -20,5 +20,3 @@ RUN chown -R www-data:www-data \
   /var/www/bootstrap/cache
 
 RUN php artisan optimize
-
-RUN php artisan migrate
