@@ -1,4 +1,4 @@
-FROM php:7.1.3-fpm
+FROM php:7.2.5-fpm
 
 COPY . /var/www
 
