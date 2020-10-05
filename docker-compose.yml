@@ -3,7 +3,7 @@ services:
   webserver:
     image: nginx:alpine
     volumes:
-      - ./code:/var/www
+      - ./:/var/www
       - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
     ports:
       - "8080:80"
@@ -14,5 +14,5 @@ services:
       dockerfile: ./docker/php/Dockerfile
     volumes:
       ## copy project files to /var/www ##
-      - ./code:/var/www
+      - ./:/var/www
     working_dir: /var/www
