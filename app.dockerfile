@@ -4,7 +4,7 @@ COPY . /var/www
 
 WORKDIR /var/www
 
-RUN apt-get update && apt-get install -y git zip unzip php-zip
+RUN apt-get update && apt-get install -y git zip unzip
 
 RUN apt-get update && apt-get install -y libmcrypt-dev \
   mysql-client libmagickwand-dev --no-install-recommends \
