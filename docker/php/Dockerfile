@@ -29,13 +29,8 @@ RUN pecl install -o -f redis \
   &&  rm -rf /tmp/pear \
   &&  docker-php-ext-enable redis
 
-# NPM for frontend builds
-RUN apt install nodejs npm -y
-
-
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
-
 
 # Add user for laravel application
 RUN groupadd -g 1000 www
