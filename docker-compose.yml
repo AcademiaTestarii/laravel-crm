@@ -3,6 +3,7 @@ services:
   webserver:
     image: nginx:alpine
     volumes:
+      - ./:/var/www
       - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
     ports:
       - 80:80
@@ -12,6 +13,4 @@ services:
     build:
       context: .
       dockerfile: ./docker/php/Dockerfile
-    volumes:
-      - /var/www/storage
     working_dir: /var/www
