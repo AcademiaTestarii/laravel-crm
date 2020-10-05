@@ -37,9 +37,6 @@ RUN chown -R www-data:www-data \
   /var/www/storage \
   /var/www/bootstrap/cache
 
-# Copy existing application directory contents
-COPY ./ /var/www
-
 # Expose port 9000 and start php-fpm server
 EXPOSE 9000
 CMD ["php-fpm"]
