@@ -1,25 +1,18 @@
 version: "2"
 services:
-  #  The Application
-  app:
-    build:
-      context: ./
-      dockerfile: app.dockerfile
-    working_dir: /var/www
+  webserver:
+    image: nginx:alpine
     volumes:
-      - ./:/var/www
-    networks:
-      - default
-    environment:
-      - "DB_HOST=database"
-
-  # The Web Server
-  web:
-    build:
-      context: ./
-      dockerfile: web.dockerfile
-    working_dir: /var/www
-    volumes_from:
-      - app
+      - ./code:/var/www
+      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
     ports:
-      - 80:9000
+      - "8080:80"
+  app:
+    ## read php image from our custom docker image ##
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile
+    volumes:
+      ## copy project files to /var/www ##
+      - ./code:/var/www
+    working_dir: /var/www
