@@ -90,7 +90,7 @@
                         @foreach($blogNews as $blog)
                             <tr>
                                 <td>
-                                    <a href="/blog?id={{$blog->getId()}}">{{$blog->getTitle()}}</a>
+                                    <a href="/blog/{{$blog->getId()}}">{{$blog->getTitle()}}</a>
                                 </td>
                                 <td>{{$blog->getDate()}}</td>
                                 <td class="text-center">

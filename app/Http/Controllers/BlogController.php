@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\BlogImage;
 use App\Repositories\BlogImageRepository;
 use App\Repositories\BlogRepository;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
 
 class BlogController extends Controller
 {
@@ -125,8 +125,12 @@ class BlogController extends Controller
 
     public function uploadImage($blogId, Request $request)
     {
-        $file = $request->file('file');
-        $file->storeAs('news', $request->file('file')->getClientOriginalName(), ['disk' => 'storage']);
+        $image = $request->file('file');
+        $imageName = $image->getClientOriginalName();
+
+        $destinationPath = public_path('/news');
+        $img = Image::make($image->path());
+        $img->save($destinationPath.'/'.$imageName);
 
         $this->blogImageRepository
             ->create([

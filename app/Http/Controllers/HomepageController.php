@@ -10,7 +10,6 @@ use App\Services\SliderService;
 use App\Services\TestimonialService;
 use Illuminate\Http\Request;
 
-
 class HomepageController extends Controller
 {
     protected $contentRepository;

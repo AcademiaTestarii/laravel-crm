@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Repositories\PartnerRepository;
 use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
 
 class PartnerController extends Controller
 {
@@ -55,10 +56,15 @@ class PartnerController extends Controller
      */
     public function update(Request $request)
     {
-        //  dump($request->all()); exit;
         if ($request->file('image')) {
-            $file = $request->file('image');
-            $file->storeAs('partners', $request->file('image')->getClientOriginalName(), ['disk' => 'storage']);
+            $image = $request->file('image');
+            $imageName = $image->getClientOriginalName();
+
+            $destinationPath = public_path('/partners');
+            $img = Image::make($image->path());
+            $img->resize(null, 60, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($destinationPath.'/'.$imageName);
         }
 
         $partnerId = $request->get('id');
@@ -71,7 +77,7 @@ class PartnerController extends Controller
             ->findOneBy(['id' => $partnerId])
             ->update([
                 'name' => $request->get('name'),
-                'logo' => ($request->file('image')) ? $request->file('image')->getClientOriginalName() : null,
+                'logo' => ($request->file('image')) ? $imageName : null,
                 'description' => $request->get('description'),
                 'url' => $request->get('url')
             ]);

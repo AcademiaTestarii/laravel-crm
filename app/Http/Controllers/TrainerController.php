@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Repositories\TrainerRepository;
 use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
 
 class TrainerController extends Controller
 {
@@ -50,8 +51,14 @@ class TrainerController extends Controller
     public function update(Request $request)
     {
         if ($request->file('image')) {
-            $file = $request->file('image');
-            $file->storeAs('trainers', $request->file('image')->getClientOriginalName(), ['disk' => 'storage']);
+            $image = $request->file('image');
+            $imageName = $image->getClientOriginalName();
+
+            $destinationPath = public_path('/trainers');
+            $img = Image::make($image->path());
+            $img->resize(350, null, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($destinationPath.'/'.$imageName);
         }
 
         $trainerId = $request->get('id');
@@ -70,7 +77,7 @@ class TrainerController extends Controller
                 'title' => $request->get('title'),
                 'bio' => $request->get('bio'),
                 'is_staff' => 0,
-                'picture' => ($request->file('image')) ? $request->file('image')->getClientOriginalName() : null,
+                'picture' => ($request->file('image')) ? $imageName : null,
             ]);
 
         return redirect()->route('trainer', ['id' => $trainerId]);

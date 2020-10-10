@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Repositories\SliderRepository;
 use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
 
 class SliderController extends Controller
 {
@@ -36,8 +37,14 @@ class SliderController extends Controller
     public function update(Request $request)
     {
         if ($request->file('image')) {
-            $file = $request->file('image');
-            $file->storeAs('slider', $request->file('image')->getClientOriginalName(), ['disk' => 'storage']);
+            $image = $request->file('image');
+            $imageName = $image->getClientOriginalName();
+
+            $destinationPath = public_path('/slider');
+            $img = Image::make($image->path());
+            $img->resize(1920, null, function ($constraint) {
+                $constraint->aspectRatio();
+            })->save($destinationPath.'/'.$imageName);
         }
 
         $sliderId = $request->get('id');
@@ -55,7 +62,7 @@ class SliderController extends Controller
                 'link' => $request->get('link'),
                 'active' => ($request->get('active') == 'on') ? 1 : 0,
                 'button' => $request->get('button'),
-                'image' => ($request->file('image')) ? $request->file('image')->getClientOriginalName() : null,
+                'image' => ($request->file('image')) ? $imageName : null,
             ]);
 
         return redirect()->route('slider', ['id' => $sliderId]);

@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', 'DashboardController@index');
+
 Route::get('dashboard', 'DashboardController@index');
 Route::get('homepage', 'HomepageController@index')->name('homepage');
 Route::post('homepage', 'HomepageController@update');
