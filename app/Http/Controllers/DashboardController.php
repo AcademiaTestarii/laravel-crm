@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\ClassesRepository;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {

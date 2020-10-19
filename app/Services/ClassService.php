@@ -100,12 +100,12 @@ class ClassService
             'is_bucharest_located' => ($request->get('bucharest')) ? 1 : 0,
             'deployment' => $request->get('deploymentCourse'),
             'image' => ($request->file('image'))
-                ? $request->file('image')->getClientOriginalName()
-                : ($request->get('image')) ? $request->get('image') : null,
+                ? ($request->file('image')->getClientOriginalName())
+                : (($request->get('image')) ? $request->get('image') : null),
 
             'schedule_pdf' => ($request->file('filepdf'))
-                ? $request->file('filepdf')->getClientOriginalName()
-                : ($request->get('filepdf')) ? $request->get('filepdf') : null,
+                ? ($request->file('filepdf')->getClientOriginalName())
+                : (($request->get('filepdf')) ? $request->get('filepdf') : null),
         ]);
 
         $class->classTrainer()->create([
