@@ -67,9 +67,10 @@ class TrainerController extends Controller
             $trainerId = $this->trainerRepository->create([])->getId();
         }
 
-        $this->trainerRepository
-            ->findOneBy(['id' => $trainerId])
-            ->update([
+        $trainer = $this->trainerRepository
+            ->findOneBy(['id' => $trainerId]);
+
+        $trainer->update([
                 'name' => $request->get('name'),
                 'phone' => $request->get('phone'),
                 'email' => $request->get('email'),
@@ -77,7 +78,7 @@ class TrainerController extends Controller
                 'title' => $request->get('title'),
                 'bio' => $request->get('bio'),
                 'is_staff' => 0,
-                'picture' => ($request->file('image')) ? $imageName : null,
+                'picture' => ($request->file('image')) ? $imageName : $trainer->picture,
             ]);
 
         return redirect()->route('trainer', ['id' => $trainerId]);
