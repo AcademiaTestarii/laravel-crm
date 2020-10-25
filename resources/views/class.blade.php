@@ -132,7 +132,7 @@
 
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Numar cursanti:</label>
-                            <div class="col-sm-10"><input value="@if($class) {{$class->getStudents()}} @endif"
+                            <div class="col-sm-10"><input value=@if($class)"{{$class->getStudents()}}"@endif
                                                           name="students"
                                                           type="text" placeholder="doar cifre" class="form-control"
                                                           required></div>
@@ -141,14 +141,14 @@
 
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Pret curs/cursant:</label>
-                            <div class="col-sm-10"><input value="@if($class) {{$class->getPrice()}} @endif" name="price"
+                            <div class="col-sm-10"><input value="@if($class){{$class->getPrice()}}@endif" name="price"
                                                           type="text"
                                                           placeholder="doar cifre" class="form-control" required></div>
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Pret redus/cursant:</label>
-                            <div class="col-sm-10"><input value="@if($class) {{$class->getDiscountPrice()}} @endif"
+                            <div class="col-sm-10"><input value="@if($class){{$class->getDiscountPrice()}}@endif"
                                                           name="discount_price"
                                                           type="text" placeholder="doar cifre" class="form-control">
                             </div>
