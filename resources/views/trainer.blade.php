@@ -156,7 +156,6 @@
                         <div class="form-group">
                             <div class="col-sm-4 col-sm-offset-2">
                                 <input type="hidden" name="id2update" value="@if($trainer) {{$trainer->getId()}} @endif"/>
-                                <button class="btn btn-white" type="reset">Reseteaza</button>
                                 <button class="btn btn-primary" type="submit" name="<?php /*echo $submit;*/?>">Salveaza
                                 </button>
                             </div>
