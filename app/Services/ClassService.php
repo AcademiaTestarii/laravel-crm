@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Classes;
+use App\Models\MainClass;
 use App\Repositories\ClassesRepository;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
@@ -73,8 +74,13 @@ class ClassService
         $classRepository = App::make(ClassesRepository::class);
         $registrationDates = explode(',', $request->get('deployment'));
 
+        //todo: repo
+        $mainClass = MainClass::create([
+            'title' => $request->get('title_main')
+        ]);
+
         $class = $classRepository->create([
-            'main_class_id' => ($request->get('main_class_id')) ? $request->get('main_class_id') : null,
+            'main_class_id' => ($request->get('main_class_id')) ? $request->get('main_class_id') : $mainClass->id,
             'title' => $request->get('title'),
             'short_description' => $request->get('short_description'),
             'description' => $request->get('description'),
