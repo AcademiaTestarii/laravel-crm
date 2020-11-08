@@ -44,26 +44,27 @@ class SliderController extends Controller
             $img = Image::make($image->path());
             $img->resize(1920, null, function ($constraint) {
                 $constraint->aspectRatio();
-            })->save($destinationPath.'/'.$imageName);
+            })->save($destinationPath . '/' . $imageName);
         }
 
         $sliderId = $request->get('id');
 
-        if(!$sliderId) {
+        if (!$sliderId) {
             $sliderId = $this->sliderRepository->create([])->getId();
         }
 
-        $this->sliderRepository
-            ->findOneBy(['id' => $sliderId])
-            ->update([
-                'title' => $request->get('title'),
-                'description1' => $request->get('description1'),
-                'description2' => $request->get('description2'),
-                'link' => $request->get('link'),
-                'active' => ($request->get('active') == 'on') ? 1 : 0,
-                'button' => $request->get('button'),
-                'image' => ($request->file('image')) ? $imageName : null,
-            ]);
+        $slider = $this->sliderRepository
+            ->findOneBy(['id' => $sliderId]);
+
+        $slider->update([
+            'title' => $request->get('title'),
+            'description1' => $request->get('description1'),
+            'description2' => $request->get('description2'),
+            'link' => $request->get('link'),
+            'active' => ($request->get('active') == 'on') ? 1 : 0,
+            'button' => $request->get('button'),
+            'image' => ($request->file('image')) ? $imageName : $slider->image,
+        ]);
 
         return redirect()->route('slider', ['id' => $sliderId]);
     }

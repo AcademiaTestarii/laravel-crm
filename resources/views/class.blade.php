@@ -94,7 +94,7 @@
                             <label class="col-sm-2 control-label">Titlu curs:<br/><small>Apare in meniu, in casete,
                                     etc</small></label>
                             <div class="col-sm-4"><input @if($class && $class->mainClass) disabled @endif
-                                                         value="@if($class && $class->mainClass) {{$class->mainClass->getTitle()}} @endif"
+                                                         value="@if($class && $class->mainClass) {!! $class->mainClass->getTitle() !!} @endif"
                                                          name="title_main" type="text" class="form-control" required>
                             </div>
                             <label class="col-sm-2 control-label">Suplimentar:<br/><small>Iterare, nu apare pe

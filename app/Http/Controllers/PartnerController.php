@@ -64,7 +64,7 @@ class PartnerController extends Controller
             $img = Image::make($image->path());
             $img->resize(null, 60, function ($constraint) {
                 $constraint->aspectRatio();
-            })->save($destinationPath.'/'.$imageName);
+            })->save($destinationPath . '/' . $imageName);
         }
 
         $partnerId = $request->get('id');
@@ -73,14 +73,15 @@ class PartnerController extends Controller
             $partnerId = $this->partnerRepository->create([])->getId();
         }
 
-        $this->partnerRepository
-            ->findOneBy(['id' => $partnerId])
-            ->update([
-                'name' => $request->get('name'),
-                'logo' => ($request->file('image')) ? $imageName : null,
-                'description' => $request->get('description'),
-                'url' => $request->get('url')
-            ]);
+        $partner = $this->partnerRepository
+            ->findOneBy(['id' => $partnerId]);
+        
+        $partner->update([
+            'name' => $request->get('name'),
+            'logo' => ($request->file('image')) ? $imageName : $partner->logo,
+            'description' => $request->get('description'),
+            'url' => $request->get('url')
+        ]);
 
         return redirect()->route('partner', ['id' => $partnerId]);
     }

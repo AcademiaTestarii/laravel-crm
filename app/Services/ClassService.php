@@ -47,8 +47,8 @@ class ClassService
             'is_planned' => ($request->get('planned')) ? 1 : 0,
             'is_bucharest_located' => ($request->get('bucharest')) ? 1 : 0,
             'deployment' => $request->get('deploymentCourse'),
-            'image' => ($request->file('image')) ? $request->file('image')->getClientOriginalName() : null,
-            'schedule_pdf' => ($request->file('filepdf')) ? $request->file('filepdf')->getClientOriginalName() : null,
+            'image' => ($request->file('image')) ? $request->file('image')->getClientOriginalName() : $class->image,
+            'schedule_pdf' => ($request->file('filepdf')) ? $request->file('filepdf')->getClientOriginalName() : $class->schedule_pdf,
         ]);
 
         $class->classTrainer()->delete();
