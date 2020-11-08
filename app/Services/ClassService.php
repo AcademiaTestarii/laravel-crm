@@ -74,9 +74,15 @@ class ClassService
         $classRepository = App::make(ClassesRepository::class);
         $registrationDates = explode(',', $request->get('deployment'));
 
+        $mainTitle = $request->get('title_main');
         //todo: repo
         $mainClass = MainClass::create([
-            'title' => $request->get('title_main')
+            'title' => $mainTitle,
+            'is_active' => 1,
+            'order' => MainClass::max('order') + 1,
+            'is_new' => 1,
+            'url_string_short' => strtolower(str_replace(' ', '-', $mainTitle)),
+            'url_string_full' => strtolower(str_replace(' ', '-', $mainTitle)) . '.html',
         ]);
 
         $class = $classRepository->create([
