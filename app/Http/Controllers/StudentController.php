@@ -20,13 +20,9 @@ class StudentController extends Controller
      */
     public function index(Request $request)
     {
-        $activeStudents = $this->studentRepository->allWithActivity();
-        $inactiveStudents = $this->studentRepository->allWithoutActivity();
         $students = $this->studentRepository->allOrderedByActiveAndName();
 
         return view('students')->with([
-            'activeStudents' => $activeStudents,
-            'inactiveStudents' => $inactiveStudents,
             'students' => $students
         ]);
     }

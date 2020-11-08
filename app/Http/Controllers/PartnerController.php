@@ -75,7 +75,7 @@ class PartnerController extends Controller
 
         $partner = $this->partnerRepository
             ->findOneBy(['id' => $partnerId]);
-        
+
         $partner->update([
             'name' => $request->get('name'),
             'logo' => ($request->file('image')) ? $imageName : $partner->logo,
