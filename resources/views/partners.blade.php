@@ -68,7 +68,7 @@
         </div>
 
         <div class="wrapper wrapper-content animated fadeInRight">
-            <div class="row">
+            <div class="row row-padding">
                 @foreach($partners as $partner)
                 <div class="col-lg-3">
                     <div class="widget-head-color-box lazur-bg p-lg text-center">
