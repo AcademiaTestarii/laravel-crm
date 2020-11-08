@@ -5,11 +5,19 @@ namespace App\Services;
 use App\Models\Classes;
 use App\Models\MainClass;
 use App\Repositories\ClassesRepository;
+use App\Repositories\MainClassRepository;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
 
 class ClassService
 {
+    protected $mainClassRepository;
+
+    public function __construct(MainClassRepository $mainClassRepository)
+    {
+        $this->mainClassRepository = $mainClassRepository;
+    }
+
     public function update(Classes $class, $request)
     {
         $registrationDates = explode(',', $request->get('deployment'));
@@ -75,8 +83,8 @@ class ClassService
         $registrationDates = explode(',', $request->get('deployment'));
 
         $mainTitle = $request->get('title_main');
-        //todo: repo
-        $mainClass = MainClass::create([
+
+        $mainClass = $this->mainClassRepository->create([
             'title' => $mainTitle,
             'is_active' => 1,
             'order' => MainClass::max('order') + 1,
