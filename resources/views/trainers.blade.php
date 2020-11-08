@@ -59,10 +59,10 @@
         </div>
 
         <div class="wrapper wrapper-content animated fadeInRight">
-            <div class="row">
+            <div class="row row-padding">
                 @foreach($trainers as $trainer)
                     <div class="col-lg-4">
-                        <div class="widget-head-color-box navy-bg p-lg text-center">
+                        <div class="widget-head-color-box navy-bg p-lg text-center trainer-name">
                             <div class="m-b-md">
                                 <h2 class="font-bold no-margins">
                                     {{$trainer->getName()}}
@@ -76,10 +76,10 @@
                                 <span>{{$trainer->classTrainers()->count()}} Curs(uri)</span>
                             </div>
                         </div>
-                        <div class="widget-text-box">
+                        <div class="widget-text-box trainer-bio">
                             <h4 class="media-heading">{{$trainer->getName()}}</h4>
-                            <p>{!! $trainer->getBio() !!}</p>
-                            <a class="btn btn-primary" href="/trainer?id={{$trainer->getId()}}">Detalii trainer</a>
+                            <p >{!! $trainer->getBio() !!}</p>
+                            <a class="btn btn-primary trainer-details" href="/trainer?id={{$trainer->getId()}}">Detalii trainer</a>
                         </div>
                     </div>
                 @endforeach

@@ -8453,3 +8453,23 @@ tr.group:hover {
 .partner-name {
   font-size: 1.5em;
 }
+
+.trainer-name {
+  min-height: 355px;
+}
+
+.trainer-bio {
+  min-height: 301px;
+}
+
+.trainer-details {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  margin-left: 36px;
+  margin-bottom: 20px;
+}
+
+.row-padding {
+  padding-bottom: 65px;
+}
