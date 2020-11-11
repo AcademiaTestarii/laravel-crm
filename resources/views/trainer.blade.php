@@ -108,7 +108,7 @@
                                            class="form-control">
                                 </div>
                             </div>
-                            <div class="form-group col-md-3">
+                            <div class="form-group col-md-4">
                                 <label class="col-sm-3 control-label">LinkedIn:<br/></label>
                                 <div class="col-sm-9">
                                     <input value="@if($trainer) {{$trainer->getLinkedin()}} @endif" name="linkedin" type="text"
