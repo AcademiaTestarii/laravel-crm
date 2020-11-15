@@ -10226,6 +10226,14 @@ tr.group:hover {
     margin-bottom: 20px;
 }
 
+.trainer-delete {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    margin-left: 160px;
+    margin-bottom: 20px;
+}
+
 .row-padding {
     padding-bottom: 65px;
 }

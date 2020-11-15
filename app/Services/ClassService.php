@@ -79,6 +79,7 @@ class ClassService
 
     public function create($request)
     {
+       // dump($request->all()); exit;
         $classRepository = App::make(ClassesRepository::class);
         $registrationDates = explode(',', $request->get('deployment'));
 

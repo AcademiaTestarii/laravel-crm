@@ -19,8 +19,16 @@ class TrainerController extends Controller
      * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index()
+    public function index(Request $request)
     {
+        if ($request->get('delete')) {
+            $this->trainerRepository
+                ->findOneBy(['id' => $request->get('delete')])
+                ->delete();
+
+            return redirect()->route('trainers');
+        }
+
         $trainers = $this->trainerRepository->allOrderedBy('name');
 
         return view('trainers')->with([
@@ -58,7 +66,7 @@ class TrainerController extends Controller
             $img = Image::make($image->path());
             $img->resize(350, null, function ($constraint) {
                 $constraint->aspectRatio();
-            })->save($destinationPath.'/'.$imageName);
+            })->save($destinationPath . '/' . $imageName);
         }
 
         $trainerId = $request->get('id');
@@ -71,15 +79,15 @@ class TrainerController extends Controller
             ->findOneBy(['id' => $trainerId]);
 
         $trainer->update([
-                'name' => $request->get('name'),
-                'phone' => $request->get('phone'),
-                'email' => $request->get('email'),
-                'linkedin' => $request->get('linkedin'),
-                'title' => $request->get('title'),
-                'bio' => $request->get('bio'),
-                'is_staff' => 0,
-                'picture' => ($request->file('image')) ? $imageName : $trainer->picture,
-            ]);
+            'name' => $request->get('name'),
+            'phone' => $request->get('phone'),
+            'email' => $request->get('email'),
+            'linkedin' => $request->get('linkedin'),
+            'title' => $request->get('title'),
+            'bio' => $request->get('bio'),
+            'is_staff' => 0,
+            'picture' => ($request->file('image')) ? $imageName : $trainer->picture,
+        ]);
 
         return redirect()->route('trainer', ['id' => $trainerId]);
     }

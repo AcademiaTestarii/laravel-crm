@@ -14,7 +14,15 @@
 
     <link href="{{asset('css/animate.css')}}" rel="stylesheet">
     <link href="{{asset('css/style.css')}}" rel="stylesheet">
+    <script>
+        function confirmDelete(delUrl) {
+            if (confirm("Esti sigur ca vrei sa stergi?")) {
+                document.location = delUrl;
+            }
 
+            return false;
+        }
+    </script>
 </head>
 <body>
 
@@ -78,8 +86,11 @@
                         </div>
                         <div class="widget-text-box trainer-bio">
                             <h4 class="media-heading">{{$trainer->getName()}}</h4>
-                            <p >{!! $trainer->getBio() !!}</p>
-                            <a class="btn btn-primary trainer-details" href="/trainer?id={{$trainer->getId()}}">Detalii trainer</a>
+                            <p>{!! $trainer->getBio() !!}</p>
+                            <a class="btn btn-primary trainer-details" href="/trainer?id={{$trainer->getId()}}">Detalii
+                                trainer</a>
+                            <a onClick="confirmDelete('trainers_list?delete={{$trainer->getId()}}')" class="btn btn-danger trainer-delete"
+                               >Sterge trainer</a>
                         </div>
                     </div>
                 @endforeach

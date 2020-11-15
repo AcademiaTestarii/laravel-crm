@@ -210,6 +210,7 @@ class ClassesController extends Controller
 
         if ($request->get('action') == 'duplicate') {
             $duplicatedClass = $this->classesRepository->findOneBy(['id' => $request->get('id')]);
+
             $request->request->add([
                 'image' => $duplicatedClass->image,
                 'filepdf' => $duplicatedClass->schedule_pdf,
