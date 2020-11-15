@@ -31,12 +31,12 @@ class CommunicationController extends Controller
 
         if ($request->get('main_class') && !empty($request->get('main_class'))) {
             $selectedMainClass = $this->mainClassRepository->findOneBy(['id' => $request->get('main_class')]);
-            $filter[]=['main_class' => $request->get('main_class')];
+            $filter=['main_class' => $request->get('main_class')];
         }
 
         if ($request->get('class') && !empty($request->get('class'))) {
             $selectedClass = $this->classesRepository->findOneBy(['id' => $request->get('class')]);
-            $filter[]=['class' => $request->get('class')];
+            $filter=['class' => $request->get('class')];
         }
 
         $students = $this->studentRepository->allQueryBy($filter);
