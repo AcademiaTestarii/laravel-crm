@@ -60,6 +60,5 @@ class AddUser extends Command
         }
 
         $this->dispatch(new \App\Jobs\AddUser($userName, $userEmail, $userRole, $userPassport));
-
     }
 }

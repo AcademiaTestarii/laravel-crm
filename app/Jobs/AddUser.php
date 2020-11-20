@@ -8,6 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class AddUser extends Job implements ShouldQueue
 {
@@ -98,6 +99,6 @@ class AddUser extends Job implements ShouldQueue
             return $userPassword;
         }
 
-        return str_random();
+        return Str::random(12);
     }
 }
