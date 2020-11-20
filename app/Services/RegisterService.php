@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use App\Models\Role;
-use App\Models\RoleUser;
 use App\Repositories\UserRepository;
 use App\User;
 use Illuminate\Support\Facades\Mail;
@@ -36,10 +35,7 @@ class RegisterService
             'password' => bcrypt($userData['password'])
         ]);
 
-        RoleUser::create([
-            'user_id' => $user->id,
-            'role_id' => $role->getId()
-        ]);
+        $user->roleUser()->create(['role_id' => $role->id]);
 
         return $user;
     }

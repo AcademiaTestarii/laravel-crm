@@ -1,32 +1,30 @@
 <?php
 
-namespace Passport\Jobs;
+namespace App\Jobs;
 
-
+use App\Models\Role;
+use App\User;
 use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Http\Request;
 use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
-use Passport\Models\Role;
-use Passport\User;
-use Ramsey\Uuid\Uuid;
 
 class AddUser extends Job implements ShouldQueue
 {
     use InteractsWithQueue;
 
+    protected $userPassword;
     private $userName;
     private $userEmail;
     private $userRole;
 
 
-    public function __construct($userName, $userEmail, $userRole)
+    public function __construct($userName, $userEmail, $userRole, $userPassword)
     {
         $this->userName = $userName;
         $this->userEmail = $userEmail;
         $this->userRole = $userRole;
+        $this->userPassword = $this->determinePassword($userPassword);
     }
 
     /**
@@ -48,31 +46,38 @@ class AddUser extends Job implements ShouldQueue
             echo 'The ' . $this->userRole . ' does not exist! Please choose another one!';
             return;
         }
-        $password = str_random();
-        $hasedPassword = Hash::make($password);
-
-        $uuid = Uuid::uuid4();
 
         $newUser = User::create([
             'name' => $this->userName,
-            'uid' => $uuid->toString(),
             'email' => $this->userEmail,
-            'password' => $hasedPassword,
-            'remember_token' => ''
+            'password' => bcrypt($this->userPassword),
+            'remember_token' => null
         ]);
 
         $fileName = $this->generateFile($newUser->email);
 
         $newUser->roleUser()->create(['role_id' => $role->id]);
-        Storage::append($fileName, implode(',', [$newUser->name, $newUser->email, $password, $this->userRole]));
 
-        Mail::send('emails/user_credentials', ['comment' => ['user' => $newUser->toArray(), 'password' => $password]], function ($message) use ($newUser) {
+        Storage::append(
+            $fileName,
+            implode(',', [$newUser->name, $newUser->email, $this->userPassword, $this->userRole])
+        );
 
-            $message->from('pct@adoreme.com')
-                ->to($newUser->email)
-                ->bcc('liancu@adoreme.com')
-                ->subject('Your PCT credentials');
-        });
+        $greetings = "Salut " . $newUser->name . "<br><br>";
+
+        $message = "<p>Ti-am generat o parola pentru Academia Testarii.<br>
+        <p>
+        <p>Iti multumim,<br>Echipa Academia Testarii</p>";
+
+        Mail::send(
+            'auth/emails/register_existing_user',
+            ['messageBody' => ['greetings' => $greetings, 'message' => $message]],
+            function ($message) use ($newUser) {
+                $message->from('contact@academiatestarii.ro')
+                    ->to($newUser->getEmail())
+                    ->subject('Confirmare înregistrare pe platforma Academia Testarii');
+            }
+        );
     }
 
     /**
@@ -87,4 +92,12 @@ class AddUser extends Job implements ShouldQueue
         return $filename;
     }
 
+    protected function determinePassword($userPassword)
+    {
+        if (!empty($userPassword)) {
+            return $userPassword;
+        }
+
+        return str_random();
+    }
 }

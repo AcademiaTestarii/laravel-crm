@@ -55,18 +55,25 @@ class User extends Authenticatable
         );
     }
 
-    public function permissions()
+    public function permissions(): array
     {
         $permissions = [];
         foreach ($this->roles()->get() as $role) {
-            $permissions[] = $role->permissions()->pluck('code')->toArray();
+            foreach ($role->permissions()->get() as $permission) {
+                $permissions[] = $permission->code;
+            }
         }
 
-        return array_values($permissions);
+        return $permissions;
     }
 
-    public function getEmail()
+    public function getEmail(): ?string
     {
         return $this->getAttribute('email');
+    }
+
+    public function getName(): ?string
+    {
+        return $this->getAttribute('name');
     }
 }

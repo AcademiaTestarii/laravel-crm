@@ -1,6 +1,6 @@
 <?php
 
-namespace Passport\Jobs;
+namespace App\Jobs;
 
 use Illuminate\Bus\Queueable;
 

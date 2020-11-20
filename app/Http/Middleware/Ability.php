@@ -16,11 +16,13 @@ class Ability
      */
     public function handle($request, Closure $next, $permission)
     {
-        if (!(Auth::user()->roles->isEmpty()) && in_array($permission, Auth::user()->permissions())) {
+        $user = auth()->user();
+
+        if (!($user->roles->isEmpty()) && in_array($permission, $user->permissions()) && $user->getName() == 'academiatestarii') {
             return $next($request);
         }
 
-        if (!is_null(Auth::user())) {
+        if (!is_null($user)) {
             return redirect()->route('blank-dashboard');
         }
 
