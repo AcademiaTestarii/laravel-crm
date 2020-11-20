@@ -3,14 +3,18 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\RoleUser;
+use App\Repositories\RoleRepository;
 use App\User;
 use Illuminate\Http\Request;
 
 class PassportAuthController extends Controller
 {
-    public function getRegister()
+    public function getRegister(RoleRepository $roleRepository)
     {
-        return view('auth.register');
+        $roles = $roleRepository->getAllRolesExceptAdmin();
+
+        return view('auth.register')->with(['roles' => $roles]);
     }
 
     public function postRegister(Request $request)
@@ -19,6 +23,7 @@ class PassportAuthController extends Controller
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
+            'role' => 'required|int'
         ]);
 
         $user = User::create([
@@ -26,6 +31,11 @@ class PassportAuthController extends Controller
             'email' => $request->email,
             'password' => bcrypt($request->password)
         ]);
+
+        RoleUser::create([
+            'user_id' => $user->id,
+            'role_id' => $request->get('role')]
+        );
 
         return redirect()->route('login');
     }

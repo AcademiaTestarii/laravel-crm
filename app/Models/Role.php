@@ -21,7 +21,7 @@ class Role extends Model
     /**
      * Grant the given permission to a role.
      *
-     * @param  Permission $permission
+     * @param Permission $permission
      * @return mixed
      */
     public function givePermissionTo(Permission $permission)
@@ -32,7 +32,7 @@ class Role extends Model
     /**
      * Remove the given permission to a role.
      *
-     * @param  Permission $permission
+     * @param Permission $permission
      * @return mixed
      */
     public function removePermissionTo(Permission $permission)
@@ -45,7 +45,8 @@ class Role extends Model
      * @param $roles
      * @return \Illuminate\Support\Collection
      */
-    public static function getPermissionsForRoles($roles) {
+    public static function getPermissionsForRoles($roles)
+    {
         $roles = self::with('permissions')->whereIn('code', $roles)->get();
         $permissions = [];
 
@@ -59,4 +60,13 @@ class Role extends Model
         return $permissions;
     }
 
+    public function getId()
+    {
+        return $this->getAttribute('id');
+    }
+
+    public function getName()
+    {
+        return $this->getAttribute('name');
+    }
 }
