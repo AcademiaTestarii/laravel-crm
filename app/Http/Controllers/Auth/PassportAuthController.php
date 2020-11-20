@@ -3,21 +3,27 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\RoleUser;
 use App\Repositories\RoleRepository;
-use App\User;
+use App\Services\RegisterService;
 use Illuminate\Http\Request;
 
 class PassportAuthController extends Controller
 {
-    public function getRegister(RoleRepository $roleRepository)
+    protected $roleRepository;
+
+    public function __construct(RoleRepository $roleRepository)
     {
-        $roles = $roleRepository->getAllRolesExceptAdmin();
+        $this->roleRepository = $roleRepository;
+    }
+
+    public function getRegister()
+    {
+        $roles = $this->roleRepository->getAllRolesExceptAdmin();
 
         return view('auth.register')->with(['roles' => $roles]);
     }
 
-    public function postRegister(Request $request)
+    public function postRegister(Request $request, RegisterService $registerService)
     {
         $validatedData = $request->validate([
             'name' => 'required|max:255',
@@ -26,16 +32,13 @@ class PassportAuthController extends Controller
             'role' => 'required|int'
         ]);
 
-        $user = User::create([
+        $role = $this->roleRepository->findOneBy(['id' => $request->get('role')]);
+
+        $registerService->register($role, [
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt($request->password)
+            'password' => $request->password
         ]);
-
-        RoleUser::create([
-            'user_id' => $user->id,
-            'role_id' => $request->get('role')]
-        );
 
         return redirect()->route('login');
     }

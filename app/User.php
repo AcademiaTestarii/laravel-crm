@@ -64,4 +64,9 @@ class User extends Authenticatable
 
         return array_values($permissions);
     }
+
+    public function getEmail()
+    {
+        return $this->getAttribute('email');
+    }
 }

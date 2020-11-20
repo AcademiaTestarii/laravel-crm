@@ -69,4 +69,13 @@ class Role extends Model
     {
         return $this->getAttribute('name');
     }
+
+    public function isStudent()
+    {
+        if ($this->getAttribute('code') == 'student') {
+            return true;
+        }
+
+        return false;
+    }
 }
