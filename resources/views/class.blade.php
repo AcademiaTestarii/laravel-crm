@@ -93,8 +93,8 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Titlu curs:<br/><small>Apare in meniu, in casete,
                                     etc</small></label>
-                            <div class="col-sm-4"><input disabled
-                                                         value="@if($class && $class->mainClass) {{$class->mainClass->getTitle()}} @endif"
+                            <div class="col-sm-4"><input @if($class && $class->mainClass) disabled @endif
+                                                         value="@if($class && $class->mainClass) {!! $class->mainClass->getTitle() !!} @endif"
                                                          name="title_main" type="text" class="form-control" required>
                             </div>
                             <label class="col-sm-2 control-label">Suplimentar:<br/><small>Iterare, nu apare pe
@@ -132,7 +132,7 @@
 
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Numar cursanti:</label>
-                            <div class="col-sm-10"><input value="@if($class) {{$class->getStudents()}} @endif"
+                            <div class="col-sm-10"><input value="@if($class){{$class->getStudents()}}@endif"
                                                           name="students"
                                                           type="text" placeholder="doar cifre" class="form-control"
                                                           required></div>
@@ -141,14 +141,14 @@
 
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Pret curs/cursant:</label>
-                            <div class="col-sm-10"><input value="@if($class) {{$class->getPrice()}} @endif" name="price"
+                            <div class="col-sm-10"><input value="@if($class){{$class->getPrice()}}@endif" name="price"
                                                           type="text"
                                                           placeholder="doar cifre" class="form-control" required></div>
                         </div>
                         <div class="hr-line-dashed"></div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Pret redus/cursant:</label>
-                            <div class="col-sm-10"><input value="@if($class) {{$class->getDiscountPrice()}} @endif"
+                            <div class="col-sm-10"><input value="@if($class){{$class->getDiscountPrice()}}@endif"
                                                           name="discount_price"
                                                           type="text" placeholder="doar cifre" class="form-control">
                             </div>
@@ -297,8 +297,8 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Trainer:</label>
                             <div class="col-sm-10">
-                                <select class="select2 form-control" name="trainer">
-                                    <option>-- Alege --</option>
+                                <select class="select2 form-control" name="trainer" required>
+                                    <option value="">-- Alege --</option>
                                     @foreach($trainers as $trainer)
                                         <option value="{{$trainer->getId()}}"
                                                 @if($class && in_array($class->getId(), $trainer->classTrainers->pluck('class_id')->toArray()))
@@ -470,6 +470,10 @@ if ($class) {
                     number: true
                 },
                 price: {
+                    required: true,
+                    number: true
+                },
+                trainer: {
                     required: true,
                     number: true
                 }

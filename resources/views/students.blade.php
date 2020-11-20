@@ -94,21 +94,23 @@
                                                     </tr>
                                                     </thead>
                                                     <tbody>
-                                                    @foreach($activeStudents as $activeStudent)
-                                                        <tr>
-                                                            <td><a data-toggle="tab"
-                                                                   href="#contact-{{$activeStudent->getId()}}"
-                                                                   class="client-link">{{$activeStudent->getLastName()}} {{$activeStudent->getFirstName()}}</a>
-                                                            </td>
-                                                            <td>
-                                                                <i class="fa fa-envelope"> </i> {{$activeStudent->getEmail()}}
-                                                            </td>
-                                                            <td>{{$activeStudent->getPhone()}}</td>
-                                                            <td>{{$activeStudent->getRegistrationDate()}}</td>
-                                                            <td class="text-center">
-                                                                <span class="label label-primary">Activ</span>
-                                                            </td>
-                                                        </tr>
+                                                    @foreach($students as $activeStudent)
+                                                        @if(!is_null($activeStudent->activity))
+                                                            <tr>
+                                                                <td><a data-toggle="tab"
+                                                                       href="#contact-{{$activeStudent->getId()}}"
+                                                                       class="client-link">{{$activeStudent->getLastName()}} {{$activeStudent->getFirstName()}}</a>
+                                                                </td>
+                                                                <td>
+                                                                    <i class="fa fa-envelope"> </i> {{$activeStudent->getEmail()}}
+                                                                </td>
+                                                                <td>{{$activeStudent->getPhone()}}</td>
+                                                                <td>{{$activeStudent->getRegistrationDate()}}</td>
+                                                                <td class="text-center">
+                                                                    <span class="label label-primary">Activ</span>
+                                                                </td>
+                                                            </tr>
+                                                        @endif
                                                     @endforeach
                                                     </tbody>
                                                 </table>
@@ -130,21 +132,23 @@
                                                     </tr>
                                                     </thead>
                                                     <tbody>
-                                                    @foreach($inactiveStudents as $inactiveStudent)
-                                                        <tr>
-                                                            <td><a data-toggle="tab"
-                                                                   href="#contact-{{$inactiveStudent->getId()}}"
-                                                                   class="client-link">{{$inactiveStudent->getLastName()}} {{$inactiveStudent->getFirstName()}}</a>
-                                                            </td>
-                                                            <td>
-                                                                <i class="fa fa-envelope"> </i> {{$inactiveStudent->getEmail()}}
-                                                            </td>
-                                                            <td>{{$inactiveStudent->getPhone()}}</td>
-                                                            <td>{{$inactiveStudent->getRegistrationDate()}}</td>
-                                                            <td class="text-center">
-                                                                <span class="label label-danger">Inactiv</span>
-                                                            </td>
-                                                        </tr>
+                                                    @foreach($students as $inactiveStudent)
+                                                        @if(is_null($inactiveStudent->activity))
+                                                            <tr>
+                                                                <td><a data-toggle="tab"
+                                                                       href="#contact-{{$inactiveStudent->getId()}}"
+                                                                       class="client-link">{{$inactiveStudent->getLastName()}} {{$inactiveStudent->getFirstName()}}</a>
+                                                                </td>
+                                                                <td>
+                                                                    <i class="fa fa-envelope"> </i> {{$inactiveStudent->getEmail()}}
+                                                                </td>
+                                                                <td>{{$inactiveStudent->getPhone()}}</td>
+                                                                <td>{{$inactiveStudent->getRegistrationDate()}}</td>
+                                                                <td class="text-center">
+                                                                    <span class="label label-danger">Inactiv</span>
+                                                                </td>
+                                                            </tr>
+                                                        @endif
                                                     @endforeach
                                                     </tbody>
                                                 </table>

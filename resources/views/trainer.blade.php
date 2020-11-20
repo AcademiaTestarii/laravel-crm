@@ -95,22 +95,22 @@
                         <div class="row">
                             <div class="col-md-2"></div>
                             <div class="form-group col-md-3">
-                                <label class="col-sm-2 control-label">Telefon:<br/></label>
-                                <div class="col-sm-10">
+                                <label class="col-sm-3 control-label">Telefon:<br/></label>
+                                <div class="col-sm-9">
                                     <input value="@if($trainer) {{$trainer->getPhone()}} @endif" name="phone" type="text"
                                            class="form-control">
                                 </div>
                             </div>
                             <div class="form-group col-md-3">
-                                <label class="col-sm-2 control-label">Email:<br/></label>
-                                <div class="col-sm-10">
+                                <label class="col-sm-3 control-label">Email:<br/></label>
+                                <div class="col-sm-9">
                                     <input value="@if($trainer) {{$trainer->getEmail()}} @endif" name="email" type="email"
                                            class="form-control">
                                 </div>
                             </div>
-                            <div class="form-group col-md-3">
-                                <label class="col-sm-2 control-label">LinkedIN:<br/></label>
-                                <div class="col-sm-10">
+                            <div class="form-group col-md-4">
+                                <label class="col-sm-3 control-label">LinkedIn:<br/></label>
+                                <div class="col-sm-9">
                                     <input value="@if($trainer) {{$trainer->getLinkedin()}} @endif" name="linkedin" type="text"
                                            class="form-control">
                                 </div>
@@ -156,7 +156,6 @@
                         <div class="form-group">
                             <div class="col-sm-4 col-sm-offset-2">
                                 <input type="hidden" name="id2update" value="@if($trainer) {{$trainer->getId()}} @endif"/>
-                                <button class="btn btn-white" type="reset">Reseteaza</button>
                                 <button class="btn btn-primary" type="submit" name="<?php /*echo $submit;*/?>">Salveaza
                                 </button>
                             </div>

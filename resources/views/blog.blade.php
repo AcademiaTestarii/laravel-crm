@@ -98,7 +98,7 @@
                                         <input type="checkbox" @if($blog->isActive()) checked @endif name="activ"
                                                onChange="this.form.submit()"/>
                                         <input type="hidden" name="state"
-                                               value="{{$blog->getId()}}"/>
+                                               @if($blog->isActive()) value="inactive" @else value="active" @endif/>
                                         <input type="hidden" name="value"
                                                value="{{$blog->getActive()}}"/>
                                         <input type="hidden" name="id"

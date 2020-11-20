@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class MainClass extends Model
 {
+    protected $guarded = [];
+    public $timestamps = null;
+
     public function getId()
     {
         return $this->getAttribute('id');

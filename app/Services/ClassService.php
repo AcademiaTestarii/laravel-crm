@@ -3,12 +3,21 @@
 namespace App\Services;
 
 use App\Models\Classes;
+use App\Models\MainClass;
 use App\Repositories\ClassesRepository;
+use App\Repositories\MainClassRepository;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\App;
 
 class ClassService
 {
+    protected $mainClassRepository;
+
+    public function __construct(MainClassRepository $mainClassRepository)
+    {
+        $this->mainClassRepository = $mainClassRepository;
+    }
+
     public function update(Classes $class, $request)
     {
         $registrationDates = explode(',', $request->get('deployment'));
@@ -38,8 +47,8 @@ class ClassService
             'is_planned' => ($request->get('planned')) ? 1 : 0,
             'is_bucharest_located' => ($request->get('bucharest')) ? 1 : 0,
             'deployment' => $request->get('deploymentCourse'),
-            'image' => ($request->file('image')) ? $request->file('image')->getClientOriginalName() : null,
-            'schedule_pdf' => ($request->file('filepdf')) ? $request->file('filepdf')->getClientOriginalName() : null,
+            'image' => ($request->file('image')) ? $request->file('image')->getClientOriginalName() : $class->image,
+            'schedule_pdf' => ($request->file('filepdf')) ? $request->file('filepdf')->getClientOriginalName() : $class->schedule_pdf,
         ]);
 
         $class->classTrainer()->delete();
@@ -70,11 +79,23 @@ class ClassService
 
     public function create($request)
     {
+       // dump($request->all()); exit;
         $classRepository = App::make(ClassesRepository::class);
         $registrationDates = explode(',', $request->get('deployment'));
 
+        $mainTitle = $request->get('title_main');
+
+        $mainClass = $this->mainClassRepository->create([
+            'title' => $mainTitle,
+            'is_active' => 1,
+            'order' => MainClass::max('order') + 1,
+            'is_new' => 1,
+            'url_string_short' => strtolower(str_replace(' ', '-', $mainTitle)),
+            'url_string_full' => strtolower(str_replace(' ', '-', $mainTitle)) . '.html',
+        ]);
+
         $class = $classRepository->create([
-            'main_class_id' => ($request->get('main_class_id')) ? $request->get('main_class_id') : null,
+            'main_class_id' => ($request->get('main_class_id')) ? $request->get('main_class_id') : $mainClass->id,
             'title' => $request->get('title'),
             'short_description' => $request->get('short_description'),
             'description' => $request->get('description'),

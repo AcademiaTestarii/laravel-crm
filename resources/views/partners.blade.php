@@ -68,17 +68,17 @@
         </div>
 
         <div class="wrapper wrapper-content animated fadeInRight">
-            <div class="row">
+            <div class="row row-padding">
                 @foreach($partners as $partner)
                 <div class="col-lg-3">
                     <div class="widget-head-color-box lazur-bg p-lg text-center">
                         <div class="m-b-md">
-                            <h2 class="font-bold no-margins">
+                            <h2 class="font-bold no-margins partner-name">
                                 {{$partner->getName()}}
                             </h2>
                         </div>
                         <a href="/partner?id={{$partner->getId()}}">
-                            <img src="{{$partner->getLogo()}}" class="m-b-md" alt="">
+                            <img src="{{$partner->getLogo()}}" class="m-b-md partner-image" alt="">
                         </a>
                     </div>
                     <div class="widget-text-box text-center">

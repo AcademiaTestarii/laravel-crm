@@ -68,7 +68,7 @@
 
                     <form role="form" action="" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <div class="row">
+                        <div class="row row-padding">
                             <div class="col-md-12">
                                 <!-- general form elements -->
                                 <div class="box">

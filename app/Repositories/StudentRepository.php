@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Student;
+use Illuminate\Support\Facades\DB;
 
 class StudentRepository extends Repository
 {
@@ -11,16 +12,6 @@ class StudentRepository extends Repository
     public function __construct(Student $student)
     {
         $this->model = $student;
-    }
-
-    public function allWithActivity()
-    {
-        return $this->model->whereNotNull('activity')->orderBy('last_name')->get();
-    }
-
-    public function allWithoutActivity()
-    {
-        return $this->model->whereNull('activity')->orderBy('last_name')->get();
     }
 
     public function allOrderedByActiveAndName()
@@ -34,16 +25,27 @@ class StudentRepository extends Repository
             return $this->model->all();
         }
 
-        return $this->model->where(function ($query) use ($filter) {
-            if (isset($filter['class'])) {
-                return $query->whereHas('classStudents')->where('class_id', $filter['class']);
-            }
+        $model = $this->model->where(function ($query) use ($filter) {
             if (isset($filter['main_class'])) {
-                return $query->whereHas('classStudents')->where(function($q) use ($filter) {
-                    return $q->whereHas('class')->where('main_class_id', $filter['main_class']);
+                return $query->whereHas('classStudents', function ($q) use ($filter) {
+                    return $q->whereHas('classes', function ($qu) use ($filter) {
+                        if (isset($filter['class']) && !empty($filter['class'])) {
+                            return $qu->where('main_class_id', $filter['main_class'])
+                                ->where('class_id', $filter['class']);
+                        }
+                        return $qu->where('main_class_id', $filter['main_class']);
+                    });
+                });
+            }
+
+            if (isset($filter['class']) && !empty($filter['class'])) {
+                return $query->whereHas('classStudents', function ($q) use ($filter) {
+                    return $q->where('class_id', $filter['class']);
                 });
             }
 
         })->get();
+
+        return $model;
     }
 }

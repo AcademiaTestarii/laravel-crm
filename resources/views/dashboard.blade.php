@@ -92,7 +92,6 @@ $page = "cursuri";
 
 <!-- Calendar -->
 <script src="{{asset('calendar/bootstrap-year-calendar.min.js')}}"></script>
-
 <script>
 
     function editEvent(event) {
@@ -207,7 +206,7 @@ $page = "cursuri";
                     @foreach($classes as $key => $class)
                 {
                     id: "{{ $key}}",
-                    name: "{{ $class->mainClass->title}}",
+                    name: @if($class->mainClass) "{!! $class->mainClass->title !!}" @else " " @endif,
                     location: "{{$class->title}}",
                     startDate: new Date({{ strftime("%Y, %m-1, %e", strtotime($class->registration_start_date))}}),
                     endDate: new Date({{ strftime("%Y, %m-1, %e", strtotime($class->registration_end_date))}}),
@@ -220,7 +219,6 @@ $page = "cursuri";
         });
     });
 </script>
-
 
 <!-- Custom and plugin javascript -->
 <script src="{{asset('js/inspinia.js')}}"></script>

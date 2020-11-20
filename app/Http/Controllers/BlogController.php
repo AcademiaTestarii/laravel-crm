@@ -30,12 +30,11 @@ class BlogController extends Controller
                 ->findOneBy(['id' => $request->get('delete')])
                 ->delete();
         }
-
         if ($request->get('state')) {
             $this->blogRepository
                 ->findOneBy(['id' => $request->get('id')])
                 ->update([
-                    'is_active' => $request->get('state')
+                    'is_active' => ($request->get('state') == 'inactive') ? 0 : 1
                 ]);
         }
 
