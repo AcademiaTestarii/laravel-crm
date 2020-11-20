@@ -23,6 +23,11 @@ class PassportAuthController extends Controller
         return view('auth.register')->with(['roles' => $roles]);
     }
 
+    public function getPasswordReset()
+    {
+        return view('auth.passwords.reset');
+    }
+
     public function postRegister(Request $request, RegisterService $registerService)
     {
         $validatedData = $request->validate([
@@ -36,6 +41,22 @@ class PassportAuthController extends Controller
 
         $registerService->register($role, [
             'name' => $request->name,
+            'email' => $request->email,
+            'password' => md5($request->password)
+        ]);
+
+        return redirect()->route('login');
+    }
+
+    public function postPasswordReset(Request $request, RegisterService $registerService)
+    {
+        $validatedData = $request->validate([
+            'email' => 'required|email|max:255|exists:users,email',
+            'password' => 'required|min:6|confirmed',
+            'password_confirmation' => 'required|min:6'
+        ]);
+
+        $registerService->resetPassword([
             'email' => $request->email,
             'password' => md5($request->password)
         ]);

@@ -22,6 +22,17 @@ class RegisterService
         $this->sendUserEmail($user, $role);
     }
 
+
+    public function resetPassword(array $userData)
+    {
+        $user = $this->userRepository->findOneBy(['email' => $userData['email']]);
+        $user->update([
+            'password' => bcrypt($userData['password'])
+        ]);
+
+        $this->sendUserPasswordResetEmail($user);
+    }
+
     /**
      * @param Role $role
      * @param array $userData
@@ -69,6 +80,30 @@ class RegisterService
                 $message->from('contact@academiatestarii.ro')
                     ->to($user->getEmail())
                     ->subject('Confirmare înregistrare pe platforma Academia Testarii');
+            }
+        );
+    }
+
+
+    /**
+     * @param User $user
+     */
+    protected function sendUserPasswordResetEmail(User $user)
+    {
+        $emailTemplate = 'register_student';
+        $greetings = "Salut " . $user->name . "<br><br>";
+
+        $message = "<p>Parola ta a fost resetata.<br>
+        <p>
+        <p>Iti multumim,<br>Echipa Academia Testarii</p>";
+
+        Mail::send(
+            'auth/emails/' . $emailTemplate,
+            ['messageBody' => ['greetings' => $greetings, 'message' => $message]],
+            function ($message) use ($user) {
+                $message->from('contact@academiatestarii.ro')
+                    ->to($user->getEmail())
+                    ->subject('Confirmare resetare parola pe platforma Academia Testarii');
             }
         );
     }

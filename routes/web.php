@@ -12,8 +12,11 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('register', 'Auth\PassportAuthController@getRegister');
+Route::get('register', 'Auth\PasspportAuthController@getRegister');
 Route::post('register', 'Auth\PassportAuthController@postRegister');
+
+Route::get('password/reset', 'Auth\PassportAuthController@getPasswordReset');
+Route::post('password/reset', 'Auth\PassportAuthController@postPasswordReset');
 
 Route::get('login', 'Auth\PassportAuthController@getLogin')->name('login');
 Route::get('/', 'Auth\PassportAuthController@getLogin');
