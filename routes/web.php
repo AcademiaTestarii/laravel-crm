@@ -16,12 +16,13 @@ Route::get('register', 'Auth\PassportAuthController@getRegister');
 Route::post('register', 'Auth\PassportAuthController@postRegister');
 
 Route::get('login', 'Auth\PassportAuthController@getLogin')->name('login');
+Route::get('/', 'Auth\PassportAuthController@getLogin')->name('login');
 Route::post('login', 'Auth\PassportAuthController@postLogin');
 
 
 Route::middleware('auth:api')->group(function () {
     Route::get('logout', 'Auth\PassportAuthController@logOut')->name('logout');
-    Route::get('/', 'DashboardController@index');
+    //Route::get('/', 'DashboardController@index');
 
     Route::get('dashboard', 'DashboardController@index')->name('dashboard');
     Route::get('homepage', 'HomepageController@index')->name('homepage');

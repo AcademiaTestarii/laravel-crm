@@ -17,7 +17,6 @@ class CreateRolesAndPermissionsTables extends Migration
             $table->id();
             $table->string('code');
             $table->string('name');
-            $table->string('description')->nullable();
             $table->timestamps();
         });
 
@@ -37,7 +36,6 @@ class CreateRolesAndPermissionsTables extends Migration
             $table->id();
             $table->string('code');
             $table->string('name');
-            $table->string('description')->nullable();
             $table->timestamps();
         });
 
