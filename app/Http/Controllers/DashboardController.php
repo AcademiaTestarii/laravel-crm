@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\ClassesRepository;
-use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
@@ -19,5 +18,10 @@ class DashboardController extends Controller
         $classes = $this->classesRepository->allOrderedBy('registration_start_date');
 
         return view('dashboard')->with(['classes' => $classes]);
+    }
+
+    public function getBlankDashboard()
+    {
+        return view('blank_dashboard');
     }
 }

@@ -57,6 +57,11 @@ class User extends Authenticatable
 
     public function permissions()
     {
-        return $this->roles->pluck('permissions')->flatten()->pluck('code');
+        $permissions = [];
+        foreach ($this->roles()->get() as $role) {
+            $permissions[] = $role->permissions()->pluck('code')->toArray();
+        }
+
+        return array_values($permissions);
     }
 }
