@@ -37,12 +37,11 @@ class PassportAuthController extends Controller
         $registerService->register($role, [
             'name' => $request->name,
             'email' => $request->email,
-            'password' => $request->password
+            'password' => md5($request->password)
         ]);
 
         return redirect()->route('login');
     }
-
 
     public function getLogin()
     {
@@ -59,6 +58,8 @@ class PassportAuthController extends Controller
             'email' => 'email|required',
             'password' => 'required'
         ]);
+
+        $loginData['password'] = md5($loginData['password']);
 
         if (!auth()->attempt($loginData)) {
             return redirect()->route('login');

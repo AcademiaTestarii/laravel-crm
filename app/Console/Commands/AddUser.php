@@ -47,6 +47,10 @@ class AddUser extends Command
         $userRole = $this->option('userRole');
         $userPassport = $this->option('userPassword');
 
+        if (!empty($userPassport)) {
+            $userPassport = md5($userPassport);
+        }
+
         if (!isset($userName) || is_null($userName)) {
             echo 'Please add a userName!';
         }

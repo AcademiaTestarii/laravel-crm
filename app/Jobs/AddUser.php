@@ -34,10 +34,10 @@ class AddUser extends Job implements ShouldQueue
      */
     public function handle()
     {
-        $user = User::where('email', $this->userEmail)->orWhere('name', $this->userName)->first();
+        $user = User::where('email', $this->userEmail)->first();
 
         if (!is_null($user)) {
-            echo 'The email address or the user name already exists! Please choose another one!';
+            echo 'The email address '. $this->userEmail.' already exists! Please choose another one!';
             return;
         }
 
@@ -99,6 +99,6 @@ class AddUser extends Job implements ShouldQueue
             return $userPassword;
         }
 
-        return Str::random(12);
+        return md5(Str::random(12));
     }
 }
