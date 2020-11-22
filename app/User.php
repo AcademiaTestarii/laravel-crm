@@ -67,6 +67,11 @@ class User extends Authenticatable
         return $permissions;
     }
 
+    public function getId(): ?string
+    {
+        return $this->getAttribute('id');
+    }
+
     public function getEmail(): ?string
     {
         return $this->getAttribute('email');

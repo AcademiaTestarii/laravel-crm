@@ -4,6 +4,7 @@ namespace App\Console;
 
 use App\Console\Commands\AddUser;
 use App\Console\Commands\MigrateStudents;
+use App\Console\Commands\MigrateTrainerProvider;
 use App\Console\Commands\MigrateTrainers;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -19,6 +20,7 @@ class Kernel extends ConsoleKernel
         AddUser::class,
         MigrateTrainers::class,
         MigrateStudents::class,
+        MigrateTrainerProvider::class,
     ];
 
     /**
