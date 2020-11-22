@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class TrainerProvider extends Model
 {
     protected $guarded = ['id'];
-    
+
     public function getId()
     {
         return $this->getAttribute('id');

@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Models\Role;
+use App\Models\Student;
 use App\Repositories\StudentRepository;
 use App\User;
 use Illuminate\Console\Command;
@@ -42,9 +43,9 @@ class MigrateStudents extends Command
      *
      * @return mixed
      */
-    public function handle(StudentRepository $studentRepository)
+    public function handle()
     {
-        $students = $studentRepository->allOrderedBy();
+        $students = Student::whereNull('user_id')->get();
 
         foreach ($students as $student) {
 
