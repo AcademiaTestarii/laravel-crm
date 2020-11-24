@@ -120,4 +120,9 @@ class Student extends Model
     {
         return $this->getAttribute('web');
     }
+
+    public function getPassword()
+    {
+        return $this->getAttribute('password');
+    }
 }

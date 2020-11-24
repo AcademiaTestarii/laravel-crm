@@ -19,4 +19,9 @@ class DashboardController extends Controller
 
         return view('dashboard')->with(['classes' => $classes]);
     }
+
+    public function getBlankDashboard()
+    {
+        return view('blank_dashboard');
+    }
 }
