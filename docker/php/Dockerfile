@@ -35,11 +35,10 @@ RUN curl --silent --show-error https://getcomposer.org/installer | php \
 
 RUN chown -R www-data:www-data \
   /var/www/storage \
-  /var/www/bootstrap/cache
-
-RUN chown -R www-data /var/www/public
-RUN chmod -R 777 public/
-RUN chmod -R 777 storage/
+  /var/www/bootstrap/cache \
+  && chown -R www-data /var/www/public \
+  &&  chmod -R 777 public/ \
+  &&  chmod -R 777 storage/
 
 RUN php artisan optimize
 
