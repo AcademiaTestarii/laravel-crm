@@ -37,7 +37,7 @@ RUN chown -R www-data:www-data \
   /var/www/storage \
   /var/www/bootstrap/cache
 
-RUN chown -R www-data /var/www/
+RUN chown -R www-data /var/www/public
 RUN chmod -R 777 public/
 RUN chmod -R 777 storage/
 
