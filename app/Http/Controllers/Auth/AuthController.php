@@ -83,7 +83,9 @@ class AuthController extends Controller
         $loginData['password'] = md5($loginData['password']);
 
         if (!auth()->attempt($loginData)) {
-            return redirect()->route('login');
+            return redirect()->route('login')->withErrors([
+                'email_password_mismatch' => 'Email and password do not match',
+            ]);
         }
 
         auth()->user()->createToken('AcademiaTestarii')->accessToken;

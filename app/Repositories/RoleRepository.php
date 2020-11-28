@@ -13,6 +13,12 @@ class RoleRepository extends Repository
         $this->model = $role;
     }
 
+    /**
+     * @param array $exceptRoles
+     * @param string $column
+     * @param string $order
+     * @return mixed
+     */
     public function getAllRolesExcept(array $exceptRoles, string $column = 'id', string $order = 'ASC')
     {
         $model = $this->model;
