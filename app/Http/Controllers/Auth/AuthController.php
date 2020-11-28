@@ -7,7 +7,7 @@ use App\Repositories\RoleRepository;
 use App\Services\RegisterService;
 use Illuminate\Http\Request;
 
-class PassportAuthController extends Controller
+class AuthController extends Controller
 {
     protected $roleRepository;
 
@@ -18,7 +18,7 @@ class PassportAuthController extends Controller
 
     public function getRegister()
     {
-        $roles = $this->roleRepository->getAllRolesExceptAdmin();
+        $roles = $this->roleRepository->getAllRolesExcept(['admin', 'trainer']);
 
         return view('auth.register')->with(['roles' => $roles]);
     }

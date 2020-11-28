@@ -28,7 +28,6 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    Academia Testarii
                 </a>
             </div>
 

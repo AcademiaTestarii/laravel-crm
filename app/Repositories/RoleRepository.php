@@ -13,8 +13,14 @@ class RoleRepository extends Repository
         $this->model = $role;
     }
 
-    public function getAllRolesExceptAdmin(string $column = 'id', string $order = 'ASC')
+    public function getAllRolesExcept(array $exceptRoles, string $column = 'id', string $order = 'ASC')
     {
-        return $this->model->where('code', '!=', 'admin')->orderBy($column, $order)->get();
+        $model = $this->model;
+        foreach ($exceptRoles as $exceptRole) {
+            $model = $model->where(function ($query) use ($exceptRole) {
+                $query->where('code', '!=', $exceptRole);
+            });
+        }
+        return $model->orderBy($column, $order)->get();
     }
 }
