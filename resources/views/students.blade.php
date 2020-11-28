@@ -256,7 +256,7 @@
                                                 </div>
 
                                                 <div class="well well-sm">
-                                                    <h3>Calificative</h4>
+                                                    <h3>Calificative</h3>
                                                         @if($student->feedbacks->isNotEmpty())
                                                             @foreach($student->feedbacks as $feedback)
                                                                 <p><i class="fa fa-angle-double-right"></i>
@@ -274,7 +274,7 @@
                                                     @endif
                                                 </div>
                                                 <div class="well well-sm">
-                                                    <h3>Notite</h4>
+                                                    <h3>Notite</h3>
                                                         @if($student->classStudents->isNotEmpty())
                                                             <?php
                                                             $count = 0;
