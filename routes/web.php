@@ -12,19 +12,19 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('register', 'Auth\PassportAuthController@getRegister');
-Route::post('register', 'Auth\PassportAuthController@postRegister');
+Route::get('register', 'Auth\AuthController@getRegister');
+Route::post('register', 'Auth\AuthController@postRegister');
 
-Route::get('password/reset', 'Auth\PassportAuthController@getPasswordReset');
-Route::post('password/reset', 'Auth\PassportAuthController@postPasswordReset');
+Route::get('password/reset', 'Auth\AuthController@getPasswordReset');
+Route::post('password/reset', 'Auth\AuthController@postPasswordReset');
 
-Route::get('login', 'Auth\PassportAuthController@getLogin')->name('login');
-Route::get('/', 'Auth\PassportAuthController@getLogin');
-Route::post('login', 'Auth\PassportAuthController@postLogin');
+Route::get('login', 'Auth\AuthController@getLogin')->name('login');
+Route::get('/', 'Auth\AuthController@getLogin');
+Route::post('login', 'Auth\AuthController@postLogin');
 
 
 Route::middleware('auth:api')->group(function () {
-    Route::get('logout', 'Auth\PassportAuthController@logOut')->name('logout');
+    Route::get('logout', 'Auth\AuthController@logOut')->name('logout');
     Route::get('blank_dashboard', 'DashboardController@getBlankDashboard')->name('blank-dashboard');
 
     Route::group(['middleware' => ['ability:can-view-all']], function () {

@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
     <div class="container">
         <div class="row">
@@ -10,7 +9,15 @@
                         <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
                             {{ csrf_field() }}
 
-                            <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
+                            @if($errors->has('email_password_mismatch'))
+                            <div class="form-group">
+                                <label class="col-md-2 control-label"></label>
+                                <div class="col-md-8 alert alert-danger" role="alert">
+                                    {{ $errors->first('email_password_mismatch') }}
+                                </div>
+                            </div>
+                            @endif
+                            <div class="form-group{{ ($errors->has('email') || $errors->has('email_password_mismatch')) ? ' has-error' : '' }}">
                                 <label for="email" class="col-md-4 control-label">E-Mail Address</label>
 
                                 <div class="col-md-6">
@@ -25,7 +32,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                            <div class="form-group{{ ($errors->has('password') || $errors->has('email_password_mismatch')) ? ' has-error' : '' }}">
                                 <label for="password" class="col-md-4 control-label">Password</label>
 
                                 <div class="col-md-6">
