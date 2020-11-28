@@ -1,24 +1,4 @@
-<?php
-session_start();
-include("__connect.php");
-if (isset($_SESSION['key_admin']) && $_SESSION['key_admin'] == session_id()) {
-    $membru = true;
-    include("useract.php");
-} else {
-    $membru = false;
-}
-$page = "inscriere-curs";
-if (isset($_GET['curs']) && is_numeric($_GET['curs'])) {
-    $curs = trim(mysqli_real_escape_string($link, $_GET['curs']));
-    $sql = "SELECT * FROM `classes`
-LEFT JOIN `main_classes` ON `classes`.`main_class_id`=`main_classes`.`id`
-WHERE `classes.id`=" . $curs;
-    $query = mysqli_query($link, $sql);
-    $cursactiv = mysqli_fetch_assoc($query);
-    $set = true;
-}
-?>
-        <!DOCTYPE html>
+<!DOCTYPE html>
 <html dir="ltr" lang="ro">
 <head>
 
@@ -29,8 +9,8 @@ WHERE `classes.id`=" . $curs;
     <meta name="keywords" content=""/>
 
     <!-- Page Title -->
-    <title>Academia Testarii:: Formular inscriere curs <?php echo $cursactiv['main_classes.title']; ?></title>
-    <base href="<?php echo $_SERVER['SERVER_NAME']; ?>>">
+    <title>Academia Testarii:: Formular inscriere curs {{ $main_class->title }}</title>
+
     <!-- Favicons -->
     <link rel="apple-touch-icon" sizes="57x57" href="favicon/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="favicon/apple-icon-60x60.png">
@@ -115,7 +95,8 @@ WHERE `classes.id`=" . $curs;
             "@id": "/#organization",
             "name": "Academia Testarii",
             "logo": "/images/logo-academia-testarii.png"
-        }</script>
+        }
+    </script>
 
     <!-- Facebook Pixel Code -->
     <script>
@@ -160,10 +141,46 @@ WHERE `classes.id`=" . $curs;
     </div>
 
     <!-- Header -->
-    <header id="header" class="header modern-header modern-header-white">
-        <?php include("include.top.header.php"); ?>
-        <?php include("include.top.menu.php"); ?>
-    </header>
+
+
+        <nav class="navbar-default navbar-static-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav metismenu" id="side-menu">
+                    <li class="nav-header">
+                        @include('include.user')
+                        <div class="logo-element">
+                            AT+
+                        </div>
+                    </li>
+                    @include('include.mainmenu2')
+                </ul>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="gray-bg">
+            <div class="row border-bottom">
+                <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+                    <div class="navbar-header">
+                        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i>
+                        </a>
+                    </div>
+                    @include('include.controlpanel')
+                </nav>
+            </div>
+            <div class="row wrapper border-bottom white-bg page-heading">
+                <div class="col-lg-8">
+                    <h2>Blog</h2>
+                    <ol class="breadcrumb">
+                        <li><a href="/dashboard">Home</a></li>
+                        <li class="active"><a href="/blog_list"><strong>Blog</strong></a></li>
+                    </ol>
+                </div>
+                <div class="col-sm-4">
+                    <div class="title-action">
+                        <a class="btn btn-primary" href="/blog">Adauga</a>
+                    </div>
+                </div>
+            </div>
 
     <!-- Start main-content -->
     <div class="main-content">
@@ -176,7 +193,7 @@ WHERE `classes.id`=" . $curs;
                     <div class="row">
                         <div class="col-md-12">
                             <h2 class="title text-white">Formular inscriere curs
-                                <br/><?php echo $cursactiv['main_classes.title']; ?></h2>
+                                <br/>{{ $main_class->title }}}</h2>
                         </div>
                     </div>
                 </div>
@@ -188,21 +205,25 @@ WHERE `classes.id`=" . $curs;
             <div class="container pt-60 pb-60">
                 <h2 class="mt-0 text-theme-colored">Te rugăm să completezi acest formular pentru a te înscrie la
                     cursurile organizate de Academia Testării:</h2>
-                <?php if (!$membru) { ?>
+
+                @guest
                 <p>După ce completezi acest formular vei primi un mesaj de confirmare pe email. In acest mesaj vei
                     primi deasemenea și instrucţiuni pentru activarea contului tău de pe platforma Academia Testării
                     unde vei putea consulta materiale pentru curs precum și alte informaţii care privesc relaţia
-                    dintre Academia Testării și tine.</p><p>Dacă ai deja cont pe platforma Academia Testării, te
+                    dintre Academia Testării și tine.</p>
+                <p>Dacă ai deja cont pe platforma Academia Testării, te
                     rugăm să <strong><a href="ajax-load/login-form.html" class="ajaxload-popup text-theme-colored">intri
                             în contul tău</a></strong> pentru a te înscrie la cursuri.</p>
-                <?php } else { ?>
+                @endguest
+
+                @if (Auth::student())
                 <p>Avem nevoie de datele tale personale (Nume, Adresa, Localitate, etc pentru facturare). Te rugăm
                     să completezi datele personale în <strong><a href="contul_tau.php#sectiuneaDate"
                                                                  class="text-theme-colored">contul tău</a></strong>,
                     apoi să revi la formularul de înscriere.</p>
                 <p>Dacă ai toate datele completate, atunci te poţi înscrie la cursuri selectând modulul dorit din
                     partea de jos a formularului.</p>
-                <?php } ?>
+               @endif
                 <hr/>
                 <div class="section-content post">
                     <form id="inscriere_curs" name="inscriere_curs" class="reservation-form" method="post"
@@ -211,49 +232,49 @@ WHERE `classes.id`=" . $curs;
                             <div class="col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label>Nume <small>*</small></label>
-                                    <?php if ($membru) { ?>
+                                    @if (Auth::student())
                                     <input name="nume" class="form-control" type="text"
-                                           value="<?php echo $row_userlogat['last_name']; ?>" readonly>
-                                    <?php } else { ?>
+                                           value="{{ Auth::student()->last_name }}" readonly>
+                                    @else
                                     <input name="nume" class="form-control" type="text" placeholder="Nume"
                                            minlength="3" required="">
-                                    <?php } ?>
+                                    @endif
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label>Prenume <small>*</small></label>
-                                    <?php if ($membru) { ?>
+                                    @if (Auth::student())
                                     <input name="prenume" class="form-control" type="text"
-                                           value="<?php echo $row_userlogat['first_name']; ?>" readonly>
-                                    <?php } else { ?>
+                                           value="{{ Auth::student()->first_name }}" readonly>
+                                    @else
                                     <input name="prenume" class="form-control" type="text" placeholder="Prenume"
                                            minlength="3" required="">
-                                    <?php } ?>
+                                    @endif
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label>Email <small>*</small></label>
-                                    <?php if ($membru) { ?>
+                                    @if (Auth::student())
                                     <input name="email" class="form-control" type="email"
-                                           value="<?php echo $row_userlogat['email']; ?>" readonly>
-                                    <?php } else { ?>
+                                           value="{{ Auth::student()->email }}" readonly>
+                                    @else
                                     <input name="email" class="form-control" type="email" placeholder="Email"
                                            minlength="5" required="">
-                                    <?php } ?>
+                                    @endif
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label>Data naștere</label>
-                                    <?php if ($membru) { ?>
+                                    @if (Auth::student())
                                     <input name="data_nastere" class="form-control" type="date"
-                                           value="<?php echo $row_userlogat['date_of_birth']; ?>" readonly>
-                                    <?php } else { ?>
+                                           value="{{ Auth::student()->date_of_birth }}" readonly>
+                                    @else
                                     <input name="data_nastere" class="form-control" type="date" minlength="10"
                                            placeholder="Data naștere">
-                                    <?php } ?>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -262,33 +283,33 @@ WHERE `classes.id`=" . $curs;
                             <div class="col-sm-12 col-md-4">
                                 <div class="form-group">
                                     <label>Adresă <small>*</small></label>
-                                    <?php if ($membru) { ?>
+                                    @if (Auth::student())
                                     <input name="adresa" class="form-control" type="text"
-                                           value="<?php echo $row_userlogat['address']; ?>" readonly>
-                                    <?php } else { ?>
+                                           value="{{ Auth::student()->address }}" readonly>
+                                   @else
                                     <input name="adresa" class="form-control" type="text"
                                            placeholder="O folosim pentru factură" minlength="10" required="">
-                                    <?php } ?>
+                                    @endif
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-4">
                                 <div class="form-group">
                                     <label>Localitate <small>*</small></label>
-                                    <?php if ($membru) { ?>
+                                    @if (Auth::student())
                                     <input name="localitate" class="form-control" type="text"
-                                           value="<?php echo $row_userlogat['city']; ?>" readonly>
-                                    <?php } else { ?>
+                                           value="{{ Auth::student()->city }}" readonly>
+                                   @else
                                     <input name="localitate" class="form-control" type="text"
                                            placeholder="O folosim pentru factură" minlength="3" required="">
-                                    <?php } ?>
+                                   @endif
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-4">
                                 <div class="form-group">
                                     <label>Judet <small>*</small></label>
-                                    <?php if ($membru) { ?>
+                                    @if (Auth::student())
                                     <input name="judet" class="form-control" type="text"
-                                           value="<?php echo $row_userlogat['county']; ?>" readonly>
+                                           value="{{ Auth::student()->county }}" readonly>
                                     <?php } else { ?>
                                     <input name="judet" class="form-control" type="text"
                                            placeholder="Îl folosim pentru factură" minlength="3" required="">
@@ -303,36 +324,36 @@ WHERE `classes.id`=" . $curs;
                             <div class="col-sm-12 col-md-4">
                                 <div class="form-group">
                                     <label>Profesie actuală</label>
-                                    <?php if ($membru) { ?>
+                                    @if (Auth::student())
                                     <input name="profesie" class="form-control" type="text"
-                                           value="<?php echo $row_userlogat['job_title']; ?>" readonly>
-                                    <?php } else { ?>
+                                           value="{{ Auth::student()->job_title }}" readonly>
+                                    @else
                                     <input name="profesie" class="form-control" type="text"
                                            placeholder="Profesie actuală">
-                                    <?php } ?>
+                                    @endif
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-4">
                                 <div class="form-group">
                                     <label>Telefon <small>*</small></label>
-                                    <?php if ($membru) { ?>
+                                    @if (Auth::student())
                                     <input name="telefon" class="form-control" type="text"
-                                           value="<?php echo $row_userlogat['phone']; ?>" readonly>
-                                    <?php } else { ?>
+                                           value="{{ Auth::student()->phone }}" readonly>
+                                   @else
                                     <input name="telefon" class="form-control" type="text" placeholder="Telefon"
                                            required="">
-                                    <?php } ?>
+                                    @endif
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-4">
                                 <div class="form-group">
                                     <label>Educaţie</label>
-                                    <?php if ($membru) { ?>
+                                    @if (Auth::student())
                                     <input name="educatie" class="form-control" type="text"
-                                           value="<?php echo $row_userlogat['education']; ?>" readonly>
-                                    <?php } else { ?>
+                                           value="{{ Auth::student()->education }}" readonly>
+                                  @else
                                     <input name="educatie" class="form-control" type="text" placeholder="Educaţie">
-                                    <?php } ?>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -355,10 +376,13 @@ WHERE `classes.id`=" . $curs;
                             <div class="col-sm-12 col-md-3">
                                 <div class="form-group">
                                     <label>Cunostinţe altă limbă străină </label>
-                                    <?php if ($membru) { ?>
+
+                                    <!-- de testat si cu if(Auth::user()->hasRole('student')) -->
+
+                                    @if (Auth::student())
                                     <input name="alta_limba" class="form-control" type="text"
-                                           value="<?php echo $row_userlogat['other_language']; ?>" readonly>
-                                    <?php } else { ?>
+                                           value="{{ Auth::student()->other_language }}" readonly>
+                                    @else
                                     <input name="alta_limba" class="form-control" type="text"
                                            placeholder="Cunostinţe altă limbă străina">
                                     <?php } ?>
@@ -399,45 +423,17 @@ WHERE `classes.id`=" . $curs;
                                     <label>Modulul dorit <small>*</small></label>
                                     <select id="curs" class="form-control" name="curs">
                                         <option value="--">-- alege curs --</option>
-                                        <?php
-                                        $sql_cursuri = "SELECT * FROM `main_classes` WHERE `is_active`=1 ORDER BY `order` ASC";
-                                        $query_cursuri = mysqli_query($link, $sql_cursuri);
-                                        $disabled = "";
-                                        while ($row_cursuri = mysqli_fetch_assoc($query_cursuri)) { ?>
-                                        <optgroup
-                                                label="<?php echo str_replace("<br />", "", $row_cursuri['title']); ?>">
-                                            <?php
-                                            $sql_cursuri2 = "SELECT * FROM `classes` WHERE `main_class_id`=" . $row_cursuri['id'] . " AND `registration_start_date`>NOW() ORDER BY `registration_start_date` ASC LIMIT 2";
-                                            $query_cursuri2 = mysqli_query($link, $sql_cursuri2);
-                                            while ($row_cursuri2 = mysqli_fetch_assoc($query_cursuri2)) {
-                                            $disabled = "";
-                                            if ($membru) {
-                                                $cursuriSql = mysqli_query($link, "SELECT * FROM `class_students` WHERE `student_id`=" . $row_userlogat['id'] . " AND `class_id`=" . $row_cursuri2['id']);
-                                                if (mysqli_num_rows($cursuriSql) > 0) {
-                                                    $inscris = true;
-                                                    $disabled = "disabled";
-                                                } else {
-                                                    $inscris = false;
-                                                    $disabled = "";
-                                                }
-                                            }
-                                            $activ = "";
-                                            if ($row_cursuri2['id'] == $cursactiv['id']) {
-                                                $activ = "selected";
-                                            }
-                                            echo $row_cursuri2['id'] . "--" . $cursactiv['id'];
-                                            ?>
-                                            <option <?php echo $activ; ?> <?php echo $disabled; ?>
-                                                    value="<?php echo $row_cursuri2['id']; ?>"><?php if ($row_cursuri2['registration_start_date'] != "0000-00-00") {
-                                                    echo strftime("%e %B %Y", strtotime($row_cursuri2['registration_start_date'])) . " - " . strftime("%e %B %Y", strtotime($row_cursuri2['registration_end_date']));
-                                                } else {
-                                                    echo "TBA";
-                                                } ?><?php if ($inscris) {
-                                                    echo " -- Esti înscris la acest curs.";
-                                                }; ?></option>
-                                            <?php } ?>
-                                        </optgroup>
-                                        <?php } ?>
+                                        @foreach($mainCourses as $maincourse)
+
+                                            {{ $maincourse->title}}
+
+
+                                            @foreach ($maincourse->courses as $course)
+                                                <option {{ $active }} value = "{{ $course->id }}">
+                                                {{ $course->registration_start_date }} - {{ $course->registration_end_date }}
+                                            @endforeach
+                                                </option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -643,6 +639,7 @@ WHERE `classes.id`=" . $curs;
 
     </footer>
     <a class="scrollToTop" href="#"><i class="fa fa-angle-up"></i></a>
+</div>
 </div>
 <!-- end wrapper -->
 
