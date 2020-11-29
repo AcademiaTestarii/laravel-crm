@@ -18,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'remember_token'
+        'name', 'email', 'password', 'remember_token', 'is_active', 'hash', 'email_verified_at'
     ];
 
     /**
@@ -80,5 +80,10 @@ class User extends Authenticatable
     public function getName(): ?string
     {
         return $this->getAttribute('name');
+    }
+
+    public function getHashUrl(): ?string
+    {
+        return request()->getSchemeAndHttpHost() . '/account/activate/'. $this->getAttribute('hash');
     }
 }
