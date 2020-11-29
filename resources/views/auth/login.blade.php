@@ -9,13 +9,31 @@
                         <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
                             {{ csrf_field() }}
 
-                            @if($errors->has('email_password_mismatch'))
-                            <div class="form-group">
-                                <label class="col-md-2 control-label"></label>
-                                <div class="col-md-8 alert alert-danger" role="alert">
-                                    {{ $errors->first('email_password_mismatch') }}
+                            @if(session()->get('activate_email'))
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label"></label>
+                                    <div class="col-md-8 alert alert-info" role="alert">
+                                        A confirmation email was sent to the provided email address.
+                                    </div>
                                 </div>
-                            </div>
+                            @endif
+
+                            @if(session()->get('activated'))
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label"></label>
+                                    <div class="col-md-8 alert alert-info" role="alert">
+                                        Your account has been activated. You may login
+                                    </div>
+                                </div>
+                            @endif
+
+                            @if($errors->has('email_password_mismatch'))
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label"></label>
+                                    <div class="col-md-8 alert alert-danger" role="alert">
+                                        {{ $errors->first('email_password_mismatch') }}
+                                    </div>
+                                </div>
                             @endif
                             <div class="form-group{{ ($errors->has('email') || $errors->has('email_password_mismatch')) ? ' has-error' : '' }}">
                                 <label for="email" class="col-md-4 control-label">E-Mail Address</label>

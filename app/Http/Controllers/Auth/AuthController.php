@@ -4,16 +4,24 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\RoleRepository;
+use App\Repositories\UserRepository;
 use App\Services\RegisterService;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
     protected $roleRepository;
+    protected $userRepository;
+    protected $registerSerice;
 
-    public function __construct(RoleRepository $roleRepository)
-    {
+    public function __construct(
+        RoleRepository $roleRepository,
+        UserRepository $userRepository,
+        RegisterService $registerService
+    ) {
         $this->roleRepository = $roleRepository;
+        $this->userRepository = $userRepository;
+        $this->registerSerice = $registerService;
     }
 
     public function getRegister()
@@ -28,7 +36,7 @@ class AuthController extends Controller
         return view('auth.passwords.reset');
     }
 
-    public function postRegister(Request $request, RegisterService $registerService)
+    public function postRegister(Request $request)
     {
         $validatedData = $request->validate([
             'name' => 'required|max:255',
@@ -39,16 +47,18 @@ class AuthController extends Controller
 
         $role = $this->roleRepository->findOneBy(['id' => $request->get('role')]);
 
-        $registerService->register($role, [
+        $this->registerSerice->register($role, [
             'name' => $request->name,
             'email' => $request->email,
-            'password' => md5($request->password)
+            'is_active' => null,
+            'password' => md5($request->password),
+            'hash' => $this->generateHash($request->email)
         ]);
 
-        return redirect()->route('login');
+        return redirect()->route('login')->with(['activate_email' => true]);
     }
 
-    public function postPasswordReset(Request $request, RegisterService $registerService)
+    public function postPasswordReset(Request $request)
     {
         $validatedData = $request->validate([
             'email' => 'required|email|max:255|exists:users,email',
@@ -56,7 +66,7 @@ class AuthController extends Controller
             'password_confirmation' => 'required|min:6'
         ]);
 
-        $registerService->resetPassword([
+        $this->registerSerice->resetPassword([
             'email' => $request->email,
             'password' => md5($request->password)
         ]);
@@ -81,6 +91,7 @@ class AuthController extends Controller
         ]);
 
         $loginData['password'] = md5($loginData['password']);
+        $loginData['is_active'] = 1;
 
         if (!auth()->attempt($loginData)) {
             return redirect()->route('login')->withErrors([
@@ -98,5 +109,29 @@ class AuthController extends Controller
         auth()->logout();
 
         return redirect('/login');
+    }
+
+    /**
+     * @param string $email
+     * @return string
+     */
+    protected function generateHash(string $email)
+    {
+        return sha1(mt_rand(10000, 99999) . time() . $email);
+    }
+
+    /**
+     * @param string $hash
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Exception
+     */
+    public function activate(string $hash)
+    {
+        $user = $this->userRepository->findOneBy(['hash' => $hash]);
+
+        if ($user) {
+            $this->registerSerice->activateUser($user);
+        }
+        return redirect()->route('login')->with(['activated' => true]);
     }
 }
