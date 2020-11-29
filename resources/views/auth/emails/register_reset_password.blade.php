@@ -8,7 +8,7 @@
 </head>
 <body>
 <div>
-    {!! $messageBody['greetings'] !!} {!! $messageBody['message']!!}
+
 </div>
 </body>
 </html>

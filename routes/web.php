@@ -22,6 +22,7 @@ Route::get('login', 'Auth\AuthController@getLogin')->name('login');
 Route::get('/', 'Auth\AuthController@getLogin');
 Route::post('login', 'Auth\AuthController@postLogin');
 
+Route::get('/account/activate/{hash}', 'Auth\AuthController@activate');
 
 Route::middleware('auth:api')->group(function () {
     Route::get('logout', 'Auth\AuthController@logOut')->name('logout');
