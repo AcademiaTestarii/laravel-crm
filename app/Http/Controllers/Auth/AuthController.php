@@ -55,7 +55,7 @@ class AuthController extends Controller
             'hash' => $this->generateHash($request->email)
         ]);
 
-        return redirect()->route('login')->with(['activate' => true]);
+        return redirect()->route('login')->with(['activate_email' => true]);
     }
 
     public function postPasswordReset(Request $request)
@@ -132,7 +132,6 @@ class AuthController extends Controller
         if ($user) {
             $this->registerSerice->activateUser($user);
         }
-
-        return redirect()->route('login')->with(['activate' => 'Email address was activated. You may login']);
+        return redirect()->route('login')->with(['activated' => true]);
     }
 }

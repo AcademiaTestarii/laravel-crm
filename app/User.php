@@ -84,6 +84,6 @@ class User extends Authenticatable
 
     public function getHashUrl(): ?string
     {
-        return request()->getHost() . $this->getAttribute('hash');
+        return request()->getSchemeAndHttpHost() . '/account/activate/'. $this->getAttribute('hash');
     }
 }

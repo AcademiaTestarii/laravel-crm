@@ -19,24 +19,24 @@
 
     </p>
     <p>
-        Inainte de toate, activeaza contul tau <a href="/account/activate/{{$user->getHashUrl()}}">aici</a>
+        Inainte de toate, activeaza contul tau <a href="{{$user->getHashUrl()}}">aici</a>
     </p>
     <p>
-        Incepe aceasta calatorie acum si acceseaza contul tau <a href="/account">aici</a>
+        Incepe aceasta calatorie acum si acceseaza contul tau <a href="{{request()->getSchemeAndHttpHost()}}/account">aici</a>
     </p>
     <p>
 
-        Porneste la drum, finalizand profilul de Training provider <a href="/trainer/settings/">aici</a>
+        Porneste la drum, finalizand profilul de Training provider <a href="{{request()->getSchemeAndHttpHost()}}/trainer/settings/">aici</a>
         . Vom folosi aceste date pentru a-ti promova mai bine cursul si pentru a putea facilita plata viitoarelor
         cursuri, direct in contul tau.
 
     </p>
     <p>
-        Odata completate, creaza primul tau curs <a href="/classes_list"></a>
-        sau verifica cursurile pe care esti alocat <a href="/trainer/calendar/">aici</a>
+        Odata completate, creaza primul tau curs <a href="{{request()->getSchemeAndHttpHost()}}/classes_list"></a>
+        sau verifica cursurile pe care esti alocat <a href="{{request()->getSchemeAndHttpHost()}}/trainer/calendar/">aici</a>
         . Tot din calendar vei putea si livra cursurile pe care esti alocat, in datele planificate. Incercam sa
         dezvoltam un flux cat mai facil pentru crearea si publicarea de cursuri, in cazul in care ai nevoie de ajutor,
-        nu ezita sa accesezi zona de <a href="/resources">resurse</a>
+        nu ezita sa accesezi zona de <a href="{{request()->getSchemeAndHttpHost()}}/resources">resurse</a>
         sau sa ne scrii la office@academiatestarii.ro.
     </p>
 

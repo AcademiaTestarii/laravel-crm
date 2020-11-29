@@ -80,3 +80,31 @@ Route::middleware('auth:api')->group(function () {
         Route::get('search', 'SearchController@index');
     });
 });
+
+Route::get('account', function() {
+    return '';
+});
+
+Route::get('trainer/settings/', function() {
+    return '';
+});
+
+Route::get('trainer/calendar/', function() {
+    return '';
+});
+
+Route::get('resources', function() {
+    return '';
+});
+
+Route::get('/student/catalog', function() {
+    return '';
+});
+
+Route::get('/student/classes', function() {
+    return '';
+});
+
+Route::get('/student/my_classes', function() {
+    return '';
+});

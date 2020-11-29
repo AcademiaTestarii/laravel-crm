@@ -20,16 +20,16 @@
     </p>
     <p>
         Inainte de toate, activeaza contul tau
-        <a href="/account/activate/{{$user->getHashUrl()}}">aici</a>
+        <a href="{{$user->getHashUrl()}}">aici</a>
     </p>
     <p>
-        Acceseaza contul tau <a href="/account">aici</a>
+        Acceseaza contul tau <a href="{{request()->getSchemeAndHttpHost()}}/account">aici</a>
     </p>
     <p>
-        Odata finalizat, rasfoieste catalogul de cursuri <a href="/student/catalog">aici</a>
+        Odata finalizat, rasfoieste catalogul de cursuri <a href="{{request()->getSchemeAndHttpHost()}}/student/catalog">aici</a>
         si alege cursul sau cursurile care ti se potrivesc. Verifica in contul tau cursurile la care esti inscris si
-        datele in care se desfasoara <a href="/student/classes">"aici</a>
-        . Participa la lectiile planificate, atat cele in regim individual cat si live, din sectiunea <a href="/student/my_classes">Cursurile mele</a>
+        datele in care se desfasoara <a href="{{request()->getSchemeAndHttpHost()}}/student/classes">aici</a>
+        . Participa la lectiile planificate, atat cele in regim individual cat si live, din sectiunea <a href="{{request()->getSchemeAndHttpHost()}}/student/my_classes">Cursurile mele</a>
 
     </p>
     <p>
