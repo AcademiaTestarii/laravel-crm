@@ -97,7 +97,7 @@ class ClassesController extends Controller
             $selectedMainClass = $this->mainClassRepository->findOneBy(['id' => $request->get('id')]);
         }
 
-        //filter by status
+        //filter by status // PT LAURA: sa folosim $mainClasses = MainClass::with('classes')->query ceva ceva (); pt a obtine toate classes ale unui mainClass?
         $mainClasses = $this->mainClassRepository->findAllWithRelationsBy('classes', $query);
 
         foreach ($mainClasses as $mainClass) {
