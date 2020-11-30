@@ -311,9 +311,4 @@ class ClassesController extends Controller
             'class' => $class,
         ]);
     }
-
-    protected function signup()
-    {
-
-    }
 }
