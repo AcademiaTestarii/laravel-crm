@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ClassSignupController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -80,7 +81,7 @@ Route::middleware('auth:api')->group(function () {
         Route::get('search', 'SearchController@index');
     });
 });
-Route::post('class-signup/{classId}', 'ClassesController@signup')->name('class_signup');
+Route::post('class-signup/{classId}', ClassSignupController::class)->name('class_signup');
 
 
 Route::get('account', function() {
