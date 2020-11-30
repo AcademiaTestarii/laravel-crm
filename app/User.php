@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Models\TrainerProvider;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
@@ -39,11 +40,17 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    const USER_ACADEMIA_TESTARII = 'academiatestarii';
+
     public function roleUser()
     {
         return $this->hasOne(RoleUser::class);
     }
 
+    public function trainerProvider()
+    {
+        return $this->belongsTo(TrainerProvider::class);
+    }
 
     public function roles()
     {
@@ -84,6 +91,26 @@ class User extends Authenticatable
 
     public function getHashUrl(): ?string
     {
-        return request()->getSchemeAndHttpHost() . '/account/activate/'. $this->getAttribute('hash');
+        return request()->getSchemeAndHttpHost() . '/account/activate/' . $this->getAttribute('hash');
+    }
+
+    public function isAcademiaTestarii(): bool
+    {
+        if ($this->getName() == self::USER_ACADEMIA_TESTARII) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function isTrainerProvider(): bool
+    {
+        foreach ($this->roles()->get() as $role) {
+            if ($role->getCode() == Role::ROLE_TRAINER_PROVIDER) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

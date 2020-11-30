@@ -21,6 +21,7 @@ class TrainerController extends Controller
      */
     public function index(Request $request)
     {
+        //todo move to separate route
         if ($request->get('delete')) {
             $this->trainerRepository
                 ->findOneBy(['id' => $request->get('delete')])
