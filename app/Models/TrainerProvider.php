@@ -8,12 +8,12 @@ class TrainerProvider extends Model
 {
     protected $guarded = ['id'];
 
-    public function getId()
+    public function getId(): int
     {
         return $this->getAttribute('id');
     }
 
-    public function getName()
+    public function getName(): string
     {
         return $this->getAttribute('name');
     }
