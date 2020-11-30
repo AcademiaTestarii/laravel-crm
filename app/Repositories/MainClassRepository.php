@@ -16,4 +16,17 @@ class MainClassRepository extends Repository
     {
         $this->model = $mainClass;
     }
+
+    public function getOrdered()
+    {
+        $mainClasses = $this->mainClass::where('is_active', 1)->orderBy('order', 'asc')-get();
+
+        return $mainClasses;
+    }
+
+    public function getById(int $mainClassId) {
+        $mainClass = $this->mainClass::with('classes')->findOrFail($mainClassId);
+
+        return $mainClass;
+    }
 }

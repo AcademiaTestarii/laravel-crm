@@ -12,4 +12,11 @@ class ClassStudentRepository extends Repository
     {
         $this->model = $classStudent;
     }
+
+    public function countStudentClasses(int $authId, int $classId): int
+    {
+        $countStudentClasses = $this->classStudent::where('student_id', $authId)->where('class_id', $classId)->count();
+
+        return $countStudentClasses;
+    }
 }
