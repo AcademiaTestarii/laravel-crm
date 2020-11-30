@@ -18,7 +18,10 @@ class Ability
     {
         $user = auth()->user();
 
-        if (!($user->roles->isEmpty()) && in_array($permission, $user->permissions()) && $user->getName() == 'academiatestarii') {
+        if (!($user->roles->isEmpty())
+            && in_array($permission, $user->permissions())
+            && 'trainer-provider' == $user->roles->toArray()[0]['code']
+        ) {
             return $next($request);
         }
 
