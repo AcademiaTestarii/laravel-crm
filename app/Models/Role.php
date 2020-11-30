@@ -8,6 +8,10 @@ class Role extends Model
 {
     protected $guarded = ['id'];
 
+    const ROLE_STUDENT = 'student';
+    const ROLE_TRAINER = 'trainer';
+    const ROLE_TRAINER_PROVIDER = 'trainer-provider';
+
     /**
      * A role may be given various permissions.
      *
@@ -60,19 +64,24 @@ class Role extends Model
         return $permissions;
     }
 
-    public function getId()
+    public function getId(): int
     {
         return $this->getAttribute('id');
     }
 
-    public function getName()
+    public function getName(): string
     {
         return $this->getAttribute('name');
     }
 
-    public function isStudent()
+    public function getCode(): string
     {
-        if ($this->getAttribute('code') == 'student') {
+        return $this->getAttribute('code');
+    }
+
+    public function isStudent(): bool
+    {
+        if ($this->getAttribute('code') == self::ROLE_STUDENT) {
             return true;
         }
 
