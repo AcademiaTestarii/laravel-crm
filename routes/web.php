@@ -80,6 +80,8 @@ Route::middleware('auth:api')->group(function () {
         Route::get('search', 'SearchController@index');
     });
 });
+Route::post('class-signup/{classId}', 'ClassesController@signup')->name('class_signup');
+
 
 Route::get('account', function() {
     return '';
