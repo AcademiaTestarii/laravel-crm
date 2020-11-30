@@ -12,8 +12,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $path = public_path('academia_2020.sql');
-        $sql = file_get_contents($path);
-        DB::unprepared($sql);
+        //$path = public_path('academia_2020.sql');
+        //$sql = file_get_contents($path);
+        //DB::unprepared($sql);
     }
 }
