@@ -19,13 +19,13 @@ class MainClassRepository extends Repository
 
     public function getOrdered()
     {
-        $mainClasses = $this->mainClass::where('is_active', 1)->orderBy('order', 'asc')-get();
+        $mainClasses = $this->model::where('is_active', 1)->orderBy('order', 'asc')->get();
 
         return $mainClasses;
     }
 
     public function getById(int $mainClassId) {
-        $mainClass = $this->mainClass::with('classes')->findOrFail($mainClassId);
+        $mainClass = $this->model::with('classes')->findOrFail($mainClassId);
 
         return $mainClass;
     }
