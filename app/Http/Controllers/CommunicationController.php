@@ -7,7 +7,6 @@ use App\Repositories\MainClassRepository;
 use App\Repositories\StudentRepository;
 use Illuminate\Http\Request;
 
-
 class CommunicationController extends Controller
 {
     protected $mainClassRepository;

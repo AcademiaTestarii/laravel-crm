@@ -32,7 +32,7 @@
 
     </p>
     <p>
-        Odata completate, creaza primul tau curs <a href="{{request()->getSchemeAndHttpHost()}}/classes_list"></a>
+        Odata completate, creaza primul tau curs <a href="{{request()->getSchemeAndHttpHost()}}/classes_list">aici</a>
         sau verifica cursurile pe care esti alocat <a href="{{request()->getSchemeAndHttpHost()}}/trainer/calendar/">aici</a>
         . Tot din calendar vei putea si livra cursurile pe care esti alocat, in datele planificate. Incercam sa
         dezvoltam un flux cat mai facil pentru crearea si publicarea de cursuri, in cazul in care ai nevoie de ajutor,

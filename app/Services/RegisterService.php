@@ -3,6 +3,8 @@
 namespace App\Services;
 
 use App\Models\Role;
+use App\Repositories\TrainerProviderRepository;
+use App\Repositories\TrainerRepository;
 use App\Repositories\UserRepository;
 use App\User;
 use Carbon\Carbon;
@@ -11,10 +13,17 @@ use Illuminate\Support\Facades\Mail;
 class RegisterService
 {
     protected $userRepository;
+    protected $trainerProviderRepository;
+    protected $trainerRepository;
 
-    public function __construct(UserRepository $userRepository)
-    {
+    public function __construct(
+        UserRepository $userRepository,
+        TrainerProviderRepository $trainerProviderRepository,
+        TrainerRepository $trainerRepository
+    ) {
         $this->userRepository = $userRepository;
+        $this->trainerProviderRepository = $trainerProviderRepository;
+        $this->trainerRepository = $trainerRepository;
     }
 
     /**
@@ -44,6 +53,7 @@ class RegisterService
      * @param Role $role
      * @param array $userData
      * @return mixed
+     * @throws \Exception
      */
     protected function createUserAndRole(Role $role, array $userData)
     {
@@ -57,6 +67,23 @@ class RegisterService
 
         $user->roleUser()->create(['role_id' => $role->id]);
 
+        if ($user->isTrainerProvider()) {
+            $this->trainerProviderRepository->create([
+                'name' => $user->getName(),
+                'user_id' => $user->getId()
+            ]);
+        }
+
+        if ($user->isTrainer()) {
+            $this->trainerRepository->findOneBy([
+                'email' => $userData['email']
+            ])->update([
+                'user_id' => $user->getId()
+            ]);
+
+            $this->activateUser($user);
+        }
+
         return $user;
     }
 
@@ -68,8 +95,12 @@ class RegisterService
     {
         $emailTemplate = 'register_student';
 
-        if (!$role->isStudent()) {
+        if ($user->isTrainerProvider()) {
             $emailTemplate = 'register_trainer_provider';
+        }
+
+        if ($user->isTrainer()) {
+            return;
         }
 
         Mail::send(
