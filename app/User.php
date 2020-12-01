@@ -113,4 +113,17 @@ class User extends Authenticatable
 
         return false;
     }
+
+    public function isStudent(): bool
+    {
+        foreach ($this->roles()->get() as $role) {
+            if ($role->getCode() == Role::ROLE_STUDENT) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
 }
