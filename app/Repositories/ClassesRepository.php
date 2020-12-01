@@ -20,7 +20,7 @@ class ClassesRepository extends Repository
 
     public function orderByStartdate(int $mainClassId)
     {
-        $classesByStartDate = $this->classGroup::where('main_class_id', $mainClassId)->where('registration_start_date', '>', Carbon::now())->orderBy('registration_start_date', 'asc')->limit(2)->get();
+        $classesByStartDate = $this->model::where('main_class_id', $mainClassId)->where('registration_start_date', '>', Carbon::now())->orderBy('registration_start_date', 'asc')->limit(2)->get();
 
         return $classesByStartDate;
     }
