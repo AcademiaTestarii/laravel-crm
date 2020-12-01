@@ -49,7 +49,7 @@ class User extends Authenticatable
 
     public function trainerProvider()
     {
-        return $this->belongsTo(TrainerProvider::class);
+        return $this->hasOne(TrainerProvider::class);
     }
 
     public function roles()
@@ -107,6 +107,17 @@ class User extends Authenticatable
     {
         foreach ($this->roles()->get() as $role) {
             if ($role->getCode() == Role::ROLE_TRAINER_PROVIDER) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function isTrainer(): bool
+    {
+        foreach ($this->roles()->get() as $role) {
+            if ($role->getCode() == Role::ROLE_TRAINER) {
                 return true;
             }
         }

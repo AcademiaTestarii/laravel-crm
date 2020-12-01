@@ -215,6 +215,7 @@ class ClassesController extends Controller
                 'image' => $duplicatedClass->image,
                 'filepdf' => $duplicatedClass->schedule_pdf,
             ]);
+
             $class = $this->classService->create($request);
         }
 
@@ -270,7 +271,6 @@ class ClassesController extends Controller
 
     public function updateDetails(Request $request)
     {
-
         $class = $this->classesRepository->findOneBy(['id' => $request->get('class')]);
         if ($request->get('note')) {
             $this->classStudentRepository->findOneBy([

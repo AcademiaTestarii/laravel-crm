@@ -16,4 +16,17 @@ class ClassesRepository extends Repository
     {
         $this->model = $classGroup;
     }
+
+    public function allOrderedBy(string $column = 'id', string $order = 'ASC')
+    {
+        $model = $this->model;
+
+        if (auth()->user()->isTrainerProvider()) {
+            $model = $model->whereHas('mainClass', function($query) {
+                return $query->where('trainer_provider_id', auth()->user()->trainerProvider->getId());
+            });
+        }
+
+        return $model->orderBy($column, $order)->get();
+    }
 }
