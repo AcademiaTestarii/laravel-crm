@@ -62,4 +62,13 @@ class Trainer extends Model
         return $this->getAttribute('phone');
     }
 
+    public function hasTrainerProviderId()
+    {
+        if (!is_null($this->getAttribute('trainer_provider_id'))) {
+            return true;
+        }
+
+        return false;
+    }
+
 }

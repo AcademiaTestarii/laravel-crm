@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Role;
 use App\Repositories\RoleRepository;
 use App\Repositories\UserRepository;
 use App\Services\RegisterService;
@@ -26,9 +27,11 @@ class AuthController extends Controller
 
     public function getRegister()
     {
+        auth()->logout();
         $roles = $this->roleRepository->getAllRolesExcept(['admin', 'trainer']);
+        $trainerRole = $this->roleRepository->findOneBy(['code' => Role::ROLE_TRAINER]);
 
-        return view('auth.register')->with(['roles' => $roles]);
+        return view('auth.register')->with(['roles' => $roles, 'roleTrainer' => $trainerRole]);
     }
 
     public function getPasswordReset()

@@ -3,16 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\TrainerRepository;
+use App\Services\TrainerService;
 use Illuminate\Http\Request;
-use Intervention\Image\Facades\Image;
 
 class TrainerController extends Controller
 {
     protected $trainerRepository;
+    protected $trainerService;
 
-    public function __construct(TrainerRepository $trainerRepository)
+    public function __construct(TrainerRepository $trainerRepository, TrainerService $trainerService)
     {
         $this->trainerRepository = $trainerRepository;
+        $this->trainerService = $trainerService;
     }
 
     /**
@@ -59,38 +61,9 @@ class TrainerController extends Controller
      */
     public function update(Request $request)
     {
-        if ($request->file('image')) {
-            $image = $request->file('image');
-            $imageName = $image->getClientOriginalName();
+        $trainer = $this->trainerService->update($request);
 
-            $destinationPath = public_path('/trainers');
-            $img = Image::make($image->path());
-            $img->resize(350, null, function ($constraint) {
-                $constraint->aspectRatio();
-            })->save($destinationPath . '/' . $imageName);
-        }
-
-        $trainerId = $request->get('id');
-
-        if (!$trainerId) {
-            $trainerId = $this->trainerRepository->create([])->getId();
-        }
-
-        $trainer = $this->trainerRepository
-            ->findOneBy(['id' => $trainerId]);
-
-        $trainer->update([
-            'name' => $request->get('name'),
-            'phone' => $request->get('phone'),
-            'email' => $request->get('email'),
-            'linkedin' => $request->get('linkedin'),
-            'title' => $request->get('title'),
-            'bio' => $request->get('bio'),
-            'is_staff' => 0,
-            'picture' => ($request->file('image')) ? $imageName : $trainer->picture,
-        ]);
-
-        return redirect()->route('trainer', ['id' => $trainerId]);
+        return redirect()->route('trainer', ['id' => $trainer->getId()]);
     }
 
     public function removeImage(Request $request)
