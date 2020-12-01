@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\ClassSignupController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -79,10 +78,11 @@ Route::middleware('auth:api')->group(function () {
         Route::post('blog/{id}/uploadImage', 'BlogController@uploadImage');
 
         Route::get('search', 'SearchController@index');
+
+        Route::get('class_details/{classId}/class-signup', 'ClassSignupController@classSignup')->name('class_signup');
+
     });
 });
-Route::any('classes/{id}/signup', ClassSignupController::class)->name('class_signup');
-//any = - get for request input, -post for submitting form, - put for updating details
 
 Route::get('account', function() {
     return '';
