@@ -7,7 +7,7 @@ use App\Models\MainClass;
 use App\Services\ClassSignupService;
 use Illuminate\Http\Request;
 
-class ClassSignupController extends Controller
+class ClassSignupController
 {
     protected $classSignupService;
     protected $request;
@@ -31,10 +31,10 @@ class ClassSignupController extends Controller
         $mainClassId = $this->request->input('id');
         $classId = $this->request->input('id');
 
-        $signupView = $this->classSignupService->getSignupData($request->input('main_class_id'), $request->user()->id, $request->input('class_id'), ContentConstants::TERMS_OF_SERVICE);
+        $signupData = $this->classSignupService->getSignupData($request->input('main_class_id'), $request->user()->id, $request->input('class_id'), ContentConstants::TERMS_OF_SERVICE);
 
         return view('class_signup_form')->with([
-            'signupView' => $signupView,
+            'signupData' => $signupData,
         ]);
     }
 }
