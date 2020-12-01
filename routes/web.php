@@ -81,8 +81,8 @@ Route::middleware('auth:api')->group(function () {
         Route::get('search', 'SearchController@index');
     });
 });
-Route::post('class-signup/{classId}', ClassSignupController::class)->name('class_signup');
-
+Route::any('classes/{id}/signup', ClassSignupController::class)->name('class_signup');
+//any = - get for request input, -post for submitting form, - put for updating details
 
 Route::get('account', function() {
     return '';
