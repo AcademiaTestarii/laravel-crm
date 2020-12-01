@@ -29,6 +29,11 @@ class TrainerRepository extends Repository
         return $model->orderBy($column, $order)->get();
     }
 
+    /**
+     * @param array $criteria
+     * @param array $orderBy
+     * @return mixed
+     */
     public function findOneBy(array $criteria, array $orderBy = [])
     {
         $model = $this->model;

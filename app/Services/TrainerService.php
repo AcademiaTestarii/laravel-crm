@@ -37,6 +37,7 @@ class TrainerService
                 $trainerData['trainer_provider_id'] = auth()->user()->trainerProvider->getId();
                 $email = $request->get('email');
 
+                //todo: move the email into separate service
                 Mail::send(
                     'auth/emails/register_trainer',
                     [

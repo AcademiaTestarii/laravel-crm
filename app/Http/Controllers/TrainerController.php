@@ -66,6 +66,10 @@ class TrainerController extends Controller
         return redirect()->route('trainer', ['id' => $trainer->getId()]);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function removeImage(Request $request)
     {
         if ($request->get('id')) {
