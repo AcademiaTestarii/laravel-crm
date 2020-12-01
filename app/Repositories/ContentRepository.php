@@ -17,7 +17,8 @@ class ContentRepository extends Repository
         $this->model = $content;
     }
 
-    public function getContentDetailsByType($pageType) {
-        $contentByType = $this->content::where('name', $pageType);
+    public function getContentData($pageType) {
+
+        return $contentByType = $this->model::where('name', $pageType)->first();
     }
 }
