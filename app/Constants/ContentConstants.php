@@ -9,7 +9,7 @@ class ContentConstants
     const FOR_COMPANIES = 'pentru firme';
     const ABOUT_US = 'despre noi';
     const CONTACT = 'contact';
-    const TERMS_OF_SERVICE = 'termeni si conditii';
+    const TERMS_OF_SERVICE = 'termeni_si_conditii';
 
     const TYPES = [
         self::HOMEPAGE,
