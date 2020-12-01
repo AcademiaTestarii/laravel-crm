@@ -16,12 +16,40 @@ class StudentRepository extends Repository
 
     public function allOrderedByActiveAndName()
     {
+        if (auth()->user()->isTrainerProvider()) {
+            $model = $this->model->where(function ($query) {
+                return $query->whereHas('classStudents', function ($q) {
+                    return $q->whereHas('classes', function ($qu) {
+                        return $qu->whereHas('mainClass', function ($qr) {
+                            return $qr->where('trainer_provider_id', auth()->user()->trainerProvider->getId());
+                        });
+                    });
+                });
+            });
+
+            return $model->orderBy('is_active', 'DESC')->orderBy('last_name')->get();
+        }
+
         return $this->model->orderBy('is_active', 'DESC')->orderBy('last_name')->get();
     }
 
     public function allQueryBy($filter)
     {
         if (empty($filter)) {
+            $model = $this->model;
+            if (auth()->user()->isTrainerProvider()) {
+                $model = $model->where(function ($query) {
+                    return $query->whereHas('classStudents', function ($q) {
+                        return $q->whereHas('classes', function ($qu) {
+                            return $qu->whereHas('mainClass', function ($qr) {
+                                return $qr->where('trainer_provider_id', auth()->user()->trainerProvider->getId());
+                            });
+                        });
+                    });
+                });
+
+                return $model->get();
+            }
             return $this->model->all();
         }
 
