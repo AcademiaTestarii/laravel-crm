@@ -79,7 +79,7 @@ Route::middleware('auth:api')->group(function () {
 
         Route::get('search', 'SearchController@index');
 
-        Route::get('class_details/{classId}/class-signup', 'ClassSignupController@classSignup')->name('class_signup');
+        Route::any('classes_list/{class_id}/signup', 'ClassSignupController@classSignup')->name('class_signup');
 
     });
 });
