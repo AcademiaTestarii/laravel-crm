@@ -9,19 +9,22 @@ use Illuminate\Http\Request;
 class ClassSignupController extends Controller
 {
     protected $classSignupService;
+    private   $request;
 
-    public function __construct(
-        ClassSignupService $classSignupService
-    ) {
+    public function __construct(ClassSignupService $classSignupService, Request $request)
+    {
         $this->classSignupService = $classSignupService;
+        $this->request = $request;
     }
 
-    protected function classSignup (Request $request)
+    protected function classSignup()
     {
-        $signupData = $this->classSignupService->getSignupData(1, 53, 39, ContentConstants::TERMS_OF_SERVICE);
+        $signupData = $this->classSignupService->getSignupData($this->request->input('main_class_id'), $this->request->input('student_id'), $this->request->input('class_id'), ContentConstants::TERMS_OF_SERVICE);
 
-        return view('class_signup_form')->with([
-            'signupData' => $signupData,
-        ]);
+        return view('class_signup_form')->with(
+            [
+                'signupData' => $signupData,
+            ]
+        );
     }
 }
