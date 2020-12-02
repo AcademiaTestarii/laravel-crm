@@ -12,22 +12,22 @@
         <title>Academia Testarii:: Formular inscriere curs {{ $signupData['mainClass']->title }}</title>
 
         <!-- Favicons -->
-        <link rel="apple-touch-icon" sizes="57x57" href="favicon/apple-icon-57x57.png">
-        <link rel="apple-touch-icon" sizes="60x60" href="favicon/apple-icon-60x60.png">
-        <link rel="apple-touch-icon" sizes="72x72" href="favicon/apple-icon-72x72.png">
-        <link rel="apple-touch-icon" sizes="76x76" href="favicon/apple-icon-76x76.png">
-        <link rel="apple-touch-icon" sizes="114x114" href="favicon/apple-icon-114x114.png">
-        <link rel="apple-touch-icon" sizes="120x120" href="favicon/apple-icon-120x120.png">
-        <link rel="apple-touch-icon" sizes="144x144" href="favicon/apple-icon-144x144.png">
-        <link rel="apple-touch-icon" sizes="152x152" href="favicon/apple-icon-152x152.png">
-        <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-icon-180x180.png">
-        <link rel="icon" type="image/png" sizes="192x192" href="favicon/android-icon-192x192.png">
-        <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="96x96" href="favicon/favicon-96x96.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
-        <link rel="manifest" href="favicon/manifest.json">
+        <link rel="apple-touch-icon" sizes="57x57" href="{{asset('favicon/apple-icon-57x57.png')}}">
+        <link rel="apple-touch-icon" sizes="60x60" href="{{asset('favicon/apple-icon-60x60.png')}}">
+        <link rel="apple-touch-icon" sizes="72x72" href="{{asset('favicon/apple-icon-72x72.png')}}">
+        <link rel="apple-touch-icon" sizes="76x76" href="{{asset('favicon/apple-icon-76x76.png')}}">
+        <link rel="apple-touch-icon" sizes="114x114" href="{{asset('favicon/apple-icon-114x114.png')}}">
+        <link rel="apple-touch-icon" sizes="120x120" href="{{asset('favicon/apple-icon-120x120.png')}}">
+        <link rel="apple-touch-icon" sizes="144x144" href="{{asset('favicon/apple-icon-144x144.png')}}">
+        <link rel="apple-touch-icon" sizes="152x152" href="{{asset('favicon/apple-icon-152x152.png')}}">
+        <link rel="apple-touch-icon" sizes="180x180" href="{{asset('favicon/apple-icon-180x180.png')}}">
+        <link rel="icon" type="image/png" sizes="192x192" href="{{asset('favicon/android-icon-192x192.png')}}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{{asset('favicon/favicon-32x32.png')}}">
+        <link rel="icon" type="image/png" sizes="96x96" href="{{asset('favicon/favicon-96x96.png')}}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{{asset('favicon/favicon-16x16.png')}}">
+        <link rel="manifest" href="{{asset('favicon/manifest.json')}}">
         <meta name="msapplication-TileColor" content="#ffffff">
-        <meta name="msapplication-TileImage" content="favicon/ms-icon-144x144.png">
+        <meta name="msapplication-TileImage" content="{{asset('favicon/ms-icon-144x144.png')}}">
         <meta name="theme-color" content="#ffffff">
 
         <!-- Open Graph data -->
@@ -46,38 +46,38 @@
         <meta property="og:site_name" content="Academia Testării" />
 
         <!-- Stylesheet -->
-        <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
-        <link href="css/jquery-ui.min.css" rel="stylesheet" type="text/css">
-        <link href="css/animate.css" rel="stylesheet" type="text/css">
-        <link href="css/css-plugin-collections.css" rel="stylesheet" />
+        <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet" type="text/css">
+        <link href="{{asset('css/jquery-ui.min.css')}}" rel="stylesheet" type="text/css">
+        <link href="{{asset('css/animate.css')}}" rel="stylesheet" type="text/css">
+        <link href="{{asset('css/css-plugin-collections.css')}}" rel="stylesheet" />
 
         <!-- CSS | menuzord megamenu skins -->
-        <link id="menuzord-menu-skins" href="css/menuzord-skins/menu-academia-testarii.css" rel="stylesheet" />
+        <link id="menuzord-menu-skins" href="{{asset('css/menuzord-skins/menu-academia-testarii.css')}}" rel="stylesheet" />
         <!-- CSS | Main style file -->
-        <link href="css/style-main.css" rel="stylesheet" type="text/css">
+        <link href="{{asset('css/style-main.css')}}" rel="stylesheet" type="text/css">
         <!-- CSS | Preloader Styles -->
-        <link href="css/preloader.css" rel="stylesheet" type="text/css">
+        <link href="{{asset('css/preloader.css')}}" rel="stylesheet" type="text/css">
         <!-- CSS | Custom Margin Padding Collection -->
-        <link href="css/custom-bootstrap-margin-padding.css" rel="stylesheet" type="text/css">
+        <link href="{{asset('css/custom-bootstrap-margin-padding.css')}}" rel="stylesheet" type="text/css">
         <!-- CSS | Responsive media queries -->
-        <link href="css/responsive.css" rel="stylesheet" type="text/css">
+        <link href="{{asset('css/responsive.css')}}" rel="stylesheet" type="text/css">
         <!-- Academia Testarii CSS | Style css -->
-        <link href="css/style.css" rel="stylesheet" type="text/css">
+        <link href="{{asset('css/style.css')}}" rel="stylesheet" type="text/css">
         <!-- Revolution Slider 5.x CSS settings -->
-        <link href="js/revolution-slider/css/settings.css" rel="stylesheet" type="text/css" />
-        <link href="js/revolution-slider/css/layers.css" rel="stylesheet" type="text/css" />
-        <link href="js/revolution-slider/css/navigation.css" rel="stylesheet" type="text/css" />
+        <link href="{{asset('js/revolution-slider/css/settings.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{asset('js/revolution-slider/css/layers.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{asset('js/revolution-slider/css/navigation.css')}}" rel="stylesheet" type="text/css" />
         <!-- CSS | Academia Testarii -->
         <link href="css/colors/academia-testarii.css" rel="stylesheet" type="text/css">
         <!-- external javascripts -->
-        <script src="js/jquery-2.2.4.min.js"></script>
-        <script src="js/jquery-ui.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
+        <script src="{{asset('js/jquery-2.2.4.min.js')}}"></script>
+        <script src="{{asset('js/jquery-ui.min.js')}}"></script>
+        <script src="{{asset('js/bootstrap.min.js')}}"></script>
         <!-- JS | jquery plugin collection -->
-        <script src="js/jquery-plugin-collection.js"></script>
+        <script src="{{asset('js/jquery-plugin-collection.js')}}"></script>
         <!-- Revolution Slider 5.x SCRIPTS -->
-        <script src="js/revolution-slider/js/jquery.themepunch.tools.min.js"></script>
-        <script src="js/revolution-slider/js/jquery.themepunch.revolution.min.js"></script>
+        <script src="{{asset('js/revolution-slider/js/jquery.themepunch.tools.min.js')}}"></script>
+        <script src="{{asset('js/revolution-slider/js/jquery.themepunch.revolution.min.js')}}"></script>
         <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -202,6 +202,7 @@
                                     <div class="col-md-12">
                                         <h2 class="title text-white">Formular inscriere curs
                                             <br />{{ $signupData['mainClass']->title }}</h2>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -240,7 +241,7 @@
                             <hr />
                             <div class="section-content post">
                                 <form id="inscriere_curs" name="inscriere_curs" class="reservation-form" method="post"
-                                      action="includes/inscriere-curs.php" novalidate="novalidate">
+                                      action="{{ route('class_signup') }}" novalidate="novalidate">
                                     <div class="row entry-content">
                                         <div class="col-sm-12 col-md-3">
                                             <div class="form-group">
@@ -668,23 +669,23 @@
         <script src="js/custom.js"></script>
 
         <script type="text/javascript"
-                src="js/revolution-slider/js/extensions/revolution.extension.actions.min.js"></script>
+                src="{{asset('js/revolution-slider/js/extensions/revolution.extension.actions.min.js')}}"></script>
         <script type="text/javascript"
-                src="js/revolution-slider/js/extensions/revolution.extension.carousel.min.js"></script>
+                src="{{asset('js/revolution-slider/js/extensions/revolution.extension.carousel.min.js')}}"></script>
         <script type="text/javascript"
-                src="js/revolution-slider/js/extensions/revolution.extension.kenburn.min.js"></script>
+                src="{{asset('js/revolution-slider/js/extensions/revolution.extension.kenburn.min.js')}}"></script>
         <script type="text/javascript"
-                src="js/revolution-slider/js/extensions/revolution.extension.layeranimation.min.js"></script>
+                src="{{asset('js/revolution-slider/js/extensions/revolution.extension.layeranimation.min.js')}}"></script>
         <script type="text/javascript"
-                src="js/revolution-slider/js/extensions/revolution.extension.migration.min.js"></script>
+                src="{{asset('js/revolution-slider/js/extensions/revolution.extension.migration.min.js')}}"></script>
         <script type="text/javascript"
-                src="js/revolution-slider/js/extensions/revolution.extension.navigation.min.js"></script>
+                src="{{asset('js/revolution-slider/js/extensions/revolution.extension.navigation.min.js')}}"></script>
         <script type="text/javascript"
-                src="js/revolution-slider/js/extensions/revolution.extension.parallax.min.js"></script>
+                src="{{asset('js/revolution-slider/js/extensions/revolution.extension.parallax.min.js')}}"></script>
         <script type="text/javascript"
-                src="js/revolution-slider/js/extensions/revolution.extension.slideanims.min.js"></script>
+                src="{{asset('js/revolution-slider/js/extensions/revolution.extension.slideanims.min.js')}}"></script>
         <script type="text/javascript"
-                src="js/revolution-slider/js/extensions/revolution.extension.video.min.js"></script>
+                src="{{asset('js/revolution-slider/js/extensions/revolution.extension.video.min.js')}}"></script>
         <script>
             $(document).ready(function () {
                 /*  var the_terms = $("#termeni_site");
