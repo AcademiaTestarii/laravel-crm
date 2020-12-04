@@ -79,13 +79,15 @@ class ClassService
 
     public function create($request)
     {
-       // dump($request->all()); exit;
         $classRepository = App::make(ClassesRepository::class);
         $registrationDates = explode(',', $request->get('deployment'));
 
         $mainTitle = $request->get('title_main');
 
         $mainClass = $this->mainClassRepository->create([
+            'trainer_provider_id' => ((auth()->user()->isTrainerProvider()))
+                ? auth()->user()->trainerProvider->getId()
+                : null,
             'title' => $mainTitle,
             'is_active' => 1,
             'order' => MainClass::max('order') + 1,

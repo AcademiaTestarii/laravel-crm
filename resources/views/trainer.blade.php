@@ -77,7 +77,8 @@
                             <label class="col-sm-2 control-label">Nume complet:<br/><small>Apare in meniu, in casete,
                                     etc</small></label>
                             <div class="col-sm-10">
-                                <input value="@if($trainer) {{$trainer->getName()}} @endif" name="name" type="text" class="form-control"
+                                <input value="@if($trainer) {{$trainer->getName()}} @endif" name="name" type="text"
+                                       class="form-control"
                                        required>
                             </div>
                         </div>
@@ -86,7 +87,8 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">Pozitie/Titlu:<br/><small>pozitia, titulatura</small></label>
                             <div class="col-sm-10">
-                                <input value="@if($trainer) {{$trainer->getTitle()}} @endif" name="title" type="text" class="form-control"
+                                <input value="@if($trainer) {{$trainer->getTitle()}} @endif" name="title" type="text"
+                                       class="form-control"
                                        required>
                             </div>
                         </div>
@@ -97,21 +99,25 @@
                             <div class="form-group col-md-3">
                                 <label class="col-sm-3 control-label">Telefon:<br/></label>
                                 <div class="col-sm-9">
-                                    <input value="@if($trainer) {{$trainer->getPhone()}} @endif" name="phone" type="text"
+                                    <input value="@if($trainer) {{$trainer->getPhone()}} @endif" name="phone"
+                                           type="text"
                                            class="form-control">
                                 </div>
                             </div>
                             <div class="form-group col-md-3">
                                 <label class="col-sm-3 control-label">Email:<br/></label>
                                 <div class="col-sm-9">
-                                    <input value="@if($trainer) {{$trainer->getEmail()}} @endif" name="email" type="email"
+                                    <input value="@if($trainer) {{$trainer->getEmail()}} @endif" name="email"
+                                           type="email"
+                                           @if($trainer && $trainer->hasTrainerProviderId()) disabled @endif
                                            class="form-control">
                                 </div>
                             </div>
                             <div class="form-group col-md-4">
                                 <label class="col-sm-3 control-label">LinkedIn:<br/></label>
                                 <div class="col-sm-9">
-                                    <input value="@if($trainer) {{$trainer->getLinkedin()}} @endif" name="linkedin" type="text"
+                                    <input value="@if($trainer) {{$trainer->getLinkedin()}} @endif" name="linkedin"
+                                           type="text"
                                            class="form-control">
                                 </div>
                             </div>
@@ -155,7 +161,8 @@
 
                         <div class="form-group">
                             <div class="col-sm-4 col-sm-offset-2">
-                                <input type="hidden" name="id2update" value="@if($trainer) {{$trainer->getId()}} @endif"/>
+                                <input type="hidden" name="id2update"
+                                       value="@if($trainer) {{$trainer->getId()}} @endif"/>
                                 <button class="btn btn-primary" type="submit" name="<?php /*echo $submit;*/?>">Salveaza
                                 </button>
                             </div>

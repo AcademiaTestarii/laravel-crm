@@ -29,7 +29,8 @@
 
                                 <div class="col-md-6">
                                     <input id="email" type="email" class="form-control" name="email"
-                                           value="{{ old('email') }}">
+                                           @if(request()->get('email')) value="{{ request()->get('email')}}"
+                                           @else value="{{ old('name') }}" @endif >
 
                                     @if ($errors->has('email'))
                                         <span class="help-block">
@@ -44,11 +45,15 @@
 
                                 <div class="col-md-6">
                                     <select name="role" id="role" class="form-control">
-                                        @foreach($roles as $role)
-                                            <option value="{{$role->getId()}}">
-                                                {{$role->getName()}}
-                                            </option>
-                                        @endforeach
+                                        @if(request()->get('email'))
+                                            <option value="{{$roleTrainer->getId()}}">{{$roleTrainer->getName()}}</option>
+                                        @else
+                                            @foreach($roles as $role)
+                                                <option value="{{$role->getId()}}">
+                                                    {{$role->getName()}}
+                                                </option>
+                                            @endforeach
+                                        @endif
                                     </select>
                                     @if ($errors->has('role'))
                                         <span class="help-block">
@@ -88,10 +93,13 @@
                             </div>
 
                             <div class="form-group">
-                                <div class="col-md-6 col-md-offset-4">
+                                <div class="col-md-8 col-md-offset-4">
                                     <button type="submit" class="btn btn-primary">
                                         Register
                                     </button>
+                                    <a class="btn btn-link" href="{{ url('/login') }}">
+                                        Already have an account?
+                                    </a>
                                 </div>
                             </div>
                         </form>
