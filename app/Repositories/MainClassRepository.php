@@ -101,7 +101,6 @@ class MainClassRepository extends Repository
 
         return $model->get();
     }
-}
 
     public function getOrdered()
     {
@@ -115,3 +114,6 @@ class MainClassRepository extends Repository
 
         return $mainClass;
     }
+}
+
+
