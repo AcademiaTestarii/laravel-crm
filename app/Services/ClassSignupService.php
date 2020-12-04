@@ -24,23 +24,13 @@ class ClassSignupService
 
     public function getSignupData(int $mainClassId, int $studentId, int $classId, string $pageType)
     {
-        $mainClasses = $this->mainClassRepository->getOrdered();
-        $mainClass = $this->mainClassRepository->getById($mainClassId);
-
-        $classesByStartDate = $this->classesRepository->orderByStartDate($mainClassId);
-
-        $student = $this->classStudentRepository->getClassStudentData($studentId, $classId);
-        $signedUp = $student->count() > 0;
-
-        $termsOfService = $this->contentRepository->getContentData($pageType);
-
         $signupData = [];
-        $signupData['student'] = $student;
-        $signupData['mainClasses'] = $mainClasses;
-        $signupData['mainClass'] = $mainClass;
-        $signupData['classesByStartDate'] = $classesByStartDate;
-        $signupData['signedUp'] = $signedUp;
-        $signupData['termsOfService'] = $termsOfService;
+        $signupData['student'] = $this->classStudentRepository->getClassStudentData($studentId, $classId);
+        $signupData['mainClasses'] = $this->mainClassRepository->getOrdered();
+        $signupData['mainClass'] = $this->mainClassRepository->getById($mainClassId);
+        $signupData['classesByStartDate'] = $this->classesRepository->orderByStartDate($mainClassId);
+        $signupData['signedUp'] = $signupData['student']->count() > 0;
+        $signupData['termsOfService'] = $this->contentRepository->getContentData($pageType);
 
         return $signupData;
     }

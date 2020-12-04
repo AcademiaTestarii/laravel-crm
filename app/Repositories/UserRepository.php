@@ -14,12 +14,4 @@ class UserRepository extends Repository
         $this->model = $user;
     }
 
-public function isStudent(): bool
-{
-    $studentRole = false;
-  if( $this->model === Role::ROLE_STUDENT) {
-            return $studentRole === false;
-        }
-    }
-
 }

@@ -226,7 +226,7 @@
                                     în contul tău</a></strong> pentru a te înscrie la cursuri.</p>
                             @endguest
 
-                            @if(Auth::user()->isStudent())
+                            @if(Auth::user() === (new App\User)->isStudent())
                             <p>Avem nevoie de datele tale personale (Nume, Adresa, Localitate, etc pentru facturare). Te
                                 rugăm
                                 să completezi datele personale în <strong><a href="contul_tau.php#sectiuneaDate"
@@ -245,7 +245,7 @@
                                         <div class="col-sm-12 col-md-3">
                                             <div class="form-group">
                                                 <label>Nume <small>*</small></label>
-                                                @if(Auth::user()->isStudent())
+                                                @if(Auth::user() === (new App\User)->isStudent())
                                                 <input name="nume" class="form-control" type="text"
                                                        value="{{ $signupData['student']->last_name }}" readonly>
                                                 @else
@@ -258,7 +258,7 @@
                                         <div class="col-sm-12 col-md-3">
                                             <div class="form-group">
                                                 <label>Prenume <small>*</small></label>
-                                                @if(Auth::user()->isStudent())
+                                                @if(Auth::user() === (new App\User)->isStudent())
                                                 <input name="prenume" class="form-control" type="text"
                                                        value="{{ $signupData['student']->first_name }}" readonly>
                                                 @else
@@ -271,7 +271,7 @@
                                         <div class="col-sm-12 col-md-3">
                                             <div class="form-group">
                                                 <label>Email <small>*</small></label>
-                                                @if(Auth::user()->isStudent())
+                                                @if(Auth::user() === (new App\User)->isStudent())
                                                 <input name="email" class="form-control" type="email"
                                                        value="{{ $signupData['student']->email }}" readonly>
                                                 @else
@@ -284,7 +284,7 @@
                                         <div class="col-sm-12 col-md-3">
                                             <div class="form-group">
                                                 <label>Data naștere</label>
-                                                @if(Auth::user()->isStudent())
+                                                @if(Auth::user() === (new App\User)->isStudent())
                                                 <input name="data_nastere" class="form-control" type="date"
                                                        value="{{ $signupData['student']->date_of_birth }}" readonly>
                                                 @else
@@ -300,7 +300,7 @@
                                         <div class="col-sm-12 col-md-4">
                                             <div class="form-group">
                                                 <label>Adresă <small>*</small></label>
-                                                @if(Auth::user()->isStudent())
+                                                @if(Auth::user() === (new App\User)->isStudent())
                                                 <input name="adresa" class="form-control" type="text"
                                                        value="{{ $signupData['student']->address }}" readonly>
                                                 @else
@@ -313,7 +313,7 @@
                                         <div class="col-sm-12 col-md-4">
                                             <div class="form-group">
                                                 <label>Localitate <small>*</small></label>
-                                                @if(Auth::user()->isStudent())
+                                                @if(Auth::user() === (new App\User)->isStudent())
                                                 <input name="localitate" class="form-control" type="text"
                                                        value="{{ $signupData['student']->city }}" readonly>
                                                 @else
@@ -326,7 +326,7 @@
                                         <div class="col-sm-12 col-md-4">
                                             <div class="form-group">
                                                 <label>Judet <small>*</small></label>
-                                                @if(Auth::user()->isStudent())
+                                                @if(Auth::user() === (new App\User)->isStudent())
                                                 <input name="judet" class="form-control" type="text"
                                                        value="{{ $signupData['student']->county }}" readonly>
                                                 @else
@@ -344,7 +344,7 @@
                                         <div class="col-sm-12 col-md-4">
                                             <div class="form-group">
                                                 <label>Profesie actuală</label>
-                                                @if(Auth::user()->isStudent())
+                                                @if(Auth::user() === (new App\User)->isStudent())
                                                 <input name="profesie" class="form-control" type="text"
                                                        value="{{ $signupData['student']->job_title }}" readonly>
                                                 @else
@@ -356,7 +356,7 @@
                                         <div class="col-sm-12 col-md-4">
                                             <div class="form-group">
                                                 <label>Telefon <small>*</small></label>
-                                                @if(Auth::user()->isStudent())
+                                                @if(Auth::user() === (new App\User)->isStudent())
                                                 <input name="telefon" class="form-control" type="text"
                                                        value="{{ $signupData['student']->phone }}" readonly>
                                                 @else
@@ -369,7 +369,7 @@
                                         <div class="col-sm-12 col-md-4">
                                             <div class="form-group">
                                                 <label>Educaţie</label>
-                                                @if(Auth::user()->isStudent())
+                                                @if(Auth::user() === (new App\User)->isStudent())
                                                 <input name="educatie" class="form-control" type="text"
                                                        value="{{ $signupData['student']->education }}" readonly>
                                                 @else
@@ -401,7 +401,7 @@
 
                                                 <!-- de testat si cu if(Auth::user()->hasRole('student')) -->
 
-                                                @if(Auth::user()->isStudent())
+                                                @if(Auth::user() === (new App\User)->isStudent())
                                                 <input name="alta_limba" class="form-control" type="text"
                                                        value="{{ $signupData['student']->other_language }}"
                                                        readonly>
