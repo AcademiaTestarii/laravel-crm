@@ -76,4 +76,19 @@ class StudentRepository extends Repository
 
         return $model;
     }
+
+    public function findOneBy(array $criteria, array $orderBy = [])
+    {
+        $model = $this->model;
+
+        foreach ($criteria as $column => $value) {
+            $model = $model->where($column, '=', $value);
+        }
+
+        if (auth()->user()->isStudent()) {
+            $model = $model->where('id', auth()->user()->student->getId());
+        }
+
+        return $model->first();
+    }
 }
