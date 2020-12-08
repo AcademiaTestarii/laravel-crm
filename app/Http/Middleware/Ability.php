@@ -25,9 +25,6 @@ class Ability
             return $next($request);
         }
 
-        if (!is_null($user)) {
-            return redirect()->route('blank-dashboard');
-        }
 
         return redirect()->route('login');
     }
