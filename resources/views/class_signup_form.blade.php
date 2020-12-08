@@ -239,8 +239,9 @@
                             @endif
                             <hr />
                             <div class="section-content post">
-                                <form id="inscriere_curs" name="inscriere_curs" class="reservation-form" method="post"
-                                      action="includes/inscriere-curs.php" novalidate="novalidate">
+                                <form id="inscriere_curs" name="inscriere_curs" class="reservation-form" method="get"
+                                      action="{{ route('class_signup') }}" novalidate="novalidate">
+                                    @csrf
                                     <div class="row entry-content">
                                         <div class="col-sm-12 col-md-3">
                                             <div class="form-group">
