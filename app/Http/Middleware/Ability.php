@@ -21,10 +21,14 @@ class Ability
         if (!($user->roles->isEmpty())
             && in_array($permission, $user->permissions())
             && 'trainer-provider' == $user->roles->toArray()[0]['code']
+            && 'student' == $user->roles->toArray()[0]['code']
         ) {
             return $next($request);
         }
 
+        if (!($user->roles->isEmpty()) && auth()->user()->isStudent()) {
+            return redirect()->route('class_signup');
+        }
 
         return redirect()->route('login');
     }
