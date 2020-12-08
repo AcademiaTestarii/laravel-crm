@@ -13,11 +13,4 @@ class ClassStudentRepository extends Repository
         $this->model = $classStudent;
     }
 
-
-    public function getClassStudentData(int $studentId, int $classId)
-    {
-        $student = $this->model::where('student_id', $studentId)->where('class_id', $classId)->first();
-
-        return $student;
-    }
 }
