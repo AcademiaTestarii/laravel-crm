@@ -32,7 +32,7 @@ class AuthController extends Controller
         $trainerRole = $this->roleRepository->findOneBy(['code' => Role::ROLE_TRAINER]);
         $studentRole = $this->roleRepository->findOneBy(['code' => Role::ROLE_STUDENT]);
 
-        return view('auth.register')->with(['roles' => $roles, 'roleTrainer' => $trainerRole, 'studentRole' => $studentRole]);
+        return view('auth.register')->with(['roles' => $roles, 'roleTrainer' => $trainerRole, 'roleStudent' => $studentRole]);
     }
 
     public function getPasswordReset()
