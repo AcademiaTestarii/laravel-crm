@@ -86,7 +86,7 @@ class StudentRepository extends Repository
         }
 
         if (auth()->user()->isStudent()) {
-            $model = $model->where('id', auth()->user()->student->getId());
+            $model = $model->where('id', auth()->user()->getId());
         }
 
         return $model->first();
