@@ -9,8 +9,8 @@
         <meta name="keywords" content="" />
 
         <!-- Page Title -->
-        <title>Academia Testarii:: Formular inscriere curs {{ $signupData['mainClass']->title }}</title>
 
+        <title>Academia Testarii:: Formular inscriere curs {{ $mainClass['title'] }}</title>
         <!-- Favicons -->
         <link rel="apple-touch-icon" sizes="57x57" href="favicon/apple-icon-57x57.png">
         <link rel="apple-touch-icon" sizes="60x60" href="favicon/apple-icon-60x60.png">
@@ -99,6 +99,8 @@
 
 
 
+
+
         </script>
 
         <!-- Facebook Pixel Code -->
@@ -168,7 +170,7 @@
                     <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
                         <div class="navbar-header">
                             <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i
-                                    class="fa fa-bars"></i>
+                                        class="fa fa-bars"></i>
                             </a>
                         </div>
                         @include('include.controlpanel')
@@ -201,10 +203,10 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <h2 class="title text-white">Formular inscriere curs
-                                            <br />{{ $signupData['mainClass']->title }}</h2>
+                                            <br />{{ $mainClass['title'] }}</h2>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                     </section>
 
                     <!-- Section: Have Any Question -->
@@ -214,45 +216,46 @@
                                 cursurile organizate de Academia Testării:</h2>
 
                             @guest
-                            <p>După ce completezi acest formular vei primi un mesaj de confirmare pe email. In acest mesaj
-                                vei
-                                primi deasemenea și instrucţiuni pentru activarea contului tău de pe platforma Academia
-                                Testării
-                                unde vei putea consulta materiale pentru curs precum și alte informaţii care privesc relaţia
-                                dintre Academia Testării și tine.</p>
-                            <p>Dacă ai deja cont pe platforma Academia Testării, te
-                                rugăm să <strong><a href="ajax-load/login-form.html"
-                                                    class="ajaxload-popup text-theme-colored">intri
-                                    în contul tău</a></strong> pentru a te înscrie la cursuri.</p>
+                                <p>După ce completezi acest formular vei primi un mesaj de confirmare pe email. In acest mesaj
+                                    vei
+                                    primi deasemenea și instrucţiuni pentru activarea contului tău de pe platforma Academia
+                                    Testării
+                                    unde vei putea consulta materiale pentru curs precum și alte informaţii care privesc relaţia
+                                    dintre Academia Testării și tine.</p>
+                                <p>Dacă ai deja cont pe platforma Academia Testării, te
+                                    rugăm să <strong><a href="ajax-load/login-form.html"
+                                                        class="ajaxload-popup text-theme-colored">intri
+                                            în contul tău</a></strong> pentru a te înscrie la cursuri.</p>
                             @endguest
 
                             @if(Auth::user() === (new App\User)->isStudent())
-                            <p>Avem nevoie de datele tale personale (Nume, Adresa, Localitate, etc pentru facturare). Te
-                                rugăm
-                                să completezi datele personale în <strong><a href="contul_tau.php#sectiuneaDate"
-                                                                             class="text-theme-colored">contul
-                                    tău</a></strong>,
-                                apoi să revi la formularul de înscriere.</p>
-                            <p>Dacă ai toate datele completate, atunci te poţi înscrie la cursuri selectând modulul dorit
-                                din
-                                partea de jos a formularului.</p>
+                                <p>Avem nevoie de datele tale personale (Nume, Adresa, Localitate, etc pentru facturare). Te
+                                    rugăm
+                                    să completezi datele personale în <strong><a href="contul_tau.php#sectiuneaDate"
+                                                                                 class="text-theme-colored">contul
+                                            tău</a></strong>,
+                                    apoi să revi la formularul de înscriere.</p>
+                                <p>Dacă ai toate datele completate, atunci te poţi înscrie la cursuri selectând modulul dorit
+                                    din
+                                    partea de jos a formularului.</p>
                             @endif
                             <hr />
                             <div class="section-content post">
                                 <form id="inscriere_curs" name="inscriere_curs" class="reservation-form" method="get"
-                                      action="{{ route('class_signup') }}" novalidate="novalidate">
+                                      action="{{ route('class_signup', $selectedMainClass, $mainClasses, $students, $student, $classStudent,$signedUpStudent, $mainClass) }}"
+                                      novalidate="novalidate">
                                     @csrf
                                     <div class="row entry-content">
                                         <div class="col-sm-12 col-md-3">
                                             <div class="form-group">
                                                 <label>Nume <small>*</small></label>
-                                                @if(Auth::user() === (new App\User)->isStudent())
-                                                <input name="nume" class="form-control" type="text"
-                                                       value="{{ $signupData['student']->last_name }}" readonly>
+                                                @if(Auth::user()->isStudent())
+                                                    <input name="nume" class="form-control" type="text"
+                                                           value="{{ $student['last_name'] }}" readonly>
                                                 @else
-                                                <input name="nume" class="form-control" type="text"
-                                                       placeholder="Nume"
-                                                       minlength="3" required="">
+                                                    <input name="nume" class="form-control" type="text"
+                                                           placeholder="Nume"
+                                                           minlength="3" required="">
                                                 @endif
                                             </div>
                                         </div>
@@ -260,12 +263,12 @@
                                             <div class="form-group">
                                                 <label>Prenume <small>*</small></label>
                                                 @if(Auth::user() === (new App\User)->isStudent())
-                                                <input name="prenume" class="form-control" type="text"
-                                                       value="{{ $signupData['student']->first_name }}" readonly>
+                                                    <input name="prenume" class="form-control" type="text"
+                                                           value="{{ $signupData['student']->first_name }}" readonly>
                                                 @else
-                                                <input name="prenume" class="form-control" type="text"
-                                                       placeholder="Prenume"
-                                                       minlength="3" required="">
+                                                    <input name="prenume" class="form-control" type="text"
+                                                           placeholder="Prenume"
+                                                           minlength="3" required="">
                                                 @endif
                                             </div>
                                         </div>
@@ -273,12 +276,12 @@
                                             <div class="form-group">
                                                 <label>Email <small>*</small></label>
                                                 @if(Auth::user() === (new App\User)->isStudent())
-                                                <input name="email" class="form-control" type="email"
-                                                       value="{{ $signupData['student']->email }}" readonly>
+                                                    <input name="email" class="form-control" type="email"
+                                                           value="{{ $signupData['student']->email }}" readonly>
                                                 @else
-                                                <input name="email" class="form-control" type="email"
-                                                       placeholder="Email"
-                                                       minlength="5" required="">
+                                                    <input name="email" class="form-control" type="email"
+                                                           placeholder="Email"
+                                                           minlength="5" required="">
                                                 @endif
                                             </div>
                                         </div>
@@ -286,12 +289,12 @@
                                             <div class="form-group">
                                                 <label>Data naștere</label>
                                                 @if(Auth::user() === (new App\User)->isStudent())
-                                                <input name="data_nastere" class="form-control" type="date"
-                                                       value="{{ $signupData['student']->date_of_birth }}" readonly>
+                                                    <input name="data_nastere" class="form-control" type="date"
+                                                           value="{{ $signupData['student']->date_of_birth }}" readonly>
                                                 @else
-                                                <input name="data_nastere" class="form-control" type="date"
-                                                       minlength="10"
-                                                       placeholder="Data naștere">
+                                                    <input name="data_nastere" class="form-control" type="date"
+                                                           minlength="10"
+                                                           placeholder="Data naștere">
                                                 @endif
                                             </div>
                                         </div>
@@ -302,12 +305,12 @@
                                             <div class="form-group">
                                                 <label>Adresă <small>*</small></label>
                                                 @if(Auth::user() === (new App\User)->isStudent())
-                                                <input name="adresa" class="form-control" type="text"
-                                                       value="{{ $signupData['student']->address }}" readonly>
+                                                    <input name="adresa" class="form-control" type="text"
+                                                           value="{{ $signupData['student']->address }}" readonly>
                                                 @else
-                                                <input name="adresa" class="form-control" type="text"
-                                                       placeholder="O folosim pentru factură" minlength="10"
-                                                       required="">
+                                                    <input name="adresa" class="form-control" type="text"
+                                                           placeholder="O folosim pentru factură" minlength="10"
+                                                           required="">
                                                 @endif
                                             </div>
                                         </div>
@@ -315,12 +318,12 @@
                                             <div class="form-group">
                                                 <label>Localitate <small>*</small></label>
                                                 @if(Auth::user() === (new App\User)->isStudent())
-                                                <input name="localitate" class="form-control" type="text"
-                                                       value="{{ $signupData['student']->city }}" readonly>
+                                                    <input name="localitate" class="form-control" type="text"
+                                                           value="{{ $signupData['student']->city }}" readonly>
                                                 @else
-                                                <input name="localitate" class="form-control" type="text"
-                                                       placeholder="O folosim pentru factură" minlength="3"
-                                                       required="">
+                                                    <input name="localitate" class="form-control" type="text"
+                                                           placeholder="O folosim pentru factură" minlength="3"
+                                                           required="">
                                                 @endif
                                             </div>
                                         </div>
@@ -328,12 +331,12 @@
                                             <div class="form-group">
                                                 <label>Judet <small>*</small></label>
                                                 @if(Auth::user() === (new App\User)->isStudent())
-                                                <input name="judet" class="form-control" type="text"
-                                                       value="{{ $signupData['student']->county }}" readonly>
+                                                    <input name="judet" class="form-control" type="text"
+                                                           value="{{ $signupData['student']->county }}" readonly>
                                                 @else
-                                                <input name="judet" class="form-control" type="text"
-                                                       placeholder="Îl folosim pentru factură" minlength="3"
-                                                       required="">
+                                                    <input name="judet" class="form-control" type="text"
+                                                           placeholder="Îl folosim pentru factură" minlength="3"
+                                                           required="">
                                                 @endif
                                             </div>
                                         </div>
@@ -346,11 +349,11 @@
                                             <div class="form-group">
                                                 <label>Profesie actuală</label>
                                                 @if(Auth::user() === (new App\User)->isStudent())
-                                                <input name="profesie" class="form-control" type="text"
-                                                       value="{{ $signupData['student']->job_title }}" readonly>
+                                                    <input name="profesie" class="form-control" type="text"
+                                                           value="{{ $signupData['student']->job_title }}" readonly>
                                                 @else
-                                                <input name="profesie" class="form-control" type="text"
-                                                       placeholder="Profesie actuală">
+                                                    <input name="profesie" class="form-control" type="text"
+                                                           placeholder="Profesie actuală">
                                                 @endif
                                             </div>
                                         </div>
@@ -358,12 +361,12 @@
                                             <div class="form-group">
                                                 <label>Telefon <small>*</small></label>
                                                 @if(Auth::user() === (new App\User)->isStudent())
-                                                <input name="telefon" class="form-control" type="text"
-                                                       value="{{ $signupData['student']->phone }}" readonly>
+                                                    <input name="telefon" class="form-control" type="text"
+                                                           value="{{ $signupData['student']->phone }}" readonly>
                                                 @else
-                                                <input name="telefon" class="form-control" type="text"
-                                                       placeholder="Telefon"
-                                                       required="">
+                                                    <input name="telefon" class="form-control" type="text"
+                                                           placeholder="Telefon"
+                                                           required="">
                                                 @endif
                                             </div>
                                         </div>
@@ -371,11 +374,11 @@
                                             <div class="form-group">
                                                 <label>Educaţie</label>
                                                 @if(Auth::user() === (new App\User)->isStudent())
-                                                <input name="educatie" class="form-control" type="text"
-                                                       value="{{ $signupData['student']->education }}" readonly>
+                                                    <input name="educatie" class="form-control" type="text"
+                                                           value="{{ $signupData['student']->education }}" readonly>
                                                 @else
-                                                <input name="educatie" class="form-control" type="text"
-                                                       placeholder="Educaţie">
+                                                    <input name="educatie" class="form-control" type="text"
+                                                           placeholder="Educaţie">
                                                 @endif
                                             </div>
                                         </div>
@@ -403,12 +406,12 @@
                                                 <!-- de testat si cu if(Auth::user()->hasRole('student')) -->
 
                                                 @if(Auth::user() === (new App\User)->isStudent())
-                                                <input name="alta_limba" class="form-control" type="text"
-                                                       value="{{ $signupData['student']->other_language }}"
-                                                       readonly>
+                                                    <input name="alta_limba" class="form-control" type="text"
+                                                           value="{{ $signupData['student']->other_language }}"
+                                                           readonly>
                                                 @else
-                                                <input name="alta_limba" class="form-control" type="text"
-                                                       placeholder="Cunostinţe altă limbă străina">
+                                                    <input name="alta_limba" class="form-control" type="text"
+                                                           placeholder="Cunostinţe altă limbă străina">
                                                 @endif
                                             </div>
                                         </div>
@@ -450,15 +453,15 @@
 
                                                     {{ $signupData['mainClass']->title}}
                                                     @foreach ($signupData['classesByStartDate'] as $class)
-                                                    <option value="{{ $class->id }}">
+                                                        <option value="{{ $class->id }}">
 
-                                                        {{ $class->registration_start_date }}
-                                                        - {{ $class->registration_end_date }}
+                                                            {{ $class->registration_start_date }}
+                                                            - {{ $class->registration_end_date }}
 
-                                                    @if($signupData['signedUp']) <!--TODO de facut cu functie -->
-                                                        <p>-- Esti înscris la acest curs.</p>
-                                                        @endif
-                                                    </option>
+                                                            @if($signupData['signedUp']) <!--TODO de facut cu functie -->
+                                                            <p>-- Esti înscris la acest curs.</p>
+                                                            @endif
+                                                        </option>
 
                                                 </select>
                                             </div>
@@ -502,8 +505,8 @@
                                                        name="termeni_site" value="" required="">
                                                 <label class="form-check-label"><a data-toggle="modal"
                                                                                    data-target=".bs-example-modal-lg">Sunt de
-                                                    acord
-                                                    cu Termenii și Condițiile site-ului *</a></label>
+                                                        acord
+                                                        cu Termenii și Condițiile site-ului *</a></label>
                                             </div>
                                         </div>
                                         <div class="col-sm-12 col-md-12">
@@ -527,18 +530,18 @@
 
                                     <div class="row">
                                         <div class="col-sm-12 col-md-12 text-center">
-                                            @if($signupData['signedUp']) <!--TODO de facut cu functie -->
+                                        @if($signupData['signedUp']) <!--TODO de facut cu functie -->
                                             <h4>Ești deja înscris la acest curs.</h4>
                                             <a href="contul_tau.php#sectiuneaCursuri"
                                                class="btn btn-dark btn-theme-colored"><i
-                                                    class="fa fa-user-o"></i> Verifică informaţiile în contul tău.</a>
+                                                        class="fa fa-user-o"></i> Verifică informaţiile în contul tău.</a>
                                             @else
-                                            <button id="submitBtn" type="submit"
-                                                    class="btn btn-dark btn-theme-colored"
-                                                    data-loading-text="Asteapta putin..."> <!--disabled="disabled"-->
-                                                Înscrie-te
-                                                la curs
-                                            </button>
+                                                <button id="submitBtn" type="submit"
+                                                        class="btn btn-dark btn-theme-colored"
+                                                        data-loading-text="Asteapta putin..."> <!--disabled="disabled"-->
+                                                    Înscrie-te
+                                                    la curs
+                                                </button>
                                             @endif
                                         </div>
                                     </div>
@@ -642,11 +645,12 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Inchide"><span
-                                        aria-hidden="true">&times;</span></button>
+                                            aria-hidden="true">&times;</span></button>
                             </div>
                             <div class="pl-50 pr-50 pb-50">
 
-                                <h2 class="modal-title" id="myModalLabel2">{{  $signupData['termsOfService']->title }}</h2>
+                                <h2 class="modal-title"
+                                    id="myModalLabel2">{{  $signupData['termsOfService']->title }}</h2>
                                 <hr />
                                 {{  $signupData['termsOfService']->text }}
                             </div>
