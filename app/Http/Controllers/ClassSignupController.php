@@ -38,7 +38,7 @@ class ClassSignupController extends Controller
     {
         $selectedMainClass = null;
         $query             = [];
-        $student           = $this->studentRepository->findOneBy(['id' => $this->request->get('id')]);
+        $student           = $this->studentRepository->findOneBy(['id' => 1]);
         $signedUpStudent   = $student->count() > 0 ? true : false;
 
 
@@ -132,14 +132,17 @@ class ClassSignupController extends Controller
         }
 
         $students                     = $this->studentRepository->allOrderedByActiveAndName();
+
         $classStudent                 = $this->classStudentRepository->findOneBy(['class_id' => $this->request->get('class'), 'student_id' => $this->request->get('delete')]);
         $signupData['termsOfService'] = $this->contentRepository->getContentData(ContentConstants::TERMS_OF_SERVICE);
-
-        return view('classes')->with(
+        $mainClass = $this->mainClassRepository->findOneBy(['id' => 1]);
+        return view('class_signup_form')->with(
             [
                 'selectedMainClass' => $selectedMainClass,
                 'mainClasses'       => $mainClasses,
+                'mainClass'       => $mainClass,
                 'students'          => $students,
+                'student'          => $student,
                 'classStudent'      => $classStudent,
                 'signedUpStudent'   => $signedUpStudent,
 
