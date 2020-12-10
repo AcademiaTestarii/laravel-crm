@@ -9,6 +9,7 @@ use App\Repositories\MainClassRepository;
 use App\Repositories\StudentRepository;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ClassSignupController extends Controller
 {
@@ -38,10 +39,8 @@ class ClassSignupController extends Controller
     {
         $selectedMainClass = null;
         $query             = [];
-        $student           = $this->studentRepository->findOneBy(['id' => 1]);
-        $signedUpStudent   = $student->count() > 0 ? true : false;
-
-
+        $student           = $this->studentRepository->findByAuthId(Auth::id());
+$signedUpStudent = $student->exists();
         if ($this->request->get('id')) {
             $query['main_class_id'] = [
                 'value'    => $this->request->get('id'),
