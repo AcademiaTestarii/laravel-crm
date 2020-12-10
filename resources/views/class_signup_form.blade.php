@@ -207,6 +207,7 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
                     </section>
 
                     <!-- Section: Have Any Question -->
@@ -242,7 +243,16 @@
                             <hr />
                             <div class="section-content post">
                                 <form id="inscriere_curs" name="inscriere_curs" class="reservation-form" method="get"
-                                      action="{{ route('class_signup', $selectedMainClass, $mainClasses, $students, $student, $classStudent,$signedUpStudent, $mainClass) }}"
+                                      action="{{ route('class_signup', [
+                'selectedMainClass' => $selectedMainClass,
+                'mainClasses'       => $mainClasses,
+                'mainClass'       => $mainClass,
+                'students'          => $students,
+                'student'          => $student,
+                'classStudent'      => $classStudent,
+                'signedUpStudent'   => $signedUpStudent,
+
+            ]) }}"
                                       novalidate="novalidate">
                                     @csrf
                                     <div class="row entry-content">
