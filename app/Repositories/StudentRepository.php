@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\Student;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class StudentRepository extends Repository
@@ -17,15 +18,26 @@ class StudentRepository extends Repository
     public function allOrderedByActiveAndName()
     {
         if (auth()->user()->isTrainerProvider()) {
-            $model = $this->model->where(function ($query) {
-                return $query->whereHas('classStudents', function ($q) {
-                    return $q->whereHas('classes', function ($qu) {
-                        return $qu->whereHas('mainClass', function ($qr) {
-                            return $qr->where('trainer_provider_id', auth()->user()->trainerProvider->getId());
-                        });
-                    });
-                });
-            });
+            $model = $this->model->where(
+                function ($query) {
+                    return $query->whereHas(
+                        'classStudents',
+                        function ($q) {
+                            return $q->whereHas(
+                                'classes',
+                                function ($qu) {
+                                    return $qu->whereHas(
+                                        'mainClass',
+                                        function ($qr) {
+                                            return $qr->where('trainer_provider_id', auth()->user()->trainerProvider->getId());
+                                        }
+                                    );
+                                }
+                            );
+                        }
+                    );
+                }
+            );
 
             return $model->orderBy('is_active', 'DESC')->orderBy('last_name')->get();
         }
@@ -38,41 +50,65 @@ class StudentRepository extends Repository
         if (empty($filter)) {
             $model = $this->model;
             if (auth()->user()->isTrainerProvider()) {
-                $model = $model->where(function ($query) {
-                    return $query->whereHas('classStudents', function ($q) {
-                        return $q->whereHas('classes', function ($qu) {
-                            return $qu->whereHas('mainClass', function ($qr) {
-                                return $qr->where('trainer_provider_id', auth()->user()->trainerProvider->getId());
-                            });
-                        });
-                    });
-                });
+                $model = $model->where(
+                    function ($query) {
+                        return $query->whereHas(
+                            'classStudents',
+                            function ($q) {
+                                return $q->whereHas(
+                                    'classes',
+                                    function ($qu) {
+                                        return $qu->whereHas(
+                                            'mainClass',
+                                            function ($qr) {
+                                                return $qr->where('trainer_provider_id', auth()->user()->trainerProvider->getId());
+                                            }
+                                        );
+                                    }
+                                );
+                            }
+                        );
+                    }
+                );
 
                 return $model->get();
             }
+
             return $this->model->all();
         }
 
-        $model = $this->model->where(function ($query) use ($filter) {
-            if (isset($filter['main_class'])) {
-                return $query->whereHas('classStudents', function ($q) use ($filter) {
-                    return $q->whereHas('classes', function ($qu) use ($filter) {
-                        if (isset($filter['class']) && !empty($filter['class'])) {
-                            return $qu->where('main_class_id', $filter['main_class'])
-                                ->where('class_id', $filter['class']);
+        $model = $this->model->where(
+            function ($query) use ($filter) {
+                if (isset($filter['main_class'])) {
+                    return $query->whereHas(
+                        'classStudents',
+                        function ($q) use ($filter) {
+                            return $q->whereHas(
+                                'classes',
+                                function ($qu) use ($filter) {
+                                    if (isset($filter['class']) && !empty($filter['class'])) {
+                                        return $qu->where('main_class_id', $filter['main_class'])
+                                                  ->where('class_id', $filter['class']);
+                                    }
+
+                                    return $qu->where('main_class_id', $filter['main_class']);
+                                }
+                            );
                         }
-                        return $qu->where('main_class_id', $filter['main_class']);
-                    });
-                });
-            }
+                    );
+                }
 
-            if (isset($filter['class']) && !empty($filter['class'])) {
-                return $query->whereHas('classStudents', function ($q) use ($filter) {
-                    return $q->where('class_id', $filter['class']);
-                });
-            }
+                if (isset($filter['class']) && !empty($filter['class'])) {
+                    return $query->whereHas(
+                        'classStudents',
+                        function ($q) use ($filter) {
+                            return $q->where('class_id', $filter['class']);
+                        }
+                    );
+                }
 
-        })->get();
+            }
+        )->get();
 
         return $model;
     }
@@ -85,10 +121,13 @@ class StudentRepository extends Repository
             $model = $model->where($column, '=', $value);
         }
 
-        if (auth()->user()->isStudent()) {
-            $model = $model->where('id', auth()->user()->getId());
-        }
-
         return $model->first();
+    }
+
+    public function findByAuthId($authId)
+    {
+        $model = $this->model;
+
+        return $model->where('students.user_id', $authId)->first();
     }
 }
