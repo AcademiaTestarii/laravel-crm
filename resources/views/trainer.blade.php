@@ -110,7 +110,7 @@
                                     <input value="@if($trainer) {{$trainer->getEmail()}} @endif" name="email"
                                            type="email"
                                            @if($trainer && $trainer->hasTrainerProviderId()) disabled @endif
-                                           class="form-control">
+                                           class="form-control" required>
                                 </div>
                             </div>
                             <div class="form-group col-md-4">
