@@ -79,16 +79,16 @@ class ClassesController extends Controller
             $status = $request->get('status');
 
             if ($status == 2) {
-                $query['registration_start_date'] = [
-                    'value' => (new  Carbon())->format("Y-m-d"),
-                    'operator' => '<'
+                $query['is_active'] = [
+                    'value' => 1,
+                    'operator' => '='
                 ];
             }
 
             if ($status == 3) {
-                $query['registration_start_date'] = [
-                    'value' => (new  Carbon())->format("Y-m-d"),
-                    'operator' => '>'
+                $query['is_active'] = [
+                    'value' => 0,
+                    'operator' => '='
                 ];
             }
         }
@@ -126,15 +126,13 @@ class ClassesController extends Controller
                     $status = $request->get('status');
 
                     if ($status == 2) {
-                        if ($class->getRegistrationStartDate()->format("Y-m-d") < (new  Carbon())->format("Y-m-d")
-                        ) {
+                        if (!$class->isActive()) {
                             $mainClass->classes->forget($key);
                         }
                     }
 
                     if ($status == 3) {
-                        if ($class->getRegistrationStartDate()->format("Y-m-d") > (new  Carbon())->format("Y-m-d")
-                        ) {
+                        if ($class->isActive()) {
                             $mainClass->classes->forget($key);
                         }
                     }
