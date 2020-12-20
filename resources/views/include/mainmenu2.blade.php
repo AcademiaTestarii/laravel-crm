@@ -16,7 +16,7 @@
 </li>
 
 <li @if (\Request::is('students')) class="active" @endif>
-    <a href="/students"><i class="fa fa-users"></i> <span class="nav-label">Cursanti</span></a>
+    <a href="/students_list"><i class="fa fa-users"></i> <span class="nav-label">Cursanti</span></a>
 </li>
 @if(auth()->user()->isAcademiaTestarii())
     <li @if (\Request::is('communication')) class="active" @endif>

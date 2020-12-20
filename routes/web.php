@@ -57,7 +57,7 @@ Route::middleware('auth:api')->group(function () {
         Route::get('feedback/{id}', 'FeedbackController@getDetails');
         Route::get('certificate/{id}', 'FeedbackController@getCertificateDetails');
 
-        Route::get('students', 'StudentController@index')->name('students');
+        Route::get('students_list', 'StudentController@index')->name('students');
         Route::get('communication', 'CommunicationController@index')->name('communication');
 
         Route::get('trainers_list', 'TrainerController@index')->name('trainers');
