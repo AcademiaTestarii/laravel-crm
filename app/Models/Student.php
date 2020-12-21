@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Student extends Model
 {
-    protected $hidden = ['id'];
-
     public function classStudents()
     {
         return $this->hasMany(ClassStudent::class);

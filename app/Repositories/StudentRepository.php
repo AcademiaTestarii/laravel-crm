@@ -17,7 +17,7 @@ class StudentRepository extends Repository
     {
         if (auth()->user()->isTrainerProvider()) {
             $trainerProviderId = auth()->user()->trainerProvider->getId();
-            $students = \DB::select("SELECT * from students s
+            $students = \DB::select("SELECT s.* from students s
                     JOIN class_students cs on s.id = cs.student_id
                     JOIN classes c on cs.class_id = c.id 
                     JOIN main_classes mc on c.main_class_id = mc.id
@@ -40,7 +40,7 @@ class StudentRepository extends Repository
 
         if (isset($filter['main_class']) && !isset($filter['class'])) {
             $mainClassId = $filter['main_class'];
-            $query = "SELECT * from students s
+            $query = "SELECT s.* from students s
                     JOIN class_students cs on s.id = cs.student_id
                     JOIN classes c on cs.class_id = c.id 
                     WHERE c.main_class_id = $mainClassId
@@ -49,7 +49,7 @@ class StudentRepository extends Repository
 
         if (isset($filter['class'])) {
             $classId = $filter['class'];
-            $query = "SELECT * from students s
+            $query = "SELECT s.* from students s
                     JOIN class_students cs on s.id = cs.student_id
                     JOIN classes c on cs.class_id = c.id 
                     WHERE c.id = $classId
