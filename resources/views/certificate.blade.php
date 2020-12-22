@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Certificat de absolvire: {{$feedback->student->getLastName()}} {{$feedback->student->getFirstName()}}</title>
-    <base href="https://www.academiatestarii.ro">
+    <base href="<?php echo $_SERVER['HTTP_HOST'];?>">
     <!-- Favicons -->
     <link rel="apple-touch-icon" sizes="57x57" href="favicon/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="favicon/apple-icon-60x60.png">
@@ -21,20 +21,21 @@
     <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="96x96" href="favicon/favicon-96x96.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
-    <link rel="manifest" href="favicon/manifest.json">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="favicon/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
 
     <!-- Stylesheet -->
-    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
-    <link href="css/jquery-ui.min.css" rel="stylesheet" type="text/css">
-    <link href="css/animate.css" rel="stylesheet" type="text/css">
-    <link href="css/css-plugin-collections.css" rel="stylesheet"/>
+    <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{asset('css/jquery-ui.min.css')}}" rel="stylesheet">
+
+    <link href="{{asset('css/animate.css')}}" rel="stylesheet">
+    <link href="{{asset('css/css-plugin-collections.css')}}" rel="stylesheet">
+
     <!-- Academia Testarii CSS | Style css -->
-    <link href="css/style.css" rel="stylesheet" type="text/css">
+    <link href="{{asset('css/style.css')}}" rel="stylesheet">
     <!-- CSS | Academia Testarii -->
-    <link href="css/colors/academia-testarii.css" rel="stylesheet" type="text/css">
+    <link href="{{asset('css/colors/academia-testarii.css')}}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Fondamento&display=swap" rel="stylesheet">
     <script type='application/ld+json'>
         {"@context":"https://schema.org","@type":"Organization","url":"https://www.academiatestarii.ro/","sameAs":["https://www.facebook.com/academiatestarii/","https://www.linkedin.com/company/18151104/"],"@id":"https://www.academiatestarii.ro/#organization","name":"Academia Testarii","logo":"https://www.academiatestarii.ro/images/logo-academia-testarii.png"}
@@ -90,7 +91,7 @@
 <div id="wrapper" class="container text-center">
     <br/>
     <a class="btn btn-colored btn-block btn-theme-colored2 text-white btn-lg btn-flat"
-       href="/feedback.php/{{$feedback->getLink()}}">Feedback participare</a>
+       href="/feedback/{{$feedback->getLink()}}">Feedback participare</a>
     <br/><br/>
 </div>
 @include('include/tracking')

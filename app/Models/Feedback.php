@@ -37,12 +37,12 @@ class Feedback extends Model
 
     public function getOrganizationJiraZephyrPlus()
     {
-        return $this->getAttribute('organization_jira_zephyr_plus');
+        return $this->getAttribute('organizare_jira_zephyr_plus');
     }
 
     public function getOrganizationJiraZephyrMinus()
     {
-        return $this->getAttribute('organization_jira_zephyr_minus');
+        return $this->getAttribute('organizare_jira_zephyr_minus');
     }
 
     public function getTestCasesPlus()
