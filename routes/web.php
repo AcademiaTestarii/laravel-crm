@@ -58,6 +58,7 @@ Route::middleware('auth:api')->group(function () {
         Route::get('inline_move_student', 'ClassesController@getMoveStudent');
 
         Route::get('students_list', 'StudentController@index')->name('students');
+        Route::get('students_list/{studentId}', 'StudentController@getDetails');
         Route::get('communication', 'CommunicationController@index')->name('communication');
 
         Route::get('trainers_list', 'TrainerController@index')->name('trainers');

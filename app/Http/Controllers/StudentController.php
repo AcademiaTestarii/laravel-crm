@@ -26,4 +26,14 @@ class StudentController extends Controller
             'students' => $students
         ]);
     }
+
+    public function getDetails(int $studentId)
+    {
+        $student = $this->studentRepository->findOneBy(['id' => $studentId]);
+
+        return view('student_activity')->with([
+            'student' => $student
+        ]);
+    }
+
 }

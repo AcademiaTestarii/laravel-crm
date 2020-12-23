@@ -98,8 +98,8 @@
                                                         @if(!is_null($activeStudent->activity))
                                                             <tr>
                                                                 <td><a data-toggle="tab"
-                                                                       id="{{$activeStudent->getId()}}"
                                                                        href="#contact-{{$activeStudent->getId()}}"
+                                                                       id="{{$activeStudent->getId()}}"
                                                                        class="client-link">{{$activeStudent->getLastName()}} {{$activeStudent->getFirstName()}}</a>
                                                                 </td>
                                                                 <td>
@@ -111,152 +111,6 @@
                                                                     <span class="label label-primary">Activ</span>
                                                                 </td>
                                                             </tr>
-                                                            <div id="student_hidden_widget-{{$activeStudent->getId()}}" class="tab-content student_hidden_widget">
-                                                                <?php
-                                                                $counter = 0;
-                                                                $student = $activeStudent;
-                                                                ?>
-                                                                <div id="contact-{{$student->getId()}}"
-                                                                     class="tab-pane @if($counter==0) active @endif">
-                                                                    <div class="row m-b-lg">
-                                                                        <div class="col-lg-12">
-                                                                            <h2>{{$student->getLastName()}} {{$student->getFirstName()}}</h2>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="client-detail">
-                                                                        <div class="full-height-scroll">
-
-                                                                            <strong>Activitate recenta</strong>
-
-                                                                            <ul class="list-group clear-list">
-                                                                                <li class="list-group-item">
-                                                                                    <span class="pull-right"> {{$student->getRegistrationDate()->formatLocalized("%e %B, %Y la ora %H:%M:%S")}} </span>
-                                                                                    Inregistrare pe platforma AT+
-                                                                                </li>
-                                                                                <li class="list-group-item">
-                                                        <span class="pull-right">
-                                                            @if(!is_null($student->getActivity()))
-                                                                {{$student->getActivity()->formatLocalized("%e %B, %Y la ora %H:%M:%S")}}
-                                                            @else
-                                                                Niciodata
-                                                            @endif
-                                                        </span>
-                                                                                    Ultima logare pe platforma AT+
-                                                                                </li>
-                                                                            </ul>
-
-                                                                            <div class="well well-sm">
-                                                                                <h3>Date personale</h3>
-                                                                                <div class="row">
-                                                                                    <div class="col-md-6">
-                                                                                        <strong>Adresa:</strong> {{$student->getAddress()}}
-                                                                                    </div>
-                                                                                    <div class="col-md-6">
-                                                                                        <strong>Localitate:</strong> {{$student->getCity()}}
-                                                                                    </div>
-                                                                                    <div class="col-md-6">
-                                                                                        <strong>Judet:</strong> {{$student->getCounty()}}
-                                                                                    </div>
-                                                                                    <div class="col-md-6">
-                                                                                        <strong>Profesie:</strong> {{$student->getJob()}}
-                                                                                    </div>
-                                                                                    <div class="col-md-12"><strong>Data
-                                                                                            nastere:</strong> {{$student->getDateOfBirth()}}
-                                                                                    </div>
-                                                                                    <div class="col-md-12">
-                                                                                        <hr/>
-                                                                                    </div>
-                                                                                    <div class="col-md-4">
-                                                                                        <strong>Educatie:</strong> {{$student->getEducation()}}
-                                                                                    </div>
-                                                                                    <div class="col-md-4">
-                                                                                        <strong>Engleza:</strong> {{$student->getEnglish()}}
-                                                                                    </div>
-                                                                                    <div class="col-md-4"><strong>Alta
-                                                                                            limba:</strong> {{$student->getOtherLanguage()}}
-                                                                                    </div>
-                                                                                    <div class="col-md-4"><strong>MS
-                                                                                            Office:</strong> {{$student->getMsOffice()}}
-                                                                                    </div>
-                                                                                    <div class="col-md-4">
-                                                                                        <strong>Web:</strong> {{$student->getWeb()}}
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-
-                                                                            <div class="well well-sm">
-                                                                                <h3>Cursuri</h3>
-                                                                                @if($student->classStudents->isNotEmpty())
-                                                                                    @foreach($student->classStudents as $classStudent)
-                                                                                        <p>
-                                                                                            <i class="fa fa-angle-double-right"></i>
-                                                                                            @if($classStudent->classes)
-                                                                                                <a href="/class_details/{{$classStudent->getClassId()}}">
-                                                                                                    <strong>{{$classStudent->classes->mainClass->getTitle()}}
-                                                                                                        :
-                                                                                                        {{$classStudent->classes->getTitle()}}</strong></a>
-                                                                                            @endif
-                                                                                        </p>
-                                                                                    @endforeach
-                                                                                @else
-                                                                                    <p>Nu este inregistrat la nici un
-                                                                                        curs.</p>
-                                                                                @endif
-                                                                            </div>
-
-                                                                            <div class="well well-sm">
-                                                                                <h3>Calificative</h4>
-                                                                                    @if($student->feedbacks->isNotEmpty())
-                                                                                        @foreach($student->feedbacks as $feedback)
-                                                                                            <p>
-                                                                                                <i class="fa fa-angle-double-right"></i>
-                                                                                                @if($feedback->class)
-                                                                                                    <a href="/feedback/{{$feedback->getId()}}"
-                                                                                                       target="_blank">{{$feedback->class->mainClass->getTitle()}}
-                                                                                                        : {{$feedback->class->getTitle()}}
-                                                                                                        <i
-                                                                                                                class="fa fa-arrow-circle-right"></i>
-                                                                                                    </a>
-                                                                                                @endif
-                                                                                            </p>
-                                                                                        @endforeach
-                                                                                    @else
-                                                                                        <p>Nu are calificative
-                                                                                            acordate.</p>
-                                                                                @endif
-                                                                            </div>
-                                                                            <div class="well well-sm">
-                                                                                <h3>Notite</h4>
-                                                                                    @if($student->classStudents->isNotEmpty())
-                                                                                        <?php
-                                                                                        $count = 0;
-                                                                                        ?>
-                                                                                        @foreach($student->classStudents as $classStudent)
-                                                                                            @if($classStudent->getNote())
-                                                                                                @if($classStudent->classes)
-                                                                                                    <strong>{{$classStudent->classes->mainClass->getTitle()}}
-                                                                                                        : {{$classStudent->classes->getTitle()}}</strong>
-                                                                                                @endif
-                                                                                                <p>
-                                                                                                    <i class="fa fa-angle-double-right"></i> {{$classStudent->getNote()}}
-                                                                                                </p><br/>
-                                                                                                <?php
-                                                                                                $count++;
-                                                                                                ?>
-                                                                                            @endif
-                                                                                        @endforeach
-                                                                                        @if($count==0)
-                                                                                            <p>Nu are notite.</p>
-                                                                                        @endif
-                                                                                    @else
-                                                                                        <p>Nu are notite.</p>
-                                                                                @endif
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <?php $counter++; ?>
-                                                            </div>
                                                         @endif
                                                     @endforeach
                                                     </tbody>
@@ -283,8 +137,8 @@
                                                         @if(is_null($inactiveStudent->activity))
                                                             <tr>
                                                                 <td><a data-toggle="tab"
-                                                                       id="{{$inactiveStudent->getId()}}"
                                                                        href="#contact-{{$inactiveStudent->getId()}}"
+                                                                       id="{{$inactiveStudent->getId()}}"
                                                                        class="client-link">{{$inactiveStudent->getLastName()}} {{$inactiveStudent->getFirstName()}}</a>
                                                                 </td>
                                                                 <td>
@@ -296,152 +150,6 @@
                                                                     <span class="label label-danger">Inactiv</span>
                                                                 </td>
                                                             </tr>
-                                                            <div id="student_hidden_widget-{{$inactiveStudent->getId()}}" class="student_hidden_widget tab-content">
-                                                                <?php
-                                                                $counter = 0;
-                                                                $student = $inactiveStudent;
-                                                                ?>
-                                                                <div id="contact-{{$student->getId()}}"
-                                                                     class="tab-pane @if($counter==0) active @endif">
-                                                                    <div class="row m-b-lg">
-                                                                        <div class="col-lg-12">
-                                                                            <h2>{{$student->getLastName()}} {{$student->getFirstName()}}</h2>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="client-detail">
-                                                                        <div class="full-height-scroll">
-
-                                                                            <strong>Activitate recenta</strong>
-
-                                                                            <ul class="list-group clear-list">
-                                                                                <li class="list-group-item">
-                                                                                    <span class="pull-right"> {{$student->getRegistrationDate()->formatLocalized("%e %B, %Y la ora %H:%M:%S")}} </span>
-                                                                                    Inregistrare pe platforma AT+
-                                                                                </li>
-                                                                                <li class="list-group-item">
-                                                        <span class="pull-right">
-                                                            @if(!is_null($student->getActivity()))
-                                                                {{$student->getActivity()->formatLocalized("%e %B, %Y la ora %H:%M:%S")}}
-                                                            @else
-                                                                Niciodata
-                                                            @endif
-                                                        </span>
-                                                                                    Ultima logare pe platforma AT+
-                                                                                </li>
-                                                                            </ul>
-
-                                                                            <div class="well well-sm">
-                                                                                <h3>Date personale</h3>
-                                                                                <div class="row">
-                                                                                    <div class="col-md-6">
-                                                                                        <strong>Adresa:</strong> {{$student->getAddress()}}
-                                                                                    </div>
-                                                                                    <div class="col-md-6">
-                                                                                        <strong>Localitate:</strong> {{$student->getCity()}}
-                                                                                    </div>
-                                                                                    <div class="col-md-6">
-                                                                                        <strong>Judet:</strong> {{$student->getCounty()}}
-                                                                                    </div>
-                                                                                    <div class="col-md-6">
-                                                                                        <strong>Profesie:</strong> {{$student->getJob()}}
-                                                                                    </div>
-                                                                                    <div class="col-md-12"><strong>Data
-                                                                                            nastere:</strong> {{$student->getDateOfBirth()}}
-                                                                                    </div>
-                                                                                    <div class="col-md-12">
-                                                                                        <hr/>
-                                                                                    </div>
-                                                                                    <div class="col-md-4">
-                                                                                        <strong>Educatie:</strong> {{$student->getEducation()}}
-                                                                                    </div>
-                                                                                    <div class="col-md-4">
-                                                                                        <strong>Engleza:</strong> {{$student->getEnglish()}}
-                                                                                    </div>
-                                                                                    <div class="col-md-4"><strong>Alta
-                                                                                            limba:</strong> {{$student->getOtherLanguage()}}
-                                                                                    </div>
-                                                                                    <div class="col-md-4"><strong>MS
-                                                                                            Office:</strong> {{$student->getMsOffice()}}
-                                                                                    </div>
-                                                                                    <div class="col-md-4">
-                                                                                        <strong>Web:</strong> {{$student->getWeb()}}
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-
-                                                                            <div class="well well-sm">
-                                                                                <h3>Cursuri</h3>
-                                                                                @if($student->classStudents->isNotEmpty())
-                                                                                    @foreach($student->classStudents as $classStudent)
-                                                                                        <p>
-                                                                                            <i class="fa fa-angle-double-right"></i>
-                                                                                            @if($classStudent->classes)
-                                                                                                <a href="/class_details/{{$classStudent->getClassId()}}">
-                                                                                                    <strong>{{$classStudent->classes->mainClass->getTitle()}}
-                                                                                                        :
-                                                                                                        {{$classStudent->classes->getTitle()}}</strong></a>
-                                                                                            @endif
-                                                                                        </p>
-                                                                                    @endforeach
-                                                                                @else
-                                                                                    <p>Nu este inregistrat la nici un
-                                                                                        curs.</p>
-                                                                                @endif
-                                                                            </div>
-
-                                                                            <div class="well well-sm">
-                                                                                <h3>Calificative</h4>
-                                                                                    @if($student->feedbacks->isNotEmpty())
-                                                                                        @foreach($student->feedbacks as $feedback)
-                                                                                            <p>
-                                                                                                <i class="fa fa-angle-double-right"></i>
-                                                                                                @if($feedback->class)
-                                                                                                    <a href="/feedback/{{$feedback->getId()}}"
-                                                                                                       target="_blank">{{$feedback->class->mainClass->getTitle()}}
-                                                                                                        : {{$feedback->class->getTitle()}}
-                                                                                                        <i
-                                                                                                                class="fa fa-arrow-circle-right"></i>
-                                                                                                    </a>
-                                                                                                @endif
-                                                                                            </p>
-                                                                                        @endforeach
-                                                                                    @else
-                                                                                        <p>Nu are calificative
-                                                                                            acordate.</p>
-                                                                                @endif
-                                                                            </div>
-                                                                            <div class="well well-sm">
-                                                                                <h3>Notite</h4>
-                                                                                    @if($student->classStudents->isNotEmpty())
-                                                                                        <?php
-                                                                                        $count = 0;
-                                                                                        ?>
-                                                                                        @foreach($student->classStudents as $classStudent)
-                                                                                            @if($classStudent->getNote())
-                                                                                                @if($classStudent->classes)
-                                                                                                    <strong>{{$classStudent->classes->mainClass->getTitle()}}
-                                                                                                        : {{$classStudent->classes->getTitle()}}</strong>
-                                                                                                @endif
-                                                                                                <p>
-                                                                                                    <i class="fa fa-angle-double-right"></i> {{$classStudent->getNote()}}
-                                                                                                </p><br/>
-                                                                                                <?php
-                                                                                                $count++;
-                                                                                                ?>
-                                                                                            @endif
-                                                                                        @endforeach
-                                                                                        @if($count==0)
-                                                                                            <p>Nu are notite.</p>
-                                                                                        @endif
-                                                                                    @else
-                                                                                        <p>Nu are notite.</p>
-                                                                                @endif
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <?php $counter++; ?>
-                                                            </div>
                                                         @endif
                                                     @endforeach
                                                     </tbody>
@@ -455,12 +163,7 @@
                     </div>
                 </div>
                 <div class="col-sm-4">
-                    <div class="ibox ">
-
-                        <div class="ibox-content student-right">
-                            <!-- aici  -->
-                        </div>
-                    </div>
+                    <!-- here -->
                 </div>
             </div>
         </div>
@@ -500,10 +203,23 @@
 </script>
 <script>
     $('.client-link').click(function () {
-        var id = this.id;
-        var rightWidgetHtml =  $("#student_hidden_widget-"+id).html();
-        $(".student-right").html(rightWidgetHtml);
+        var studentId = this.id;
+
+        $.ajax({
+            url:"/students_list/"+studentId,
+            type:'GET',
+            success: function(data){
+                $('.col-sm-4').html(data);
+            }
+        });
     });
+
+    /**
+     *     var id = this.id;
+     var rightWidgetHtml =  $("#student_hidden_widget-".id).html();
+     console.log(rightWidgetHtml);
+     $(".student-right").html(rightWidgetHtml);
+     */
 </script>
 </body>
 </html>
