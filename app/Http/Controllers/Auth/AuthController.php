@@ -30,9 +30,8 @@ class AuthController extends Controller
         auth()->logout();
         $roles = $this->roleRepository->getAllRolesExcept(['admin', 'trainer']);
         $trainerRole = $this->roleRepository->findOneBy(['code' => Role::ROLE_TRAINER]);
-        $studentRole = $this->roleRepository->findOneBy(['code' => Role::ROLE_STUDENT]);
 
-        return view('auth.register')->with(['roles' => $roles, 'roleTrainer' => $trainerRole, 'roleStudent' => $studentRole]);
+        return view('auth.register')->with(['roles' => $roles, 'roleTrainer' => $trainerRole]);
     }
 
     public function getPasswordReset()

@@ -93,7 +93,7 @@ class RegisterService
                     'first_name' => explode(" ", ($user["name"]))[0],
                     'last_name'  => explode(" ", ($user["name"]))[1],
                     'email'      => $user['email'],
-                    'is_active'  => 1
+                    'is_active'  => 1 //de intrebat is active la inreg sau activat prin alte metoda
 
                 ]
             );

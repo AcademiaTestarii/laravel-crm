@@ -20,21 +20,19 @@ class ClassSignupController extends Controller
     private $contentRepository;
 
     public function __construct(
-        Request $request,
         MainClassRepository $mainClassRepository,
         StudentRepository $studentRepository,
         ClassStudentRepository $classStudentRepository,
         ContentRepository $contentRepository
     )
     {
-        $this->request                = $request;
         $this->mainClassRepository    = $mainClassRepository;
         $this->studentRepository      = $studentRepository;
         $this->classStudentRepository = $classStudentRepository;
         $this->contentRepository      = $contentRepository;
     }
 
-    public function classSignup()
+    public function classSignup($classId, Request $request)
 
     {
         $selectedMainClass = null;
