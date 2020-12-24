@@ -11,6 +11,7 @@ class ClassesRepository extends Repository
 
     /**
      * ClassGroupRepository constructor.
+     *
      * @param Classes $classGroup
      */
     public function __construct(Classes $classGroup)
@@ -23,13 +24,17 @@ class ClassesRepository extends Repository
         $model = $this->model;
 
         if (auth()->user()->isTrainerProvider()) {
-            $model = $model->whereHas('mainClass', function($query) {
-                return $query->where('trainer_provider_id', auth()->user()->trainerProvider->getId());
-            });
+            $model = $model->whereHas(
+                'mainClass',
+                function ($query) {
+                    return $query->where('trainer_provider_id', auth()->user()->trainerProvider->getId());
+                }
+            );
         }
 
         return $model->orderBy($column, $order)->get();
     }
+
     public function orderByStartdate(int $mainClassId)
     {
         $classesByStartDate = $this->model::where('main_class_id', $mainClassId)
@@ -40,6 +45,12 @@ class ClassesRepository extends Repository
 
         return $classesByStartDate;
     }
+
+    public function getStudentsValue()
+    {
+        return $this->model->getStudents();
+    }
+
 }
 
 
