@@ -13,4 +13,9 @@ class ClassStudentRepository extends Repository
         $this->model = $classStudent;
     }
 
+    public function count($classId) {
+
+       return  $this->model::where('class_id', $classId)->count();
+    }
+
 }
