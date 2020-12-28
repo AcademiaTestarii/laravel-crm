@@ -35,21 +35,10 @@ class ClassSignupController extends Controller
     public function classSignup($classId, Request $request)
 
     {
-        $selectedMainClass = null;
-        $query             = [];
-        $student           = $this->studentRepository->findByAuthId(Auth::id());
-$signedUpStudent = $student->exists();
-        if ($this->request->get('id')) {
-            $query['main_class_id'] = [
-                'value'    => $this->request->get('id'),
-                'operator' => '=',
-            ];
+        $student         = $this->studentRepository->findByAuthId(Auth::id());
+        $signedUpStudent = $student->exists();
 
-            $selectedMainClass = $this->mainClassRepository->findOneBy(['id' => $this->request->get('id')]);
-
-
-        }
-
+        $selectedMainClass = $this->mainClassRepository->findOneBy(['id' => $this->request->get('id')]);
 
         if ($this->request->get('start')) {
             $query['registration_start_date'] = [
@@ -128,18 +117,19 @@ $signedUpStudent = $student->exists();
             }
         }
 
-        $students                     = $this->studentRepository->allOrderedByActiveAndName();
+        $students = $this->studentRepository->allOrderedByActiveAndName();
 
         $classStudent                 = $this->classStudentRepository->findOneBy(['class_id' => $this->request->get('class'), 'student_id' => $this->request->get('delete')]);
         $signupData['termsOfService'] = $this->contentRepository->getContentData(ContentConstants::TERMS_OF_SERVICE);
-        $mainClass = $this->mainClassRepository->findOneBy(['id' => 1]);
+        $mainClass                    = $this->mainClassRepository->findOneBy(['id' => 1]);
+
         return view('class_signup_form')->with(
             [
                 'selectedMainClass' => $selectedMainClass,
                 'mainClasses'       => $mainClasses,
-                'mainClass'       => $mainClass,
+                'mainClass'         => $mainClass,
                 'students'          => $students,
-                'student'          => $student,
+                'student'           => $student,
                 'classStudent'      => $classStudent,
                 'signedUpStudent'   => $signedUpStudent,
 
