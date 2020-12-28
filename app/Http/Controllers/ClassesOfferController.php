@@ -160,51 +160,15 @@ class ClassesOfferController extends Controller
         );
     }
 
-    public function get(Request $request)
+    public function get($classId, Request $request)
     {
-        $class     = null;
-        $pageTitle = 'Adaugare';
-        $action    = 'add';
-
-        if ($request->get('removeimage')) {
-            $this->classesRepository
-                ->findOneBy(['id' => $request->get('id')])
-                ->update(
-                    [
-                        'image' => null,
-                    ]
-                );
-        }
-
-        if ($request->get('removepdf')) {
-            $this->classesRepository
-                ->findOneBy(['id' => $request->get('id')])
-                ->update(
-                    [
-                        'schedule_pdf' => null,
-                    ]
-                );
-        }
-
-        if ($request->get('id')) {
-            $class     = $this->classesRepository->findOneBy(['id' => $request->get('id')]);
-            $pageTitle = "Modificare";
-            $action    = 'edit';
-        }
-
-        if ($request->get('duplicate')) {
-            $pageTitle = 'Duplicat';
-            $action    = 'duplicate';
-        }
-
+        $class    = $this->classesRepository->findOneBy(['id' => $request->get('id')]);
         $trainers = $this->trainerRepository->allOrderedBy('name');
 
         return view('students.class_offer')->with(
             [
-                'class'     => $class,
-                'pageTitle' => $pageTitle,
-                'trainers'  => $trainers,
-                'action'    => $action,
+                'class'    => $class,
+                'trainers' => $trainers,
             ]
         );
     }
