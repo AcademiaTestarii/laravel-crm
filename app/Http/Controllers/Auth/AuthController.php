@@ -102,6 +102,10 @@ class AuthController extends Controller
             ]);
         }
 
+        if(auth()->user()->isStudent()) {
+            return redirect()->route('student_dashboard');
+        }
+
         auth()->user()->createToken('AcademiaTestarii')->accessToken;
 
         return redirect()->route('dashboard');
