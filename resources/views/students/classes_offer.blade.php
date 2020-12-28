@@ -50,7 +50,8 @@ Scopul? Să îţi dezvolți abilităţile necesare pentru a contribui la livrare
         <link href="{{asset('css/css-plugin-collections.css')}}" rel="stylesheet" />
 
         <!-- CSS | menuzord megamenu skins -->
-        <link id="menuzord-menu-skins" href="{{asset('css/menuzord-skins/menu-academia-testarii.css')}}" rel="stylesheet" />
+        <link id="menuzord-menu-skins" href="{{asset('css/menuzord-skins/menu-academia-testarii.css')}}"
+              rel="stylesheet" />
         <!-- CSS | Main style file -->
         <link href="{{asset('css/style-main.css')}}" rel="stylesheet" type="text/css">
         <!-- CSS | Preloader Styles -->
@@ -154,7 +155,6 @@ Scopul? Să îţi dezvolți abilităţile necesare pentru a contribui la livrare
                     </div>
                 </section>
 
-
                 <!-- Classes -->
                 <section id="blog" class="bg-silver-light">
                     <div class="container">
@@ -170,124 +170,79 @@ Scopul? Să îţi dezvolți abilităţile necesare pentru a contribui la livrare
                         <div class="section-content">
                             <div class="row">
 
-                                @foreach($mainClasses as $mainclass)
+                                @foreach($mainClasses as $mainClass)
                                     <div class="col-md-4 col-sm-6 col-xs-12">
-                                    <article class="post clearfix mb-30">
-                                        <div class="entry-header">
-                                            <div class="post-thumb thumb">
-                                                <img src=/classes/"
-                                                     alt="" class="img-responsive img-fullwidth">
-                                            </div>
-                                            <div class="entry-date media-left text-center flip bg-theme-colored border-top-theme-colored2-3px pt-5 pr-15 pb-5 pl-15">
-                                                @if(!is_null($mainClass->classes->first()))
-                                                    @foreach($mainClass->classes as $class)
-                                                <ul>
-                                                    <li class="font-16 text-white font-weight-600">
-                                                        {{ $class->registration_start_date }}
-                                                    <li>
-                                                </ul>
+                                        <article class="post clearfix mb-30">
+                                            <div class="entry-header">
+                                                <div class="post-thumb thumb">
+                                                    <img src=/classes/"
+                                                         alt="" class="img-responsive img-fullwidth">
+                                                </div>
+                                                <div class="entry-date media-left text-center flip bg-theme-colored border-top-theme-colored2-3px pt-5 pr-15 pb-5 pl-15">
+                                                    @if(!is_null($mainClass->classes->first()))
+                                                        @foreach($mainClass->classes as $class)
+                                                            <ul>
+                                                                <li class="font-16 text-white font-weight-600">
+                                                                {{ $class->registration_start_date }}
+                                                                <li>
+                                                            </ul>
 
-                                            </div>
-                                        </div>
-                                        <div class="entry-content p-20 bg-white">
-                                            <div class="entry-meta media mt-0 mb-10">
-                                                <div class="media-body pl-0">
-                                                    <div class="event-content pull-left flip">
-                                                        <h4 class="entry-title text-white text-uppercase font-weight-600 m-0 mt-5">
-                                                            <a href="{{ route('class_offer') }}"> {{ $class->getTitle() }} </a>
-                                                        </h4>
-
-                                                        <p>{{ $class->short_description }}</p>
-
-                                                        <div class="price">Taxa de înscriere:
-                                                            <del>
-                                                                <span class="amount">{{ $class->price }} Lei</span>
-                                                            </del>
-                                                            <strong><span
-                                                                        class="amount">{{ $class->discount_price }} Lei</span></strong>
-                                                        </div>
-
-
-
-                                                      @if ($class->is_planned == 1)
-                                                        <span class="mb-10 text-gray-darkgray mr-10 font-13"><i
-                                                                    class="fa fa-calendar mr-5 text-theme-colored"></i>Data va fi anunţata ulterior</span>
-                                                        @else
-
-                                                        <span class="mb-0 text-gray-darkgray mr-10 font-13">Următorul curs:
-                                                            <br />
-                                                            @endif
-                                                            <i class="fa fa-calendar mr-5 text-theme-colored"></i>
-                                                            @if ($class->registration_start_date != "0000-00-00")
-                                                            {{ $class->registration_start_date }} - {{ $class->registration_end_date }}
-                                                           @else
-                                                            Data va fi anunţata ulterior
-                                                                @endif
-                                                          </span>
-                                                      <br />
-
-                                                        <span class="mb-10 text-gray-darkgray mr-10 font-13">Locuri disponibile: {{ $available }} </span>
-
-                                                        <?php
-                                                        $datesSql2 = mysqli_query(
-                                                            $link,
-                                                            "SELECT `id` AS `urmatorul`,`weekend` FROM `classes` WHERE `main_class_id`=" . $row_cursuri['main_class_id'] . " AND  `registration_start_date` > NOW() AND `id` != " . $row_cursuri['id'] . " ORDER BY `registration_start_date` ASC LIMIT 1"
-                                                        );
-                                                        if (mysqli_num_rows($datesSql2) > 0) {
-                                                        $datesRow2 = mysqli_fetch_assoc($datesSql2);
-                                                        $datesSql3 = mysqli_query(
-                                                            $link,
-                                                            "SELECT MIN(`date`) AS `start`, MAX(`date`) AS `end` FROM `class_dates` WHERE `class_id`=" . $datesRow2['urmatorul']
-                                                        );
-                                                        $datesRow3 = mysqli_fetch_assoc($datesSql3);
-                                                        ?>
-                                                        <hr class="mb-0" />
-                                                        <span class="mb-10 text-gray-darkgray mr-10 font-13">Cursuri viitoare:
-                                                            <br /><i
-                                                                    class="fa fa-calendar mr-5 text-theme-colored"></i> <?php if ($datesRow3['start'] != "0000-00-00") {
-                                                                echo strftime(
-                                                                         "%e %B",
-                                                                         strtotime($datesRow3['start'])
-                                                                     ) . " - " . strftime(
-                                                                         "%e %B %Y",
-                                                                         strtotime($datesRow3['end'])
-                                                                     );
-                                                                echo ($datesRow2['weekend'] == 1) ? " (in weekend)" : "";
-                                                            } else {
-                                                                echo "Data va fi anunţată ulterior";
-                                                            } ?></span>
-                                                        <?php } else { ?>
-                                                        <hr class="mb-0" />
-                                                        <span class="mb-10 text-gray-darkgray mr-10 font-13">Cursuri viitoare:
-                                                            <br /><i
-                                                                    class="fa fa-calendar mr-5 text-theme-colored"></i> Data va fi anunţată ulterior</span>
-                                                        <?php } ?>
-
-                                                    </div>
                                                 </div>
                                             </div>
-                                        <!--p class="mt-5"><?php if ($row_cursuri['weekend'] == 0) {
-                                            echo "In timpul saptamanii";
-                                        } else {
-                                            echo "In weekend";
-                                        } ?></p-->
-                                            <a class="btn btn-dark btn-theme-colored2"
-                                               href="curs/<?php echo $row_cursuri['main_class_id'] . '/' . strtolower(
-                                                       str_replace(
-                                                           " ",
-                                                           "-",
-                                                           iconv(
-                                                               'utf-8',
-                                                               'ascii//TRANSLIT',
-                                                               $row_cursuri['main_title']
-                                                           )
-                                                       )
-                                                   ) ?>"> Detalii curs</a>
-                                            <a href="https://<?php echo $_SERVER['HTTP_HOST'] ?>/inscriere-curs.php?curs=<?php echo $row_cursuri['id']; ?>"
-                                               class="btn btn-dark btn-theme-colored pull-right">Înscrie-te</a>
-                                        </div>
-                                    </article>
-                                </div>
+                                            <div class="entry-content p-20 bg-white">
+                                                <div class="entry-meta media mt-0 mb-10">
+                                                    <div class="media-body pl-0">
+                                                        <div class="event-content pull-left flip">
+                                                            <h4 class="entry-title text-white text-uppercase font-weight-600 m-0 mt-5">
+                                                                <a href="{{ route('class_offer', $class) }}"> {{ $class->getTitle() }} </a>
+                                                            </h4>
+
+                                                            <p>{{ $class->short_description }}</p>
+
+                                                            <div class="price">Taxa de înscriere:
+                                                                <del>
+                                                                    <span class="amount">{{ $class->price }} Lei</span>
+                                                                </del>
+                                                                <strong><span
+                                                                            class="amount">{{ $class->discount_price }} Lei</span></strong>
+                                                            </div>
+
+                                                            @if ($class->is_planned == 1)
+                                                                <span class="mb-10 text-gray-darkgray mr-10 font-13"><i
+                                                                            class="fa fa-calendar mr-5 text-theme-colored"></i>Data va fi anunţata ulterior</span>
+                                                            @elseif ($class->registration_start_date > \Carbon\Carbon::yesterday())
+
+
+                                                            <span class="mb-0 text-gray-darkgray mr-10 font-13">Următorul curs:
+                                                                    <br />
+
+                                                                    <i class="fa fa-calendar mr-5 text-theme-colored"></i>
+
+                                                                    {{ $class->registration_start_date }} - {{ $class->registration_end_date }}
+                                                                    @endif
+                                                                </span>
+                                                                <br />
+
+                                                                <span class="mb-10 text-gray-darkgray mr-10 font-13">Locuri disponibile: {{ $available }} </span>
+
+                                                                <hr class="mb-0" />
+                                                                <span class="mb-10 text-gray-darkgray mr-10 font-13">Cursuri viitoare:
+                                                                    <br /><i
+                                                                            class="fa fa-calendar mr-5 text-theme-colored"></i>
+                                                                    @if($class->isInWeekend()) (Weekend) @endif
+                                                                </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <a class="btn btn-dark btn-theme-colored2"
+                                                   href="{{ route('class_offer', $class) }}"> Detalii curs</a>
+                                                <a href="{{ route('class_signup', $class) }}"
+                                                   class="btn btn-dark btn-theme-colored pull-right">Înscrie-te</a>
+                                            </div>
+                                        </article>
+                                    </div>
+                                @endforeach
+                                @endif
                                 @endforeach
 
                             </div>
@@ -302,7 +257,7 @@ Scopul? Să îţi dezvolți abilităţile necesare pentru a contribui la livrare
             <!-- Footer -->
             <footer id="footer" class="footer" data-bg-img="images/footer-bg.png" data-bg-color="#020443">
 
-             @include("include.footer.php")
+                @include("include.footer")
             </footer>
             <a class="scrollToTop" href="#"><i class="fa fa-angle-up"></i></a>
         </div>
@@ -330,6 +285,6 @@ Scopul? Să îţi dezvolți abilităţile necesare pentru a contribui la livrare
                 src="{{asset('js/revolution-slider/js/extensions/revolution.extension.slideanims.min.js')}}"></script>
         <script type="text/javascript"
                 src="{{asset('js/revolution-slider/js/extensions/revolution.extension.video.min.js')}}"></script>
-        <?php include("tracking.php");?>
+        @include("include.tracking")
     </body>
 </html>
