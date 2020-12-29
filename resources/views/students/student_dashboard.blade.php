@@ -218,9 +218,9 @@
                                                                                         <strong>Preț curs: </strong>
                                                                                         <span
                                                                                                 class="amount">{{  $active->price }} Lei</span>
+                                                                                        @endif
                                                                                 </p>
 
-                                                                                <!-- TODO de continuat de aici!!!!!-->
                                                                             </div>
                                                                             <div class="col-md-6">
                                                                                @if ($active->resources_description != "")
@@ -238,21 +238,21 @@
                                                                                         <div id="togglea<?php echo $i;?>"
                                                                                              class="panel-collapse collapse">
                                                                                             <div class="panel-body resurs">
-                                                                                                <?php echo $row_curs_activ['resources_description'];?>
+                                                                                               {{ $active->resources_description }}
                                                                                             </div>
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
-                                                                                <?php } ?>
+                                                                               @endif
                                                                             </div>
                                                                             <div class="col-md-12">
-                                                                                <?php if ($row_curs_activ['schedule_pdf'] != "") { ?>
-                                                                                <a href="<?php echo $crmHost; ?>/documents/<?php echo $row_curs_activ['schedule_pdf'];?>"
+                                                                                @if($active->schedule_pdf != "")
+                                                                                <a href="/documents/{{ $active->schedule_pdf }}"
                                                                                    target="_blank"
                                                                                    class="btn btn-gray btn-transparent btn-xs">Programa curs</a>
-                                                                                <?php } ?>
+                                                                                @endif
 
-                                                                                <?php if ($row_curs_activ['requirements_description'] != "") { ?>
+                                                                              @if($active->requirements_description  != "")
                                                                                 | <a href="javascript:void()"
                                                                                      data-toggle="modal"
                                                                                      data-target=".bs-example-modal-lg2"
@@ -281,13 +281,12 @@
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
-                                                                                <?php } ?>
+                                                                               @endif
                                                                             </div>
                                                                         </div>
                                                                         <hr />
-                                                                    <?php $i++;} ?>
                                                                 </div>
-
+<!-- TODO am ramas aici!!!!-->
                                                                 <div class="tab-pane fade" id="inactive">
                                                                     <?php
                                                                     $sql_cursuri_inactive = mysqli_query(
@@ -353,7 +352,7 @@
                                                                         </div>
                                                                         <div class="col-md-12">
                                                                             <?php if ($row_curs_inactiv['pdf_programa'] != "") { ?>
-                                                                            <a href="<?php echo $crmHost; ?>/documents/<?php echo $row_curs_inactiv['pdf_programa'];?>"
+                                                                            <a href="/documents/<?php echo $row_curs_inactiv['pdf_programa'];?>"
                                                                                target="_blank"
                                                                                class="btn btn-gray btn-transparent btn-xs">Programa curs</a>
                                                                             <?php } ?>
@@ -412,14 +411,14 @@
                                                                         </div>
                                                                     </div>
                                                                     <hr />
-                                                                    <?php $j++; } ?>
+
                                                                 </div>
                                                             </div>
                                                             <?php } else { ?>
                                                             <div class="col-md-12 col-xs-12 curs">
                                                                 <h4>Nu te-ai înscris la nici un curs încă.</h4>
                                                             </div>
-                                                            <?php } ?>
+
                                                         </div>
                                                     </div>
                                                 </div>
