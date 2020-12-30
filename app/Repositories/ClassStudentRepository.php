@@ -26,8 +26,21 @@ class ClassStudentRepository extends Repository
         $studentId = $this->model->getId();
 
         return $this->model::join('classes', 'class_id', '=', 'classes.id')
+                           ->select('*')
                            ->where('student_id', $studentId)
                            ->where('registration_end_date', '>=', Carbon::now())
+                           ->orderBy('registration_start_date', 'ASC')
+                           ->get();
+    }
+
+    public function finishedClasses()
+    {
+        $studentId = $this->model->getId();
+
+        return $this->model::join('classes', 'class_id', '=', 'classes.id')
+                           ->select('*')
+                           ->where('student_id', $studentId)
+                           ->where('registration_end_date', '<', Carbon::now())
                            ->orderBy('registration_start_date', 'ASC')
                            ->get();
     }
