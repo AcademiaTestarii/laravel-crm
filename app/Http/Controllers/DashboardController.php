@@ -38,11 +38,13 @@ class DashboardController extends Controller
         $student         = $this->studentRepository->findByAuthId(Auth::id());
 
         $activeClasses = $this->classStudentRepository->activeClasses();
+        $finishedClasses = $this->classStudentRepository->finishedClasses();
         return view('students.student_dashboard')->with(
             [
                 'classes' => $classes,
                 'student' => $student,
-                'activeClasses' => $activeClasses
+                'activeClasses' => $activeClasses,
+                'finishedClasses' => $finishedClasses
             ]
         );
     }
