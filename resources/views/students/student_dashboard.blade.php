@@ -9,7 +9,7 @@
         <meta name="keywords" content="" />
 
         <!-- Page Title -->
-        <title>Academia Testării:: Contul tău</title>
+        <title>{{ auth()->user()->name }}'s dashboard</title>
         <base href="<?php echo $_SERVER['SERVER_NAME'];?>>">
         <!-- Favicons -->
         <link rel="apple-touch-icon" sizes="57x57" href="{{asset('favicon/apple-icon-57x57.png')}}">
@@ -86,8 +86,8 @@
 
             <!-- Header -->
             <header id="header" class="header modern-header modern-header-white">
-                <?php include("include.top.header.php");?>
-                <?php include("include.top.menu.php");?>
+                @include("include.controlpanel")
+                @include("include.mainmenu_students")
             </header>
 
             <!-- Start main-content -->
@@ -145,6 +145,7 @@
 
                                                 @else
                                                     "Astazi"
+                                                @endif
                                             </p>
                                         </dd>
                                     </dl>
@@ -197,228 +198,10 @@
                                                                        data-toggle="tab">Cursuri absolvite</a></li>
                                                             </ul>
                                                             <div id="myTabContent" class="tab-content">
-                                                                <div class="tab-pane fade in active" id="active">
-                                                                    @foreach($activeClasses->classes as $active)
-                                                                        <div class="row">
-                                                                            <div class="col-md-6">
-                                                                                <h4> {{ $active->title }}</h4>
-                                                                                <p>
-                                                                                    <strong>Data înscriere: </strong>
-                                                                                    {{ $active->registration_start_date }}
-                                                                                    <br />
+                                                                @include('students.active_classes')
 
-                                                                                    @if ($active->discount_price != "" && $active->discount_price != 0)
-                                                                                        <strong>Preț curs: </strong>
-                                                                                        <del>
-                                                                                            <span class="amount">{{  $active->price }} Lei</span>
-                                                                                        </del>
-                                                                                        <strong><span
-                                                                                                    class="amount"> {{ $active->discount_price }} Lei</span></strong>
-                                                                                    @else
-                                                                                        <strong>Preț curs: </strong>
-                                                                                        <span
-                                                                                                class="amount">{{  $active->price }} Lei</span>
-                                                                                        @endif
-                                                                                </p>
-
-                                                                            </div>
-                                                                            <div class="col-md-6">
-                                                                               @if ($active->resources_description != "")
-                                                                                <div class="panel-group toggle accordion-theme-colored2 accordion-icon-right">
-                                                                                    <div class="panel panel-default">
-                                                                                        <div class="panel-heading">
-                                                                                            <div class="panel-title"><a
-                                                                                                        class="collapsed"
-                                                                                                        data-toggle="collapse"
-                                                                                                        href="#togglea"
-                                                                                                        class=""><span
-                                                                                                            class="open-sub"></span>Resurse curs</a>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <div id="togglea<?php echo $i;?>"
-                                                                                             class="panel-collapse collapse">
-                                                                                            <div class="panel-body resurs">
-                                                                                               {{ $active->resources_description }}
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                               @endif
-                                                                            </div>
-                                                                            <div class="col-md-12">
-                                                                                @if($active->schedule_pdf != "")
-                                                                                <a href="/documents/{{ $active->schedule_pdf }}"
-                                                                                   target="_blank"
-                                                                                   class="btn btn-gray btn-transparent btn-xs">Programa curs</a>
-                                                                                @endif
-
-                                                                              @if($active->requirements_description  != "")
-                                                                                | <a href="javascript:void()"
-                                                                                     data-toggle="modal"
-                                                                                     data-target=".bs-example-modal-lg2"
-                                                                                     class="btn btn-gray btn-transparent btn-xs">Conditii participare</a>
-                                                                                <div class="modal fade bs-example-modal-lg2"
-                                                                                     tabindex="-1" role="dialog"
-                                                                                     aria-labelledby="myLargeModalLabe2">
-                                                                                    <div class="modal-dialog modal-lg">
-                                                                                        <div class="modal-content">
-                                                                                            <div class="modal-header">
-                                                                                                <button type="button"
-                                                                                                        class="close"
-                                                                                                        data-dismiss="modal"
-                                                                                                        aria-label="Inchide">
-                                                                                                    <span aria-hidden="true">&times;</span>
-                                                                                                </button>
-                                                                                            </div>
-                                                                                            <div class="pl-50 pr-50 pb-50">
-                                                                                                <h2 class="modal-title"
-                                                                                                    id="myModalLabel3">Cerinte minime de participare la cursul:
-                                                                                                    <br /><?php echo $row_curs_activ['main_classes.title'];?>
-                                                                                                </h2>
-                                                                                                <hr />
-                                                                                                <?php echo $row_curs_activ['requirements_description'];?>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                               @endif
-                                                                            </div>
-                                                                        </div>
-                                                                        <hr />
-                                                                </div>
-<!-- TODO am ramas aici!!!!-->
-                                                                <div class="tab-pane fade" id="inactive">
-                                                                    <?php
-                                                                    $sql_cursuri_inactive = mysqli_query(
-                                                                    $link,
-                                                                    "SELECT * FROM `class_students` LEFT JOIN `classes` ON `class_students`.`class_id`=`classes`.`id` LEFT JOIN `main_classes` ON `classes`.`main_class_id`=`main_classes`.`id` WHERE `class_students`.`student_id`=" . $row['id'] . " AND `registration_end_date`< NOW() ORDER BY `registration_start_date` ASC"
-                                                                    );
-                                                                    $j = 0;
-                                                                    while ($row_curs_inactiv = mysqli_fetch_assoc(
-                                                                    $sql_cursuri_inactive
-                                                                    )) {
-                                                                    $datesSqlinactiv = mysqli_query(
-                                                                    $link,
-                                                                    "SELECT MIN(`date`) AS `start2`, MAX(`date`) AS `end2` FROM `class_dates` WHERE `class_id`=" . $row_curs_inactiv['class_id']
-                                                                    );
-                                                                    $datesRowinactiv = mysqli_fetch_assoc(
-                                                                    $datesSqlinactiv
-                                                                    );
-                                                                    ?>
-
-                                                                    <div class="row">
-                                                                        <div class="col-md-6">
-                                                                            <h4><?php echo $row_curs_inactiv['main_classes.title'];?></h4>
-                                                                            <p>
-                                                                                <strong>Data înscriere: </strong> <?php echo strftime(
-                                                                                "%e %B %Y la %H:%M:%S",
-                                                                                strtotime(
-                                                                                $row_curs_inactiv['registration_start_date']
-                                                                                )
-                                                                                );?><br />
-                                                                                <strong>Cursul începe pe: </strong> <?php echo strftime(
-                                                                                "%e %B %Y",
-                                                                                strtotime(
-                                                                                $datesRowinactiv['start2']
-                                                                                )
-                                                                                );?><br />
-                                                                                <strong>Preț curs: </strong> <?php echo number_format(
-                                                                                $row_curs_inactiv['price']
-                                                                                );?> Lei
-                                                                            </p>
-                                                                        </div>
-                                                                        <div class="col-md-6">
-                                                                            <?php if ($row_curs_inactiv['resources_description'] != "") { ?>
-                                                                            <div class="panel-group toggle accordion-theme-colored2 accordion-icon-right">
-                                                                                <div class="panel panel-default">
-                                                                                    <div class="panel-heading">
-                                                                                        <div class="panel-title"><a
-                                                                                                    class="collapsed"
-                                                                                                    data-toggle="collapse"
-                                                                                                    href="#toggle<?php echo $j;?>"
-                                                                                                    class=""><span
-                                                                                                        class="open-sub"></span>Resurse curs</a>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div id="toggle<?php echo $j;?>"
-                                                                                         class="panel-collapse collapse">
-                                                                                        <div class="panel-body resurs">
-                                                                                            <?php echo $row_curs_inactiv['resources_description'];?>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <?php } ?>
-                                                                        </div>
-                                                                        <div class="col-md-12">
-                                                                            <?php if ($row_curs_inactiv['pdf_programa'] != "") { ?>
-                                                                            <a href="/documents/<?php echo $row_curs_inactiv['pdf_programa'];?>"
-                                                                               target="_blank"
-                                                                               class="btn btn-gray btn-transparent btn-xs">Programa curs</a>
-                                                                            <?php } ?>
-
-                                                                            <?php if ($row_curs_inactiv['schedule_pdf'] != "") { ?>
-                                                                            | <a href="javascript:void()"
-                                                                                 data-toggle="modal"
-                                                                                 data-target=".bs-example-modal-lg2"
-                                                                                 class="btn btn-gray btn-transparent btn-xs">Conditii participare</a>
-                                                                            <div class="modal fade bs-example-modal-lg2"
-                                                                                 tabindex="-1" role="dialog"
-                                                                                 aria-labelledby="myLargeModalLabe2">
-                                                                                <div class="modal-dialog modal-lg">
-                                                                                    <div class="modal-content">
-                                                                                        <div class="modal-header">
-                                                                                            <button type="button"
-                                                                                                    class="close"
-                                                                                                    data-dismiss="modal"
-                                                                                                    aria-label="Inchide">
-                                                                                                <span aria-hidden="true">&times;</span>
-                                                                                            </button>
-                                                                                        </div>
-                                                                                        <div class="pl-50 pr-50 pb-50">
-                                                                                            <h2 class="modal-title"
-                                                                                                id="myModalLabel3">Cerinte minime de participare la cursul:
-                                                                                                <br /><?php echo $row_curs_inactiv['main_classes.title'];?>
-                                                                                            </h2>
-                                                                                            <hr />
-                                                                                            <?php echo $row_curs_inactiv['requirements_description'];?>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <?php } ?>
-
-                                                                            <?php
-                                                                            $sql_feedback = "SELECT * FROM `feedback` WHERE `student_id`=" . $row['id'];
-                                                                            $query_feedback = mysqli_query(
-                                                                            $link,
-                                                                            $sql_feedback
-                                                                            );
-                                                                            if (mysqli_num_rows($query_feedback) > 0) {
-                                                                            $row_feedback = mysqli_fetch_array(
-                                                                            $query_feedback
-                                                                            );
-                                                                            ?>
-                                                                            |
-                                                                            <a href="feedback.php?id=<?php echo $row_feedback['link'];?>"
-                                                                               target="_blank"
-                                                                               class="btn btn-gray btn-transparent btn-xs">Feedback curs</a>
-                                                                            |
-                                                                            <a href="certificat.php?id=<?php echo $row_feedback['link'];?>"
-                                                                               target="_blank"
-                                                                               class="btn btn-gray btn-transparent btn-xs">Certificat de ablosvire curs</a>
-                                                                            <?php } ?>
-                                                                        </div>
-                                                                    </div>
-                                                                    <hr />
-
-                                                                </div>
+                                                                @include('students.finished_classes')
                                                             </div>
-                                                            <?php } else { ?>
-                                                            <div class="col-md-12 col-xs-12 curs">
-                                                                <h4>Nu te-ai înscris la nici un curs încă.</h4>
-                                                            </div>
-
                                                         </div>
                                                     </div>
                                                 </div>
@@ -434,6 +217,8 @@
                                                         </a>
                                                     </h6>
                                                 </div>
+                                                <!-- TODO am ramas aici!!!! -->
+
                                                 <div id="sectiuneaDate" class="panel-collapse collapse" role="tabpanel"
                                                      aria-labelledby="headingDate" aria-expanded="false">
                                                     <div class="panel-body">
@@ -750,11 +535,7 @@
 
             <!-- Footer -->
             <footer id="footer" class="footer" data-bg-img="images/footer-bg.png" data-bg-color="#020443">
-
-                <?php include("include.footer.php");?>
-
-                <?php include("include.subfooter.php");?>
-
+                @include('include.footer')
             </footer>
             <a class="scrollToTop" href="#"><i class="fa fa-angle-up"></i></a>
         </div>
@@ -790,7 +571,6 @@
                 $('sectiuneaCursuri' + '.sectiunea').collapse('hide');
             });
         </script>
-        <?php include("tracking.php");?>
+
     </body>
 </html>
-<? } else {header("Location:index.php");}?>
