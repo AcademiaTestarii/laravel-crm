@@ -50,7 +50,6 @@ class Student extends Model
         if (is_null($this->getAttribute('registration_date'))) {
             return null;
         }
-
         return (new Carbon($this->getAttribute('registration_date')));
     }
 

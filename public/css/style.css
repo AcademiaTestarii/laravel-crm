@@ -10237,3 +10237,7 @@ tr.group:hover {
 .row-padding {
     padding-bottom: 65px;
 }
+
+.student_hidden_widget {
+    display: none;
+}

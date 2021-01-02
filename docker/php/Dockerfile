@@ -37,8 +37,10 @@ RUN chown -R www-data:www-data \
   /var/www/storage \
   /var/www/bootstrap/cache \
   && chown -R www-data /var/www/public \
+  && chmod -R 777 public/documents/ \
+  && chmod -R 777 public/trainers/ \
   &&  chmod -R 777 public/ \
   &&  chmod -R 777 storage/
 
 RUN php artisan optimize
-
+RUN php artisan passport:keys

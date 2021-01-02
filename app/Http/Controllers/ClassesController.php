@@ -79,16 +79,16 @@ class ClassesController extends Controller
             $status = $request->get('status');
 
             if ($status == 2) {
-                $query['registration_start_date'] = [
-                    'value' => (new  Carbon())->format("Y-m-d"),
-                    'operator' => '<'
+                $query['is_active'] = [
+                    'value' => 1,
+                    'operator' => '='
                 ];
             }
 
             if ($status == 3) {
-                $query['registration_start_date'] = [
-                    'value' => (new  Carbon())->format("Y-m-d"),
-                    'operator' => '>'
+                $query['is_active'] = [
+                    'value' => 0,
+                    'operator' => '='
                 ];
             }
         }
@@ -125,15 +125,13 @@ class ClassesController extends Controller
                     $status = $request->get('status');
 
                     if ($status == 2) {
-                        if ($class->getRegistrationStartDate()->format("Y-m-d") < (new  Carbon())->format("Y-m-d")
-                        ) {
+                        if (!$class->isActive()) {
                             $mainClass->classes->forget($key);
                         }
                     }
 
                     if ($status == 3) {
-                        if ($class->getRegistrationStartDate()->format("Y-m-d") > (new  Carbon())->format("Y-m-d")
-                        ) {
+                        if ($class->isActive()) {
                             $mainClass->classes->forget($key);
                         }
                     }
@@ -294,8 +292,8 @@ class ClassesController extends Controller
                 'score' => $request->get('grade'),
                 'class_id' => $request->get('class'),
                 'student_id' => $request->get('student'),
-                'organization_jira_zephyr_plus' => $request->get('organization_jira_zephyr_plus'),
-                'organization_jira_zephyr_minus' => $request->get('organization_jira_zephyr_minus'),
+                'organizare_jira_zephyr_plus' => $request->get('organization_jira_zephyr_plus'),
+                'organizare_jira_zephyr_minus' => $request->get('organization_jira_zephyr_minus'),
                 'test_cases_plus' => $request->get('test_cases_plus'),
                 'test_cases_minus' => $request->get('test_cases_minus'),
                 'defects_plus' => $request->get('defects_plus'),
