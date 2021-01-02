@@ -99,6 +99,7 @@
                                                             <tr>
                                                                 <td><a data-toggle="tab"
                                                                        href="#contact-{{$activeStudent->getId()}}"
+                                                                       id="{{$activeStudent->getId()}}"
                                                                        class="client-link">{{$activeStudent->getLastName()}} {{$activeStudent->getFirstName()}}</a>
                                                                 </td>
                                                                 <td>
@@ -137,6 +138,7 @@
                                                             <tr>
                                                                 <td><a data-toggle="tab"
                                                                        href="#contact-{{$inactiveStudent->getId()}}"
+                                                                       id="{{$inactiveStudent->getId()}}"
                                                                        class="client-link">{{$inactiveStudent->getLastName()}} {{$inactiveStudent->getFirstName()}}</a>
                                                                 </td>
                                                                 <td>
@@ -256,7 +258,7 @@
                                                 </div>
 
                                                 <div class="well well-sm">
-                                                    <h3>Calificative</h3>
+                                                    <h3>Calificative</h4>
                                                         @if($student->feedbacks->isNotEmpty())
                                                             @foreach($student->feedbacks as $feedback)
                                                                 <p><i class="fa fa-angle-double-right"></i>
@@ -274,7 +276,7 @@
                                                     @endif
                                                 </div>
                                                 <div class="well well-sm">
-                                                    <h3>Notite</h3>
+                                                    <h3>Notite</h4>
                                                         @if($student->classStudents->isNotEmpty())
                                                             <?php
                                                             $count = 0;
@@ -344,6 +346,26 @@
     $('.ajax-popup-link').magnificPopup({
         type: 'ajax'
     });
+</script>
+<script>
+    $('.client-link').click(function () {
+        var studentId = this.id;
+
+        $.ajax({
+            url:"/students_list/"+studentId,
+            type:'GET',
+            success: function(data){
+                $('.col-sm-4').html(data);
+            }
+        });
+    });
+
+    /**
+     *     var id = this.id;
+     var rightWidgetHtml =  $("#student_hidden_widget-".id).html();
+     console.log(rightWidgetHtml);
+     $(".student-right").html(rightWidgetHtml);
+     */
 </script>
 </body>
 </html>

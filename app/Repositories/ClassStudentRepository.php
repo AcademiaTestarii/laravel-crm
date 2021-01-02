@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\ClassStudent;
+use Carbon\Carbon;
 
 class ClassStudentRepository extends Repository
 {
@@ -13,11 +14,35 @@ class ClassStudentRepository extends Repository
         $this->model = $classStudent;
     }
 
-
-    public function getClassStudentData(int $studentId, int $classId)
+    public function count($classId)
     {
-        $student = $this->model::where('student_id', $studentId)->where('class_id', $classId)->first();
+        $classId = $this->model->getClassId();
 
-        return $student;
+        return $this->model::where('class_id', $classId)->count();
     }
+
+    public function activeClasses()
+    {
+        $studentId = $this->model->getId();
+
+        return $this->model::join('classes', 'class_id', '=', 'classes.id')
+                           ->select('*')
+                           ->where('student_id', $studentId)
+                           ->where('registration_end_date', '>=', Carbon::now())
+                           ->orderBy('registration_start_date', 'ASC')
+                           ->get();
+    }
+
+    public function finishedClasses()
+    {
+        $studentId = $this->model->getId();
+
+        return $this->model::join('classes', 'class_id', '=', 'classes.id')
+                           ->select('*')
+                           ->where('student_id', $studentId)
+                           ->where('registration_end_date', '<', Carbon::now())
+                           ->orderBy('registration_start_date', 'ASC')
+                           ->get();
+    }
+
 }

@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Feedback participare
         pentru {{$feedback->student->getLastName()}} {{$feedback->student->getFirstName()}}</title>
-    <base href="https://www.academiatestarii.ro">
+    <base href="<?php echo $_SERVER['HTTP_HOST'];?>">
     <!-- Favicons -->
     <link rel="apple-touch-icon" sizes="57x57" href="favicon/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="favicon/apple-icon-60x60.png">
@@ -84,7 +84,7 @@
                     <div class="panel-heading">
                         <div class="row">
                             <div class="col-md-4">
-                                <img src="images/logo-academia-testarii.png" alt="Logo AT"/>
+                                <img src="<?php echo $_SERVER['HTTP_HOST'];?>/images/logo-academia-testarii.png" alt="Logo AT"/>
                             </div>
                             <div class="col-md-8 text-center text-feedback">
                                 <strong>Feedback curs:</strong> {{$feedback->class->mainClass->getTitle()}}<br/>

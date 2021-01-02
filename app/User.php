@@ -19,13 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'remember_token',
-        'is_active',
-        'hash',
-        'email_verified_at'
+        'name', 'email', 'password', 'remember_token', 'is_active', 'hash', 'email_verified_at'
     ];
 
     /**
@@ -34,8 +28,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password',
-        'remember_token',
+        'password', 'remember_token',
     ];
 
     /**
@@ -121,7 +114,16 @@ class User extends Authenticatable
         return false;
     }
 
+    public function isTrainer(): bool
+    {
+        foreach ($this->roles()->get() as $role) {
+            if ($role->getCode() == Role::ROLE_TRAINER) {
+                return true;
+            }
+        }
 
+        return false;
+    }
     public function isStudent(): bool
     {
         foreach ($this->roles()->get() as $role) {
@@ -133,15 +135,6 @@ class User extends Authenticatable
         return false;
     }
 
-
-    public function isTrainer(): bool
-    {
-        foreach ($this->roles()->get() as $role) {
-            if ($role->getCode() == Role::ROLE_TRAINER) {
-                return true;
-            }
-        }
-
-        return false;
-    }
 }
+
+

@@ -20,14 +20,12 @@ class Ability
 
         if (!($user->roles->isEmpty())
             && in_array($permission, $user->permissions())
-            && 'trainer-provider' == $user->roles->toArray()[0]['code']
+            && ( 'trainer-provider'  == $user->roles->toArray()[0]['code'] || 'student'  == $user->roles->toArray()[0]['code'])
+
         ) {
             return $next($request);
         }
 
-        if (!is_null($user)) {
-            return redirect()->route('blank-dashboard');
-        }
 
         return redirect()->route('login');
     }

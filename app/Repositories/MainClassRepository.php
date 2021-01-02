@@ -17,19 +17,6 @@ class MainClassRepository extends Repository
         $this->model = $mainClass;
     }
 
-    public function getOrdered()
-    {
-        $mainClasses = $this->model::where('is_active', 1)->orderBy('order', 'asc')->get();
-
-        return $mainClasses;
-    }
-
-    public function getById(int $mainClassId)
-    {
-        $mainClass = $this->model::with('classes')->findOrFail($mainClassId);
-
-        return $mainClass;
-    }
     /**
      * @param string $column
      * @param string $order
@@ -114,4 +101,7 @@ class MainClassRepository extends Repository
 
         return $model->get();
     }
+
 }
+
+

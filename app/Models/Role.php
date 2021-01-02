@@ -79,12 +79,12 @@ class Role extends Model
         return $this->getAttribute('code');
     }
 
-    public function isStudent(): bool
-    {
-        if ($this->getAttribute('code') == self::ROLE_STUDENT) {
-            return true;
-        }
-
-        return false;
-    }
+//    public function isStudent(): bool
+//    {
+//        if ($this->getAttribute('code') == self::ROLE_STUDENT) {
+//            return true;
+//        }
+//
+//        return false;
+//    }
 }
