@@ -87,9 +87,10 @@ Route::middleware('auth:api')->group(function () {
 });
 //STUDENTS
 Route::get('student_dashboard', 'DashboardController@studentDashboard')->name('student_dashboard');
-Route::get('classes_offer', 'ClassesOfferController@index')->name('classes_offer');
-Route::get('classes_offer/{classId}', 'ClassesOfferController@get')->name('class_offer');
-Route::any('classes_offer/{classId}/class_signup', 'ClassSignupController@classSignup')->name('class_signup');
+Route::get('catalog', 'CatalogController@index')->name('catalog');
+Route::get('catalog/{classId}', 'CatalogController@get')->name('class_description');
+Route::any('catalog/{classId}/class_signup', 'CatalogController@classSignup')->name('class_signup');
+
 Route::get('account', function() {
     return '';
 });
