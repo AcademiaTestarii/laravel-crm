@@ -10,7 +10,7 @@
 
         <!-- Page Title -->
         <title>{{ auth()->user()->name }}'s dashboard</title>
-        <base href="<?php echo $_SERVER['SERVER_NAME'];?>>">
+
         <!-- Favicons -->
         <link rel="apple-touch-icon" sizes="57x57" href="{{asset('favicon/apple-icon-57x57.png')}}">
         <link rel="apple-touch-icon" sizes="60x60" href="{{asset('favicon/apple-icon-60x60.png')}}">
@@ -198,9 +198,9 @@
                                                                        data-toggle="tab">Cursuri absolvite</a></li>
                                                             </ul>
                                                             <div id="myTabContent" class="tab-content">
-                                                                @include('students.active_classes')
+                                                                @include('students.classes_active')
 
-                                                                @include('students.finished_classes')
+                                                                @include('students.classes_finished')
                                                             </div>
                                                         </div>
                                                     </div>
