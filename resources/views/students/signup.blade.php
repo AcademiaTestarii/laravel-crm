@@ -168,9 +168,13 @@
 
                                 <div class="col-md-6">
                                     <label for="class_id" class="col-md-4 control-label">Modulul dorit</label>
-{{--<select><option value="{{$class->getId()}}">{{ $class->registration_start_date }} - {{ $class->registration_end_date }}</option></select>--}}
-                                   <input id="class_id" type="text" class="form-control" name="class_id"
-                                           value="{{ $class->registration_start_date }} - {{ $class->registration_end_date }}" readonly>
+                                    @if($signedUp)
+                                        <input id="{{ $class->getId() }}" type="text" class="form-control" name="class_id"
+                                               value="Esti deja inscris la acest curs" readonly>
+                                    @else
+                                   <input id="{{ $class->getId() }}" type="text" class="form-control" name="class_id"
+                                           value="{{ $class->getTitle() }} - {{ $class->getRegistrationStartDate()->toDateString() }} - {{ $class->getRegistrationEndDate()->toDateString() }}" readonly>
+                                        @endif
                                 </div>
 
                                 <div class="form-check">
@@ -223,9 +227,15 @@
 
                             <div class="form-group">
                                 <div class="col-md-8 col-md-offset-4">
-                                    <button type="submit" class="btn btn-primary">
-                                        Inscrie-te la curs
-                                    </button>
+                                    @if($signedUp)
+                                    <a href="/catalog" class="btn btn-primary">
+                                        Inapoi la catalog
+                                    </a>
+                                        @else
+                                        <button type="submit" class="btn btn-primary">
+                                            Inscrie-te la curs
+                                        </button>
+                                        @endif
                                 </div>
                             </div>
                         </form>
