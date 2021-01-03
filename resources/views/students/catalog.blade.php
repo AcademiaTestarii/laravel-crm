@@ -1,290 +1,177 @@
 <!DOCTYPE html>
-<html dir="ltr" lang="ro">
-    <head>
-        <!-- Page Title -->
-        <title>Academia Testării :: Cursuri</title>
-        <!-- Meta Tags -->
-        <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-        <meta name="description" content="Academia Testării:: Cursuri" />
-        <meta name="keywords" content="" />
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>Academia Testarii CRM | Catalog cursuri</title>
 
-        <!-- Favicons -->
-        <link rel="apple-touch-icon" sizes="57x57" href="{{asset('favicon/apple-icon-57x57.png')}}">
-        <link rel="apple-touch-icon" sizes="60x60" href="{{asset('favicon/apple-icon-60x60.png')}}">
-        <link rel="apple-touch-icon" sizes="72x72" href="{{asset('favicon/apple-icon-72x72.png')}}">
-        <link rel="apple-touch-icon" sizes="76x76" href="{{asset('favicon/apple-icon-76x76.png')}}">
-        <link rel="apple-touch-icon" sizes="114x114" href="{{asset('favicon/apple-icon-114x114.png')}}">
-        <link rel="apple-touch-icon" sizes="120x120" href="{{asset('favicon/apple-icon-120x120.png')}}">
-        <link rel="apple-touch-icon" sizes="144x144" href="{{asset('favicon/apple-icon-144x144.png')}}">
-        <link rel="apple-touch-icon" sizes="152x152" href="{{asset('favicon/apple-icon-152x152.png')}}">
-        <link rel="apple-touch-icon" sizes="180x180" href="{{asset('favicon/apple-icon-180x180.png')}}">
-        <link rel="icon" type="image/png" sizes="192x192" href="{{asset('favicon/android-icon-192x192.png')}}">
-        <link rel="icon" type="image/png" sizes="32x32" href="{{asset('favicon/favicon-32x32.png')}}">
-        <link rel="icon" type="image/png" sizes="96x96" href="{{asset('favicon/favicon-96x96.png')}}">
-        <link rel="icon" type="image/png" sizes="16x16" href="{{asset('favicon/favicon-16x16.png')}}">
-        <link rel="manifest" href="favicon/manifest.json">
-        <meta name="msapplication-TileColor" content="#ffffff">
-        <meta name="msapplication-TileImage" content="favicon/ms-icon-144x144.png">
-        <meta name="theme-color" content="#ffffff">
+    <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{asset('font-awesome/css/font-awesome.css')}}" rel="stylesheet">
 
-        <!-- Open Graph data -->
-        <meta property="og:title" content="Academia Testării :: Cursuri" />
-        <meta property="og:author" content="@academiatestarii" />
-        <meta property="og:type" content="website" />
-        <meta property="og:url" content="/cursuri.php" />
-        <meta property="og:image:alt"
-              content="Cursuri de iniţiere şi specializare în Software Testing, consultanţă şi resourcing." />
-        <meta property="og:image" content="/images/cursuri-og.jpg" />
-        <meta property="og:image:width" content="1195" />
-        <meta property="og:image:height" content="963" />
-        <meta property="og:image:type" content="image/jpeg" />
-        <meta property="og:description" content="Oferim knowledge transfer în Software Testing. Te învăţăm teoria, practica şi cum se lucrează în echipă.
-Scopul? Să îţi dezvolți abilităţile necesare pentru a contribui la livrarea unui produs software de primă clasă." />
-        <meta property="og:site_name" content="Academia Testării" />
+    <!-- Toastr style -->
+    <link href="{{asset('css/plugins/toastr/toastr.min.css')}}" rel="stylesheet">
+    <link href="{{asset('css/plugins/summernote/summernote.css')}}" rel="stylesheet">
+    <link href="{{asset('css/plugins/summernote/summernote-bs3.css')}}" rel="stylesheet">
+    <link href="{{asset('css/plugins/jQueryUI/jquery-ui.css')}}" rel="stylesheet">
+    <link href="{{asset('js/plugins/Multiple-Dates-Picker-for-jQuery-UI-latest/jquery-ui.multidatespicker.css')}}"
+          rel="stylesheet">
+    <link href="{{asset('css/plugins/daterangepicker/daterangepicker-bs3.css')}}" rel="stylesheet">
+    <link href="{{asset('css/plugins/select2/select2.min.css')}}" rel="stylesheet">
 
-        <!-- Stylesheet -->
-        <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet" type="text/css">
-        <link href="{{asset('css/jquery-ui.min.css')}}" rel="stylesheet" type="text/css">
-        <link href="{{asset('css/animate.css')}}" rel="stylesheet" type="text/css">
-        <link href="{{asset('css/css-plugin-collections.css')}}" rel="stylesheet" />
+    <link href="{{asset('css/animate.css')}}" rel="stylesheet">
+    <link href="{{asset('css/style.css')}}" rel="stylesheet">
+    <link href="{{asset('css/plugins/iCheck/custom.css')}}" rel="stylesheet">
+</head>
+<body>
 
-        <!-- CSS | menuzord megamenu skins -->
-        <link id="menuzord-menu-skins" href="{{asset('css/menuzord-skins/menu-academia-testarii.css')}}"
-              rel="stylesheet" />
-        <!-- CSS | Main style file -->
-        <link href="{{asset('css/style-main.css')}}" rel="stylesheet" type="text/css">
-        <!-- CSS | Preloader Styles -->
-        <link href="{{asset('css/preloader.css')}}" rel="stylesheet" type="text/css">
-        <!-- CSS | Custom Margin Padding Collection -->
-        <link href="{{asset('css/custom-bootstrap-margin-padding.css')}}" rel="stylesheet" type="text/css">
-        <!-- CSS | Responsive media queries -->
-        <link href="{{asset('css/responsive.css')}}" rel="stylesheet" type="text/css">
-        <!-- Academia Testarii CSS | Style css -->
-        <link href="{{asset('css/style.css')}}" rel="stylesheet" type="text/css">
-        <!-- Revolution Slider 5.x CSS settings -->
-        <link href="{{asset('js/revolution-slider/css/settings.css')}}" rel="stylesheet" type="text/css" />
-        <link href="{{asset('js/revolution-slider/css/layers.css')}}" rel="stylesheet" type="text/css" />
-        <link href="{{asset('js/revolution-slider/css/navigation.css')}}" rel="stylesheet" type="text/css" />
-        <!-- CSS | Academia Testarii -->
-        <link href="{{asset('css/colors/academia-testarii.css')}}" rel="stylesheet" type="text/css">
-        <!-- external javascripts -->
-        <script src="{{asset('js/jquery-2.2.4.min.js')}}"></script>
-        <script src="{{asset('js/jquery-ui.min.js')}}"></script>
-        <script src="{{asset('js/bootstrap.min.js')}}"></script>
-        <!-- JS | jquery plugin collection -->
-        <script src="{{asset('js/jquery-plugin-collection.js')}}"></script>
-        <!-- Revolution Slider 5.x SCRIPTS -->
-        <script src="{{asset('js/revolution-slider/js/jquery.themepunch.tools.min.js')}}"></script>
-        <script src="{{asset('js/revolution-slider/js/jquery.themepunch.revolution.min.js')}}"></script>
-        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-        <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-        <![endif]-->
-        <script type='application/ld+json'>{"@context":"https://schema.org","@type":"Organization","url":"/","sameAs":["https://www.facebook.com/academiatestarii/","https://www.linkedin.com/company/18151104/"],"@id":"/#organization","name":"Academia Testarii","logo":"/images/logo-academia-testarii.png"}</script>
-
-        <!-- Facebook Pixel Code -->
-        <script>
-            !function (f, b, e, v, n, t, s) {
-                if ( f.fbq ) {
-                    return;
-                }
-                n = f.fbq = function () {
-                    n.callMethod ?
-                        n.callMethod.apply(n, arguments) : n.queue.push(arguments)
-                };
-                if ( !f._fbq ) {
-                    f._fbq = n;
-                }
-                n.push    = n;
-                n.loaded  = !0;
-                n.version = '2.0';
-                n.queue   = [];
-                t         = b.createElement(e);
-                t.async   = !0;
-                t.src     = v;
-                s         = b.getElementsByTagName(e)[ 0 ];
-                s.parentNode.insertBefore(t, s)
-            }(window, document, 'script',
-              'https://connect.facebook.net/en_US/fbevents.js');
-            fbq('init', '347879355772596');
-            fbq('track', 'PageView');
-        </script>
-        <noscript>
-            <img height="1" width="1"
-                 src="https://www.facebook.com/tr?id=347879355772596&ev=PageView
-&noscript=1" />
-        </noscript>
-        <!-- End Facebook Pixel Code -->
-    </head>
-    <body class="" id="up">
-        <div id="wrapper" class="clearfix">
-            <!-- preloader -->
-            <div id="preloader">
-                <div id="spinner">
-                    <div class="preloader-orbit-loading">
-                        <div class="cssload-loading"><i></i><i></i><i></i><i></i></div>
+<div id="wrapper">
+    <nav class="navbar-default navbar-static-side" role="navigation">
+        <div class="sidebar-collapse">
+            <ul class="nav metismenu" id="side-menu">
+                <li class="nav-header">
+                    @include('include/user')
+                    <div class="logo-element">
+                        AT+
                     </div>
+                </li>
+                @include('include/mainmenu2')
+            </ul>
+        </div>
+    </nav>
+
+    <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom">
+            <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+                <div class="navbar-header">
+                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i>
+                    </a>
                 </div>
-                <!--  <div id="disable-preloader" class="btn btn-default btn-sm">Treci peste preloader</div>-->
+                @include('include/controlpanel')
+            </nav>
+        </div>
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-8">
+                <h2>Catalog</h2>
+                <ol class="breadcrumb">
+                    <li><a href="/dashboard">Home</a></li>
+                    <li class="active"><a href="/catalog"><strong>Catalog</strong></a></li>
+                </ol>
             </div>
+        </div>
 
-            <!-- Header -->
-            <header id="header" class="header modern-header modern-header-white">
-                @include("include.controlpanel")
-                @include("include.mainmenu_students")
-            </header>
+        <!-- Main content -->
+        <section class="wrapper wrapper-content">
 
-            <!-- Start main-content -->
-            <div class="main-content cursuri">
+            <div class="ibox float-e-margins">
+                <div class="row">
+                    @foreach($classes as $class)
+                        <div class="col-md-4 col-sm-6 col-xs-12">
+                            <article class="post clearfix mb-30">
+                                <div class="entry-header">
+                                    <div class="post-thumb thumb">
+                                        <img src="{{$class->getImage()}}"
+                                             alt="" class="img-responsive img-fullwidth">
+                                    </div>
+                                    <div class="entry-date media-left text-center flip bg-theme-colored border-top-theme-colored2-3px pt-5 pr-15 pb-5 pl-15">
+                                        <ul>
+                                            <li class="font-16 text-white font-weight-600">
+                                            {{ $class->getRegistrationStartDate()->formatLocalized("%e %B, %Y")}}
+                                            <li>
+                                        </ul>
 
-                <!-- Section: inner-header -->
-                <section class="inner-header divider parallax layer-overlay overlay-dark-5"
-                         data-bg-img="images/Picture2.jpg">
-                    <div class="container pt-70 pb-20">
-                        <!-- Section Content -->
-                        <div class="section-content">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <h2 class="title text-white">Cursuri pentru tine</h2>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                                <div class="entry-content p-20 bg-white">
+                                    <div class="entry-meta media mt-0 mb-10">
+                                        <div class="media-body pl-0">
+                                            <div class="event-content pull-left flip">
+                                                <h4 class="entry-title text-white text-uppercase font-weight-600 m-0 mt-5">
+                                                    <a href="{{ route('class_description', $class) }}"> {{ $class->getTitle() }} </a>
+                                                </h4>
 
-                <!-- Classes -->
-                <section id="blog" class="bg-silver-light">
-                    <div class="container">
-                        <div class="section-title text-center titlu">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <h2 class="line-bottom-double-line-centered mt-0">Programă <span
-                                                class="text-theme-colored2">cursuri</span></h2>
-                                    <p>Cursurile noastre sunt livrate în două variante: în timpul săptămânii şi în weekend.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="section-content">
-                            <div class="row">
+                                                <p>{{ $class->getShortDescription() }}</p>
 
-                                @foreach($mainClasses as $mainClass)
-                                    <div class="col-md-4 col-sm-6 col-xs-12">
-                                        <article class="post clearfix mb-30">
-                                            <div class="entry-header">
-                                                <div class="post-thumb thumb">
-                                                    <img src=/classes/"
-                                                         alt="" class="img-responsive img-fullwidth">
+                                                <div class="price">Taxa de înscriere:
+                                                    <del>
+                                                        <span class="amount">{{$class->getPrice()}} Lei</span>
+                                                    </del>
+                                                    <strong><span
+                                                                class="amount">{{ $class->getDiscountPrice() }} Lei</span></strong>
                                                 </div>
-                                                <div class="entry-date media-left text-center flip bg-theme-colored border-top-theme-colored2-3px pt-5 pr-15 pb-5 pl-15">
-                                                    @if(!is_null($mainClass->classes->first()))
-                                                        @foreach($mainClass->classes as $class)
-                                                            <ul>
-                                                                <li class="font-16 text-white font-weight-600">
-                                                                {{ $class->registration_start_date }}
-                                                                <li>
-                                                            </ul>
 
-                                                </div>
-                                            </div>
-                                            <div class="entry-content p-20 bg-white">
-                                                <div class="entry-meta media mt-0 mb-10">
-                                                    <div class="media-body pl-0">
-                                                        <div class="event-content pull-left flip">
-                                                            <h4 class="entry-title text-white text-uppercase font-weight-600 m-0 mt-5">
-                                                                <a href="{{ route('class_description', $class) }}"> {{ $class->getTitle() }} </a>
-                                                            </h4>
-
-                                                            <p>{{ $class->short_description }}</p>
-
-                                                            <div class="price">Taxa de înscriere:
-                                                                <del>
-                                                                    <span class="amount">{{ $class->price }} Lei</span>
-                                                                </del>
-                                                                <strong><span
-                                                                            class="amount">{{ $class->discount_price }} Lei</span></strong>
-                                                            </div>
-
-                                                            @if ($class->is_planned == 1)
-                                                                <span class="mb-10 text-gray-darkgray mr-10 font-13"><i
-                                                                            class="fa fa-calendar mr-5 text-theme-colored"></i>Data va fi anunţata ulterior</span>
-                                                            @elseif ($class->registration_start_date > \Carbon\Carbon::yesterday())
+                                                @if ($class->isPlanned())
+                                                    <span class="mb-10 text-gray-darkgray mr-10 font-13"><i
+                                                                class="fa fa-calendar mr-5 text-theme-colored"></i>Data va fi anunţata ulterior</span>
+                                                @elseif ($class->getRegistrationStartDate() > \Carbon\Carbon::yesterday())
 
 
-                                                            <span class="mb-0 text-gray-darkgray mr-10 font-13">Următorul curs:
-                                                                    <br />
+                                                    <span class="mb-0 text-gray-darkgray mr-10 font-13">Următorul curs:
+                                                                    <br/>
 
                                                                     <i class="fa fa-calendar mr-5 text-theme-colored"></i>
 
-                                                                    {{ $class->registration_start_date }} - {{ $class->registration_end_date }}
-                                                                    @endif
+                                                                    {{ $class->getRegistrationStartDate() }} - {{ $class->getRegistrationEndDate() }}
+                                                        @endif
                                                                 </span>
-                                                                <br />
+                                                    <br/>
 
-                                                                <span class="mb-10 text-gray-darkgray mr-10 font-13">Locuri disponibile: {{ $available }} </span>
+                                                    <span class="mb-10 text-gray-darkgray mr-10 font-13">Locuri disponibile: {{ $available }} </span>
 
-                                                                <hr class="mb-0" />
-                                                                <span class="mb-10 text-gray-darkgray mr-10 font-13">Cursuri viitoare:
-                                                                    <br /><i
-                                                                            class="fa fa-calendar mr-5 text-theme-colored"></i>
+                                                    <hr class="mb-0"/>
+                                                    <span class="mb-10 text-gray-darkgray mr-10 font-13">Cursuri viitoare:
+                                                                    <br/><i
+                                                                class="fa fa-calendar mr-5 text-theme-colored"></i>
                                                                     @if($class->isInWeekend()) (Weekend) @endif
                                                                 </span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <a class="btn btn-dark btn-theme-colored2"
-                                                   href="{{ route('class_description', $class) }}"> Detalii curs</a>
-                                                <a href="{{ route('class_signup', $class) }}"
-                                                   class="btn btn-dark btn-theme-colored pull-right">Înscrie-te</a>
                                             </div>
-                                        </article>
+                                        </div>
                                     </div>
-                                @endforeach
-                                @endif
-                                @endforeach
-
-                            </div>
+                                    <a class="btn btn-dark btn-theme-colored2"
+                                       href="{{ route('class_description', $class) }}"> Detalii curs</a>
+                                    <a href="{{ route('class_signup', $class) }}"
+                                       class="btn btn-dark btn-theme-colored pull-right">Înscrie-te</a>
+                                </div>
+                            </article>
                         </div>
-                    </div>
-                </section>
-                <!-- Classes -->
-
-                <!-- end main-content -->
+                    @endforeach
+                </div>
             </div>
+        </section>
+        <!-- /.content -->
 
-            <!-- Footer -->
-            <footer id="footer" class="footer" data-bg-img="images/footer-bg.png" data-bg-color="#020443">
-
-                @include("include.footer")
-            </footer>
-            <a class="scrollToTop" href="#"><i class="fa fa-angle-up"></i></a>
+        <div class="footer">
+            @include('include/footer')
         </div>
-        <!-- end wrapper -->
+    </div>
+</div>
 
-        <!-- Footer Scripts -->
-        <!-- JS | Custom script for all pages -->
-        <script src="{{asset('js/custom.js')}}"></script>
+<!-- Mainly scripts -->
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+<script src="{{asset('js/bootstrap.min.js')}}"></script>
+<script src="{{asset('js/plugins/metisMenu/jquery.metisMenu.js')}}"></script>
+<script src="{{asset('js/plugins/slimscroll/jquery.slimscroll.min.js')}}"></script>
+<!-- Date range use moment.js same as full calendar plugin -->
+<script src="{{asset('js/plugins/fullcalendar/moment.min.js')}}"></script>
+<!-- Date range picker -->
+<script src="{{asset('js/plugins/daterangepicker/daterangepicker.js')}}"></script>
 
-        <script type="text/javascript"
-                src="{{asset('js/revolution-slider/js/extensions/revolution.extension.actions.min.js')}}"></script>
-        <script type="text/javascript"
-                src="{{asset('js/revolution-slider/js/extensions/revolution.extension.carousel.min.js')}}"></script>
-        <script type="text/javascript"
-                src="{{asset('js/revolution-slider/js/extensions/revolution.extension.kenburn.min.js')}}"></script>
-        <script type="text/javascript"
-                src="{{asset('js/revolution-slider/js/extensions/revolution.extension.layeranimation.min.js')}}"></script>
-        <script type="text/javascript"
-                src="{{asset('js/revolution-slider/js/extensions/revolution.extension.migration.min.js')}}"></script>
-        <script type="text/javascript"
-                src="{{asset('js/revolution-slider/js/extensions/revolution.extension.navigation.min.js')}}"></script>
-        <script type="text/javascript"
-                src="{{asset('js/revolution-slider/js/extensions/revolution.extension.parallax.min.js')}}"></script>
-        <script type="text/javascript"
-                src="{{asset('js/revolution-slider/js/extensions/revolution.extension.slideanims.min.js')}}"></script>
-        <script type="text/javascript"
-                src="{{asset('js/revolution-slider/js/extensions/revolution.extension.video.min.js')}}"></script>
-        @include("include.tracking")
-    </body>
+<!-- Custom and plugin javascript -->
+<script src="{{asset('js/inspinia.js')}}"></script>
+<script src="{{asset('js/plugins/pace/pace.min.js')}}"></script>
+<!-- Select2 -->
+<script src="{{asset('js/plugins/select2/select2.full.min.js')}}"></script>
+
+<!-- Multiple-dates -->
+<script src="{{asset('js/plugins/Multiple-Dates-Picker-for-jQuery-UI-latest/jquery-ui.multidatespicker.js')}}"></script>
+<!-- Jquery Validate -->
+<script src="{{asset('js/plugins/validate/jquery.validate.min.js')}}"></script>
+<!-- iCheck -->
+<script src="{{asset('js/plugins/iCheck/icheck.min.js')}}"></script>
+
+<script src="{{asset('js/plugins/ckeditor/ckeditor.js')}}"></script>
+
+<!-- CK Editor 4 -->
+</body>
 </html>

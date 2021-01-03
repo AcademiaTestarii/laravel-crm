@@ -79,10 +79,6 @@ Route::middleware('auth:api')->group(function () {
         Route::post('blog/{id}/uploadImage', 'BlogController@uploadImage');
 
         Route::get('search', 'SearchController@index');
-
-
-
-
     });
 
 });

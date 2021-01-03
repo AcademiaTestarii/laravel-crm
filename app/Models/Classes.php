@@ -206,6 +206,15 @@ class Classes extends Model
         return false;
     }
 
+    public function isPlanned()
+    {
+        if ($this->getAttribute('is_planned') == 1) {
+            return true;
+        };
+
+        return false;
+    }
+
     public function isActive()
     {
         if ($this->getAttribute('is_active') == 1) {

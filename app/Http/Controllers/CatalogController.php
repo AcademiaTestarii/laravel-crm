@@ -60,91 +60,14 @@ class CatalogController extends Controller
      */
     public function index(Request $request)
     {
-        $selectedMainClass = null;
-        $filterMainClasses = $mainClasses = $this->mainClassRepository->allOrderedBy('order');
-
+        $classes = $this->classesRepository->allOrderedBy();
         $signedUpCount = $this->classStudentRepository->count($request->get('id'));
         $classStudents = $this->classesRepository->getStudentsValue();
         $available = $classStudents - $signedUpCount;
 
-        $query = [];
-
-
-        if ($request->get('id')) {
-            $query['main_class_id'] = [
-                'value' => $request->get('id'),
-                'operator' => '=',
-            ];
-        }
-
-        if ($request->get('start')) {
-            $query['registration_start_date'] = [
-                'value' => (new  Carbon($request->get('start')))->format("Y-m-d"),
-                'operator' => '>=',
-            ];
-        }
-
-        if ($request->get('end')) {
-            $query['registration_end_date'] = [
-                'value' => (new Carbon($request->get('end')))->format("Y-m-d"),
-                'operator' => '<=',
-            ];
-        }
-
-
-        if ($request->get('id')) {
-            $selectedMainClass = $this->mainClassRepository->findOneBy(['id' => $request->get('id')]);
-        }
-
-        $mainClasses = $this->mainClassRepository->findAllWithRelationsBy('classes', $query);
-
-        foreach ($mainClasses as $mainClass) {
-            foreach ($mainClass->classes as $key => $class) {
-                if ($request->get('id')) {
-                    if ($class->getMainClassId() != $request->get('id')) {
-                        $mainClass->classes->forget($key);
-                    }
-                }
-
-                if ($request->get('start')) {
-                    if ($class->getRegistrationStartDate()->format("Y-m-d") <= (new  Carbon($request->get('start')))->format("Y-m-d")
-                    ) {
-                        $mainClass->classes->forget($key);
-                    }
-                }
-
-                if ($request->get('end')) {
-                    if ($class->getRegistrationEndDate()->format("Y-m-d") >= (new  Carbon($request->get('end')))->format("Y-m-d")
-                    ) {
-                        $mainClass->classes->forget($key);
-                    }
-                }
-
-                if ($request->get('status')) {
-                    $status = $request->get('status');
-
-                    if ($status == 2) {
-                        if ($class->getRegistrationStartDate()->format("Y-m-d") < (new  Carbon())->format("Y-m-d")
-                        ) {
-                            $mainClass->classes->forget($key);
-                        }
-                    }
-
-                    if ($status == 3) {
-                        if ($class->getRegistrationStartDate()->format("Y-m-d") > (new  Carbon())->format("Y-m-d")
-                        ) {
-                            $mainClass->classes->forget($key);
-                        }
-                    }
-                }
-            }
-        }
-
         return view('students.catalog')->with(
             [
-                'selectedMainClass' => $selectedMainClass,
-                'filterMainClasses' => $filterMainClasses,
-                'mainClasses' => $mainClasses,
+                'classes' => $classes,
                 'available' => $available,
             ]
         );
