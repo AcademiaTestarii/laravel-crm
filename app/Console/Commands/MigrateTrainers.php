@@ -74,7 +74,8 @@ class MigrateTrainers extends Command
                 'name' => $this->userName,
                 'email' => $this->userEmail,
                 'password' => bcrypt(md5($this->userPassword)),
-                'remember_token' => null
+                'remember_token' => null,
+                'is_active' => 1
             ]);
 
             $fileName = $this->generateFile($newUser->email);

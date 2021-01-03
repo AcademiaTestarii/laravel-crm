@@ -167,6 +167,14 @@ class Classes extends Model
         return (new Carbon($this->getAttribute('registration_end_date')));
     }
 
+    public function getWeekdaysSchedule() {
+        return $this->getAttribute('weekdays_schedule');
+    }
+
+    public function getWeekendSchedule() {
+        return $this->getAttribute('weekend_schedule');
+    }
+
     public function getBugdet()
     {
         return number_format($this->getAttribute('students') * $this->getAttribute('price'));
