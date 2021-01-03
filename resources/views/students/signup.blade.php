@@ -6,20 +6,16 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Te rugăm să completezi acest formular pentru a te înscrie la cursurile organizate de Academia Testării:</div>
                     <div class="panel-body">
-                        @php  $signedUp = true;
 
-                        @endphp
-                        <form class="form-horizontal" role="form"
-
-
-        @if($signedUp)
-            method= 'PUT'
-        @else method = 'POST'
-                              @endif
+                        <form class="form-horizontal" role="form" method="POST"
                               action="/catalog/student/class_signup">
-@csrf
-                            <input type=‘hidden’ value = {{ $class->getId() }} name='classId'>
-                            <input type=‘hidden’ value = {{ $student->getId() }} name='studentId'>
+                            @csrf
+
+                            @if($signedUp)
+                            <input name="_method" type="hidden" value="PUT">
+                            @endif
+                            <input type="hidden" value ="{{$class->getId() }}" name='classId'>
+                            <input type="hidden" value ="{{$student->getId()}}" name='studentId'>
 
                             <div class="form-group">
                                 <label for="last_name" class="col-md-4 control-label">Nume *</label>
@@ -172,8 +168,8 @@
 
                                 <div class="col-md-6">
                                     <label for="class_id" class="col-md-4 control-label">Modulul dorit</label>
-
-                                    <input id="class_id" type="text" class="form-control" name="class_id"
+{{--<select><option value="{{$class->getId()}}">{{ $class->registration_start_date }} - {{ $class->registration_end_date }}</option></select>--}}
+                                   <input id="class_id" type="text" class="form-control" name="class_id"
                                            value="{{ $class->registration_start_date }} - {{ $class->registration_end_date }}" readonly>
                                 </div>
 

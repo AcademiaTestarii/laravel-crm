@@ -15,20 +15,20 @@ class ClassStudentRepository extends Repository
         $this->model = $classStudent;
     }
 
-    public function count($classId)
+    public function count()
     {
         $classId = $this->model->getClassId();
 
         return $this->model::where('class_id', $classId)->count();
     }
 
-    public function signedUp()
+ /*   public function signedUp()
     {
         $classId = $this->model->getClassId();
         $studentId =$this->model->getStudentId();
 
-        return $this->model::where('class_id', $classId)->where('student_id', $studentId);
-    }
+        return $this->model::where('class_id', $classId)->where('student_id', $studentId)->first();
+    }*/
 
     public function activeClasses()
     {
