@@ -14,7 +14,8 @@
     <link href="{{asset('css/plugins/summernote/summernote.css')}}" rel="stylesheet">
     <link href="{{asset('css/plugins/summernote/summernote-bs3.css')}}" rel="stylesheet">
     <link href="{{asset('css/plugins/jQueryUI/jquery-ui.css')}}" rel="stylesheet">
-    <link href="{{asset('js/plugins/Multiple-Dates-Picker-for-jQuery-UI-latest/jquery-ui.multidatespicker.css')}}" rel="stylesheet">
+    <link href="{{asset('js/plugins/Multiple-Dates-Picker-for-jQuery-UI-latest/jquery-ui.multidatespicker.css')}}"
+          rel="stylesheet">
     <link href="{{asset('css/plugins/daterangepicker/daterangepicker-bs3.css')}}" rel="stylesheet">
     <link href="{{asset('css/plugins/select2/select2.min.css')}}" rel="stylesheet">
 
@@ -94,7 +95,7 @@
                             <label class="col-sm-2 control-label">Titlu curs:<br/><small>Apare in meniu, in casete,
                                     etc</small></label>
                             <div class="col-sm-4"><input @if($class && $class->mainClass) disabled @endif
-                                                         value="@if($class && $class->mainClass) {!! $class->mainClass->getTitle() !!} @endif"
+                                value="@if($class && $class->mainClass) {!! $class->mainClass->getTitle() !!} @endif"
                                                          name="title_main" type="text" class="form-control" required>
                             </div>
                             <label class="col-sm-2 control-label">Suplimentar:<br/><small>Iterare, nu apare pe
@@ -325,6 +326,20 @@
                             <div class="col-sm-10">
                                 <input type="text" name="deploymentCourse" id="desfasurarecurs" class="form-control"
                                        value="@if($class) {{$class->getDeployment()}} @endif">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Program weekdays:</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="weekdays_schedule" class="form-control"
+                                       value="@if($class){{$class->getWeekdaysSchedule()}}@endif">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Program weekend:</label>
+                            <div class="col-sm-10">
+                                <input type="text" name="weekend_schedule" class="form-control"
+                                       value="@if($class){{$class->getWeekendSchedule()}}@endif">
                             </div>
                         </div>
 

@@ -72,7 +72,8 @@ class MigrateStudents extends Command
                 'name' => $this->userName,
                 'email' => $this->userEmail,
                 'password' => bcrypt($this->userPassword),
-                'remember_token' => null
+                'remember_token' => null,
+                'is_active' => 1
             ]);
 
             $newUser->roleUser()->create(['role_id' => $role->id]);
