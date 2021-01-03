@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Classes;
+use App\Models\ClassStudent;
+use App\Models\Student;
 use App\Repositories\ClassesRepository;
 use App\Repositories\ClassStudentRepository;
 use App\Repositories\FeedbackRepository;
@@ -13,7 +16,6 @@ use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
-use App\Constants\ContentConstants;
 use App\Repositories\ContentRepository;
 use App\Repositories\StudentRepository;
 use Illuminate\Support\Facades\Auth;
@@ -68,11 +70,6 @@ class CatalogController extends Controller
 
         $query = [];
 
-        if ($request->get('delete')) {
-            $this->classesRepository
-                ->findOneBy(['id' => $request->get('delete')])
-                ->delete();
-        }
 
         if ($request->get('id')) {
             $query['main_class_id'] = [
@@ -95,23 +92,6 @@ class CatalogController extends Controller
             ];
         }
 
-        if ($request->get('status')) {
-            $status = $request->get('status');
-
-            if ($status == 2) {
-                $query['registration_start_date'] = [
-                    'value'    => (new  Carbon())->format("Y-m-d"),
-                    'operator' => '<',
-                ];
-            }
-
-            if ($status == 3) {
-                $query['registration_start_date'] = [
-                    'value'    => (new  Carbon())->format("Y-m-d"),
-                    'operator' => '>',
-                ];
-            }
-        }
 
         if ($request->get('id')) {
             $selectedMainClass = $this->mainClassRepository->findOneBy(['id' => $request->get('id')]);
@@ -161,7 +141,7 @@ class CatalogController extends Controller
             }
         }
 
-        return view('students.classes_offer')->with(
+        return view('students.catalog')->with(
             [
                 'selectedMainClass' => $selectedMainClass,
                 'filterMainClasses' => $filterMainClasses,
@@ -171,12 +151,14 @@ class CatalogController extends Controller
         );
     }
 
-    public function get($classId, Request $request)
+    public function get($classId)
+
     {
-        $class    = $this->classesRepository->findOneBy(['id' => $request->get('id')]);
+
+        $class    = Classes::findOrFail($classId);
         $trainers = $this->trainerRepository->allOrderedBy('name');
 
-        return view('students.class_offer')->with(
+        return view('students.class_description')->with(
             [
                 'class'    => $class,
                 'trainers' => $trainers,
@@ -184,109 +166,58 @@ class CatalogController extends Controller
         );
     }
 
-    public function classSignup($classId, Request $request)
+
+    public function classSignup($id)
 
     {
-        $student         = $this->studentRepository->findByAuthId(Auth::id());
-        $signedUpStudent = $student->exists();
+        $student = $this->studentRepository->findByAuthId(Auth::id());
+        $class   = Classes::findOrFail($id);
 
-        $selectedMainClass = $this->mainClassRepository->findOneBy(['id' => $this->request->get('id')]);
-
-        if ($this->request->get('start')) {
-            $query['registration_start_date'] = [
-                'value'    => (new  Carbon($this->request->get('start')))->format("Y-m-d"),
-                'operator' => '>=',
-            ];
-        }
-
-        if ($this->request->get('end')) {
-            $query['registration_end_date'] = [
-                'value'    => (new Carbon($this->request->get('end')))->format("Y-m-d"),
-                'operator' => '<=',
-            ];
-        }
-
-        if ($this->request->get('status')) {
-            $status = $this->request->get('status');
-
-            if ($status == 2) {
-                $query['registration_start_date'] = [
-                    'value'    => (new  Carbon())->format("Y-m-d"),
-                    'operator' => '<',
-                ];
-            }
-
-            if ($status == 3) {
-                $query['registration_start_date'] = [
-                    'value'    => (new  Carbon())->format("Y-m-d"),
-                    'operator' => '>',
-                ];
-            }
-        }
-
-
-        $mainClasses = $this->mainClassRepository->findAllWithRelationsBy('classes', $query);
-
-        foreach ($mainClasses as $mainClass) {
-            foreach ($mainClass->classes as $key => $class) {
-                if ($this->request->get('id')) {
-                    if ($class->getMainClassId() != $this->request->get('id')) {
-                        $mainClass->classes->forget($key);
-                    }
-                }
-
-                if ($this->request->get('start')) {
-                    if ($class->getRegistrationStartDate()->format("Y-m-d") <= (new  Carbon($this->request->get('start')))->format("Y-m-d")
-                    ) {
-                        $mainClass->classes->forget($key);
-                    }
-                }
-
-                if ($this->request->get('end')) {
-                    if ($class->getRegistrationEndDate()->format("Y-m-d") >= (new  Carbon($this->request->get('end')))->format("Y-m-d")
-                    ) {
-                        $mainClass->classes->forget($key);
-                    }
-                }
-
-                if ($this->request->get('status')) {
-                    $status = $this->request->get('status');
-
-                    if ($status == 2) {
-                        if ($class->getRegistrationStartDate()->format("Y-m-d") < (new  Carbon())->format("Y-m-d")
-                        ) {
-                            $mainClass->classes->forget($key);
-                        }
-                    }
-
-                    if ($status == 3) {
-                        if ($class->getRegistrationStartDate()->format("Y-m-d") > (new  Carbon())->format("Y-m-d")
-                        ) {
-                            $mainClass->classes->forget($key);
-                        }
-                    }
-                }
-            }
-        }
-
-        $students = $this->studentRepository->allOrderedByActiveAndName();
-
-        $classStudent                 = $this->classStudentRepository->findOneBy(['class_id' => $this->request->get('class'), 'student_id' => $this->request->get('delete')]);
-        $signupData['termsOfService'] = $this->contentRepository->getContentData(ContentConstants::TERMS_OF_SERVICE);
-        $mainClass                    = $this->mainClassRepository->findOneBy(['id' => 1]);
-
-        return view('class_signup_form')->with(
+        return view('students.signup')->with(
             [
-                'selectedMainClass' => $selectedMainClass,
-                'mainClasses'       => $mainClasses,
-                'mainClass'         => $mainClass,
-                'students'          => $students,
-                'student'           => $student,
-                'classStudent'      => $classStudent,
-                'signedUpStudent'   => $signedUpStudent,
-
+                'class'   => $class,
+                'student' => $student,
             ]
         );
+    }
+
+    public function updateAndCreate($id, Request $request)
+    {
+        $student                 = $this->studentRepository->findByAuthId(Auth::id());
+        $class = Classes::findOrFail($id);
+
+        $student->first_name     = request('first_name');
+        $student->last_name      = request('last_name');
+        $student->email          = request('email');
+        $student->date_of_birth  = request('date_of_birth');
+        $student->address        = request('address');
+        $student->city           = request('city');
+        $student->county         = request('county');
+        $student->job_title      = request('job_title');
+        $student->phone          = request('phone');
+        $student->education      = request('education');
+        $student->english        = request('english');
+        $student->other_language = request('other_language');
+        $student->ms_office      = request('ms_office');
+        $student->web            = request('web');
+
+        $student->update();
+
+        $classStudent             = new ClassStudent();
+
+        $classStudent->student_id = $student->id;
+        $classStudent->class_id   = $class->id;
+        $classStudent->payment_method   = request('payment_method');
+        $classStudent->payment_type   = request('payment_type');
+        $classStudent->payment1   = request('payment1');
+        $classStudent->payment2   = request('payment2');
+        $classStudent->payment_full   = request('payment_full');
+
+
+        $classStudent->save();
+
+
+        return redirect('/student_dashboard');
     }
 
 }

@@ -194,7 +194,7 @@ Scopul? Să îţi dezvolți abilităţile necesare pentru a contribui la livrare
                                                     <div class="media-body pl-0">
                                                         <div class="event-content pull-left flip">
                                                             <h4 class="entry-title text-white text-uppercase font-weight-600 m-0 mt-5">
-                                                                <a href="{{ route('class_offer', $class) }}"> {{ $class->getTitle() }} </a>
+                                                                <a href="{{ route('class_description', $class) }}"> {{ $class->getTitle() }} </a>
                                                             </h4>
 
                                                             <p>{{ $class->short_description }}</p>
@@ -235,7 +235,7 @@ Scopul? Să îţi dezvolți abilităţile necesare pentru a contribui la livrare
                                                     </div>
                                                 </div>
                                                 <a class="btn btn-dark btn-theme-colored2"
-                                                   href="{{ route('class_offer', $class) }}"> Detalii curs</a>
+                                                   href="{{ route('class_description', $class) }}"> Detalii curs</a>
                                                 <a href="{{ route('class_signup', $class) }}"
                                                    class="btn btn-dark btn-theme-colored pull-right">Înscrie-te</a>
                                             </div>

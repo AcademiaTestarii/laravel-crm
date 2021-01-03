@@ -50,6 +50,7 @@ class MainClassRepository extends Repository
             $model = $model->where('trainer_provider_id', auth()->user()->trainerProvider->getId());
         }
 
+
         if (!empty($orderBy)) {
             $model = $model->orderBy($orderBy['column'], $orderBy['direction']);
         }
