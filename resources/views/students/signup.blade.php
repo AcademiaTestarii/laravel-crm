@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
     <div class="container">
         <div class="row">
@@ -7,9 +6,20 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Te rugăm să completezi acest formular pentru a te înscrie la cursurile organizate de Academia Testării:</div>
                     <div class="panel-body">
-                        <form class="form-horizontal" role="form" method="POST" action="/catalog/{{ $class->id }}/class_signup">
-                            @csrf
+                        @php  $signedUp = true;
 
+                        @endphp
+                        <form class="form-horizontal" role="form"
+
+
+        @if($signedUp)
+            method= 'PUT'
+        @else method = 'POST'
+                              @endif
+                              action="/catalog/student/class_signup">
+@csrf
+                            <input type=‘hidden’ value = {{ $class->getId() }} name='classId'>
+                            <input type=‘hidden’ value = {{ $student->getId() }} name='studentId'>
 
                             <div class="form-group">
                                 <label for="last_name" class="col-md-4 control-label">Nume *</label>

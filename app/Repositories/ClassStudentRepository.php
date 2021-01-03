@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\ClassStudent;
+use App\Repositories\StudentRepository;
 use Carbon\Carbon;
 
 class ClassStudentRepository extends Repository
@@ -19,6 +20,14 @@ class ClassStudentRepository extends Repository
         $classId = $this->model->getClassId();
 
         return $this->model::where('class_id', $classId)->count();
+    }
+
+    public function signedUp()
+    {
+        $classId = $this->model->getClassId();
+        $studentId =$this->model->getStudentId();
+
+        return $this->model::where('class_id', $classId)->where('student_id', $studentId);
     }
 
     public function activeClasses()
