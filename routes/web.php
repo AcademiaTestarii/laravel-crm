@@ -90,7 +90,7 @@ Route::middleware('auth:api')->group(function () {
 Route::get('student_dashboard', 'DashboardController@studentDashboard')->name('student_dashboard');
 Route::get('catalog', 'CatalogController@index')->name('catalog');
 Route::get('catalog/{classId}', 'CatalogController@get')->name('class_description');
-Route::get('catalog/{classId}/class_signup', 'CatalogController@classSignup')->name('class_signup');
+Route::any('catalog/{classId}/class_signup', 'CatalogController@classSignup')->name('class_signup');
 //Route::any('catalog/{classId}/class_signup', 'CatalogController@updateAndCreate')->name('update_and_create');
 
 

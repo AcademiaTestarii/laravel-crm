@@ -26,7 +26,7 @@
                                            value="{{ $student->first_name }}" autofocus  required>
                                 </div>
 
-                                <label for="email" class="col-md-4 control-label">Email</label>
+                                <label for="email" class="col-md-4 control-label">Email *</label>
 
                                 <div class="col-md-6">
                                     <input id="email" type="email" class="form-control" name="email"

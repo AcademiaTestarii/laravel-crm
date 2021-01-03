@@ -151,6 +151,50 @@ class CatalogController extends Controller
         );
     }
 
+    public function store(Request $request)
+    {
+        $student = $this->studentRepository->findByAuthId(Auth::id());
+
+        $student->first_name     = request('first_name');
+        $student->last_name      = request('last_name');
+        $student->email          = request('email');
+        $student->date_of_birth  = request('date_of_birth');
+        $student->address        = request('address');
+        $student->city           = request('city');
+        $student->county         = request('county');
+        $student->job_title      = request('job_title');
+        $student->phone          = request('phone');
+        $student->education      = request('education');
+        $student->english        = request('english');
+        $student->other_language = request('other_language');
+        $student->ms_office      = request('ms_office');
+        $student->web            = request('web');
+
+        $validatedData = $request->validate(
+            [
+
+                'first_name'     => 'required',
+                'last_name'      => 'nullable',
+                'email'          => 'required|email',
+                'date_of_birth'  => 'required|date',
+                'address'        => 'required',
+                'city'           => 'required',
+                'county'         => 'required',
+                'job_title'      => 'nullable',
+                'phone'          => 'required|min:10',
+                'education'      => 'nullable',
+                'english'        => 'nullable',
+                'other_language' => 'nullable',
+                'ms_office'      => 'nullable',
+                'web'            => 'nullable',
+            ]
+        );
+
+        $student->save();
+
+        return redirect('/student_dashboard');
+    }
+
     public function get($classId)
 
     {
@@ -183,8 +227,8 @@ class CatalogController extends Controller
 
     public function updateAndCreate($id, Request $request)
     {
-        $student                 = $this->studentRepository->findByAuthId(Auth::id());
-        $class = Classes::findOrFail($id);
+        $student = $this->studentRepository->findByAuthId(Auth::id());
+        $class   = Classes::findOrFail($id);
 
         $student->first_name     = request('first_name');
         $student->last_name      = request('last_name');
@@ -203,14 +247,14 @@ class CatalogController extends Controller
 
         $student->update();
 
-        $classStudent             = new ClassStudent();
+        $classStudent = new ClassStudent();
 
-        $classStudent->student_id = $student->id;
-        $classStudent->class_id   = $class->id;
-        $classStudent->payment_method   = request('payment_method');
+        $classStudent->student_id     = $student->id;
+        $classStudent->class_id       = $class->id;
+        $classStudent->payment_method = request('payment_method');
         $classStudent->payment_type   = request('payment_type');
-        $classStudent->payment1   = request('payment1');
-        $classStudent->payment2   = request('payment2');
+        $classStudent->payment1       = request('payment1');
+        $classStudent->payment2       = request('payment2');
         $classStudent->payment_full   = request('payment_full');
 
 
