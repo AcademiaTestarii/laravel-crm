@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Classes;
-use App\Models\ClassStudent;
+use App\Models\MainClass;
 use App\Models\Student;
 use App\Repositories\ClassesRepository;
 use App\Repositories\ClassStudentRepository;
@@ -11,7 +11,6 @@ use App\Repositories\FeedbackRepository;
 use App\Repositories\MainClassRepository;
 use App\Repositories\TrainerRepository;
 use App\Services\ClassService;
-use Carbon\Carbon;
 use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
@@ -41,15 +40,16 @@ class CatalogController extends Controller
         FeedbackRepository $feedbackRepository,
         StudentRepository $studentRepository,
         ContentRepository $contentRepository
-    ) {
-        $this->classesRepository = $classGroupRepository;
-        $this->mainClassRepository = $mainClassRepository;
-        $this->trainerRepository = $trainerRepository;
-        $this->classService = $classService;
+    )
+    {
+        $this->classesRepository      = $classGroupRepository;
+        $this->mainClassRepository    = $mainClassRepository;
+        $this->trainerRepository      = $trainerRepository;
+        $this->classService           = $classService;
         $this->classStudentRepository = $classStudentRepository;
-        $this->feedbackRepository = $feedbackRepository;
-        $this->studentRepository = $studentRepository;
-        $this->contentRepository = $contentRepository;
+        $this->feedbackRepository     = $feedbackRepository;
+        $this->studentRepository      = $studentRepository;
+        $this->contentRepository      = $contentRepository;
     }
 
     /**
@@ -60,14 +60,14 @@ class CatalogController extends Controller
      */
     public function index(Request $request)
     {
-        $classes = $this->classesRepository->allOrderedBy();
+        $classes       = $this->classesRepository->allOrderedBy();
         $signedUpCount = $this->classStudentRepository->count($request->get('id'));
         $classStudents = $this->classesRepository->getStudentsValue();
-        $available = $classStudents - $signedUpCount;
+        $available     = $classStudents - $signedUpCount;
 
         return view('students.catalog')->with(
             [
-                'classes' => $classes,
+                'classes'   => $classes,
                 'available' => $available,
             ]
         );
@@ -76,94 +76,92 @@ class CatalogController extends Controller
     public function get($classId)
     {
 
-        $class = Classes::findOrFail($classId);
+        $mainClass    = MainClass::findOrFail($classId);
         $trainers = $this->trainerRepository->allOrderedBy('name');
 
         return view('students.class_description')->with(
             [
-                'class' => $class,
+                'mainClass'    => $mainClass,
                 'trainers' => $trainers,
             ]
         );
     }
 
 
-    public function getData($classId, Request $request)
+    public function getData($mainClLassId)
     {
-        $student = $this->studentRepository->findByAuthId(Auth::id());
-        $class = $this->classesRepository->findOneBy(['id' => $classId]);
+        //$class             = Classes::findOrFail($classId);
 
-        $signedUp = $student->isSignedUpToClass($classId);
+        $selectedMainClass = $this->mainClassRepository->findOneBy(['id' => $mainClLassId]);
+
+        $student           = $this->studentRepository->findOneBy(['id' => Auth::id()]);
 
         return view('students.signup')->with(
             [
-                'class' => $class,
-                'student' => $student,
-                'signedUp' => $signedUp
+                'student'           => $student,
+                'selectedMainClass' => $selectedMainClass,
+                //'class' => $class
             ]
         );
     }
 
-    public function update(Request $request)
+    public function update(Classes $classId, Request $request)
     {
+
         $validatedData = $request->validate(
             [
-                'first_name' => 'required',
-                'last_name' => 'required',
-                'email' => 'required|email',
-                'date_of_birth' => 'required|date',
-                'address' => 'required',
-                'city' => 'required',
-                'county' => 'required',
-                'job_title' => 'nullable',
-                'phone' => 'required|min:10',
-                'education' => 'nullable',
-                'english' => 'nullable',
+                'first_name'     => 'required',
+                'last_name'      => 'required',
+                'email'          => 'required|email',
+                'date_of_birth'  => 'required|date',
+                'address'        => 'required',
+                'city'           => 'required',
+                'county'         => 'required',
+                'job_title'      => 'nullable',
+                'phone'          => 'required|min:10',
+                'education'      => 'nullable',
+                'english'        => 'nullable',
                 'other_language' => 'nullable',
-                'ms_office' => 'nullable',
-                'web' => 'nullable',
+                'ms_office'      => 'nullable',
+                'web'            => 'nullable',
+
+
             ]
         );
 
         $this->studentRepository
             ->findOneBy(['id' => $request->get('studentId')])->update(
                 [
-                    'first_name' => $request->get('first_name'),
-                    'last_name' => $request->get('last_name'),
-                    'email' => $request->get('email'),
-                    'date_of_birth' => $request->get('date_of_birth'),
-                    'address' => $request->get('address'),
-                    'city' => $request->get('city'),
-                    'county' => $request->get('county'),
-                    'job_title' => $request->get('job_title'),
-                    'phone' => $request->get('phone'),
-                    'education' => $request->get('education'),
-                    'english' => $request->get('english'),
+                    'first_name'     => $request->get('first_name'),
+                    'last_name'      => $request->get('last_name'),
+                    'email'          => $request->get('email'),
+                    'date_of_birth'  => $request->get('date_of_birth'),
+                    'address'        => $request->get('address'),
+                    'city'           => $request->get('city'),
+                    'county'         => $request->get('county'),
+                    'job_title'      => $request->get('job_title'),
+                    'phone'          => $request->get('phone'),
+                    'education'      => $request->get('education'),
+                    'english'        => $request->get('english'),
                     'other_language' => $request->get('other_language'),
-                    'ms_office' => $request->get('ms_office'),
-                    'web' => $request->get('web'),
+                    'ms_office'      => $request->get('ms_office'),
+                    'web'            => $request->get('web'),
                 ]
             );
 
-        return redirect('/student_dashboard');
-    }
-
-    public function create(Request $request)
-    {
-
         $student = $this->studentRepository->findByAuthId(Auth::id());
-        $classStudent = $student->classStudents()->create(
+        $student->classStudents()->create(
             [
-                'student_id' => $request->get('studentId'),
-                'class_id' => $request->get('classId'),
+                'student_id'     => $request->get('studentId'),
+                'class_id'       => $request->get('classId'),
                 'payment_method' => $request->get('payment_method'),
-                'payment_type' => $request->get('payment_type'),
-                'payment1' => $request->get('payment1'),
-                'payment2' => $request->get('payment2'),
-                'payment_full' => $request->get('payment_full'),
+                'payment_type'   => $request->get('payment_type'),
+                'payment1'       => $request->get('payment1'),
+                'payment2'       => $request->get('payment2'),
+                'payment_full'   => $request->get('payment_full'),
             ]
         );
-        $classStudent->save();
+
 
         return redirect('/student_dashboard');
     }
