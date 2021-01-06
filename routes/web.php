@@ -85,10 +85,9 @@ Route::middleware('auth:api')->group(function () {
 //STUDENTS
 Route::get('student_dashboard', 'DashboardController@studentDashboard')->name('student_dashboard');
 Route::get('catalog', 'CatalogController@index')->name('catalog');
-Route::get('catalog/{classId}', 'CatalogController@get')->name('class_description');
-Route::get('catalog/{classId}/class_signup', 'CatalogController@getData')->name('class_signup');
-Route::put('catalog/student/class_signup', 'CatalogController@update')->name('update_student');
-Route::post('catalog/student/class_signup', 'CatalogController@create')->name('create_student_class');
+Route::get('catalog/{mainClassId}', 'CatalogController@get')->name('class_description');
+Route::get('catalog/{mainClassId}/class_signup', 'CatalogController@getData')->name('class_signup');
+Route::post('catalog/student/class_signup', 'CatalogController@update')->name('update_student');
 
 Route::get('account', function() {
     return '';
