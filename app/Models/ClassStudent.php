@@ -6,9 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class ClassStudent extends Model
 {
-    public $timestamps = false;
-    protected $table = 'class_students';
-    protected $guarded = ['id'];
+    public    $timestamps = false;
+    protected $table      = 'class_students';
+    //protected $guarded = ['id'];
+    protected $fillable = [
+
+        'student_id',
+        'class_id',
+        'payment_method',
+        'payment_type',
+        'payment1',
+        'payment2',
+        'payment_full',
+    ];
 
     public function classes()
     {
@@ -40,6 +50,7 @@ class ClassStudent extends Model
         if ($this->getAttribute('note') == '') {
             return null;
         }
+
         return $this->getAttribute('note');
     }
 
