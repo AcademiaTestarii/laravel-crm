@@ -65,7 +65,15 @@
 
             <div class="ibox float-e-margins">
                 <div class="row">
+                    <?php
+                    $mainClasses = [];
+                    ?>
                     @foreach($classes as $class)
+                        <?php
+                        if($class->getRegistrationStartDate() >= new \Carbon\Carbon()) {
+                        if (!in_array($class->getMainClassId(), $mainClasses)) {
+                        $mainClasses[] = $class->getMainClassId();
+                        ?>
                         <div class="col-md-4 col-sm-6 col-xs-12">
                             <article class="post clearfix mb-30">
                                 <div class="entry-header">
@@ -73,18 +81,22 @@
                                         <img src="{{$class->getImage()}}"
                                              alt="" class="img-responsive img-fullwidth">
                                     </div>
-                                    <div class="entry-date media-left text-center flip bg-theme-colored border-top-theme-colored2-3px pt-5 pr-15 pb-5 pl-15">
-                                        <ul>
-                                            <li class="font-16 text-white font-weight-600">
-                                            {{ $class->getRegistrationStartDate()->formatLocalized("%e %B, %Y")}}
+                                    <div class="entry-date media-left text-center flip bg-theme-colored border-top-theme-colored2-3px pt-5 pr-15 pb-5 pl-15"
+                                    style="top: -25px;position: absolute;right: 30px; z-index: 2;font-size: 13px;border-top: 3px solid #1e9edd !important;
+background-color: #4c3391 !important;padding-left: 15px !important;padding-bottom: 5px !important;padding-right: 15px !important;padding-top: 5px !important;">
+                                        <ul style="list-style: none;margin: 0;padding: 0;">
+                                            <li class="font-16 text-white font-weight-600" style="font-size: 16px !important;">
+                                            {{ $class->getRegistrationStartDate()->formatLocalized("%e")}}
+                                            <li>
+                                            <li class="font-16 text-white font-weight-600" style="font-size: 12px !important;text-transform: uppercase;">
+                                            {{ $class->getRegistrationStartDate()->formatLocalized("%B")}}
                                             <li>
                                         </ul>
-
                                     </div>
                                 </div>
-                                <div class="entry-content p-20 bg-white">
+                                <div class="entry-content p-20 bg-white" style="background: white;">
                                     <div class="entry-meta media mt-0 mb-10">
-                                        <div class="media-body pl-0">
+                                        <div class="media-body pl-0" style="padding:10px; background:white;">
                                             <div class="event-content pull-left flip">
                                                 <h4 class="entry-title text-white text-uppercase font-weight-600 m-0 mt-5">
                                                     <a href="{{ route('class_description', $class) }}"> {{ $class->getTitle() }} </a>
@@ -104,25 +116,24 @@
                                                     <span class="mb-10 text-gray-darkgray mr-10 font-13"><i
                                                                 class="fa fa-calendar mr-5 text-theme-colored"></i>Data va fi anunţata ulterior</span>
                                                 @elseif ($class->getRegistrationStartDate() > \Carbon\Carbon::yesterday())
-
-
                                                     <span class="mb-0 text-gray-darkgray mr-10 font-13">Următorul curs:
                                                                     <br/>
-
                                                                     <i class="fa fa-calendar mr-5 text-theme-colored"></i>
-
-                                                                    {{ $class->getRegistrationStartDate() }} - {{ $class->getRegistrationEndDate() }}
+                                                                    {{ $class->getRegistrationStartDate()->formatLocalized("%e %B, %Y") }} - {{ $class->getRegistrationEndDate()->formatLocalized("%e %B, %Y") }}
                                                         @endif
                                                                 </span>
                                                     <br/>
-
-                                                    <span class="mb-10 text-gray-darkgray mr-10 font-13">Locuri disponibile: {{ $available }} </span>
+                                                    <?php
+                                                    $available = $class->getStudents() - $class->classStudents()->count();
+                                                    ?>
+                                                    <span class="mb-10 text-gray-darkgray mr-10 font-13">Locuri disponibile: {{$available}} </span>
 
                                                     <hr class="mb-0"/>
                                                     <span class="mb-10 text-gray-darkgray mr-10 font-13">Cursuri viitoare:
                                                                     <br/><i
                                                                 class="fa fa-calendar mr-5 text-theme-colored"></i>
-                                                                    @if($class->isInWeekend()) (Weekend) @endif
+                                                                    {{$class->nextClass()->getRegistrationStartDate()->formatLocalized("%e %B, %Y")}}
+                                                         - {{ $class->getRegistrationEndDate()->formatLocalized("%e %B, %Y") }}
                                                                 </span>
                                             </div>
                                         </div>
@@ -134,6 +145,10 @@
                                 </div>
                             </article>
                         </div>
+                        <?php
+                        }
+                        }
+                        ?>
                     @endforeach
                 </div>
             </div>

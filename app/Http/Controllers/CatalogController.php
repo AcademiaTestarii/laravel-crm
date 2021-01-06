@@ -60,15 +60,14 @@ class CatalogController extends Controller
      */
     public function index(Request $request)
     {
-        $classes = $this->classesRepository->allOrderedBy();
-        $signedUpCount = $this->classStudentRepository->count($request->get('id'));
-        $classStudents = $this->classesRepository->getStudentsValue();
-        $available = $classStudents - $signedUpCount;
+        $classes = $this->classesRepository->findAllBy(
+            ['is_active' => 1],
+            '=',
+            'registration_start_date'
+        );
 
-        return view('students.catalog')->with(
-            [
-                'classes' => $classes,
-                'available' => $available,
+        return view('students.catalog')->with([
+                'classes' => $classes
             ]
         );
     }

@@ -167,11 +167,13 @@ class Classes extends Model
         return (new Carbon($this->getAttribute('registration_end_date')));
     }
 
-    public function getWeekdaysSchedule() {
+    public function getWeekdaysSchedule()
+    {
         return $this->getAttribute('weekdays_schedule');
     }
 
-    public function getWeekendSchedule() {
+    public function getWeekendSchedule()
+    {
         return $this->getAttribute('weekend_schedule');
     }
 
@@ -231,5 +233,16 @@ class Classes extends Model
         };
 
         return false;
+    }
+
+    public function nextClass()
+    {
+        $nextClass = Classes::where('registration_start_date', '>=', $this->getRegistrationStartDate())
+            ->where('main_class_id', $this->getMainClassId())
+            ->where('id', '!=', $this->getId())
+            ->orderBy('registration_start_date')
+            ->first();
+
+        return $nextClass;
     }
 }

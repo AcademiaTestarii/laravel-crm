@@ -1,6 +1,9 @@
 <li @if (\Request::is('dashboard')) class="active" @endif >
     <a href="/dashboard"><i class="fa fa-th-large"></i> <span class="nav-label">Dashboard</span></a>
 </li>
+<li @if (\Request::is('catalog')) class="active" @endif >
+    <a href="/catalog"><i class="fa fa-th-large"></i> <span class="nav-label">Catalog</span></a>
+</li>
 @if(auth()->user()->isAcademiaTestarii())
     <li
             @if (\Request::is('homepage') || \Request::is('feedback') || \Request::is('sliders')) class="active" @endif >

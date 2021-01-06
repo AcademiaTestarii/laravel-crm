@@ -1,6 +1,9 @@
 <li>
     <a href="/"><i class="fa fa-th-large"></i> <span class="nav-label">AT</span></a>
 </li>
+<li @if (\Request::is('catalog')) class="active" @endif >
+    <a href="/catalog"><i class="fa fa-th-large"></i> <span class="nav-label">Catalog</span></a>
+</li>
 <li>
     @if (Request::is('classes_offer')) class="active" @endif >
     <a href="/classes_offer"><i class="fa fa-home"></i> <span class="nav-label">Cursuri pentru tine</span></a>
