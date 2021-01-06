@@ -11,25 +11,28 @@
                               action="/catalog/student/class_signup">
                             @csrf
 
-                            @if($signedUp)
-                            <input name="_method" type="hidden" value="PUT">
-                            @endif
-                            <input type="hidden" value ="{{$class->getId() }}" name='classId'>
-                            <input type="hidden" value ="{{$student->getId()}}" name='studentId'>
+
+                            <input type="hidden" value="{{ $selectedMainClass->getId() }}" name='maiClassId'>
+                            @foreach( $selectedMainClass->classes as $class)
+                                @if($class->getRegistrationEndDate() >= \Carbon\Carbon::yesterday())
+                            <input type="hidden" value="{{ $class->getId() }}" name='classId'>
+                                @endif
+                                    @endforeach
+                            <input type="hidden" value="{{ $student->getId() }}" name='studentId'>
 
                             <div class="form-group">
                                 <label for="last_name" class="col-md-4 control-label">Nume *</label>
 
                                 <div class="col-md-6">
                                     <input id="last_name" type="text" class="form-control" name="last_name"
-                                           value="{{ $student->last_name }}" autofocus  required>
+                                           value="{{ $student->last_name }}" autofocus required>
                                 </div>
 
                                 <label for="first_name" class="col-md-4 control-label">Prenume *</label>
 
                                 <div class="col-md-6">
                                     <input id="first_name" type="text" class="form-control" name="first_name"
-                                           value="{{ $student->first_name }}" autofocus  required>
+                                           value="{{ $student->first_name }}" autofocus required>
                                 </div>
 
                                 <label for="email" class="col-md-4 control-label">Email *</label>
@@ -43,10 +46,9 @@
                                     <label for="date_of_birth" class="col-md-4 control-label">Data nasterii</label>
 
                                     <input id="date_of_birth" type="date" class="form-control" name="date_of_birth"
-                                           value="{{ $student->date_of_birth }}" >
+                                           value="{{ $student->date_of_birth }}">
                                 </div>
                             </div>
-
 
                             <div class="form-group">
                                 <div class="col-md-6">
@@ -110,21 +112,22 @@
                                             <option value="Mediu">Mediu</option>
                                             <option value="Avansat">Avansat</option>
                                         </select>
-                                        @endif
+                                    @endif
                                 </div>
 
-                                <label for="other_language" class="col-md-4 control-label">Cunostinte alta limba straina</label>
+                                <label for="other_language"
+                                       class="col-md-4 control-label">Cunostinte alta limba straina</label>
 
                                 <div class="col-md-6">
-                                        <div class="col-md-6">
-                                            <input id="other_language" type="text" class="form-control" name="english"
-                                                   @if(!empty($student->other_language) )
-                                                    value="{{ $student->other_language }}"
-                                                   @else value = ""
-                                                   @endif
-                                            >
+                                    <div class="col-md-6">
+                                        <input id="other_language" type="text" class="form-control" name="english"
+                                               @if(!empty($student->other_language) )
+                                               value="{{ $student->other_language }}"
+                                               @else value=""
+                                                @endif
+                                        >
 
-                                        </div>
+                                    </div>
                                 </div>
 
                                 <label for="ms_office" class="col-md-4 control-label">Cunostinte MS Office</label>
@@ -165,31 +168,47 @@
                             </div>
 
                             <div class="form-group">
-
                                 <div class="col-md-6">
                                     <label for="class_id" class="col-md-4 control-label">Modulul dorit</label>
-{{--<select><option value="{{$class->getId()}}">{{ $class->registration_start_date }} - {{ $class->registration_end_date }}</option></select>--}}
-                                   <input id="class_id" type="text" class="form-control" name="class_id"
-                                           value="{{ $class->registration_start_date }} - {{ $class->registration_end_date }}" readonly>
+                                    <select class="form-control" >
+                                        <optgroup label="{{ $selectedMainClass->getTitle() }}">
+                                        @foreach($selectedMainClass->classes as $class )
+
+                                            @if($class->getRegistrationEndDate() >= \Carbon\Carbon::yesterday())
+                                                @if($student->isSignedUpToClass($class->getId()))
+                                                    <option disabled value="{{ $class->getId() }}">Deja inscris -{{ $class->getRegistrationStartDate()->toDateString() }} - {{ $class->getRegistrationEndDate()->toDateString() }}</option>
+                                                @else
+                                                    <option value="{{ $class->getId() }}">{{ $class->getRegistrationStartDate()->toDateString() }} - {{ $class->getRegistrationEndDate()->toDateString() }}</option>
+                                                @endif
+                                            @endif
+
+                                        @endforeach
+                                        </optgroup>
+                                    </select>
+
                                 </div>
 
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="banca" name="payment_method" id="payment_method" checked="checked">
+                                    <input class="form-check-input" type="checkbox" value="banca" name="payment_method"
+                                           id="payment_method" checked="checked">
                                     <label class="form-check-label" for="payment_method">
-                                       Virament bancar
+                                        Virament bancar
                                     </label>
                                 </div>
 
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="payment2" id="payment2" value="1">
+                                    <input class="form-check-input" type="radio" name="payment2" id="payment2"
+                                           value="1">
                                     <label class="form-check-label" for="payment2">2 rate</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="payment3" id="payment3" value="1">
+                                    <input class="form-check-input" type="radio" name="payment3" id="payment3"
+                                           value="1">
                                     <label class="form-check-label" for="payment3">3 rate</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="payment_full" id="payment_full" value="1">
+                                    <input class="form-check-input" type="radio" name="payment_full" id="payment_full"
+                                           value="1">
                                     <label class="form-check-label" for="payment_full">Integral</label>
                                 </div>
                             </div>
@@ -215,7 +234,7 @@
                                 <div class="col-sm-12 col-md-12">
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" name="newsletter" value=""
-                                               >
+                                        >
                                         <label class="form-check-label">Doresc sa primesc noutați prin email</label>
                                     </div>
                                 </div>
@@ -223,12 +242,19 @@
 
                             <div class="form-group">
                                 <div class="col-md-8 col-md-offset-4">
+                                    {{-- @if($student->isSignedUpToClass($class->getId()))
+                                    <a href="/catalog" class="btn btn-primary">
+                                        Inapoi la catalog
+                                    </a>
+                                    @else --}}
                                     <button type="submit" class="btn btn-primary">
                                         Inscrie-te la curs
                                     </button>
+                                    {{-- @endif --}}
                                 </div>
                             </div>
                         </form>
+
                     </div>
                 </div>
             </div>

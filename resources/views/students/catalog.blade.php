@@ -99,7 +99,7 @@ background-color: #4c3391 !important;padding-left: 15px !important;padding-botto
                                         <div class="media-body pl-0" style="padding:10px; background:white;">
                                             <div class="event-content pull-left flip">
                                                 <h4 class="entry-title text-white text-uppercase font-weight-600 m-0 mt-5">
-                                                    <a href="{{ route('class_description', $class) }}"> {{ $class->getTitle() }} </a>
+                                                    <a href="{{ route('class_description', $class->getMainClassId()) }}"> {{ $class->getTitle() }} </a>
                                                 </h4>
 
                                                 <p>{{ $class->getShortDescription() }}</p>
@@ -139,8 +139,8 @@ background-color: #4c3391 !important;padding-left: 15px !important;padding-botto
                                         </div>
                                     </div>
                                     <a class="btn btn-dark btn-theme-colored2"
-                                       href="{{ route('class_description', $class) }}"> Detalii curs</a>
-                                    <a href="{{ route('class_signup', $class) }}"
+                                       href="{{ route('class_description', $class->getMainClassId()) }}"> Detalii curs</a>
+                                    <a href="{{ route('class_signup', $class->getMainClassId()) }}"
                                        class="btn btn-dark btn-theme-colored pull-right">Înscrie-te</a>
                                 </div>
                             </article>
