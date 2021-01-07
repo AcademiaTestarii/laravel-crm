@@ -11,6 +11,7 @@ use App\Repositories\FeedbackRepository;
 use App\Repositories\MainClassRepository;
 use App\Repositories\TrainerRepository;
 use App\Services\ClassService;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
@@ -60,14 +61,29 @@ class CatalogController extends Controller
      */
     public function index(Request $request)
     {
+        $mainClassesIds = [];
+        $available = '';
         $classes = $this->classesRepository->findAllBy(
             ['is_active' => 1],
             '=',
             'registration_start_date'
         );
 
-        return view('students.catalog')->with([
-                'classes' => $classes
+        foreach ($classes as $class) {
+            if ($class->getRegistrationStartDate() >= new \Carbon\Carbon()) {
+                if (!in_array($class->getMainClassId(), $mainClassesIds)) {
+                    $mainClassesIds[] = $class->getMainClassId();
+                }
+            }
+            $available = $class->getStudents() - $class->classStudents()->count();
+
+        }
+
+        return view('students.catalog')->with(
+            [
+                'classes'        => $classes,
+                'mainClassesIds' => $mainClassesIds,
+                'available'      => $available,
             ]
         );
     }
@@ -75,38 +91,34 @@ class CatalogController extends Controller
     public function get($classId)
     {
 
-        $mainClass    = MainClass::findOrFail($classId);
-        $trainers = $this->trainerRepository->allOrderedBy('name');
+        $mainClass = MainClass::findOrFail($classId);
+        $trainers  = $this->trainerRepository->allOrderedBy('name');
 
         return view('students.class_description')->with(
             [
-                'mainClass'    => $mainClass,
-                'trainers' => $trainers,
+                'mainClass' => $mainClass,
+                'trainers'  => $trainers,
             ]
         );
     }
 
 
-    public function getData($mainClLassId)
+    public function getData(Request $request, $mainClassId)
     {
-        //$class             = Classes::findOrFail($classId);
 
-        $selectedMainClass = $this->mainClassRepository->findOneBy(['id' => $mainClLassId]);
-
-        $student           = $this->studentRepository->findOneBy(['id' => Auth::id()]);
+        $selectedMainClass = $this->mainClassRepository->findOneBy(['id' => $mainClassId]);
+        $student = $this->studentRepository->findOneBy(['id' => Auth::id()]);
 
         return view('students.signup')->with(
             [
                 'student'           => $student,
                 'selectedMainClass' => $selectedMainClass,
-                //'class' => $class
             ]
         );
     }
 
     public function update(Classes $classId, Request $request)
     {
-
         $validatedData = $request->validate(
             [
                 'first_name'     => 'required',
@@ -160,7 +172,6 @@ class CatalogController extends Controller
                 'payment_full'   => $request->get('payment_full'),
             ]
         );
-
 
         return redirect('/student_dashboard');
     }
