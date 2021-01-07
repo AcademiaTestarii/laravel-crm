@@ -11,13 +11,7 @@
                               action="/catalog/student/class_signup">
                             @csrf
 
-
                             <input type="hidden" value="{{ $selectedMainClass->getId() }}" name='maiClassId'>
-                            @foreach( $selectedMainClass->classes as $class)
-                                @if($class->getRegistrationEndDate() >= \Carbon\Carbon::yesterday())
-                            <input type="hidden" value="{{ $class->getId() }}" name='classId'>
-                                @endif
-                                    @endforeach
                             <input type="hidden" value="{{ $student->getId() }}" name='studentId'>
 
                             <div class="form-group">
@@ -106,11 +100,11 @@
                                                    value="{{ $student->english }}">
                                         </div>
                                     @else
-                                        <select name="english" class="form-control">
-                                            <option value="fără">-- fără --</option>
-                                            <option value="Incepător">Incepător</option>
-                                            <option value="Mediu">Mediu</option>
-                                            <option value="Avansat">Avansat</option>
+                                        <select name="english" class="form-control" id="english" selected>
+                                            <option id="english" value="fără">-- fără --</option>
+                                            <option id="english" value="Incepător">Incepător</option>
+                                            <option id="english" value="Mediu">Mediu</option>
+                                            <option id="english" value="Avansat">Avansat</option>
                                         </select>
                                     @endif
                                 </div>
@@ -120,7 +114,8 @@
 
                                 <div class="col-md-6">
                                     <div class="col-md-6">
-                                        <input id="other_language" type="text" class="form-control" name="english"
+                                        <input id="other_language" type="text" class="form-control"
+                                               name="other_language"
                                                @if(!empty($student->other_language) )
                                                value="{{ $student->other_language }}"
                                                @else value=""
@@ -139,7 +134,7 @@
                                                    value="{{ $student->ms_office }}">
                                         </div>
                                     @else
-                                        <select name="ms_office" class="form-control">
+                                        <select name="ms_office" class="form-control" id="ms_office" selected>
                                             <option value="fără">-- fără --</option>
                                             <option value="Incepător">Incepător</option>
                                             <option value="Mediu">Mediu</option>
@@ -151,13 +146,13 @@
                                 <label for="web" class="col-md-4 control-label">Cunostinte web</label>
 
                                 <div class="col-md-6">
-                                    @if(!empty($student->ms_office) )
+                                    @if(!empty($student->web) )
                                         <div class="col-md-6">
                                             <input id="web" type="text" class="form-control" name="web"
                                                    value="{{ $student->web }}">
                                         </div>
                                     @else
-                                        <select name="web" class="form-control">
+                                        <select name="web" class="form-control" id="web" selected>
                                             <option value="fără">-- fără --</option>
                                             <option value="Incepător">Incepător</option>
                                             <option value="Mediu">Mediu</option>
@@ -170,19 +165,18 @@
                             <div class="form-group">
                                 <div class="col-md-6">
                                     <label for="class_id" class="col-md-4 control-label">Modulul dorit</label>
-                                    <select class="form-control" >
+                                    <select class="form-control" name="classId" id="classId" selected>
                                         <optgroup label="{{ $selectedMainClass->getTitle() }}">
-                                        @foreach($selectedMainClass->classes as $class )
-
-                                            @if($class->getRegistrationEndDate() >= \Carbon\Carbon::yesterday())
+                                            @foreach($selectedMainClass->classes as $class )
+                                                @if($class->getRegistrationStartDate() >= \Carbon\Carbon::now())
                                                 @if($student->isSignedUpToClass($class->getId()))
-                                                    <option disabled value="{{ $class->getId() }}">Deja inscris -{{ $class->getRegistrationStartDate()->toDateString() }} - {{ $class->getRegistrationEndDate()->toDateString() }}</option>
+                                                    <option disabled
+                                                            value="{{ $class->getId() }}">Deja inscris -{{ $class->getRegistrationStartDate()->toDateString() }} - {{ $class->getRegistrationEndDate()->toDateString() }}</option>
                                                 @else
                                                     <option value="{{ $class->getId() }}">{{ $class->getRegistrationStartDate()->toDateString() }} - {{ $class->getRegistrationEndDate()->toDateString() }}</option>
                                                 @endif
-                                            @endif
-
-                                        @endforeach
+                                                @endif
+                                            @endforeach
                                         </optgroup>
                                     </select>
 
@@ -196,20 +190,20 @@
                                     </label>
                                 </div>
 
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="payment2" id="payment2"
-                                           value="1">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="payment" id="payment2"
+                                           value=2>
                                     <label class="form-check-label" for="payment2">2 rate</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="payment3" id="payment3"
-                                           value="1">
+                                    <input class="form-check-input" type="radio" name="payment" id="payment3"
+                                           value=3>
                                     <label class="form-check-label" for="payment3">3 rate</label>
                                 </div>
                                 <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="payment_full" id="payment_full"
-                                           value="1">
-                                    <label class="form-check-label" for="payment_full">Integral</label>
+                                    <input class="form-check-input" type="radio" name="payment" id="payment_full"
+                                           value=1>
+                                    <label class="form-check-label" for="payment">Integral</label>
                                 </div>
                             </div>
 
@@ -242,15 +236,15 @@
 
                             <div class="form-group">
                                 <div class="col-md-8 col-md-offset-4">
-                                    {{-- @if($student->isSignedUpToClass($class->getId()))
-                                    <a href="/catalog" class="btn btn-primary">
-                                        Inapoi la catalog
-                                    </a>
-                                    @else --}}
-                                    <button type="submit" class="btn btn-primary">
-                                        Inscrie-te la curs
-                                    </button>
-                                    {{-- @endif --}}
+                                    @if($student->isSignedUpToClass($class->getId()))
+                                        <a href="/catalog" class="btn btn-primary">
+                                            Inapoi la catalog
+                                        </a>
+                                    @else
+                                        <button type="submit" class="btn btn-primary">
+                                            Inscrie-te la curs
+                                        </button>
+                                    @endif
                                 </div>
                             </div>
                         </form>
