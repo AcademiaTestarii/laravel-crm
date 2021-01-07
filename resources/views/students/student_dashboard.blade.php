@@ -1,78 +1,86 @@
-{{--<!DOCTYPE html>--}}
-{{--<html dir="ltr" lang="ro">--}}
-{{--    <head>--}}
+<!DOCTYPE html>
+<html dir="ltr" lang="ro">
+    <head>
 
-{{--        <!-- Meta Tags -->--}}
-{{--        <meta name="viewport" content="width=device-width,initial-scale=1.0" />--}}
-{{--        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />--}}
-{{--        <meta name="description" content="Academia Testarii:: Contul tau" />--}}
-{{--        <meta name="keywords" content="" />--}}
+        <!-- Meta Tags -->
+        <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+        <meta name="description" content="Academia Testarii:: Contul tau" />
+        <meta name="keywords" content="" />
 
-{{--        <!-- Page Title -->--}}
-{{--        <title>{{ auth()->user()->name }}'s dashboard</title>--}}
+        <!-- Page Title -->
+        <title>{{ auth()->user()->name }}'s dashboard</title>
 
-{{--        <!-- Favicons -->--}}
-{{--        <link rel="apple-touch-icon" sizes="57x57" href="{{asset('favicon/apple-icon-57x57.png')}}">--}}
-{{--        <link rel="apple-touch-icon" sizes="60x60" href="{{asset('favicon/apple-icon-60x60.png')}}">--}}
-{{--        <link rel="apple-touch-icon" sizes="72x72" href="{{asset('favicon/apple-icon-72x72.png')}}">--}}
-{{--        <link rel="apple-touch-icon" sizes="76x76" href="{{asset('favicon/apple-icon-76x76.png')}}">--}}
-{{--        <link rel="apple-touch-icon" sizes="114x114" href="{{asset('favicon/apple-icon-114x114.png')}}">--}}
-{{--        <link rel="apple-touch-icon" sizes="120x120" href="{{asset('favicon/apple-icon-120x120.png')}}">--}}
-{{--        <link rel="apple-touch-icon" sizes="144x144" href="{{asset('favicon/apple-icon-144x144.png')}}">--}}
-{{--        <link rel="apple-touch-icon" sizes="152x152" href="{{asset('favicon/apple-icon-152x152.png')}}">--}}
-{{--        <link rel="apple-touch-icon" sizes="180x180" href="{{asset('favicon/apple-icon-180x180.png')}}">--}}
-{{--        <link rel="icon" type="image/png" sizes="192x192" href="{{asset('favicon/android-icon-192x192.png')}}">--}}
-{{--        <link rel="icon" type="image/png" sizes="32x32" href="{{asset('favicon/favicon-32x32.png')}}">--}}
-{{--        <link rel="icon" type="image/png" sizes="96x96" href="{{asset('favicon/favicon-96x96.png')}}">--}}
-{{--        <link rel="icon" type="image/png" sizes="16x16" href="{{asset('favicon/favicon-16x16.png')}}">--}}
-{{--        <link rel="manifest" href="favicon/manifest.json">--}}
-{{--        <meta name="msapplication-TileColor" content="#ffffff">--}}
-{{--        <meta name="msapplication-TileImage" content="favicon/ms-icon-144x144.png">--}}
-{{--        <meta name="theme-color" content="#ffffff">--}}
+        <!-- Favicons -->
+        <link rel="apple-touch-icon" sizes="57x57" href="{{asset('favicon/apple-icon-57x57.png')}}">
+        <link rel="apple-touch-icon" sizes="60x60" href="{{asset('favicon/apple-icon-60x60.png')}}">
+        <link rel="apple-touch-icon" sizes="72x72" href="{{asset('favicon/apple-icon-72x72.png')}}">
+        <link rel="apple-touch-icon" sizes="76x76" href="{{asset('favicon/apple-icon-76x76.png')}}">
+        <link rel="apple-touch-icon" sizes="114x114" href="{{asset('favicon/apple-icon-114x114.png')}}">
+        <link rel="apple-touch-icon" sizes="120x120" href="{{asset('favicon/apple-icon-120x120.png')}}">
+        <link rel="apple-touch-icon" sizes="144x144" href="{{asset('favicon/apple-icon-144x144.png')}}">
+        <link rel="apple-touch-icon" sizes="152x152" href="{{asset('favicon/apple-icon-152x152.png')}}">
+        <link rel="apple-touch-icon" sizes="180x180" href="{{asset('favicon/apple-icon-180x180.png')}}">
+        <link rel="icon" type="image/png" sizes="192x192" href="{{asset('favicon/android-icon-192x192.png')}}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{{asset('favicon/favicon-32x32.png')}}">
+        <link rel="icon" type="image/png" sizes="96x96" href="{{asset('favicon/favicon-96x96.png')}}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{{asset('favicon/favicon-16x16.png')}}">
+        <link rel="manifest" href="favicon/manifest.json">
+        <meta name="msapplication-TileColor" content="#ffffff">
+        <meta name="msapplication-TileImage" content="favicon/ms-icon-144x144.png">
+        <meta name="theme-color" content="#ffffff">
 
-{{--        <!-- Stylesheet -->--}}
-{{--        <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet" type="text/css">--}}
-{{--        <link href="{{asset('css/jquery-ui.min.css')}}" rel="stylesheet" type="text/css">--}}
-{{--        <link href="{{asset('css/animate.css')}}" rel="stylesheet" type="text/css">--}}
-{{--        <link href="{{asset('css/css-plugin-collections.css')}}" rel="stylesheet" />--}}
+        <!-- Stylesheet -->
+        <link href="{{asset('css/bootstrap.min.css')}}" rel="stylesheet" type="text/css">
+        <link href="{{asset('css/jquery-ui.min.css')}}" rel="stylesheet" type="text/css">
+        <link href="{{asset('css/animate.css')}}" rel="stylesheet" type="text/css">
+        <link href="{{asset('css/css-plugin-collections.css')}}" rel="stylesheet" />
 
-{{--        <!-- CSS | menuzord megamenu skins -->--}}
-{{--        <link id="menuzord-menu-skins" href="{{asset('css/menuzord-skins/menu-academia-testarii.css')}}"--}}
-{{--              rel="stylesheet" />--}}
-{{--        <!-- CSS | Main style file -->--}}
-{{--        <link href="{{asset('css/style-main.css')}}" rel="stylesheet" type="text/css">--}}
-{{--        <!-- CSS | Preloader Styles -->--}}
-{{--        <link href="{{asset('css/preloader.css')}}" rel="stylesheet" type="text/css">--}}
-{{--        <!-- CSS | Custom Margin Padding Collection -->--}}
-{{--        <link href="{{asset('css/custom-bootstrap-margin-padding.css')}}" rel="stylesheet" type="text/css">--}}
-{{--        <!-- CSS | Responsive media queries -->--}}
-{{--        <link href="{{asset('css/responsive.css')}}" rel="stylesheet" type="text/css">--}}
-{{--        <!-- Academia Testarii CSS | Style css -->--}}
-{{--        <link href="{{asset('css/style.css')}}" rel="stylesheet" type="text/css">--}}
-{{--        <!-- Revolution Slider 5.x CSS settings -->--}}
-{{--        <link href="{{asset('js/revolution-slider/css/settings.css')}}" rel="stylesheet" type="text/css" />--}}
-{{--        <link href="{{asset('js/revolution-slider/css/layers.css')}}" rel="stylesheet" type="text/css" />--}}
-{{--        <link href="{{asset('js/revolution-slider/css/navigation.css')}}" rel="stylesheet" type="text/css" />--}}
-{{--        <!-- CSS | Academia Testarii -->--}}
-{{--        <link href="{{asset('css/colors/academia-testarii.css')}}" rel="stylesheet" type="text/css">--}}
-{{--        <!-- external javascripts -->--}}
-{{--        <script src="{{asset('js/jquery-2.2.4.min.js')}}"></script>--}}
-{{--        <script src="{{asset('js/jquery-ui.min.js')}}"></script>--}}
-{{--        <script src="{{asset('js/bootstrap.min.js')}}"></script>--}}
-{{--        <!-- JS | jquery plugin collection -->--}}
-{{--        <script src="{{asset('js/jquery-plugin-collection.js')}}"></script>--}}
-{{--        <!-- Revolution Slider 5.x SCRIPTS -->--}}
-{{--        <script src="{{asset('js/revolution-slider/js/jquery.themepunch.tools.min.js')}}"></script>--}}
-{{--        <script src="{{asset('js/revolution-slider/js/jquery.themepunch.revolution.min.js')}}"></script>--}}
-{{--        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->--}}
-{{--        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->--}}
-{{--        <!--[if lt IE 9]>--}}
-{{--        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>--}}
-{{--        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>--}}
-{{--        <![endif]-->--}}
-{{--        <script type='application/ld+json'>{"@context":"https://schema.org","@type":"Organization","url":"/","sameAs":["https://www.facebook.com/academiatestarii/","https://www.linkedin.com/company/18151104/"],"@id":"/#organization","name":"Academia Testarii","logo":"/images/logo-academia-testarii.png"}</script>--}}
-{{--    </head>--}}
-{{--    <body class="" id="up">--}}
+        <!-- CSS | menuzord megamenu skins -->
+        <link id="menuzord-menu-skins" href="{{asset('css/menuzord-skins/menu-academia-testarii.css')}}"
+              rel="stylesheet" />
+        <!-- CSS | Main style file -->
+        <link href="{{asset('css/style-main.css')}}" rel="stylesheet" type="text/css">
+        <!-- CSS | Preloader Styles -->
+        <link href="{{asset('css/preloader.css')}}" rel="stylesheet" type="text/css">
+        <!-- CSS | Custom Margin Padding Collection -->
+        <link href="{{asset('css/custom-bootstrap-margin-padding.css')}}" rel="stylesheet" type="text/css">
+        <!-- CSS | Responsive media queries -->
+        <link href="{{asset('css/responsive.css')}}" rel="stylesheet" type="text/css">
+        <!-- Academia Testarii CSS | Style css -->
+        <link href="{{asset('css/style.css')}}" rel="stylesheet" type="text/css">
+        <!-- Revolution Slider 5.x CSS settings -->
+        <link href="{{asset('js/revolution-slider/css/settings.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{asset('js/revolution-slider/css/layers.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{asset('js/revolution-slider/css/navigation.css')}}" rel="stylesheet" type="text/css" />
+        <!-- CSS | Academia Testarii -->
+        <link href="{{asset('css/colors/academia-testarii.css')}}" rel="stylesheet" type="text/css">
+        <!-- external javascripts -->
+        <script src="{{asset('js/jquery-2.2.4.min.js')}}"></script>
+        <script src="{{asset('js/jquery-ui.min.js')}}"></script>
+        <script src="{{asset('js/bootstrap.min.js')}}"></script>
+        <!-- JS | jquery plugin collection -->
+        <script src="{{asset('js/jquery-plugin-collection.js')}}"></script>
+        <!-- Revolution Slider 5.x SCRIPTS -->
+        <script src="{{asset('js/revolution-slider/js/jquery.themepunch.tools.min.js')}}"></script>
+        <script src="{{asset('js/revolution-slider/js/jquery.themepunch.revolution.min.js')}}"></script>
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+        <script type='application/ld+json'>{"@context":"https://schema.org","@type":"Organization","url":"/","sameAs":["https://www.facebook.com/academiatestarii/","https://www.linkedin.com/company/18151104/"],"@id":"/#organization","name":"Academia Testarii","logo":"/images/logo-academia-testarii.png"}</script>
+    </head>
+    <body class="" id="up">
+        <h1 style="color: white; text-align: center">Contul tau</h1>
+        <hr>
+        <h2 style="color: white; text-align: center">Bine ai venit, <strong>{{ auth()->user()->name }}</strong></h2>
+        <h2 style="color: white; text-align: center">Te-ai inscris cu succes la cursul {{ $lastSignedUpClass->getTitle() }}</h2>
+        <hr>
+        <a href="/catalog" class="btn btn-primary">
+            Inapoi la catalog
+        </a>
 {{--        <div id="wrapper" class="clearfix">--}}
 {{--            <!-- preloader -->--}}
 {{--            <div id="preloader">--}}
@@ -539,10 +547,10 @@
 {{--            </footer>--}}
 {{--            <a class="scrollToTop" href="#"><i class="fa fa-angle-up"></i></a>--}}
 {{--        </div>--}}
-{{--        <!-- end wrapper -->--}}
+        <!-- end wrapper -->
 
-{{--        <!-- Footer Scripts -->--}}
-{{--        <!-- JS | Custom script for all pages -->--}}
+        <!-- Footer Scripts -->
+        <!-- JS | Custom script for all pages -->
 {{--        <script src="js/custom.js"></script>--}}
 
 {{--        <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">--}}
@@ -572,5 +580,5 @@
 {{--            });--}}
 {{--        </script>--}}
 
-{{--    </body>--}}
-{{--</html>--}}
+    </body>
+</html>
