@@ -32,20 +32,20 @@ class DashboardController extends Controller
 //        return view('blank_dashboard');
 //    }
 
-    public function studentDashboard()
-    {
-        $classes = $this->classesRepository->allOrderedBy('registration_start_date');
-        $student         = $this->studentRepository->findByAuthId(Auth::id());
-
-        $activeClasses = $this->classStudentRepository->activeClasses();
-        $finishedClasses = $this->classStudentRepository->finishedClasses();
-        return view('students.student_dashboard')->with(
-            [
-                'classes' => $classes,
-                'student' => $student,
-                'activeClasses' => $activeClasses,
-                'finishedClasses' => $finishedClasses
-            ]
-        );
-    }
+//    public function studentDashboard()
+//    {
+//        $classes = $this->classesRepository->allOrderedBy('registration_start_date');
+//        $student         = $this->studentRepository->findByAuthId(Auth::id());
+//
+//        $activeClasses = $this->classStudentRepository->activeClasses();
+//        $finishedClasses = $this->classStudentRepository->finishedClasses();
+//        return view('students.student_dashboard')->with(
+//            [
+//                'classes' => $classes,
+//                'student' => $student,
+//                'activeClasses' => $activeClasses,
+//                'finishedClasses' => $finishedClasses
+//            ]
+//        );
+//    }
 }
