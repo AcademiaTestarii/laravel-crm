@@ -62,8 +62,8 @@ class CatalogController extends Controller
     public function index(Request $request)
     {
         $mainClassesIds = [];
-        $available = '';
-        $classes = $this->classesRepository->findAllBy(
+        $available      = '';
+        $classes        = $this->classesRepository->findAllBy(
             ['is_active' => 1],
             '=',
             'registration_start_date'
@@ -107,7 +107,7 @@ class CatalogController extends Controller
     {
 
         $selectedMainClass = $this->mainClassRepository->findOneBy(['id' => $mainClassId]);
-        $student = $this->studentRepository->findOneBy(['id' => Auth::id()]);
+        $student           = $this->studentRepository->findOneBy(['id' => Auth::id()]);
 
         return view('students.signup')->with(
             [

@@ -169,12 +169,12 @@
                                         <optgroup label="{{ $selectedMainClass->getTitle() }}">
                                             @foreach($selectedMainClass->classes as $class )
                                                 @if($class->getRegistrationStartDate() >= \Carbon\Carbon::now())
-                                                @if($student->isSignedUpToClass($class->getId()))
-                                                    <option disabled
-                                                            value="{{ $class->getId() }}">Deja inscris -{{ $class->getRegistrationStartDate()->toDateString() }} - {{ $class->getRegistrationEndDate()->toDateString() }}</option>
-                                                @else
-                                                    <option value="{{ $class->getId() }}">{{ $class->getRegistrationStartDate()->toDateString() }} - {{ $class->getRegistrationEndDate()->toDateString() }}</option>
-                                                @endif
+                                                    @if($student->isSignedUpToClass($class->getId()))
+                                                        <option disabled
+                                                                value="{{ $class->getId() }}">Deja inscris -{{ $class->getRegistrationStartDate()->toDateString() }} - {{ $class->getRegistrationEndDate()->toDateString() }}</option>
+                                                    @else
+                                                        <option value="{{ $class->getId() }}">{{ $class->getRegistrationStartDate()->toDateString() }} - {{ $class->getRegistrationEndDate()->toDateString() }}</option>
+                                                    @endif
                                                 @endif
                                             @endforeach
                                         </optgroup>
@@ -189,21 +189,18 @@
                                         Virament bancar
                                     </label>
                                 </div>
-
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="payment" id="payment2"
-                                           value=2>
-                                    <label class="form-check-label" for="payment2">2 rate</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="payment" id="payment3"
-                                           value=3>
-                                    <label class="form-check-label" for="payment3">3 rate</label>
-                                </div>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="payment" id="payment_full"
-                                           value=1>
-                                    <label class="form-check-label" for="payment">Integral</label>
+                                    <input class="form-check-input" type="radio" name="payment_type" id="payment2"
+                                           value="2 rate">
+                                    <label class="form-check-label" for="payment_type">2 rate</label>
+
+                                    <input class="form-check-input" type="radio" name="payment_type" id="payment3"
+                                           value="3 rate">
+                                    <label class="form-check-label" for="payment_type">3 rate</label>
+
+                                    <input class="form-check-input" type="radio" name="payment_type" id="payment_full"
+                                           value="integral">
+                                    <label class="form-check-label" for="payment_type">Integral</label>
                                 </div>
                             </div>
 
@@ -248,7 +245,6 @@
                                 </div>
                             </div>
                         </form>
-
                     </div>
                 </div>
             </div>
