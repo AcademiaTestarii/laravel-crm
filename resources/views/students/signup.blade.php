@@ -19,28 +19,28 @@
 
                                 <div class="col-md-6">
                                     <input id="last_name" type="text" class="form-control" name="last_name"
-                                           value="{{ $student->last_name }}" autofocus required>
+                                           value="{{ $student->getLastName() }}" autofocus required>
                                 </div>
 
                                 <label for="first_name" class="col-md-4 control-label">Prenume *</label>
 
                                 <div class="col-md-6">
                                     <input id="first_name" type="text" class="form-control" name="first_name"
-                                           value="{{ $student->first_name }}" autofocus required>
+                                           value="{{ $student->getFirstName() }}" autofocus required>
                                 </div>
 
                                 <label for="email" class="col-md-4 control-label">Email *</label>
 
                                 <div class="col-md-6">
                                     <input id="email" type="email" class="form-control" name="email"
-                                           value="{{$student->email}}" readonly required>
+                                           value="{{ $student->getEmail() }}" readonly required>
                                 </div>
 
                                 <div class="col-md-6">
                                     <label for="date_of_birth" class="col-md-4 control-label">Data nasterii</label>
 
                                     <input id="date_of_birth" type="date" class="form-control" name="date_of_birth"
-                                           value="{{ $student->date_of_birth }}">
+                                           value="{{ $student->getDateOfBirth() }}">
                                 </div>
                             </div>
 
@@ -49,21 +49,21 @@
                                     <label for="name" class="col-md-4 control-label">Adresa *</label>
 
                                     <input id="address" type="text" class="form-control" name="address"
-                                           value="{{ $student->address }}" required>
+                                           value="{{ $student->getAddress() }}" required>
                                 </div>
 
                                 <div class="col-md-6">
                                     <label for="city" class="col-md-4 control-label">Localitate *</label>
 
                                     <input id="city" type="text" class="form-control" name="city"
-                                           value="{{ $student->city }}" required>
+                                           value="{{ $student->getCity() }}" required>
                                 </div>
 
                                 <div class="col-md-6">
                                     <label for="county" class="col-md-4 control-label">Judet *</label>
 
                                     <input id="county" type="text" class="form-control" name="county"
-                                           value="{{ $student->county }}" required>
+                                           value="{{ $student->getCounty() }}" required>
                                 </div>
                             </div>
 
@@ -72,21 +72,21 @@
 
                                 <div class="col-md-6">
                                     <input id="job_title" type="text" class="form-control" name="job_title"
-                                           value="{{ $student->job_title }}" autofocus>
+                                           value="{{ $student->getJob() }}" autofocus>
                                 </div>
 
                                 <label for="phone" class="col-md-4 control-label">Telefon *</label>
 
                                 <div class="col-md-6">
                                     <input id="phone" type="text" class="form-control" name="phone"
-                                           value="{{ $student->phone }}" autofocus required>
+                                           value="{{ $student->getPhone() }}" autofocus required>
                                 </div>
 
                                 <label for="education" class="col-md-4 control-label">Educatie</label>
 
                                 <div class="col-md-6">
                                     <input id="education" type="text" class="form-control" name="education"
-                                           value="{{ $student->education }}">
+                                           value="{{ $student->getEducation() }}">
                                 </div>
                             </div>
 
@@ -97,7 +97,7 @@
                                     @if(!empty($student->english) )
                                         <div class="col-md-6">
                                             <input id="english" type="text" class="form-control" name="english"
-                                                   value="{{ $student->english }}">
+                                                   value="{{ $student->getEnglish() }}">
                                         </div>
                                     @else
                                         <select name="english" class="form-control" id="english" selected>
@@ -116,8 +116,8 @@
                                     <div class="col-md-6">
                                         <input id="other_language" type="text" class="form-control"
                                                name="other_language"
-                                               @if(!empty($student->other_language) )
-                                               value="{{ $student->other_language }}"
+                                               @if(!empty($student->getOtherLanguage()) )
+                                               value="{{ $student->getOtherLanguage() }}"
                                                @else value=""
                                                 @endif
                                         >
@@ -128,10 +128,10 @@
                                 <label for="ms_office" class="col-md-4 control-label">Cunostinte MS Office</label>
 
                                 <div class="col-md-6">
-                                    @if(!empty($student->ms_office) )
+                                    @if(!empty($student->getMsOffice()) )
                                         <div class="col-md-6">
                                             <input id="ms_office" type="text" class="form-control" name="ms_office"
-                                                   value="{{ $student->ms_office }}">
+                                                   value="{{ $student->getMsOffice() }}">
                                         </div>
                                     @else
                                         <select name="ms_office" class="form-control" id="ms_office" selected>
@@ -146,10 +146,10 @@
                                 <label for="web" class="col-md-4 control-label">Cunostinte web</label>
 
                                 <div class="col-md-6">
-                                    @if(!empty($student->web) )
+                                    @if(!empty($student->getWeb()) )
                                         <div class="col-md-6">
                                             <input id="web" type="text" class="form-control" name="web"
-                                                   value="{{ $student->web }}">
+                                                   value="{{ $student->getWeb() }}">
                                         </div>
                                     @else
                                         <select name="web" class="form-control" id="web" selected>

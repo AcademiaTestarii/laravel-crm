@@ -76,8 +76,8 @@
         <h1 style="color: white; text-align: center">Contul tau</h1>
         <hr>
         <h2 style="color: white; text-align: center">Bine ai venit, <strong>{{ auth()->user()->name }}</strong></h2>
-        <h2 style="color: white; text-align: center">Te-ai inscris cu succes la cursul {{ $lastSignedUpClass->getTitle() }}</h2>
-        <h2 style="color: white; text-align: center">Data inceperii cursului: {{ $lastSignedUpClass->getRegistrationStartDate()->formatLocalized("%e %B, %Y") }}</h2>
+        <h2 style="color: white; text-align: center">Te-ai inscris cu succes la cursul {{ $currentSignedUpClass->getTitle() }}</h2>
+        <h2 style="color: white; text-align: center">Data inceperii cursului: {{ $currentSignedUpClass->getRegistrationStartDate()->formatLocalized("%e %B, %Y") }}</h2>
         <hr>
         <a href="/catalog" class="btn btn-primary">
             Inapoi la catalog
