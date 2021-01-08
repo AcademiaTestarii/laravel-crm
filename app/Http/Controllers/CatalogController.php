@@ -61,31 +61,13 @@ class CatalogController extends Controller
      */
     public function index(Request $request)
     {
-        $mainClassesIds = [];
-        $available      = '';
-        $classes        = $this->classesRepository->findAllBy(
+        $classes = $this->classesRepository->findAllBy(
             ['is_active' => 1],
             '=',
             'registration_start_date'
         );
 
-        foreach ($classes as $class) {
-            if ($class->getRegistrationStartDate() >= new \Carbon\Carbon()) {
-                if (!in_array($class->getMainClassId(), $mainClassesIds)) {
-                    $mainClassesIds[] = $class->getMainClassId();
-                }
-            }
-            $available = $class->getStudents() - $class->classStudents()->count();
-
-        }
-
-        return view('students.catalog')->with(
-            [
-                'classes'        => $classes,
-                'mainClassesIds' => $mainClassesIds,
-                'available'      => $available,
-            ]
-        );
+        return view('students.catalog')->with(['classes' => $classes]);
     }
 
     public function get($classId)
