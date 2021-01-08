@@ -125,13 +125,14 @@ background-color: #4c3391 !important;padding-left: 15px !important;padding-botto
                                                                 </span>
                                                                 <br />
 
-                                                                <span class="mb-10 text-gray-darkgray mr-10 font-13">Locuri disponibile: {{$available}} </span>
+
+                                                                <span class="mb-10 text-gray-darkgray mr-10 font-13">Locuri disponibile: {{$class->getStudents() - $class->classStudents()->count()}} </span>
 
                                                                 <hr class="mb-0" />
                                                                 <span class="mb-10 text-gray-darkgray mr-10 font-13">Cursuri viitoare:
                                                                     <br /><i
                                                                             class="fa fa-calendar mr-5 text-theme-colored"></i>
-{{--                                                                    {{ $class->nextClass()->getRegistrationStartDate()->formatLocalized("%e %B, %Y") }}--}}
+                                                                    {{--                                                                    {{ $class->nextClass()->getRegistrationStartDate()->formatLocalized("%e %B, %Y") }}--}}
                                                                     - {{ $class->getRegistrationEndDate()->formatLocalized("%e %B, %Y") }}
                                                                 </span>
                                                         </div>

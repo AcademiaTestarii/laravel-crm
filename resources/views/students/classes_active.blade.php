@@ -2,29 +2,29 @@
     @foreach($activeClasses as $active)
         <div class="row">
             <div class="col-md-6">
-                <h4> {{ $active->title }}</h4>
+                <h4> {{ $active->getTitle() }}</h4>
                 <p>
                     <strong>Data înscriere: </strong>
-                    {{ $active->registration_start_date }}
+                    {{ $active->getRegistrationStartDate() }}
                     <br />
 
-                    @if ($active->discount_price != "" && $active->discount_price != 0)
+                    @if ($active->getDiscountPrice() != "" && $active->getDiscountPrice() != 0)
                         <strong>Preț curs: </strong>
                         <del>
-                            <span class="amount">{{  $active->price }} Lei</span>
+                            <span class="amount">{{  $active->getPrice() }} Lei</span>
                         </del>
                         <strong><span
-                                    class="amount"> {{ $active->discount_price }} Lei</span></strong>
+                                    class="amount"> {{ $active->getDiscountPrice() }} Lei</span></strong>
                     @else
                         <strong>Preț curs: </strong>
                         <span
-                                class="amount">{{  $active->price }} Lei</span>
+                                class="amount">{{  $active->getPrice() }} Lei</span>
                     @endif
                 </p>
 
             </div>
             <div class="col-md-6">
-                @if ($active->resources_description != "")
+                @if ($active->getResourcesDescription() != "")
                     <div class="panel-group toggle accordion-theme-colored2 accordion-icon-right">
                         <div class="panel panel-default">
                             <div class="panel-heading">
@@ -40,7 +40,7 @@
                             <div id="togglea<?php echo $i;?>"
                                  class="panel-collapse collapse">
                                 <div class="panel-body resurs">
-                                    {{ $active->resources_description }}
+                                    {{ $active->getResourcesDescription() }}
                                 </div>
                             </div>
                         </div>
@@ -48,13 +48,13 @@
                 @endif
             </div>
             <div class="col-md-12">
-                @if($active->schedule_pdf != "")
-                    <a href="/documents/{{ $active->schedule_pdf }}"
+                @if($active->getSchedulePdf() != "")
+                    <a href="/documents/{{ $active->getSchedulePdf() }}"
                        target="_blank"
                        class="btn btn-gray btn-transparent btn-xs">Programa curs</a>
                 @endif
 
-                @if($active->requirements_description  != "")
+                @if($active->getRequirementsDescription()  != "")
                     | <a href="javascript:void()"
                          data-toggle="modal"
                          data-target=".bs-example-modal-lg2"
@@ -75,10 +75,10 @@
                                 <div class="pl-50 pr-50 pb-50">
                                     <h2 class="modal-title"
                                         id="myModalLabel3">Cerinte minime de participare la cursul:
-                                        <br /><?php echo $row_curs_activ['main_classes.title'];?>
+                                        <br />{{ $active->getTitle() }}
                                     </h2>
                                     <hr />
-                                    <?php echo $row_curs_activ['requirements_description'];?>
+                                    {{ $active->getRequirementsDescription() }}
                                 </div>
                             </div>
                         </div>
