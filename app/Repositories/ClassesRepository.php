@@ -35,22 +35,6 @@ class ClassesRepository extends Repository
         return $model->orderBy($column, $order)->get();
     }
 
-    public function orderByStartdate(int $mainClassId)
-    {
-        $classesByStartDate = $this->model::where('main_class_id', $mainClassId)
-                                          ->where('registration_start_date', '>', Carbon::now())->toDateTimeString()
-                                          ->orderBy('registration_start_date', 'asc')
-                                          ->limit(2)
-                                          ->get();
-
-        return $classesByStartDate;
-    }
-
-    public function getStudentsValue()
-    {
-        return $this->model->getStudents();
-    }
-
 }
 
 
