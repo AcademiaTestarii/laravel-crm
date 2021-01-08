@@ -86,19 +86,6 @@ class RegisterService
             );
         }
 
-        if ($user->isStudent()) {
-            $this->studentRepository->create(
-                [
-                    'user_id'    => $user->getId(),
-                    'first_name' => explode(" ", ($user["name"]))[0],
-                    'last_name'  => explode(" ", ($user["name"]))[1],
-                    'email'      => $user['email'],
-                    'is_active'  => 1 //de intrebat is active la inreg sau activat prin alte metoda
-
-                ]
-            );
-        }
-
         if ($user->isTrainer()) {
             $this->trainerRepository->findOneBy(
                 [
@@ -114,6 +101,16 @@ class RegisterService
         }
 
         if ($user->isStudent()) {
+            $this->studentRepository->create(
+                [
+                    'user_id'    => $user->getId(),
+                    'first_name' => explode(" ", ($user["name"]))[0],
+                    'last_name'  => explode(" ", ($user["name"]))[1],
+                    'email'      => $user['email'],
+
+                ]
+            );
+
             $this->studentRepository->findOneBy(
                 [
                     'email' => $userData['email'],
