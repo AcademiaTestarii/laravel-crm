@@ -8,6 +8,7 @@ use App\Repositories\ClassesRepository;
 use App\Repositories\ClassStudentRepository;
 use App\Repositories\StudentRepository;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
@@ -31,23 +32,25 @@ class DashboardController extends Controller
     }
 
 
-    public function studentDashboard()
+    public function studentDashboard(Request $request)
     {
-        $student           = $this->studentRepository->findByAuthId(Auth::id());
-        $classes           = $this->classesRepository->allOrderedBy('registration_start_date');
-        $lastSigned    = ClassStudent::where('student_id', $student->id)->orderBy('sign_up_date', 'desc')->first();
-        $lastSignedUpClass = Classes::where('registration_start_date', '>=', Carbon::now())->where('id', $lastSigned->class_id)->first();
+        $student = $this->studentRepository->findByAuthId(Auth::id());
+
+        $classes = $this->classesRepository->allOrderedBy('registration_start_date');
+
+        $lastSigned           = $this->classStudentRepository->findOneBy(['student_id' => $student->getId()])->orderBy('sign_up_date', 'desc')->first();
+        $currentSignedUpClass = $this->classesRepository->findOneBy(['id' => $lastSigned->getClassId()])->first();
 
         $activeClasses   = $this->classStudentRepository->activeClasses();
         $finishedClasses = $this->classStudentRepository->finishedClasses();
 
         return view('students.student_dashboard')->with(
             [
-                'classes'           => $classes,
-                'student'           => $student,
-                'activeClasses'     => $activeClasses,
-                'finishedClasses'   => $finishedClasses,
-                "lastSignedUpClass" => $lastSignedUpClass,
+                'classes'              => $classes,
+                'student'              => $student,
+                'activeClasses'        => $activeClasses,
+                'finishedClasses'      => $finishedClasses,
+                "currentSignedUpClass" => $currentSignedUpClass,
             ]
         );
     }
