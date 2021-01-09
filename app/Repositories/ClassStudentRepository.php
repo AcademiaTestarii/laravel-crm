@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\ClassStudent;
 use App\Repositories\StudentRepository;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class ClassStudentRepository extends Repository
 {
@@ -24,7 +25,7 @@ class ClassStudentRepository extends Repository
 
     public function activeClasses()
     {
-        $studentId = $this->model->getId();
+        $studentId = Auth::id();  //temp solution
 
         return $this->model::join('classes', 'class_id', '=', 'classes.id')
                            ->select('*')
@@ -36,7 +37,7 @@ class ClassStudentRepository extends Repository
 
     public function finishedClasses()
     {
-        $studentId = $this->model->getId();
+        $studentId = Auth::id();
 
         return $this->model::join('classes', 'class_id', '=', 'classes.id')
                            ->select('*')
