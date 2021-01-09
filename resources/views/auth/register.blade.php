@@ -12,7 +12,7 @@
 <body>
   @include('include/header-new')
   <main>
-    <div class="upt-form upt-form--login">
+    <div class="upt-form upt-form--resister">
       <form class="form-horizontal" role="form" method="POST" action="/register">
         @csrf
         <input id="name" type="text" name="name" value="{{ old('name') }}" autofocus class="upt-form__input" placeholder="Enter your name">

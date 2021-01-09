@@ -23,7 +23,7 @@
               your training business, no matter the topic you want to share.</p>
           </div>
           <div class="upt-section--hero__header__column">
-            <img class="upt-section--hero__header__description" src="images/hero.png" alt="">
+            <img class="upt-section--hero__header__description" src="{{asset('images/hero.png')}}" alt="">
           </div>
         </div>
         <div class="upt-section--hero__body">
@@ -55,7 +55,7 @@
             <ul class="upt-section__content__list">
               <li class="upt-section__content__list__item">
                 <span class="upt-section__content__list__item__icon">
-                  <img src="images/icon_1.svg" alt="">
+                  <img src="{{asset('images/icon_1.svg')}}" alt="">
                 </span>
                 <span class="upt-section__content__list__item__text">
                   Course analytics to help you grow
@@ -63,7 +63,7 @@
               </li>
               <li class="upt-section__content__list__item">
                 <span class="upt-section__content__list__item__icon">
-                  <img src="images/icon_2.svg" alt="">
+                  <img src="{{asset('images/icon_2.svg')}}" alt="">
                 </span>
                 <span class="upt-section__content__list__item__text">
                   Your dedicated site to promote
@@ -73,7 +73,7 @@
               </li>
               <li class="upt-section__content__list__item">
                 <span class="upt-section__content__list__item__icon">
-                  <img src="images/icon_3.svg" alt="">
+                  <img src="{{asset('images/icon_3.svg')}}" alt="">
                 </span>
                 <span class="upt-section__content__list__item__text">
                   Get paid for your delivered courses
@@ -81,7 +81,7 @@
               </li>
               <li class="upt-section__content__list__item">
                 <span class="upt-section__content__list__item__icon">
-                  <img src="images/icon_4.svg" alt="">
+                  <img src="{{asset('images/icon_4.svg')}}" alt="">
                 </span>
                 <span class="upt-section__content__list__item__text">
                   Course management
@@ -93,7 +93,7 @@
             <ul class="upt-section__content__list">
               <li class="upt-section__content__list__item">
                 <span class="upt-section__content__list__item__icon">
-                  <img src="images/icon_5.svg" alt="">
+                  <img src="{{asset('images/icon_5.svg')}}" alt="">
                 </span>
                 <span class="upt-section__content__list__item__text">
                   Live & self-paced course delivery
@@ -101,7 +101,7 @@
               </li>
               <li class="upt-section__content__list__item">
                 <span class="upt-section__content__list__item__icon">
-                  <img src="images/icon_6.svg" alt="">
+                  <img src="{{asset('images/icon_6.svg')}}" alt="">
                 </span>
                 <span class="upt-section__content__list__item__text">
                   Student management
@@ -109,7 +109,7 @@
               </li>
               <li class="upt-section__content__list__item">
                 <span class="upt-section__content__list__item__icon">
-                  <img src="images/icon_7.svg" alt="">
+                  <img src="{{asset('images/icon_7.svg')}}" alt="">
                 </span>
                 <span class="upt-section__content__list__item__text">
                   Course Gamification
@@ -117,7 +117,7 @@
               </li>
               <li class="upt-section__content__list__item">
                 <span class="upt-section__content__list__item__icon">
-                  <img src="images/icon_8.svg" alt="">
+                  <img src="{{asset('images/icon_8.svg')}}" alt="">
                 </span>
                 <span class="upt-section__content__list__item__text">
                   Dedicated support
@@ -139,7 +139,7 @@
           <div class="upt-section__footer__content">
             <div class="upt-section__footer__content__column">
               <div class="upt-testimonial">
-                <img src="images/profile_1.svg" class="upt-testimonial__image" />
+                <img src="{{asset('images/profile_1.svg')}}" class="upt-testimonial__image" />
                 <p class="upt-testimonial__text">
                   “Having started teaching in live classes, I am happy that I get to have an equal interaction with my students through Up-Grade. Using the platform helps me to deliver the same amount of value to my students.”</p>
                 <p class="upt-testimonial__autor">George (Co-founder Academia Testarii)</p>
@@ -147,7 +147,7 @@
             </div>
             <div class="upt-section__footer__content__column">
               <div class="upt-testimonial">
-                <img src="images/profile_2.svg" class="upt-testimonial__image" />
+                <img src="{{asset('images/profile_2.svg')}}" class="upt-testimonial__image" />
                 <p class="upt-testimonial__text">
                   “Using Up-grade, we managed to navigate the pandemic, while increasing our turnover. I am happy that, from a capability perspective, Up-grade offers us all the functionalities required to manage our business”</p>
                 <p class="upt-testimonial__autor">Florin (Co-founder Academia Testarii)</p>
@@ -166,7 +166,7 @@
         <div class="upt-section__top">
           <div class="upt-section__top__column">
             <div class="upt-benefitsbox">
-              <img src="images/icon_9.svg" class="upt-benefitsbox__image" />
+              <img src="{{asset('images/icon_9.svg')}}" class="upt-benefitsbox__image" />
               <div class="upt-benefitsbox__title">Social learning</div>
               <div class="upt-benefitsbox__text">Through live sessions and extensive
                 live practice capabilities,
@@ -177,7 +177,7 @@
           </div>
           <div class="upt-section__top__column">
             <div class="upt-benefitsbox">
-              <img src="images/icon_10.svg" class="upt-benefitsbox__image" />
+              <img src="{{asset('images/icon_10.svg')}}" class="upt-benefitsbox__image" />
               <div class="upt-benefitsbox__title">Active Learning</div>
               <div class="upt-benefitsbox__text">Be involved and engaged in your
                 learning experience.
@@ -186,7 +186,7 @@
           </div>
           <div class="upt-section__top__column">
             <div class="upt-benefitsbox">
-              <img src="images/icon_11.svg" class="upt-benefitsbox__image" />
+              <img src="{{asset('images/icon_11.svg')}}" class="upt-benefitsbox__image" />
               <div class="upt-benefitsbox__title">Gamification</div>
               <div class="upt-benefitsbox__text">Students engaged through our
                 gamification algorithms and tools are
@@ -197,7 +197,7 @@
           </div>
           <div class="upt-section__top__column">
             <div class="upt-benefitsbox">
-              <img src="images/icon_12.svg" class="upt-benefitsbox__image" />
+              <img src="{{asset('images/icon_12.svg')}}" class="upt-benefitsbox__image" />
               <div class="upt-benefitsbox__title">Extensive curricula</div>
               <div class="upt-benefitsbox__text">Whether it’s a profession related skill,
                 soft skill, compliance training,
@@ -215,7 +215,7 @@
           <button class="upt-section__bottom__button">START NOW</button>
           <div class="upt-section__bottom__carousel">
             <div class="upt-coursebox">
-              <img src="images/course_1.svg" class="upt-coursebox__image" />
+              <img src="{{asset('images/course_1.svg')}}" class="upt-coursebox__image" />
               <div class="upt-coursebox__title">INIŢIERE ÎN SOFTWARE<br>
                 TESTING</div>
               <div class="upt-coursebox__subtitle">NEXT COURSE</div>
@@ -225,7 +225,7 @@
               <button class="upt-coursebox__button">Enroll</button>
             </div>
             <div class="upt-coursebox">
-              <img src="images/course_2.svg" class="upt-coursebox__image" />
+              <img src="{{asset('images/course_2.svg')}}" class="upt-coursebox__image" />
               <div class="upt-coursebox__title">INIŢIERE ÎN TEST<br>
                 AUTOMATION: REST API & UI</div>
               <div class="upt-coursebox__subtitle">NEXT COURSE</div>
@@ -236,7 +236,7 @@
               <button class="upt-coursebox__button">Enroll</button>
             </div>
             <div class="upt-coursebox">
-              <img src="images/course_3.svg" class="upt-coursebox__image" />
+              <img src="{{asset('images/course_3.svg')}}" class="upt-coursebox__image" />
               <div class="upt-coursebox__title">ADVANCED SOFTWARE<br>
                 TESTING</div>
               <div class="upt-coursebox__subtitle">NEXT COURSE</div>
