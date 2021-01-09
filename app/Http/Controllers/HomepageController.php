@@ -67,6 +67,11 @@ class HomepageController extends Controller
         ]);
     }
 
+    public function getBlankIndex()
+    {
+        return view('hp');
+    }
+
     public function update(Request $request)
     {
         $requestData = $request->all();

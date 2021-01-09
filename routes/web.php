@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/', 'HomepageController@getBlankIndex')->name('hp');
+
 Route::get('register', 'Auth\AuthController@getRegister');
 Route::post('register', 'Auth\AuthController@postRegister');
 
@@ -19,7 +21,6 @@ Route::get('password/reset', 'Auth\AuthController@getPasswordReset');
 Route::post('password/reset', 'Auth\AuthController@postPasswordReset');
 
 Route::get('login', 'Auth\AuthController@getLogin')->name('login');
-Route::get('/', 'Auth\AuthController@getLogin');
 Route::post('login', 'Auth\AuthController@postLogin');
 
 Route::get('/account/activate/{hash}', 'Auth\AuthController@activate');
@@ -88,30 +89,30 @@ Route::get('catalog/{mainClassId}', 'CatalogController@get')->name('class_descri
 Route::get('catalog/{mainClassId}/class_signup', 'CatalogController@getData')->name('class_signup');
 Route::post('catalog/student/class_signup', 'CatalogController@update')->name('update_student');
 
-Route::get('account', function() {
+Route::get('account', function () {
     return '';
 });
 
-Route::get('trainer/settings/', function() {
+Route::get('trainer/settings/', function () {
     return '';
 });
 
-Route::get('trainer/calendar/', function() {
+Route::get('trainer/calendar/', function () {
     return '';
 });
 
-Route::get('resources', function() {
+Route::get('resources', function () {
     return '';
 });
 
-Route::get('/student/catalog', function() {
+Route::get('/student/catalog', function () {
     return '';
 });
 
-Route::get('/student/classes', function() {
+Route::get('/student/classes', function () {
     return '';
 });
 
-Route::get('/student/my_classes', function() {
+Route::get('/student/my_classes', function () {
     return '';
 });
