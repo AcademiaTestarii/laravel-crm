@@ -191,11 +191,11 @@
                                 </div>
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="payment_type" id="payment2"
-                                           value="2 rate">
+                                           value="doua_rate">
                                     <label class="form-check-label" for="payment_type">2 rate</label>
 
                                     <input class="form-check-input" type="radio" name="payment_type" id="payment3"
-                                           value="3 rate">
+                                           value="trei_rate">
                                     <label class="form-check-label" for="payment_type">3 rate</label>
 
                                     <input class="form-check-input" type="radio" name="payment_type" id="payment_full"
