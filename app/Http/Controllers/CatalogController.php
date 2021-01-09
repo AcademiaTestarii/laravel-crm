@@ -4,14 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Classes;
 use App\Models\MainClass;
-use App\Models\Student;
 use App\Repositories\ClassesRepository;
 use App\Repositories\ClassStudentRepository;
 use App\Repositories\FeedbackRepository;
 use App\Repositories\MainClassRepository;
 use App\Repositories\TrainerRepository;
 use App\Services\ClassService;
-use Carbon\Carbon;
 use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
