@@ -29,7 +29,6 @@ Route::get('certificate/{id}', 'FeedbackController@getCertificateDetails');
 
 Route::middleware('auth:api')->group(function () {
     Route::get('logout', 'Auth\AuthController@logOut')->name('logout');
-    //Route::get('blank_dashboard', 'DashboardController@getBlankDashboard')->name('blank-dashboard');
 
     Route::group(['middleware' => ['ability:can-view-all']], function () {
         Route::get('dashboard', 'DashboardController@index')->name('dashboard');

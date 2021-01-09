@@ -120,8 +120,9 @@ class CatalogController extends Controller
             ]
         );
 
-        $this->studentRepository
-            ->findOneBy(['id' => $request->get('studentId')])->update(
+        $student = $this->studentRepository
+            ->findOneBy(['id' => $request->get('studentId')]);
+        $student->update(
                 [
                     'first_name'     => $request->get('first_name'),
                     'last_name'      => $request->get('last_name'),
@@ -140,7 +141,6 @@ class CatalogController extends Controller
                 ]
             );
 
-        $student = $this->studentRepository->findByAuthId(Auth::id());
         $student->classStudents()->create(
             [
                 'student_id'     => $request->get('studentId'),

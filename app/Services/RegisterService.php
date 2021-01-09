@@ -110,18 +110,6 @@ class RegisterService
 
                 ]
             );
-
-            $this->studentRepository->findOneBy(
-                [
-                    'email' => $userData['email'],
-                ]
-            )->update(
-                [
-                    'user_id' => $user->getId(),
-                ]
-            );
-
-            $this->activateUser($user);
         }
 
 
