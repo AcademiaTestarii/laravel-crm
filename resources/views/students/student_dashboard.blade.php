@@ -9,7 +9,7 @@
         <meta name="keywords" content="" />
 
         <!-- Page Title -->
-        <title>{{ auth()->user()->name }}'s dashboard</title>
+        <title>{{ $student->getFirstName() }}'s dashboard</title>
 
         <!-- Favicons -->
         <link rel="apple-touch-icon" sizes="57x57" href="{{asset('favicon/apple-icon-57x57.png')}}">
@@ -25,7 +25,7 @@
         <link rel="icon" type="image/png" sizes="32x32" href="{{asset('favicon/favicon-32x32.png')}}">
         <link rel="icon" type="image/png" sizes="96x96" href="{{asset('favicon/favicon-96x96.png')}}">
         <link rel="icon" type="image/png" sizes="16x16" href="{{asset('favicon/favicon-16x16.png')}}">
-        <link rel="manifest" href="favicon/manifest.json">
+        <link rel="manifest" href="{{asset('favicon/manifest.json')}}">
         <meta name="msapplication-TileColor" content="#ffffff">
         <meta name="msapplication-TileImage" content="favicon/ms-icon-144x144.png">
         <meta name="theme-color" content="#ffffff">
@@ -83,8 +83,8 @@
                 <!--  <div id="disable-preloader" class="btn btn-default btn-sm">Treci peste preloader</div>-->
             </div>
             <header id="header" class="header modern-header modern-header-white">
-                @include("top_header.blade.php")
-                @include("top_menu.blade.php")
+{{--                @include("include.temp_includes.top_header")--}}
+{{--                @include("include.temp_includes.top_menu")--}}
             </header>
             <div class="main-content">
                 <section class="inner-header divider parallax layer-overlay overlay-dark-5"
@@ -127,7 +127,7 @@
                                         <dt><i class="fa fa-map-marker text-theme-colored mt-5 font-15"></i></dt>
                                         <dd>
                                             <h5 class="mt-0">Ultima logare:</h5>
-                                            {{ $student->getActivity()->formatLocalized("%e %B, %Y") ?: 'Astazi' }}
+                                            {{ $student->activity ?: 'Astazi' }}
 
                                         </dd>
                                     </dl>
@@ -147,7 +147,8 @@
                             </div>
                             <div class="col-md-9">
                                 <div class="icon-box mb-0 p-0">
-                                    <div class="panel-group accordion-theme-colored accordion-icon-right" id="accordion16" role="tablist">
+                                    <div class="panel-group accordion-theme-colored accordion-icon-right"
+                                         id="accordion16" role="tablist">
                                         <div class="panel panel-default">
                                             <div class="panel-heading" role="tab" id="headingCursuri">
                                                 <h6 class="panel-title">
@@ -172,240 +173,188 @@
                                                             </ul>
                                                             <div id="myTabContent" class="tab-content">
                                                                 <div class="tab-pane fade in active" id="active">
-                                                                    <?php
-                                                                    $sql_cursuri_active = mysqli_query(
-                                                                        $link,
-                                                                        "SELECT * FROM `class_students` LEFT JOIN `classes` ON `class_students`.`class_id`=`classes`.`id` LEFT JOIN `main_classes` ON `classes`.`main_class_id`=`main_classes`.`id` WHERE `class_students`.`student_id`=" . $row['id'] . " AND `registration_end_date`>= NOW() ORDER BY `registration_start_date` ASC"
-                                                                    );
-                                                                    $i = 0;
-                                                                    while ($row_curs_activ = mysqli_fetch_assoc(
-                                                                        $sql_cursuri_active
-                                                                    )) {
-                                                                    $datesSqlactiv = mysqli_query(
-                                                                        $link,
-                                                                        "SELECT MIN(`date`) AS `start1`, MAX(`date`) AS `end1` FROM `class_dates` WHERE `class_id`=" . $row_curs_activ['class_id']
-                                                                    );
-                                                                    $datesRowactiv = mysqli_fetch_assoc($datesSqlactiv);
-                                                                    ?>
-                                                                    <div class="row">
-                                                                        <div class="col-md-6">
-                                                                            <h4><?php echo $row_curs_activ['main_classes.title'];?></h4>
-                                                                            <p>
-                                                                                <strong>Data înscriere: </strong> <?php echo strftime(
-                                                                                    "%e %B %Y la %H:%M:%S",
-                                                                                    strtotime(
-                                                                                        $row_curs_activ['registration_start_date']
-                                                                                    )
-                                                                                );?><br />
-                                                                                <strong>Cursul începe pe: </strong> <?php echo strftime(
-                                                                                    "%e %B %Y",
-                                                                                    strtotime($datesRowactiv['start1'])
-                                                                                );?><br />
 
-                                                                                <? if ($row_curs_activ['discount_price'] != "" && $row_curs_activ['discount_price'] != 0) { ?>
-                                                                                <strong>Preț curs: </strong>
-                                                                                <del>
-                                                                                    <span class="amount"><?php echo $row_curs_activ['price'];?> Lei</span>
-                                                                                </del>
-                                                                                <strong><span
-                                                                                            class="amount"><?php echo $row_curs_activ['discount_price'];?> Lei</span></strong>
-                                                                                <?php } else { ?>
-                                                                                <strong>Preț curs: </strong><span
-                                                                                        class="amount"><?php echo $row_curs_activ['price'];?> Lei</span>
-                                                                                <?php } ?>
-                                                                            </p>
-                                                                        </div>
-                                                                        <div class="col-md-6">
-                                                                            <?php if ($row_curs_activ['resources_description'] != "") { ?>
-                                                                            <div class="panel-group toggle accordion-theme-colored2 accordion-icon-right">
-                                                                                <div class="panel panel-default">
-                                                                                    <div class="panel-heading">
-                                                                                        <div class="panel-title"><a
-                                                                                                    class="collapsed"
-                                                                                                    data-toggle="collapse"
-                                                                                                    href="#togglea<?php echo $i;?>"
-                                                                                                    class=""><span
-                                                                                                        class="open-sub"></span>Resurse curs</a>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div id="togglea<?php echo $i;?>"
-                                                                                         class="panel-collapse collapse">
-                                                                                        <div class="panel-body resurs">
-                                                                                            <?php echo $row_curs_activ['resources_description'];?>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
+                                                                    @foreach($activeClasses as $active)
+                                                                        <div class="row">
+                                                                            <div class="col-md-6">
+                                                                                <h4>{{ $active->title }}</h4>
+                                                                                <p>
+                                                                                    <strong>Data înscriere: </strong>
+                                                                                    {{-- TODO -avem un get pt sign_up_date? --}}
+                                                                                    {{ $active->sign_up_date }}
+                                                                                    <br />
+                                                                                    <strong>Cursul începe pe: </strong> {{ $active->resgistration_start_date }}
+                                                                                    <br />
+                                                                                    @if(!empty($active->discount_price && $active->discount_price != 0))
+                                                                                        <strong>Preț curs: </strong>
+                                                                                        <del>
+                                                                                            <span class="amount">{{ $active->price }} Lei</span>
+                                                                                        </del>
+                                                                                        <strong><span
+                                                                                                    class="amount">{{ $active->discount_price }} Lei</span></strong>
+                                                                                    @else
+                                                                                        <strong>Preț curs: </strong>
+                                                                                        <span
+                                                                                                class="amount">{{ $active->price }} Lei</span>
+                                                                                    @endif
+                                                                                </p>
                                                                             </div>
-                                                                            <?php } ?>
-                                                                        </div>
-                                                                        <div class="col-md-12">
-                                                                            <?php if ($row_curs_activ['schedule_pdf'] != "") { ?>
-                                                                            <a href="<?php echo $crmHost; ?>/documents/<?php echo $row_curs_activ['schedule_pdf'];?>"
-                                                                               target="_blank"
-                                                                               class="btn btn-gray btn-transparent btn-xs">Programa curs</a>
-                                                                            <?php } ?>
+                                                                            <div class="col-md-6">
+                                                                                @if(!empty($active->resources_description))
+                                                                                    <div class="panel-group toggle accordion-theme-colored2 accordion-icon-right">
+                                                                                        <div class="panel panel-default">
+                                                                                            <div class="panel-heading">
+                                                                                                <div class="panel-title">
+                                                                                                    <a data-toggle="collapse"
+                                                                                                       href="#togglea"
+                                                                                                       class=""><span
+                                                                                                                class="open-sub collapse"></span>Resurse curs</a>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div id="togglea#}"
+                                                                                                 class="panel-collapse collapsed">
+                                                                                                <div class="panel-body resurs">
+                                                                                                    {{ $active->resources_description }}
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                @endif
+                                                                            </div>
+                                                                            <div class="col-md-12">
+                                                                                @if(!empty($active->schedule_pdf))
+                                                                                    {{-- TODO de definit  $crmHost--}}
+                                                                                    <a href="{{-- ?php echo $crmHost; ? --}}/documents/{{ $active->schedule_pdf }}"
+                                                                                       target="_blank"
+                                                                                       class="btn btn-gray btn-transparent btn-xs">Programa curs</a>
+                                                                                @endif
 
-                                                                            <?php if ($row_curs_activ['requirements_description'] != "") { ?>
-                                                                            | <a href="javascript:void()"
-                                                                                 data-toggle="modal"
-                                                                                 data-target=".bs-example-modal-lg2"
-                                                                                 class="btn btn-gray btn-transparent btn-xs">Conditii participare</a>
-                                                                            <div class="modal fade bs-example-modal-lg2"
-                                                                                 tabindex="-1" role="dialog"
-                                                                                 aria-labelledby="myLargeModalLabe2">
-                                                                                <div class="modal-dialog modal-lg">
-                                                                                    <div class="modal-content">
-                                                                                        <div class="modal-header">
-                                                                                            <button type="button"
-                                                                                                    class="close"
-                                                                                                    data-dismiss="modal"
-                                                                                                    aria-label="Inchide">
-                                                                                                <span aria-hidden="true">&times;</span>
-                                                                                            </button>
-                                                                                        </div>
-                                                                                        <div class="pl-50 pr-50 pb-50">
-                                                                                            <h2 class="modal-title"
-                                                                                                id="myModalLabel3">Cerinte minime de participare la cursul:
-                                                                                                <br /><?php echo $row_curs_activ['main_classes.title'];?>
-                                                                                            </h2>
-                                                                                            <hr />
-                                                                                            <?php echo $row_curs_activ['requirements_description'];?>
+                                                                                @if(!empty($active->requirement_description))
+                                                                                    | <a href="javascript:void(0)"
+                                                                                         data-toggle="modal"
+                                                                                         data-target=".bs-example-modal-lg2"
+                                                                                         class="btn btn-gray btn-transparent btn-xs">Conditii participare</a>
+                                                                                    <div class="modal fade bs-example-modal-lg2"
+                                                                                         tabindex="-1" role="dialog"
+                                                                                         aria-labelledby="myLargeModalLabe2">
+                                                                                        <div class="modal-dialog modal-lg">
+                                                                                            <div class="modal-content">
+                                                                                                <div class="modal-header">
+                                                                                                    <button type="button"
+                                                                                                            class="close"
+                                                                                                            data-dismiss="modal"
+                                                                                                            aria-label="Inchide">
+                                                                                                        <span aria-hidden="true">&times;</span>
+                                                                                                    </button>
+                                                                                                </div>
+                                                                                                <div class="pl-50 pr-50 pb-50">
+                                                                                                    <h2 class="modal-title"
+                                                                                                        id="myModalLabel3">Cerinte minime de participare la cursul:
+                                                                                                        <br />{{ $active->title }}
+                                                                                                    </h2>
+                                                                                                    <hr />
+                                                                                                    {{ $active->requirement_description }}
+                                                                                                </div>
+                                                                                            </div>
                                                                                         </div>
                                                                                     </div>
-                                                                                </div>
+                                                                                @endif
                                                                             </div>
-                                                                            <?php } ?>
                                                                         </div>
-                                                                    </div>
+                                                                    @endforeach
                                                                     <hr />
-                                                                    <?php $i++;} ?>
                                                                 </div>
 
                                                                 <div class="tab-pane fade" id="inactive">
-                                                                    <?php
-                                                                    $sql_cursuri_inactive = mysqli_query(
-                                                                        $link,
-                                                                        "SELECT * FROM `class_students` LEFT JOIN `classes` ON `class_students`.`class_id`=`classes`.`id` LEFT JOIN `main_classes` ON `classes`.`main_class_id`=`main_classes`.`id` WHERE `class_students`.`student_id`=" . $row['id'] . " AND `registration_end_date`< NOW() ORDER BY `registration_start_date` ASC"
-                                                                    );
-                                                                    $j = 0;
-                                                                    while ($row_curs_inactiv = mysqli_fetch_assoc(
-                                                                        $sql_cursuri_inactive
-                                                                    )) {
-                                                                    $datesSqlinactiv = mysqli_query(
-                                                                        $link,
-                                                                        "SELECT MIN(`date`) AS `start2`, MAX(`date`) AS `end2` FROM `class_dates` WHERE `class_id`=" . $row_curs_inactiv['class_id']
-                                                                    );
-                                                                    $datesRowinactiv = mysqli_fetch_assoc(
-                                                                        $datesSqlinactiv
-                                                                    );
-                                                                    ?>
-
-                                                                    <div class="row">
-                                                                        <div class="col-md-6">
-                                                                            <h4><?php echo $row_curs_inactiv['main_classes.title'];?></h4>
-                                                                            <p>
-                                                                                <strong>Data înscriere: </strong> <?php echo strftime(
-                                                                                    "%e %B %Y la %H:%M:%S",
-                                                                                    strtotime(
-                                                                                        $row_curs_inactiv['registration_start_date']
-                                                                                    )
-                                                                                );?><br />
-                                                                                <strong>Cursul începe pe: </strong> <?php echo strftime(
-                                                                                    "%e %B %Y",
-                                                                                    strtotime(
-                                                                                        $datesRowinactiv['start2']
-                                                                                    )
-                                                                                );?><br />
-                                                                                <strong>Preț curs: </strong> <?php echo number_format(
-                                                                                    $row_curs_inactiv['price']
-                                                                                );?> Lei
-                                                                            </p>
-                                                                        </div>
-                                                                        <div class="col-md-6">
-                                                                            <?php if ($row_curs_inactiv['resources_description'] != "") { ?>
-                                                                            <div class="panel-group toggle accordion-theme-colored2 accordion-icon-right">
-                                                                                <div class="panel panel-default">
-                                                                                    <div class="panel-heading">
-                                                                                        <div class="panel-title"><a
-                                                                                                    class="collapsed"
-                                                                                                    data-toggle="collapse"
-                                                                                                    href="#toggle<?php echo $j;?>"
-                                                                                                    class=""><span
-                                                                                                        class="open-sub"></span>Resurse curs</a>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div id="toggle<?php echo $j;?>"
-                                                                                         class="panel-collapse collapse">
-                                                                                        <div class="panel-body resurs">
-                                                                                            <?php echo $row_curs_inactiv['resources_description'];?>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
+                                                                    @foreach($finishedClasses as $finished)
+                                                                        <div class="row">
+                                                                            <div class="col-md-6">
+                                                                                <h4>{{ $finished->title }}</h4>
+                                                                                <p>
+                                                                                    <strong>Data înscriere: </strong>
+                                                                                    {{ $finished->sign_up_date}}
+                                                                                    <br />
+                                                                                    <strong>Cursul începe pe: </strong> {{ $finished->resgistration_start_date }}
+                                                                                    <br />
+                                                                                    @if(!empty($finished->discount_price && $finished->discount_price != 0))
+                                                                                        <strong>Preț curs: </strong>
+                                                                                        <del>
+                                                                                            <span class="amount">{{ $finished->price }} Lei</span>
+                                                                                        </del>
+                                                                                        <strong><span
+                                                                                                    class="amount">{{ $finished->discount_price }} Lei</span></strong>
+                                                                                    @else
+                                                                                        <strong>Preț curs: </strong>
+                                                                                        <span
+                                                                                                class="amount">{{ $finished->price }} Lei</span>
+                                                                                    @endif
+                                                                                </p>
                                                                             </div>
-                                                                            <?php } ?>
-                                                                        </div>
-                                                                        <div class="col-md-12">
-                                                                            <?php if ($row_curs_inactiv['pdf_programa'] != "") { ?>
-                                                                            <a href="<?php echo $crmHost; ?>/documents/<?php echo $row_curs_inactiv['pdf_programa'];?>"
-                                                                               target="_blank"
-                                                                               class="btn btn-gray btn-transparent btn-xs">Programa curs</a>
-                                                                            <?php } ?>
-
-                                                                            <?php if ($row_curs_inactiv['schedule_pdf'] != "") { ?>
-                                                                            | <a href="javascript:void()"
-                                                                                 data-toggle="modal"
-                                                                                 data-target=".bs-example-modal-lg2"
-                                                                                 class="btn btn-gray btn-transparent btn-xs">Conditii participare</a>
-                                                                            <div class="modal fade bs-example-modal-lg2"
-                                                                                 tabindex="-1" role="dialog"
-                                                                                 aria-labelledby="myLargeModalLabe2">
-                                                                                <div class="modal-dialog modal-lg">
-                                                                                    <div class="modal-content">
-                                                                                        <div class="modal-header">
-                                                                                            <button type="button"
-                                                                                                    class="close"
-                                                                                                    data-dismiss="modal"
-                                                                                                    aria-label="Inchide">
-                                                                                                <span aria-hidden="true">&times;</span>
-                                                                                            </button>
-                                                                                        </div>
-                                                                                        <div class="pl-50 pr-50 pb-50">
-                                                                                            <h2 class="modal-title"
-                                                                                                id="myModalLabel3">Cerinte minime de participare la cursul:
-                                                                                                <br /><?php echo $row_curs_inactiv['main_classes.title'];?>
-                                                                                            </h2>
-                                                                                            <hr />
-                                                                                            <?php echo $row_curs_inactiv['requirements_description'];?>
+                                                                            <div class="col-md-6">
+                                                                                @if(!empty($finished->resources_description))
+                                                                                    <div class="panel-group toggle accordion-theme-colored2 accordion-icon-right">
+                                                                                        <div class="panel panel-default">
+                                                                                            <div class="panel-heading">
+                                                                                                <div class="panel-title">
+                                                                                                    <a
+                                                                                                            data-toggle="collapse"
+                                                                                                            href="#togglea"
+                                                                                                            class=""><span
+                                                                                                                class="open-sub collapsed"></span>Resurse curs</a>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div id="togglea"
+                                                                                                 class="panel-collapse collapse">
+                                                                                                <div class="panel-body resurs">
+                                                                                                    {{ $finished->resources_description }}
+                                                                                                </div>
+                                                                                            </div>
                                                                                         </div>
                                                                                     </div>
-                                                                                </div>
+                                                                                @endif
                                                                             </div>
-                                                                            <?php } ?>
+                                                                            <div class="col-md-12">
+                                                                                @if(!empty($finished->schedule_pdf))
+                                                                                    {{-- TODO de definit  $crmHost--}}
+                                                                                    <a href="{{-- ?php echo $crmHost; ? --}}/documents/{{ $finished->schedule_pdf }}"
+                                                                                       target="_blank"
+                                                                                       class="btn btn-gray btn-transparent btn-xs">Programa curs</a>
+                                                                                @endif
 
-                                                                            <?php
-                                                                            $sql_feedback = "SELECT * FROM `feedback` WHERE `student_id`=" . $row['id'];
-                                                                            $query_feedback = mysqli_query(
-                                                                                $link,
-                                                                                $sql_feedback
-                                                                            );
-                                                                            if (mysqli_num_rows($query_feedback) > 0) {
-                                                                            $row_feedback = mysqli_fetch_array(
-                                                                                $query_feedback
-                                                                            );
-                                                                            ?>
-                                                                            |
-                                                                            <a href="feedback.php?id=<?php echo $row_feedback['link'];?>"
-                                                                               target="_blank"
-                                                                               class="btn btn-gray btn-transparent btn-xs">Feedback curs</a>
-                                                                            |
-                                                                            <a href="certificat.php?id=<?php echo $row_feedback['link'];?>"
-                                                                               target="_blank"
-                                                                               class="btn btn-gray btn-transparent btn-xs">Certificat de ablosvire curs</a>
-                                                                            <?php } ?>
+                                                                                @if(!empty($finished->requirement_description))
+                                                                                    | <a href="javascript:void(0)"
+                                                                                         data-toggle="modal"
+                                                                                         data-target=".bs-example-modal-lg2"
+                                                                                         class="btn btn-gray btn-transparent btn-xs">Conditii participare</a>
+                                                                                    <div class="modal fade bs-example-modal-lg2"
+                                                                                         tabindex="-1" role="dialog"
+                                                                                         aria-labelledby="myLargeModalLabe2">
+                                                                                        <div class="modal-dialog modal-lg">
+                                                                                            <div class="modal-content">
+                                                                                                <div class="modal-header">
+                                                                                                    <button type="button"
+                                                                                                            class="close"
+                                                                                                            data-dismiss="modal"
+                                                                                                            aria-label="Inchide">
+                                                                                                        <span aria-hidden="true">&times;</span>
+                                                                                                    </button>
+                                                                                                </div>
+                                                                                                <div class="pl-50 pr-50 pb-50">
+                                                                                                    <h2 class="modal-title"
+                                                                                                        id="myModalLabel3">Cerinte minime de participare la cursul:
+                                                                                                        <br />{{ $finished->title }}
+                                                                                                    </h2>
+                                                                                                    <hr />
+                                                                                                    {{ $finished->requirement_description }}
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                @endif
+                                                                            </div>
                                                                         </div>
-                                                                    </div>
+                                                                    @endforeach
                                                                     <hr />
-                                                                    <?php $j++; } ?>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -429,98 +378,104 @@
 
                                                         <!-- Register Form Starts -->
                                                         <form id="profil" name="profil" class="reservation-form"
-                                                              method="post" action="includes/profil.php"
+                                                              method="post" action="/student_dashboard"
                                                               novalidate="novalidate" enctype="multipart/form-data">
+
+                                                            <input type="hidden" value="{{ $student->getId() }}"
+                                                                   name='studentId'>
                                                             <div class="row">
                                                                 <div class="col-sm-4">
-                                                                    <div class="form-group mb-30"><label>Nume</label>
-                                                                        <input placeholder="Nume" id="nume" name="nume"
+                                                                    <div class="form-group mb-30"><label
+                                                                                for="last_name">Nume</label>
+                                                                        <input placeholder="Nume" id="last_name"
+                                                                               name="last_name"
                                                                                required="" class="form-control"
                                                                                aria-required="true" type="text"
-                                                                               value="<?php echo $row['first_name'];?>">
+                                                                               value="{{ $student->getLastName() }}">
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-4">
                                                                     <div class="form-group mb-30"><label>Prenume</label>
-                                                                        <input placeholder="Prenume" id="prenume"
-                                                                               name="prenume" required=""
+                                                                        <input placeholder="Prenume" id="first_name"
+                                                                               name="first_name" required=""
                                                                                class="form-control" aria-required="true"
                                                                                type="text"
-                                                                               value="<?php echo $row['last_name'];?>">
+                                                                               value="{{ $student->getFirstName() }}">
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-4">
                                                                     <div class="form-group mb-30">
                                                                         <label>Data naștere</label>
                                                                         <input placeholder="Data naștere"
-                                                                               id="data_nastere" name="data_nastere"
+                                                                               id="date_of_birth" name="date_of_birth"
                                                                                required="" class="form-control"
                                                                                aria-required="true" type="date"
-                                                                               value="<?php echo $row['date_of_birth'];?>">
+                                                                               value="{{ $student->getDateOfBirth() }}">
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-4">
                                                                     <div class="form-group mb-30"><label>Adresă</label>
                                                                         <input placeholder="O folosim pentru factură"
-                                                                               id="adresa" name="adresa" required=""
+                                                                               id="address" name="address" required=""
                                                                                class="form-control" aria-required="true"
                                                                                type="text"
-                                                                               value="<?php echo $row['address'];?>">
+                                                                               value="{{ $student->getAddress() }}">
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-4">
                                                                     <div class="form-group mb-30">
                                                                         <label>Localitate</label>
                                                                         <input placeholder="O folosim pentru factură"
-                                                                               id="localitate" name="localitate"
+                                                                               id="city" name="city"
                                                                                required="" class="form-control"
                                                                                aria-required="true" type="text"
-                                                                               value="<?php echo $row['city'];?>">
+                                                                               value="{{ $student->getCity() }}">
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-4">
                                                                     <div class="form-group mb-30"><label>Judet</label>
                                                                         <input placeholder="Îl folosim pentru factură"
-                                                                               id="judet" name="judet" required=""
+                                                                               id="county" name="county" required=""
                                                                                class="form-control" aria-required="true"
                                                                                type="text"
-                                                                               value="<?php echo $row['county'];?>">
+                                                                               value="{{ $student->getCounty() }}">
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-6">
                                                                     <div class="form-group mb-30">
                                                                         <label>Companie</label>
                                                                         <input placeholder="Daca esti angajat(ă)"
-                                                                               id="companie" name="companie"
+                                                                               id="company" name="company"
                                                                                class="form-control" type="text"
-                                                                               value="<?php echo $row['company'];?>">
+                                                                               value="{{ $student->getCompany() }}">
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-6">
                                                                     <div class="form-group mb-30"><label>Poziție</label>
                                                                         <input placeholder="Daca esti angajat(ă)"
-                                                                               id="pozitie" name="pozitie"
+                                                                               id="job_title" name="job_title"
                                                                                class="form-control" type="text"
-                                                                               value="<?php echo $row['job_title'];?>">
+                                                                               value="{{ $student->getJob() }}">
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-6">
                                                                     <div class="form-group mb-30"><label>Telefon</label>
-                                                                        <input placeholder="Telefon" id="telefon"
-                                                                               name="telefon" required=""
+                                                                        <input placeholder="Telefon" id="phone"
+                                                                               name="phone" required=""
                                                                                class="form-control" aria-required="true"
                                                                                type="text"
-                                                                               value="<?php echo $row['phone'];?>">
+                                                                               value="{{ $student->getPhone() }}">
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-6">
-                                                                    <div class="form-group mb-30"><label>Email</label>
-                                                                        <small>Adresa de email nu poate fi schimbată<small>
-                                                                                <input disabled placeholder="Email"
-                                                                                       id="email" name="email"
-                                                                                       class="form-control" required=""
-                                                                                       aria-required="true" type="email"
-                                                                                       value="<?php echo $row['email'];?>">
+                                                                    <div class="form-group mb-30">
+                                                                        <label>Email</label>
+                                                                        <small>Adresa de email nu poate fi schimbată</small>
+                                                                        <input disabled placeholder="Email" id="email"
+                                                                               name="email" class="form-control"
+                                                                               required="" aria-required="true"
+                                                                               type="email"
+                                                                               value="{{ $student->getEmail() }}">
                                                                     </div>
                                                                 </div>
 
@@ -531,7 +486,7 @@
                                                                         <input name="action" class="form-control"
                                                                                value="profil" type="hidden">
                                                                         <input name="cursant" class="form-control"
-                                                                               value="<?php echo $row['id'];?>"
+                                                                               value="{{ $student->getId() }}"
                                                                                type="hidden">
                                                                         <button type="submit"
                                                                                 class="btn btn-colored btn-block btn-theme-colored2 text-white btn-lg btn-flat"
@@ -545,11 +500,11 @@
                                                         <script type="text/javascript">
                                                             $("#profil").validate({
                                                                                       submitHandler : function (form) {
-                                                                                          var form_btn        = $(form).find('button[type="submit"]');
-                                                                                          var form_result_div = '#form-result';
+                                                                                          let form_btn        = $(form).find('button[type="submit"]');
+                                                                                          let form_result_div = '#form-result';
                                                                                           $(form_result_div).remove();
                                                                                           form_btn.before('<div id="form-result" class="alert alert-success" role="alert" style="display: none;"></div>');
-                                                                                          var form_btn_old_msg = form_btn.html();
+                                                                                          let form_btn_old_msg = form_btn.html();
                                                                                           form_btn.html(form_btn.prop('disabled', true).data("loading-text"));
                                                                                           $(form).ajaxSubmit({
                                                                                                                  dataType : 'json',
@@ -588,7 +543,7 @@
                                                     <div class="panel-body">
                                                         <form id="schimbaparola" name="schimbaparola"
                                                               class="reservation-form" method="post"
-                                                              action="includes/profil.php" novalidate="novalidate"
+                                                              action="/student_dashboard" novalidate="novalidate"
                                                               autocomplete="off">
                                                             <div class="row">
                                                                 <div class="col-sm-12">
@@ -608,7 +563,7 @@
                                                                         <input name="action" class="form-control"
                                                                                value="schimbaparola" type="hidden">
                                                                         <input name="cursant" class="form-control"
-                                                                               value="<?php echo $row['id'];?>"
+                                                                               value="{{ $student->getId() }}"
                                                                                type="hidden">
                                                                         <button type="submit"
                                                                                 class="btn btn-colored btn-block btn-theme-colored2 text-white btn-lg btn-flat"
@@ -622,11 +577,11 @@
                                                         <script type="text/javascript">
                                                             $("#schimbaparola").validate({
                                                                                              submitHandler : function (form) {
-                                                                                                 var form_btn        = $(form).find('button[type="submit"]');
-                                                                                                 var form_result_div = '#form-result';
+                                                                                                 let form_btn        = $(form).find('button[type="submit"]');
+                                                                                                 let form_result_div = '#form-result';
                                                                                                  $(form_result_div).remove();
                                                                                                  form_btn.before('<div id="form-result" class="alert alert-success" role="alert" style="display: none;"></div>');
-                                                                                                 var form_btn_old_msg = form_btn.html();
+                                                                                                 let form_btn_old_msg = form_btn.html();
                                                                                                  form_btn.html(form_btn.prop('disabled', true).data("loading-text"));
                                                                                                  $(form).ajaxSubmit({
                                                                                                                         dataType : 'json',
@@ -663,18 +618,20 @@
                                                      aria-expanded="false">
                                                     <div class="panel-body">
                                                         <form id="preferinte" name="preferinte" class="reservation-form"
-                                                              method="post" action="includes/profil.php"
+                                                              method="post" action="i/student_dashboard"
                                                               novalidate="novalidate">
                                                             <div class="row">
                                                                 <div class="col-sm-12">
                                                                     <div class="checkbox tab-content">
                                                                         <label><input type="checkbox" value=""
-                                                                                      name="promotii" <?php echo($row['promotions'] == 1 ? "checked" : "");?>> Discounturi și promoții Academia Testării
+                                                                                      name="promotii"
+                                                                            {{ $student->getPromotions() == 1 ? "checked" : ""}}> Discounturi și promoții Academia Testării
                                                                         </label>
                                                                     </div>
                                                                     <div class="checkbox tab-content">
                                                                         <label><input type="checkbox" value=""
-                                                                                      name="newsletter" <?php echo($row['newsletter'] == 1 ? "checked" : "");?>> Newsletter Academia Testării
+                                                                                      name="newsletter"
+                                                                            {{ $student->getNewsletter() == 1 ? "checked" : ""}}> Newsletter Academia Testării
                                                                         </label>
                                                                     </div>
                                                                 </div>
@@ -685,7 +642,7 @@
                                                                         <input name="action" class="form-control"
                                                                                value="preferinte" type="hidden">
                                                                         <input name="cursant" class="form-control"
-                                                                               value="<?php echo $row['id'];?>"
+                                                                               value="{{ $student->getId() }}"
                                                                                type="hidden">
                                                                         <button type="submit"
                                                                                 class="btn btn-colored btn-block btn-theme-colored2 text-white btn-lg btn-flat"
@@ -699,11 +656,11 @@
                                                         <script type="text/javascript">
                                                             $("#preferinte").validate({
                                                                                           submitHandler : function (form) {
-                                                                                              var form_btn        = $(form).find('button[type="submit"]');
-                                                                                              var form_result_div = '#form-result';
+                                                                                              let form_btn        = $(form).find('button[type="submit"]');
+                                                                                              let form_result_div = '#form-result';
                                                                                               $(form_result_div).remove();
                                                                                               form_btn.before('<div id="form-result" class="alert alert-success" role="alert" style="display: none;"></div>');
-                                                                                              var form_btn_old_msg = form_btn.html();
+                                                                                              let form_btn_old_msg = form_btn.html();
                                                                                               form_btn.html(form_btn.prop('disabled', true).data("loading-text"));
                                                                                               $(form).ajaxSubmit({
                                                                                                                      dataType : 'json',
@@ -732,52 +689,48 @@
                                 </div>
                             </div>
 
-                </section>
-                <!-- end main-content -->
-            </div>
+                        </div>
 
-            <!-- Footer -->
-            <footer id="footer" class="footer" data-bg-img="images/footer-bg.png" data-bg-color="#020443">
-
-                <?php include("include.footer.php");?>
-
-                <?php include("include.subfooter.php");?>
-
-            </footer>
-            <a class="scrollToTop" href="#"><i class="fa fa-angle-up"></i></a>
-        </div>
-        <!-- end wrapper -->
-
-        <!-- Footer Scripts -->
-        <!-- JS | Custom script for all pages -->
-        <script src="js/custom.js"></script>
-
-        <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Inchide"><span
-                                    aria-hidden="true">&times;</span></button>
+                        <!-- end main-content -->
                     </div>
-                    <div class="pl-50 pr-50 pb-50">
-                        <?php
-                        $sql_termeni = "SELECT * FROM `content` WHERE id=6";
-                        $termeni = mysqli_fetch_assoc(mysqli_query($link, $sql_termeni));
-                        ?>
 
-                        <h2 class="modal-title" id="myModalLabel2"><?php echo $termeni['title'];?></h2>
-                        <hr />
-                        <?php echo $termeni['text'];?>
+                    <!-- Footer -->
+                    <footer id="footer" class="footer" data-bg-img="images/footer-bg.png" data-bg-color="#020443">
+
+{{--                        @include("include.footer")--}}
+
+                    </footer>
+                    <a class="scrollToTop" href="#"><i class="fa fa-angle-up"></i></a>
+                </section>
+                <!-- end wrapper -->
+
+                <!-- Footer Scripts -->
+                <!-- JS | Custom script for all pages -->
+                <script src="js/custom.js"></script>
+
+                <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog"
+                     aria-labelledby="myLargeModalLabel">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Inchide"><span
+                                            aria-hidden="true">&times;</span></button>
+                            </div>
+                            <div class="pl-50 pr-50 pb-50">
+
+                                <h2 class="modal-title" id="myModalLabel2">{{$termsAndConditions->title}}</h2>
+                                <hr />
+                                {{ $termsAndConditions->getText() }}
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-        <script>
-            $(document).ready(function () {
-                location.hash && $(location.hash + '.collapse').collapse('show');
-                $('sectiuneaCursuri' + '.sectiunea').collapse('hide');
-            });
-        </script>
-        <?php include("tracking.php");?>
+                <script>
+                    $(document).ready(function () {
+                        location.hash && $(location.hash + '.collapse').collapse('show');
+                        $('sectiuneaCursuri' + '.sectiunea').collapse('hide');
+                    });
+                </script>
+       @include("include.tracking")
     </body>
 </html>
