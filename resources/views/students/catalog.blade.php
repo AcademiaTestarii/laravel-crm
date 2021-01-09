@@ -35,7 +35,7 @@
                         AT+
                     </div>
                 </li>
-                @include('include/mainmenu2')
+                @include('include/mainmenu_students')
             </ul>
         </div>
     </nav>
@@ -147,7 +147,11 @@ background-color: #4c3391 !important;padding-left: 15px !important;padding-botto
                                     <a class="btn btn-dark btn-theme-colored2"
                                        href="{{ route('class_description', $class->getMainClassId()) }}"> Detalii
                                         curs</a>
-                                    <a href="{{ route('class_signup', $class->getMainClassId()) }}"
+                                    <a href=
+                                       @if(Auth::guest()) "/register"
+                                       @else
+                                       "{{ route('class_signup', $class->getMainClassId()) }}"
+                                    @endif
                                        class="btn btn-dark btn-theme-colored pull-right">Înscrie-te</a>
                                 </div>
                             </article>
