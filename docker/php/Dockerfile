@@ -32,8 +32,8 @@ RUN pecl install -o -f redis \
 
 RUN curl --silent --show-error https://getcomposer.org/installer | php \
   && php composer.phar update \
-  && php composer.phar dump-autoload \
-  && php composer.phar install --no-dev --no-scripts
+  && php composer.phar install --no-dev --no-scripts \
+  && php composer.phar dump-autoload
 
 
 RUN chown -R www-data:www-data \
