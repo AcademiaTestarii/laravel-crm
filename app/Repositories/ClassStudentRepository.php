@@ -22,14 +22,6 @@ class ClassStudentRepository extends Repository
         return $this->model::where('class_id', $classId)->count();
     }
 
- /*   public function signedUp()
-    {
-        $classId = $this->model->getClassId();
-        $studentId =$this->model->getStudentId();
-
-        return $this->model::where('class_id', $classId)->where('student_id', $studentId)->first();
-    }*/
-
     public function activeClasses()
     {
         $studentId = $this->model->getId();
