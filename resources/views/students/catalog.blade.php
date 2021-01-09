@@ -1,63 +1,70 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Up-grade.tech</title>
-  <link href="{{asset('css/design.css')}}" rel="stylesheet">
-</head>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Up-grade.tech</title>
+        <link href="{{asset('css/design.css')}}" rel="stylesheet">
+    </head>
 
-<body>
-  @include('include/header-new')
-  <main>
-    <div class="upt-section__catalog">
-      <div class="container">
-        <div class="upt-section__catalog__title">The best courses for you
-        </div>
-        <div class="upt-section__catalog__text">Make the most of your online learning experience
-        </div>
-        <div class="upt-section__catalog__grid">
-          <?php
-          $mainClasses = [];
-          ?>
-          @foreach($classes as $class)
-          <?php
-          if ($class->getRegistrationStartDate() >= new \Carbon\Carbon()) {
-            if (!in_array($class->getMainClassId(), $mainClasses)) {
-              $mainClasses[] = $class->getMainClassId();
-          ?>
-              <div class="upt-catalogbox">
-                <span class="upt-catalogbox__image"><img src="{{$class->getImage()}}" /></span>
-                <div class="upt-catalogbox__title">{{ $class->getTitle() }}</div>
-                <p class="upt-catalogbox__autor">George Stan</p>
-                <p class="upt-catalogbox__text">{{ $class->getShortDescription() }}</p>
-                <div class="upt-catalogbox__subtitle">NEXT COURSE</div>
-                <div class="upt-catalogbox__description">
-                  @if ($class->isPlanned())
-                  <span class="mb-10 text-gray-darkgray mr-10 font-13"><i class="fa fa-calendar mr-5 text-theme-colored"></i>Data va fi anunţata ulterior</span>
-                  @elseif ($class->getRegistrationStartDate() > \Carbon\Carbon::yesterday())
-                  <span class="mb-0 text-gray-darkgray mr-10 font-13">
-                    <i class="fa fa-calendar mr-5 text-theme-colored"></i>
-                    {{ $class->getRegistrationStartDate()->formatLocalized("%e %B, %Y") }} - {{ $class->getRegistrationEndDate()->formatLocalized("%e %B, %Y") }}
-                    @endif
-                  </span> <br>
-                  {{$class->getStudents() - $class->classStudents()->count()}} Spots Available<br>
-                  Price <strike>{{$class->getPrice()}} RON</strike> {{ $class->getDiscountPrice() }} RON
+    <body>
+        @include('include/header-new')
+        <main>
+            <div class="upt-section__catalog">
+                <div class="container">
+                    <div class="upt-section__catalog__title">The best courses for you
+                    </div>
+                    <div class="upt-section__catalog__text">Make the most of your online learning experience
+                    </div>
+                    <div class="upt-section__catalog__grid">
+                        <?php
+                        $mainClasses = [];
+                        ?>
+                        @foreach($classes as $class)
+                            <?php
+                            if ($class->getRegistrationStartDate() >= new \Carbon\Carbon()) {
+                            if (!in_array($class->getMainClassId(), $mainClasses)) {
+                            $mainClasses[] = $class->getMainClassId();
+                            ?>
+                            <div class="upt-catalogbox">
+                                <span class="upt-catalogbox__image"><img src="{{$class->getImage()}}" /></span>
+                                <div class="upt-catalogbox__title">{{ $class->getTitle() }}</div>
+                                <p class="upt-catalogbox__autor">George Stan</p>
+                                <p class="upt-catalogbox__text">{{ $class->getShortDescription() }}</p>
+                                <div class="upt-catalogbox__subtitle">NEXT COURSE</div>
+                                <div class="upt-catalogbox__description">
+                                    @if ($class->isPlanned())
+                                        <span class="mb-10 text-gray-darkgray mr-10 font-13"><i
+                                                    class="fa fa-calendar mr-5 text-theme-colored"></i>Data va fi anunţata ulterior</span>
+                                    @elseif ($class->getRegistrationStartDate() > \Carbon\Carbon::yesterday())
+                                        <span class="mb-0 text-gray-darkgray mr-10 font-13">
+                                            <i class="fa fa-calendar mr-5 text-theme-colored"></i>
+                                            {{ $class->getRegistrationStartDate()->formatLocalized("%e %B, %Y") }} - {{ $class->getRegistrationEndDate()->formatLocalized("%e %B, %Y") }}
+                                            @endif
+                                        </span> <br>
+                                        {{$class->getStudents() - $class->classStudents()->count()}} Spots Available<br>
+                                        Price
+                                        <strike>{{$class->getPrice()}} RON</strike> {{ $class->getDiscountPrice() }} RON
+                                </div>
+                                @if(Auth::guest())
+                                    <a href="/register?mainClassId={{ $class->getMainClassId() }}" class="upt-catalogbox__button">Enroll</a>
+                                @else
+                                    <a href="{{ route('class_signup', $class->getMainClassId()) }}"
+                                       class="upt-catalogbox__button">Enroll</a>
+                                @endif
+                            </div>
+                            <?php
+                            }
+                            }
+                            ?>
+                        @endforeach
+                    </div>
                 </div>
-                <a href="{{ route('class_signup', $class->getMainClassId()) }}" class="upt-catalogbox__button">Enroll</a>
-              </div>
-          <?php
-            }
-          }
-          ?>
-          @endforeach
-        </div>
-      </div>
-    </div>
-  </main>
-  @include('include/footer-new')
-</body>
+            </div>
+        </main>
+        @include('include/footer-new')
+    </body>
 
 </html>
 
