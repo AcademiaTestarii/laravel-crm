@@ -1,111 +1,69 @@
-@extends('layouts.app')
+<!DOCTYPE html>
+<html>
 
-@section('content')
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Register</div>
-                    <div class="panel-body">
-                        <form class="form-horizontal" role="form" method="POST" action="/register">
-                            @csrf
-                            <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
-                                <label for="name" class="col-md-4 control-label">Name</label>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Up-grade.tech</title>
+  <link href="{{asset('css/design.css')}}" rel="stylesheet">
+  <link href="/css/app.css" rel="stylesheet">
+</head>
 
-                                <div class="col-md-6">
-                                    <input id="name" type="text" class="form-control" name="name"
-                                           value="{{ old('name') }}" autofocus>
+<body>
+  @include('include/header-new')
+  <main>
+    <div class="upt-form upt-form--login">
+      <form class="form-horizontal" role="form" method="POST" action="/register">
+        @csrf
+        <input id="name" type="text" name="name" value="{{ old('name') }}" autofocus class="upt-form__input" placeholder="Enter your name">
+        @if ($errors->has('name'))
+        <span class="help-block">
+          <strong>{{ $errors->first('name') }}</strong>
+        </span>
+        @endif
+        <input id="email" type="email" name="email" @if(request()->get('email')) value="{{ request()->get('email')}}" @else value="{{ old('email') }}" @endif class="upt-form__input" placeholder="Enter your e-mail">
+        @if ($errors->has('email'))
+        <span class="help-block">
+          <strong>{{ $errors->first('email') }}</strong>
+        </span>
+        @endif
+        <select name="role" id="role" class="upt-form__input upt-form__input--role">
+          @if(request()->get('email'))
+          <option value="{{$roleTrainer->getId()}}">{{$roleTrainer->getName()}}</option>
+          @else
+          @foreach($roles as $role)
+          <option value="{{$role->getId()}}">
+            {{$role->getName()}}
+          </option>
+          @endforeach
+          @endif
+        </select>
+        @if ($errors->has('role'))
+        <span class="help-block">
+          <strong>{{ $errors->first('role') }}</strong>
+        </span>
+        @endif
+        <input id="password" type="password" class="upt-form__input" name="password" placeholder="Enter your password">
+        @if ($errors->has('password'))
+        <span class="help-block">
+          <strong>{{ $errors->first('password') }}</strong>
+        </span>
+        @endif
+        <input id="password-confirm" type="password" class="upt-form__input" name="password_confirmation" placeholder="Confirm your password">
 
-                                    @if ($errors->has('name'))
-                                        <span class="help-block">
-                                        <strong>{{ $errors->first('name') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
-                                <label for="email" class="col-md-4 control-label">E-Mail Address</label>
-
-                                <div class="col-md-6">
-                                    <input id="email" type="email" class="form-control" name="email"
-                                           @if(request()->get('email')) value="{{ request()->get('email')}}"
-                                           @else value="{{ old('name') }}" @endif >
-
-                                    @if ($errors->has('email'))
-                                        <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="form-group{{ $errors->has('role') ? ' has-error' : '' }}">
-                                <label for="name" class="col-md-4 control-label">Role</label>
-
-                                <div class="col-md-6">
-                                    <select name="role" id="role" class="form-control">
-                                        @if(request()->get('email'))
-                                            <option value="{{$roleTrainer->getId()}}">{{$roleTrainer->getName()}}</option>
-                                        @else
-                                            @foreach($roles as $role)
-                                                <option value="{{$role->getId()}}">
-                                                    {{$role->getName()}}
-                                                </option>
-                                            @endforeach
-                                        @endif
-                                    </select>
-                                    @if ($errors->has('role'))
-                                        <span class="help-block">
-                                        <strong>{{ $errors->first('role') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                                <label for="password" class="col-md-4 control-label">Password</label>
-
-                                <div class="col-md-6">
-                                    <input id="password" type="password" class="form-control" name="password">
-
-                                    @if ($errors->has('password'))
-                                        <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
-                                <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
-
-                                <div class="col-md-6">
-                                    <input id="password-confirm" type="password" class="form-control"
-                                           name="password_confirmation">
-
-                                    @if ($errors->has('password_confirmation'))
-                                        <span class="help-block">
-                                        <strong>{{ $errors->first('password_confirmation') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-md-8 col-md-offset-4">
-                                    <button type="submit" class="btn btn-primary">
-                                        Register
-                                    </button>
-                                    <a class="btn btn-link" href="{{ url('/login') }}">
-                                        Already have an account?
-                                    </a>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+        @if ($errors->has('password_confirmation'))
+        <span class="help-block">
+          <strong>{{ $errors->first('password_confirmation') }}</strong>
+        </span>
+        @endif
+        <button type="submit" class="upt-form__button">Sign Up</button>
+        <p class="upt-form__text">Already have an account?
+          <a class="upt-form__text__link" href="{{ url('/login') }}">Login</a>
+        </p>
+      </form>
     </div>
-@endsection
+  </main>
+  @include('include/footer-new')
+</body>
+
+</html>
