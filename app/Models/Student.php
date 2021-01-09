@@ -92,6 +92,11 @@ class Student extends Model
         return $this->getAttribute('job');
     }
 
+    public function getCompany()
+    {
+        return $this->getAttribute('company');
+    }
+
     public function getDateOfBirth()
     {
         return $this->getAttribute('date_of_birth');
@@ -125,5 +130,15 @@ class Student extends Model
     public function getPassword()
     {
         return $this->getAttribute('password');
+    }
+
+    public function getPromotions()
+    {
+        return $this->getAttribute('promotions');
+    }
+
+    public function getNewsletter()
+    {
+        return $this->getAttribute('newsletter');
     }
 }
