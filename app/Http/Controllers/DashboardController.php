@@ -35,8 +35,7 @@ class DashboardController extends Controller
 
         $classes = $this->classesRepository->allOrderedBy('registration_start_date');
 
-        $lastSigned           = $this->classStudentRepository->findOneBy(['student_id' => $student->getId()])->orderBy('sign_up_date', 'desc')->first();
-        $currentSignedUpClass = $this->classesRepository->findOneBy(['id' => $lastSigned->getClassId()])->first();
+        $countStudentClasses =
 
         $activeClasses   = $this->classStudentRepository->activeClasses();
         $finishedClasses = $this->classStudentRepository->finishedClasses();
@@ -47,7 +46,6 @@ class DashboardController extends Controller
                 'student'              => $student,
                 'activeClasses'        => $activeClasses,
                 'finishedClasses'      => $finishedClasses,
-                "currentSignedUpClass" => $currentSignedUpClass,
             ]
         );
     }
