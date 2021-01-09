@@ -2,12 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Classes;
-use App\Models\ClassStudent;
 use App\Repositories\ClassesRepository;
 use App\Repositories\ClassStudentRepository;
 use App\Repositories\StudentRepository;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
