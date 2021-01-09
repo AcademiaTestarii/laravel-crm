@@ -43,5 +43,6 @@ RUN chown -R www-data:www-data \
   &&  chmod -R 777 public/ \
   &&  chmod -R 777 storage/
 
-RUN php artisan optimize
+RUN php artisan route:clear \
+  && php artisan optimize
 RUN php artisan passport:keys
