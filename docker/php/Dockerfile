@@ -31,7 +31,6 @@ RUN pecl install -o -f redis \
   &&  docker-php-ext-enable redis
 
 RUN curl --silent --show-error https://getcomposer.org/installer | php \
-  && php composer.phar update \
   && php composer.phar install --no-dev --no-scripts \
   && php composer.phar dump-autoload
 
