@@ -609,6 +609,11 @@ body {
   max-height: 226px;
   overflow: hidden;
 }
+
+.upt-catalogbox__image img {
+  max-width: 360px;
+}
+
 .upt-catalogbox__title {
   position: relative;
   text-align: left;
