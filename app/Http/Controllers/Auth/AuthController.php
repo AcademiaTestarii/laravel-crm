@@ -88,6 +88,7 @@ class AuthController extends Controller
 
     public function postLogin(Request $request)
     {
+
         $loginData = $request->validate([
             'email' => 'email|required',
             'password' => 'required'
@@ -103,12 +104,20 @@ class AuthController extends Controller
         }
 
         if(auth()->user()->isStudent()) {
+            if($request->get('mainClassId') != null){
+                if($request->get('mainClassId') != null){
+                    return redirect('/catalog/'.$request->get('mainClassId').'/class_signup');
+                }
+                return redirect()->route('catalog');
+            }
             return redirect()->route('catalog');
         }
 
         auth()->user()->createToken('AcademiaTestarii')->accessToken;
 
         return redirect()->route('dashboard');
+
+
     }
 
     public function logOut()
