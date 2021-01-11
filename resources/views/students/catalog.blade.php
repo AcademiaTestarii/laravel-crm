@@ -47,12 +47,8 @@
                                         Price
                                         <strike>{{$class->getPrice()}} RON</strike> {{ $class->getDiscountPrice() }} RON
                                 </div>
-                                @if(Auth::guest())
-                                    <a href="/register?mainClassId={{ $class->getMainClassId() }}" class="upt-catalogbox__button">Enroll</a>
-                                @else
-                                    <a href="{{ route('class_signup', $class->getMainClassId()) }}"
-                                       class="upt-catalogbox__button">Enroll</a>
-                                @endif
+                                <a href="{{ route('class_signup', $class->getMainClassId()) }}"
+                                   class="upt-catalogbox__button">Enroll</a>
                             </div>
                             <?php
                             }
