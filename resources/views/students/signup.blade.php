@@ -11,7 +11,16 @@
                               action="/catalog/student/class_signup">
                             @csrf
 
-                            <input type="hidden" value="{{ $selectedMainClass->getId() }}" name='maiClassId'>
+                            @if(Auth::guest())
+                                <div class="form-group">
+                                    <div class="col-md-8 col-md-offset-4">
+                                            <a href="/login?mainClassId={{ $selectedMainClass->getId() }}" class="btn btn-primary">
+                                               Te rugam sa te loghezi inainte de a te inscrie la curs
+                                            </a>
+                                    </div>
+                                </div>
+@else
+                            <input type="hidden" value="{{ $selectedMainClass->getId() }}" name='mainClassId'>
                             <input type="hidden" value="{{ $student->getId() }}" name='studentId'>
 
                             <div class="form-group">
@@ -244,6 +253,7 @@
                                     @endif
                                 </div>
                             </div>
+                                @endif
                         </form>
                     </div>
                 </div>
