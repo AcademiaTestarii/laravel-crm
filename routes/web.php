@@ -79,16 +79,18 @@ Route::middleware('auth:api')->group(function () {
         Route::post('blog/{id}/uploadImage', 'BlogController@uploadImage');
 
         Route::get('search', 'SearchController@index');
+
+
+        //STUDENTS
+        Route::get('student_dashboard', 'DashboardController@studentDashboard')->name('student_dashboard');
+        Route::post('student_dashboard', 'DashboardController@update')->name('update_student_dashboard');
     });
 
 });
-//STUDENTS
-Route::get('student_dashboard', 'DashboardController@studentDashboard')->name('student_dashboard');
-Route::post('student_dashboard', 'DashboardController@update')->name('update_student_dashboard');
-Route::get('catalog', 'CatalogController@index')->name('catalog');
-Route::get('catalog/{mainClassId}', 'CatalogController@get')->name('class_description');
 Route::get('catalog/{mainClassId}/class_signup', 'CatalogController@getData')->name('class_signup');
 Route::post('catalog/student/class_signup', 'CatalogController@update')->name('update_student');
+Route::get('catalog', 'CatalogController@index')->name('catalog');
+Route::get('catalog/{mainClassId}', 'CatalogController@get')->name('class_description');
 
 Route::get('account', function () {
     return '';
