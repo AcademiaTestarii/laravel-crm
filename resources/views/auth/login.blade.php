@@ -15,6 +15,7 @@
     <div class="upt-form upt-form--login">
       <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
         @csrf
+        <input type="hidden" value="{{ app('request')->input('mainClassId') }}" name='mainClassId'>
         @if(session()->get('activate_email'))
         <div class="form-group">
           <label class="col-md-2 control-label"></label>
@@ -55,7 +56,7 @@
         @endif
         <button type="submit" class="upt-form__button">LOGIN</button>
         <p class="upt-form__text">Don’t have an account?
-          <a class="upt-form__text__link" href="{{ url('/register') }}">Sign Up</a>
+          <a class="upt-form__text__link" href="/register?mainClassId={{ app('request')->input('mainClassId') }}">Sign Up</a>
         </p>
       </form>
     </div>
