@@ -87,7 +87,7 @@ class CatalogController extends Controller
     {
 
         $selectedMainClass = $this->mainClassRepository->findOneBy(['id' => $mainClassId]);
-        $student           = $this->studentRepository->findOneBy(['id' => Auth::id()]);
+        $student           = $this->studentRepository->findByAuthId(Auth::id());
 
         return view('students.signup')->with(
             [
