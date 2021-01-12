@@ -15,6 +15,7 @@
     <div class="upt-form upt-form--resister">
       <form class="form-horizontal" role="form" method="POST" action="/register">
         @csrf
+        <input type="hidden" value="{{ app('request')->input('mainClassId') }}" name='mainClassId'>
         <input id="name" type="text" name="name" value="{{ old('name') }}" autofocus class="upt-form__input" placeholder="Enter your name">
         @if ($errors->has('name'))
         <span class="help-block">
