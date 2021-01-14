@@ -91,7 +91,7 @@ class User extends Authenticatable
 
     public function getHashUrl(): ?string
     {
-        return request()->getSchemeAndHttpHost() . '/account/activate/' . $this->getAttribute('hash').'?mainClassId=' . request()->get('mainClassId');
+        return request()->getSchemeAndHttpHost() . '/account/activate/' . $this->getAttribute('hash');
     }
 
     public function isAcademiaTestarii(): bool
