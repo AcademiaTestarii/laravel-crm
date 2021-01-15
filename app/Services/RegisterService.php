@@ -101,15 +101,27 @@ class RegisterService
         }
 
         if ($user->isStudent()) {
+            if (!empty(explode(" ", ($user["name"]))[1])) {
+                $this->studentRepository->create(
+                    [
+                        'user_id'    => $user->getId(),
+                        'first_name' => explode(" ", ($user["name"]))[0],
+                        'last_name'  => explode(" ", ($user["name"]))[1],
+                        'email'      => $user['email'],
+
+                    ]
+                );
+            }
+
             $this->studentRepository->create(
                 [
                     'user_id'    => $user->getId(),
                     'first_name' => explode(" ", ($user["name"]))[0],
-                    'last_name'  => explode(" ", ($user["name"]))[1],
                     'email'      => $user['email'],
 
                 ]
             );
+
         }
 
 

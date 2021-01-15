@@ -118,6 +118,7 @@ class CatalogController extends Controller
 
 
             ]
+
         );
 
         $student = $this->studentRepository
