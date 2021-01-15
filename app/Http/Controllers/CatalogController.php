@@ -13,24 +13,28 @@ use App\Services\ClassService;
 use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 use App\Repositories\ContentRepository;
 use App\Repositories\StudentRepository;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Contracts\Validation\Factory as Validator;
 
 class CatalogController extends Controller
 {
-    protected $classesRepository;
-    protected $mainClassRepository;
-    protected $trainerRepository;
-    protected $classService;
-    protected $classStudentRepository;
-    protected $feedbackRepository;
-    protected $request;
-    protected $studentRepository;
-    protected $contentRepository;
+    protected ClassesRepository      $classesRepository;
+    protected MainClassRepository    $mainClassRepository;
+    protected TrainerRepository      $trainerRepository;
+    protected ClassService           $classService;
+    protected ClassStudentRepository $classStudentRepository;
+    protected FeedbackRepository     $feedbackRepository;
+    protected Request                $request;
+    protected StudentRepository      $studentRepository;
+    protected ContentRepository      $contentRepository;
+    protected Validator              $validator;
 
     public function __construct(
+        Validator $validator,
         ClassesRepository $classGroupRepository,
         MainClassRepository $mainClassRepository,
         TrainerRepository $trainerRepository,
@@ -49,6 +53,7 @@ class CatalogController extends Controller
         $this->feedbackRepository     = $feedbackRepository;
         $this->studentRepository      = $studentRepository;
         $this->contentRepository      = $contentRepository;
+        $this->validator              = $validator;
     }
 
     /**
@@ -99,48 +104,75 @@ class CatalogController extends Controller
 
     public function update(Classes $classId, Request $request)
     {
-        $validatedData = $request->validate(
+        $validator = $this->validator->make(
+            $request->all(),
             [
-                'first_name'     => 'required',
-                'last_name'      => 'required',
-                'email'          => 'required|email',
-                'date_of_birth'  => 'required|date',
+                'first_name'     => 'required|min:3',
+                'last_name'      => 'required|min:3',
+                'date_of_birth'  => 'required|date|before:2014-01-01',
                 'address'        => 'required',
                 'city'           => 'required',
                 'county'         => 'required',
                 'job_title'      => 'nullable',
-                'phone'          => 'required|min:10',
-                'education'      => 'nullable',
-                'english'        => 'nullable',
+                'phone'          => 'required|digits:10|starts_with:07',
+                'education'      => 'required',
+                'english'        => 'required',
                 'other_language' => 'nullable',
                 'ms_office'      => 'nullable',
-                'web'            => 'nullable',
+                'web'            => 'required',
+                'payment_type'   => 'required',
+            ],
+            [
+                'first_name.required' => 'prenumele este obligatoriu',
+                'first_name.min'      => 'prenume: minim 3 caractere',
 
+                'last_name.required' => 'numele este obligatoriu',
+                'last_name.min'      => 'nume: minim 3 caractere',
+
+                'date_of_birth.required' => 'data nasterii este obligatorie',
+                'date_of_birth.date'     => 'introdu o data valida',
+                'date_of_birth.before'     => 'trebuie sa ai varsta de cel putin 14 ani',
+
+                'address.required' => 'adresa este obligatorie',
+                'city.required'    => 'localitatea este obligatorie',
+                'county.required'  => 'judetul este obligatoriu',
+
+                'phone.required'    => 'numarul de telefon este obligatoriu',
+                'phone.digits'      => 'telefon: introdu 10 cifre',
+                'phone.starts_with' => 'introdu un numar de telefon valid',
+
+                'education.required' => 'campul educatie este obligatoriu',
+                'english.required'   => 'cunostinte limba engleza este camp obligatoriu',
+                'web.required'       => 'cunostinte web este camp obligatoriu',
+
+                'payment_type.in'       => 'bifeaza una dintre optiuni :values',
+                'payment_type.required' => 'bifeaza una dintre optiunile de plata',
 
             ]
 
-        );
+        )->validate();
 
         $student = $this->studentRepository
             ->findOneBy(['id' => $request->get('studentId')]);
         $student->update(
-                [
-                    'first_name'     => $request->get('first_name'),
-                    'last_name'      => $request->get('last_name'),
-                    'email'          => $request->get('email'),
-                    'date_of_birth'  => $request->get('date_of_birth'),
-                    'address'        => $request->get('address'),
-                    'city'           => $request->get('city'),
-                    'county'         => $request->get('county'),
-                    'job_title'      => $request->get('job_title'),
-                    'phone'          => $request->get('phone'),
-                    'education'      => $request->get('education'),
-                    'english'        => $request->get('english'),
-                    'other_language' => $request->get('other_language'),
-                    'ms_office'      => $request->get('ms_office'),
-                    'web'            => $request->get('web'),
-                ]
-            );
+            [
+                'first_name'     => $request->get('first_name'),
+                'last_name'      => $request->get('last_name'),
+                'email'          => $request->get('email'),
+                'date_of_birth'  => $request->get('date_of_birth'),
+                'address'        => $request->get('address'),
+                'city'           => $request->get('city'),
+                'county'         => $request->get('county'),
+                'job_title'      => $request->get('job_title'),
+                'phone'          => $request->get('phone'),
+                'education'      => $request->get('education'),
+                'english'        => $request->get('english'),
+                'other_language' => $request->get('other_language'),
+                'ms_office'      => $request->get('ms_office'),
+                'web'            => $request->get('web'),
+            ]
+        );
+
 
         $student->classStudents()->create(
             [
