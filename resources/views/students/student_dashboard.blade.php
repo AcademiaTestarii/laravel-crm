@@ -83,8 +83,8 @@
                 <!--  <div id="disable-preloader" class="btn btn-default btn-sm">Treci peste preloader</div>-->
             </div>
             <header id="header" class="header modern-header modern-header-white">
-{{--                @include("include.temp_includes.top_header")--}}
-{{--                @include("include.temp_includes.top_menu")--}}
+                {{--                @include("include.temp_includes.top_header")--}}
+                {{--                @include("include.temp_includes.top_menu")--}}
             </header>
             <div class="main-content">
                 <section class="inner-header divider parallax layer-overlay overlay-dark-5"
@@ -180,7 +180,6 @@
                                                                                 <h4>{{ $active->title }}</h4>
                                                                                 <p>
                                                                                     <strong>Data înscriere: </strong>
-                                                                                    {{-- TODO -avem un get pt sign_up_date? --}}
                                                                                     {{ $active->sign_up_date }}
                                                                                     <br />
                                                                                     <strong>Cursul începe pe: </strong> {{ $active->resgistration_start_date }}
@@ -223,8 +222,7 @@
                                                                             </div>
                                                                             <div class="col-md-12">
                                                                                 @if(!empty($active->schedule_pdf))
-                                                                                    {{-- TODO de definit  $crmHost--}}
-                                                                                    <a href="{{-- ?php echo $crmHost; ? --}}/documents/{{ $active->schedule_pdf }}"
+                                                                                    <a href="/documents/{{ $active->schedule_pdf }}"
                                                                                        target="_blank"
                                                                                        class="btn btn-gray btn-transparent btn-xs">Programa curs</a>
                                                                                 @endif
@@ -315,8 +313,7 @@
                                                                             </div>
                                                                             <div class="col-md-12">
                                                                                 @if(!empty($finished->schedule_pdf))
-                                                                                    {{-- TODO de definit  $crmHost--}}
-                                                                                    <a href="{{-- ?php echo $crmHost; ? --}}/documents/{{ $finished->schedule_pdf }}"
+                                                                                    <a href="/documents/{{ $finished->schedule_pdf }}"
                                                                                        target="_blank"
                                                                                        class="btn btn-gray btn-transparent btn-xs">Programa curs</a>
                                                                                 @endif
@@ -625,13 +622,13 @@
                                                                     <div class="checkbox tab-content">
                                                                         <label><input type="checkbox" value=""
                                                                                       name="promotii"
-                                                                            {{ $student->getPromotions() == 1 ? "checked" : ""}}> Discounturi și promoții Academia Testării
+                                                                                    {{ $student->getPromotions() == 1 ? "checked" : ""}}> Discounturi și promoții Academia Testării
                                                                         </label>
                                                                     </div>
                                                                     <div class="checkbox tab-content">
                                                                         <label><input type="checkbox" value=""
                                                                                       name="newsletter"
-                                                                            {{ $student->getNewsletter() == 1 ? "checked" : ""}}> Newsletter Academia Testării
+                                                                                    {{ $student->getNewsletter() == 1 ? "checked" : ""}}> Newsletter Academia Testării
                                                                         </label>
                                                                     </div>
                                                                 </div>
@@ -697,7 +694,7 @@
                     <!-- Footer -->
                     <footer id="footer" class="footer" data-bg-img="images/footer-bg.png" data-bg-color="#020443">
 
-{{--                        @include("include.footer")--}}
+                        {{--                        @include("include.footer")--}}
 
                     </footer>
                     <a class="scrollToTop" href="#"><i class="fa fa-angle-up"></i></a>
@@ -731,6 +728,6 @@
                         $('sectiuneaCursuri' + '.sectiunea').collapse('hide');
                     });
                 </script>
-       @include("include.tracking")
+        @include("include.tracking")
     </body>
 </html>
