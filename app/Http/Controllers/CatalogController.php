@@ -91,7 +91,11 @@ class CatalogController extends Controller
     public function getData(Request $request, $mainClassId)
     {
 
+
         $selectedMainClass = $this->mainClassRepository->findOneBy(['id' => $mainClassId]);
+        if (Auth::guest()) {
+            return redirect('/login?mainClassId='.$selectedMainClass->getId());
+        }
         $student           = $this->studentRepository->findByAuthId(Auth::id());
 
         return view('students.signup')->with(
@@ -131,7 +135,7 @@ class CatalogController extends Controller
 
                 'date_of_birth.required' => 'data nasterii este obligatorie',
                 'date_of_birth.date'     => 'introdu o data valida',
-                'date_of_birth.before'     => 'trebuie sa ai varsta de cel putin 14 ani',
+                'date_of_birth.before'   => 'trebuie sa ai varsta de cel putin 14 ani',
 
                 'address.required' => 'adresa este obligatorie',
                 'city.required'    => 'localitatea este obligatorie',
