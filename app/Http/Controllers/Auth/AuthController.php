@@ -127,7 +127,7 @@ class AuthController extends Controller
                 return redirect('/catalog/' . $request->get('mainClassId') . '/class_signup');
             }
 
-            return redirect()->route('catalog');
+            return redirect()->route('hp');
         }
 
         auth()->user()->createToken('AcademiaTestarii')->accessToken;
