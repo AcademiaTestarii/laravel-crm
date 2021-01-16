@@ -46,4 +46,5 @@ RUN chown -R www-data:www-data \
 
 RUN php artisan route:clear \
   && php artisan optimize \
+  && php artisan migrate \
   && php artisan passport:keys
