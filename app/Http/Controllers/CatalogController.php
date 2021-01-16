@@ -42,6 +42,7 @@ class CatalogController extends Controller
         FeedbackRepository $feedbackRepository,
         StudentRepository $studentRepository,
         ContentRepository $contentRepository
+
     )
     {
         $this->classesRepository      = $classGroupRepository;
