@@ -99,31 +99,22 @@ class RegisterService
 
             $this->activateUser($user);
         }
+        $userLastName = null;
+        if (!empty(explode(" ", ($user["name"]))[1])) {
+            $userLastName = explode(" ", ($user["name"]))[1];
+        }
 
         if ($user->isStudent()) {
-            if (!empty(explode(" ", ($user["name"]))[1])) {
-                $this->studentRepository->create(
-                    [
-                        'user_id'    => $user->getId(),
-                        'first_name' => explode(" ", ($user["name"]))[0],
-                        'last_name'  => explode(" ", ($user["name"]))[1],
-                        'email'      => $user['email'],
-
-                    ]
-                );
-            }
-
             $this->studentRepository->create(
                 [
                     'user_id'    => $user->getId(),
                     'first_name' => explode(" ", ($user["name"]))[0],
+                    'last_name'  => $userLastName,
                     'email'      => $user['email'],
 
                 ]
             );
-
         }
-
 
         return $user;
     }
