@@ -58,6 +58,9 @@
         <p class="upt-form__text">Don’t have an account?
           <a class="upt-form__text__link" href="/register?mainClassId={{ app('request')->input('mainClassId') }}">Sign Up</a>
         </p>
+        <p class="upt-form__text">Forgot Password?
+          <a class="upt-form__text__link" href="/password/reset">Reset it here</a>
+        </p>
       </form>
     </div>
   </main>
