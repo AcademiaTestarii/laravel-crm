@@ -89,7 +89,7 @@ class Student extends Model
 
     public function getJob()
     {
-        return $this->getAttribute('job');
+        return $this->getAttribute('job_title');
     }
 
     public function getCompany()
