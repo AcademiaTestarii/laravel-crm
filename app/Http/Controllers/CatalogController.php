@@ -13,7 +13,6 @@ use App\Services\ClassService;
 use Exception;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 use App\Repositories\ContentRepository;
 use App\Repositories\StudentRepository;
