@@ -20,15 +20,6 @@
           <form class="form-horizontal" role="form" method="POST" action="/catalog/student/class_signup">
             @csrf
 
-            @if(Auth::guest())
-            <div>
-              <div class="col-md-8 col-md-offset-4">
-                <a href="/login?mainClassId={{ $selectedMainClass->getId() }}" class="btn btn-primary">
-                  Te rugam sa te loghezi inainte de a te inscrie la curs
-                </a>
-              </div>
-            </div>
-            @else
             <input type="hidden" value="{{ $selectedMainClass->getId() }}" name='mainClassId'>
             <input type="hidden" value="{{ $student->getId() }}" name='studentId'>
 
@@ -246,7 +237,6 @@
                 @endif
               </div>
             </div>
-            @endif
           </form>
         </div>
       </div>
