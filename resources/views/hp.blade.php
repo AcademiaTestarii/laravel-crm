@@ -233,7 +233,7 @@
                         ?>
                         <div class="upt-coursebox">
                             <img src="{{$class->getImage()}}" class="upt-coursebox__image"/>
-                            <div class="upt-coursebox__title">{{ $class->getTitle() }}</div>
+                            <div class="upt-coursebox__title">{{ $class->mainClass->getTitle() }}</div>
                             <div class="upt-coursebox__subtitle">NEXT COURSE</div>
 
                             @if ($class->isPlanned())
