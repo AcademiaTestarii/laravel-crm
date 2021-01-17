@@ -30,7 +30,7 @@
                             <div class="upt-catalogbox">
                                 <span class="upt-catalogbox__image"><img src="{{$class->getImage()}}" /></span>
                                 <div class="upt-catalogbox__title">{{ $class->getTitle() }}</div>
-                                <p class="upt-catalogbox__autor">George Stan</p>
+                                <p class="upt-catalogbox__autor">{{$class->classTrainer->trainer->getName()}}</p>
                                 <p class="upt-catalogbox__text">{{ $class->getShortDescription() }}</p>
                                 <div class="upt-catalogbox__subtitle">NEXT COURSE</div>
                                 <div class="upt-catalogbox__description">
