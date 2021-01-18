@@ -141,6 +141,18 @@ class DashboardController extends Controller
 
             return redirect()->back();
         }
+
+        if ($request->has('updateNotifications')) {
+            $student->update(
+                [
+                    'notifications' => $request->get('notifications'),
+                    'promotions'    => $request->get('promotions'),
+                    'newsletter'    => $request->get('newsletter'),
+                ]
+            );
+
+            return redirect()->back();
+        }
     }
 
 }
