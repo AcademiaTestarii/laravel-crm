@@ -70,8 +70,8 @@
                             </div>
                         </div>
                     </div>
-                | <a href="/feedback?id={{ $finished->id }}&student_id={{ $finished->student_id }}" target="_blank" class="btn btn-gray btn-transparent btn-xs">Feedback curs</a>
-                | <a href="/certificat?id={{ $finished->id }}&student_id={{ $finished->student_id }}" target="_blank" class="btn btn-gray btn-transparent btn-xs">Certificat de ablosvire curs</a>
+                | <a href="{{ $baseUrl }}/feedback?id={{ $finished->id }}&student_id={{ $finished->student_id }}" target="_blank" class="btn btn-gray btn-transparent btn-xs">Feedback curs</a>
+                | <a href="{{ $baseUrl }}/certificat?id={{ $finished->id }}&student_id={{ $finished->student_id }}" target="_blank" class="btn btn-gray btn-transparent btn-xs">Certificat de ablosvire curs</a>
             </div>
         </div>
     <hr />

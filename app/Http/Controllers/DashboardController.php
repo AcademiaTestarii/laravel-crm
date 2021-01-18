@@ -55,6 +55,13 @@ class DashboardController extends Controller
         $finishedClasses    = $this->classStudentRepository->finishedClasses();
         $termsAndConditions = $this->contentRepository->getContentData('termeni_si_conditii');
 
+        $baseurl='';
+        if(url()->current() === 'stage.up-grade.tech') {
+            $baseurl = 'stage.academiatestarii.ro';
+        } elseif (url()->current() === 'up-grade.tech') {
+            $baseurl = 'stage.academiatestarii.ro';
+        }
+
         return view('students.dashboard.student_dashboard')->with(
             [
                 'classes'            => $classes,
@@ -62,6 +69,7 @@ class DashboardController extends Controller
                 'activeClasses'      => $activeClasses,
                 'finishedClasses'    => $finishedClasses,
                 'termsAndConditions' => $termsAndConditions,
+                'baseUrl' => $baseurl
             ]
         );
     }
