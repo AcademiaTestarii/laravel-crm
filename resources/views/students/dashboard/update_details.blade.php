@@ -1,6 +1,5 @@
 <form role="form" class="reservation-form" method="POST" action="/student_dashboard">
     @csrf
-
     <input type="hidden" value="{{ $student->getId() }}" name='studentId'>
 
     <div class="row">
@@ -80,7 +79,7 @@
 
         <div class="col-sm-12">
             <div class="form-group mb-0 mt-0">
-                <button type="submit" class="btn btn-colored btn-block btn-theme-colored2 text-white btn-lg btn-flat">
+                <button type="submit" class="btn btn-colored btn-block btn-theme-colored2 text-white btn-lg btn-flat" name="updateDetails">
                     Actualizează datele
                 </button>
             </div>
