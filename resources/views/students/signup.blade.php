@@ -156,7 +156,7 @@
               <div class="col-sm-12 col-md-6">
                 <div class="form-group">
                   <label for="class_id" class="control-label">Modulul dorit</label>
-                  <select class="form-control" name="classId" id="classId" selected>
+                  <select class="form-control" name="classId" id="classes" selected>
                     <optgroup label="{{ $selectedMainClass->getTitle() }}">
                       @foreach($selectedMainClass->classes as $class )
                       @if($class->getRegistrationStartDate() >= \Carbon\Carbon::now())
