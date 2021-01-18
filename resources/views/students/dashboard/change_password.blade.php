@@ -1,7 +1,7 @@
 <div id="sectiuneaParola" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingPreferinte"
      aria-expanded="false">
     <div class="panel-body">
-        <form id="password" name="password" class="reservation-form" method="POST" action="/student_dashboard" novalidate="novalidate"
+        <form class="reservation-form" method="POST" action="/student_dashboard" novalidate="novalidate"
               autocomplete="off">
             @csrf
             <input type="hidden" value="{{ $student->getId() }}" name='studentId'>
