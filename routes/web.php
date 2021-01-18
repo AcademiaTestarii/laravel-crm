@@ -92,10 +92,6 @@ Route::post('catalog/student/class_signup', 'CatalogController@update')->name('u
 Route::get('catalog', 'CatalogController@index')->name('catalog');
 Route::get('catalog/{mainClassId}', 'CatalogController@get')->name('class_description');
 
-Route::get('account', function () {
-    return '';
-});
-
 Route::get('trainer/settings/', function () {
     return '';
 });
@@ -105,17 +101,5 @@ Route::get('trainer/calendar/', function () {
 });
 
 Route::get('resources', function () {
-    return '';
-});
-
-Route::get('/student/catalog', function () {
-    return '';
-});
-
-Route::get('/student/classes', function () {
-    return '';
-});
-
-Route::get('/student/my_classes', function () {
     return '';
 });
