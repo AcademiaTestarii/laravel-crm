@@ -17,8 +17,10 @@ Route::get('/', 'HomepageController@getHomepageIndex')->name('hp');
 Route::get('register', 'Auth\AuthController@getRegister');
 Route::post('register', 'Auth\AuthController@postRegister');
 
-Route::get('password/reset', 'Auth\AuthController@getPasswordReset');
+Route::get('password/reset', 'Auth\AuthController@getPasswordReset')->name('email_reset');
 Route::post('password/reset', 'Auth\AuthController@postPasswordReset');
+Route::post('password/email_reset', 'Auth\AuthController@postEmailPasswordReset');
+Route::get('password/reset/{hash}', 'Auth\AuthController@getEmailPasswordReset');
 
 Route::get('login', 'Auth\AuthController@getLogin')->name('login');
 Route::post('login', 'Auth\AuthController@postLogin');

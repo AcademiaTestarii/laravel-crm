@@ -94,6 +94,11 @@ class User extends Authenticatable
         return request()->getSchemeAndHttpHost() . '/account/activate/' . $this->getAttribute('hash');
     }
 
+    public function getResetPasswordHashUrl(): ?string
+    {
+        return request()->getSchemeAndHttpHost() . '/password/reset/' . $this->getAttribute('hash');
+    }
+
     public function isAcademiaTestarii(): bool
     {
         if ($this->getName() == self::USER_ACADEMIA_TESTARII) {

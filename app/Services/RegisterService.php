@@ -151,7 +151,7 @@ class RegisterService
     /**
      * @param User $user
      */
-    protected function sendUserPasswordResetEmail(User $user)
+    public function sendUserPasswordResetEmail(User $user)
     {
         $emailTemplate = 'register_reset_password';
 
