@@ -97,9 +97,10 @@ class AuthController extends Controller
 
         $this->registerService->resetPassword(
             [
-                'email'    => $user->getEmail(),
+                'email' => $user->getEmail(),
                 'password' => md5($request->get('password')),
-            ]
+            ],
+            false
         );
 
         return redirect()->route('login')->with(['reset_password' => true]);

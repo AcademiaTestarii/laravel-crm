@@ -16,23 +16,22 @@ class RegisterService
     protected $userRepository;
     protected $trainerProviderRepository;
     protected $trainerRepository;
-    private   $studentRepository;
+    private $studentRepository;
 
     public function __construct(
         UserRepository $userRepository,
         TrainerProviderRepository $trainerProviderRepository,
         TrainerRepository $trainerRepository,
         StudentRepository $studentRepository
-    )
-    {
-        $this->userRepository            = $userRepository;
+    ) {
+        $this->userRepository = $userRepository;
         $this->trainerProviderRepository = $trainerProviderRepository;
-        $this->trainerRepository         = $trainerRepository;
-        $this->studentRepository         = $studentRepository;
+        $this->trainerRepository = $trainerRepository;
+        $this->studentRepository = $studentRepository;
     }
 
     /**
-     * @param Role  $role
+     * @param Role $role
      * @param array $userData
      */
     public function register(Role $role, array $userData)
@@ -43,8 +42,9 @@ class RegisterService
 
     /**
      * @param array $userData
+     * @param bool $withEmail
      */
-    public function resetPassword(array $userData)
+    public function resetPassword(array $userData, $withEmail = true)
     {
         $user = $this->userRepository->findOneBy(['email' => $userData['email']]);
         $user->update(
@@ -53,11 +53,13 @@ class RegisterService
             ]
         );
 
-        $this->sendUserPasswordResetEmail($user);
+        if ($withEmail) {
+            $this->sendUserPasswordResetEmail($user);
+        }
     }
 
     /**
-     * @param Role  $role
+     * @param Role $role
      * @param array $userData
      *
      * @return mixed
@@ -67,11 +69,11 @@ class RegisterService
     {
         $user = $this->userRepository->create(
             [
-                'name'      => $userData['name'],
-                'email'     => $userData['email'],
-                'password'  => bcrypt($userData['password']),
+                'name' => $userData['name'],
+                'email' => $userData['email'],
+                'password' => bcrypt($userData['password']),
                 'is_active' => $userData['is_active'],
-                'hash'      => $userData['hash'],
+                'hash' => $userData['hash'],
             ]
         );
 
@@ -80,7 +82,7 @@ class RegisterService
         if ($user->isTrainerProvider()) {
             $this->trainerProviderRepository->create(
                 [
-                    'name'    => $user->getName(),
+                    'name' => $user->getName(),
                     'user_id' => $user->getId(),
                 ]
             );
@@ -107,10 +109,10 @@ class RegisterService
         if ($user->isStudent()) {
             $this->studentRepository->create(
                 [
-                    'user_id'    => $user->getId(),
+                    'user_id' => $user->getId(),
                     'first_name' => explode(" ", ($user["name"]))[0],
-                    'last_name'  => $userLastName,
-                    'email'      => $user['email'],
+                    'last_name' => $userLastName,
+                    'email' => $user['email'],
 
                 ]
             );
@@ -141,8 +143,8 @@ class RegisterService
             ['user' => $user],
             function ($message) use ($user) {
                 $message->from('contact@academiatestarii.ro')
-                        ->to($user->getEmail())
-                        ->subject('Confirmare înregistrare pe platforma Academia Testarii');
+                    ->to($user->getEmail())
+                    ->subject('Confirmare înregistrare pe platforma Academia Testarii');
             }
         );
     }
@@ -160,8 +162,8 @@ class RegisterService
             ['user' => $user],
             function ($message) use ($user) {
                 $message->from('contact@academiatestarii.ro')
-                        ->to($user->getEmail())
-                        ->subject('Confirmare resetare parola pe platforma Academia Testarii');
+                    ->to($user->getEmail())
+                    ->subject('Confirmare resetare parola pe platforma Academia Testarii');
             }
         );
     }
@@ -175,7 +177,7 @@ class RegisterService
     {
         $user->update(
             [
-                'is_active'         => 1,
+                'is_active' => 1,
                 'email_verified_at' => (new Carbon())->toDateTimeString(),
             ]
         );
