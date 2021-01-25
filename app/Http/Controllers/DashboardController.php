@@ -57,9 +57,9 @@ class DashboardController extends Controller
 
         $baseurl='';
         if(url()->current() === 'stage.up-grade.tech') {
-            $baseurl = 'stage.academiatestarii.ro';
+            $baseurl = env('STAGE_URL');
         } elseif (url()->current() === 'up-grade.tech') {
-            $baseurl = 'stage.academiatestarii.ro';
+            $baseurl = env('APP_URL');
         }
 
         return view('students.dashboard.student_dashboard')->with(
