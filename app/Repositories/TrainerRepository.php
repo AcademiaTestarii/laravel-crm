@@ -42,7 +42,7 @@ class TrainerRepository extends Repository
             $model = $model->where($column, '=', $value);
         }
 
-        if (auth()->user()->isTrainerProvider()) {
+        if (auth()->user() && auth()->user()->isTrainerProvider()) {
             $model = $model->where('trainer_provider_id', auth()->user()->trainerProvider->getId());
         }
 

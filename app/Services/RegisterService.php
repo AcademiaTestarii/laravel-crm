@@ -33,6 +33,7 @@ class RegisterService
     /**
      * @param Role $role
      * @param array $userData
+     * @throws \Exception
      */
     public function register(Role $role, array $userData)
     {

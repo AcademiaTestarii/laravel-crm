@@ -63,7 +63,7 @@ class AuthController extends Controller
             ]
         );
 
-        return redirect()->route('login')->with(['activate_email' => true]);
+        return redirect()->route('login')->with(['activate_email' => ($role->isTrainer()) ? false : true]);
 
         $mainClassId = $request->get('mainClassId');
 
