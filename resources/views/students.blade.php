@@ -359,13 +359,6 @@
             }
         });
     });
-
-    /**
-     *     var id = this.id;
-     var rightWidgetHtml =  $("#student_hidden_widget-".id).html();
-     console.log(rightWidgetHtml);
-     $(".student-right").html(rightWidgetHtml);
-     */
 </script>
 </body>
 </html>

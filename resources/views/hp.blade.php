@@ -40,7 +40,8 @@
                     <p class="upt-section__cta-box__description">
                         Up-grade your career and latest skills.
                         What do you want to learn?</p>
-                    <a class="upt-section__cta-box__button upt-section__cta-box__button--yellow" href="/register">START NOW</a>
+                    <a class="upt-section__cta-box__button upt-section__cta-box__button--yellow" href="/register">START
+                        NOW</a>
                 </div>
             </div>
         </div>
@@ -250,7 +251,7 @@
                 <div class="upt-section__bottom__text">Make the most of your online learning experience
                 </div>
                 <a class="upt-section__bottom__button" href="/register">START NOW</a>
-               {{-- <button class="upt-section__bottom__button">START NOW</button>--}}
+                {{-- <button class="upt-section__bottom__button">START NOW</button>--}}
                 <div class="upt-section__bottom__carousel">
                     <?php
                     $mainClasses = [];
@@ -273,6 +274,17 @@
                                         <div class="upt-coursebox__description">
                                             {{ $class->getRegistrationStartDate()->formatLocalized("%e %B, %Y") }}
                                             - {{ $class->getRegistrationEndDate()->formatLocalized("%e %B, %Y") }}
+
+                                            @if(!is_null($class->getWeekdaysSchedule()))
+                                                <br>
+                                               {{$class->getWeekdaysSchedule()}}
+                                            @endif
+
+                                            @if(!is_null($class->getWeekendSchedule()))
+                                                <br>
+                                               {{$class->getWeekendSchedule()}}
+                                            @endif
+
                                             @endif
                                             <br>
                                             {{$class->getStudents() - $class->classStudents()->count()}} Spots Available<br>

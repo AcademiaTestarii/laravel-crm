@@ -41,6 +41,15 @@
                                         <span class="mb-0 text-gray-darkgray mr-10 font-13">
                                             <i class="fa fa-calendar mr-5 text-theme-colored"></i>
                                             {{ $class->getRegistrationStartDate()->formatLocalized("%e %B, %Y") }} - {{ $class->getRegistrationEndDate()->formatLocalized("%e %B, %Y") }}
+                                            @if(!is_null($class->getWeekdaysSchedule()))
+                                                <br>
+                                                {{$class->getWeekdaysSchedule()}}
+                                            @endif
+                                            @if(!is_null($class->getWeekendSchedule()))
+                                                <br>
+                                               {{$class->getWeekendSchedule()}}
+                                            @endif
+
                                             @endif
                                         </span> <br>
                                         {{$class->getStudents() - $class->classStudents()->count()}} Spots Available<br>
