@@ -18,11 +18,11 @@
         <div class="footer__content__column__column">
           <ul class="footer__content__column__column__list">
             <li class="footer__content__column__column__list__item">
-              <a class="footer__content__column__column__list__item__link" href="/Login">Teach on upgrade
+              <a class="footer__content__column__column__list__item__link" href="/login">Teach on upgrade
               </a>
             </li>
             <li class="footer__content__column__column__list__item">
-              <a class="footer__content__column__column__list__item__link" href="/Register">Register</a>
+              <a class="footer__content__column__column__list__item__link" href="/register">Register</a>
             </li>
             <li class="footer__content__column__column__list__item">
               <a class="footer__content__column__column__list__item__link" href="/COURSE">Apply to course

@@ -40,7 +40,7 @@
                     <p class="upt-section__cta-box__description">
                         Up-grade your career and latest skills.
                         What do you want to learn?</p>
-                    <a class="upt-section__cta-box__button upt-section__cta-box__button--yellow" href="/">START NOW</a>
+                    <a class="upt-section__cta-box__button upt-section__cta-box__button--yellow" href="/register">START NOW</a>
                 </div>
             </div>
         </div>
@@ -249,7 +249,8 @@
                 <div class="upt-section__bottom__title">Don’t waste your valuable time and money.</div>
                 <div class="upt-section__bottom__text">Make the most of your online learning experience
                 </div>
-                <button class="upt-section__bottom__button">START NOW</button>
+                <a class="upt-section__bottom__button" href="/register">START NOW</a>
+               {{-- <button class="upt-section__bottom__button">START NOW</button>--}}
                 <div class="upt-section__bottom__carousel">
                     <?php
                     $mainClasses = [];
