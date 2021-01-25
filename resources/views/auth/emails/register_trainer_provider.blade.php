@@ -39,7 +39,6 @@
         nu ezita sa accesezi zona de <a href="{{request()->getSchemeAndHttpHost()}}/resources">resurse</a>
         sau sa ne scrii la office@academiatestarii.ro.--}}
     </p>
-
     <p>
         La cat mai multi studenti si cursuri livrate!
     </p>
