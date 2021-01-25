@@ -108,14 +108,14 @@ class ClassesController extends Controller
                 }
 
                 if ($request->get('start')) {
-                    if ($class->getRegistrationStartDate()->format("Y-m-d") <= (new  Carbon($request->get('start')))->format("Y-m-d")
+                    if ($class->getRegistrationStartDate()->format("Y-m-d") < (new  Carbon($request->get('start')))->format("Y-m-d")
                     ) {
                         $mainClass->classes->forget($key);
                     }
                 }
 
                 if ($request->get('end')) {
-                    if ($class->getRegistrationEndDate()->format("Y-m-d") >= (new  Carbon($request->get('end')))->format("Y-m-d")
+                    if ($class->getRegistrationEndDate()->format("Y-m-d") > (new  Carbon($request->get('end')))->format("Y-m-d")
                     ) {
                         $mainClass->classes->forget($key);
                     }
