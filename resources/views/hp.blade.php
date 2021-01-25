@@ -128,7 +128,7 @@
                 </div>
                 <div class="upt-section__content__column">
                     <div class="upt-form">
-                        <a class="upt-form__link" href="#">Already have an account? Login</a>
+                        <a class="upt-form__link" href="/login">Already have an account? Login</a>
                         <input type="text" class="upt-form__input" placeholder="Enter your name">
                         <input type="email" class="upt-form__input" placeholder="Enter your email">
                         <button class="upt-form__button">CREATE ACCOUNT</button>
