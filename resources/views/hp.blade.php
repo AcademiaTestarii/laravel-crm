@@ -129,9 +129,39 @@
                 <div class="upt-section__content__column">
                     <div class="upt-form">
                         <a class="upt-form__link" href="/login">Already have an account? Login</a>
-                        <input type="text" class="upt-form__input" placeholder="Enter your name">
-                        <input type="email" class="upt-form__input" placeholder="Enter your email">
-                        <button class="upt-form__button">CREATE ACCOUNT</button>
+                        <form method="POST" action="/register">
+                            @csrf
+                            @if ($errors->has('name'))
+                                <span class="help-block">
+                                  <strong>{{ $errors->first('name') }}</strong>
+                                </span>
+                            @endif
+                            <input type="text" name="name" value="{{ old('name') }}" class="upt-form__input"
+                                   placeholder="Enter your name">
+                            @if ($errors->has('email'))
+                                <span class="help-block">
+                                    <strong>{{ $errors->first('email') }}</strong>
+                                </span>
+                            @endif
+                            <input type="email" name="email" value="{{ old('email') }}" class="upt-form__input"
+                                   placeholder="Enter your email">
+                            @if ($errors->has('password'))
+                                <span class="help-block">
+                                  <strong>{{ $errors->first('password') }}</strong>
+                                </span>
+                            @endif
+                            <input type="password" name="password" class="upt-form__input"
+                                   placeholder="Enter your password">
+                            @if ($errors->has('password_confirmation'))
+                                <span class="help-block">
+                                  <strong>{{ $errors->first('password_confirmation') }}</strong>
+                                </span>
+                            @endif
+                            <input type="password" name="password_confirmation" class="upt-form__input"
+                                   placeholder="Confirm your password">
+                            <input type="hidden" name="role" value="2"/>
+                            <input type="submit" class="upt-form__button" value="CREATE ACCOUNT"/>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -223,7 +253,7 @@
                 <div class="upt-section__bottom__carousel">
                     <?php
                     $mainClasses = [];
-                  $counter = 0;
+                    $counter = 0;
                     ?>
                     @foreach($classes as $class)
                         <?php
