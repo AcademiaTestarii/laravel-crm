@@ -96,7 +96,7 @@
             <div class="row entry-content">
               <div class="col-sm-12 col-md-3">
                 <div class="form-group">
-                  <label for="english" class="control-label">Cunostinte limba engleza</label>
+                  <label for="english" class="control-label">Cunostinte limba engleza *</label>
                   @if(!empty($student->english) )
                   <input id="english" type="text" class="form-control" name="english" value="{{ $student->getEnglish() }}">
                   @else
@@ -136,7 +136,7 @@
               </div>
               <div class="col-sm-12 col-md-3">
                 <div class="form-group">
-                  <label for="web" class="control-label">Cunostinte web</label>
+                  <label for="web" class="control-label">Cunostinte web *</label>
                   @if(!empty($student->getWeb()) )
                   <input id="web" type="text" class="form-control" name="web" value="{{ $student->getWeb() }}">
                   @else
