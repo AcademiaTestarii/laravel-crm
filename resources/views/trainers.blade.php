@@ -84,13 +84,17 @@
                                 <span>{{$trainer->classTrainers()->count()}} Curs(uri)</span>
                             </div>
                         </div>
-                        <div class="widget-text-box trainer-bio">
+                        <div class="widget-text-box trainer-bio-top">
                             <h4 class="media-heading">{{$trainer->getName()}}</h4>
                             <p>{!! $trainer->getBio() !!}</p>
+                        </div>
+                        <div class="widget-text-box trainer-bio-bottom">
                             <a class="btn btn-primary trainer-details" href="/trainer?id={{$trainer->getId()}}">Detalii
                                 trainer</a>
-                            <a onClick="confirmDelete('trainers_list?delete={{$trainer->getId()}}')" class="btn btn-danger trainer-delete"
-                               >Sterge trainer</a>
+                            <a onClick="confirmDelete('trainers_list?delete={{$trainer->getId()}}')"
+                               class="btn btn-danger trainer-delete"
+                            >Sterge trainer</a>
+
                         </div>
                     </div>
                 @endforeach
