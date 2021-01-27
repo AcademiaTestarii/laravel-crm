@@ -8,7 +8,25 @@
 </head>
 <body>
 <div>
+    <p>
+        Salut
+        {{$user->name}},
+    </p>
+    <p>
+        Suntem bucurosi ca ai ales Up-Grade ca si platforma pentru educatie. Misiunea noastra este sa imbunatatim
+        calitatea educatiei online, prin cursuri de calitate, ajutate de tehnologie de ultima ora.
 
+    </p>
+    <p>
+        Reseteaza parola ta
+        <a href="{{$user->getResetPasswordHashUrl()}}">aici</a>
+    </p>
+    <p>
+        Iti multumim,
+    </p>
+    <p>
+        Echipa Up-Grade
+    </p>
 </div>
 </body>
 </html>

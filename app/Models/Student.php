@@ -141,4 +141,9 @@ class Student extends Model
     {
         return $this->getAttribute('newsletter');
     }
+
+    public function getNotifications()
+    {
+        return $this->getAttribute('notifications');
+    }
 }

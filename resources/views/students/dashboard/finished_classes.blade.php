@@ -7,7 +7,7 @@
                     <strong>Data înscriere: </strong>
                     {{ $finished->sign_up_date}}
                     <br />
-                    <strong>Cursul începe pe: </strong> {{ $finished->resgistration_start_date }}
+                    <strong>Cursul a inceput pe: </strong> {{ $finished->registration_start_date }}
                     <br />
                     @if(!empty($finished->discount_price && $finished->discount_price != 0))
                         <strong>Preț curs: </strong>
@@ -24,36 +24,24 @@
                 </p>
             </div>
             <div class="col-md-6">
-                @if(!empty($finished->resources_description))
                     <div class="panel-group toggle accordion-theme-colored2 accordion-icon-right">
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <div class="panel-title">
-                                    <a
-                                            data-toggle="collapse"
-                                            href="#togglea"
-                                            class=""><span
-                                                class="open-sub collapsed"></span>Resurse curs</a>
+                                    <a data-toggle="collapse" href="#toggleb" class="">
+                                        <span class="open-sub collapsed"></span>Resurse curs</a>
                                 </div>
                             </div>
-                            <div id="togglea"
+                            <div id="toggleb"
                                  class="panel-collapse collapse">
                                 <div class="panel-body resurs">
-                                    {{ $finished->resources_description }}
+                                    {!!  $finished->resources_description !!}
                                 </div>
                             </div>
                         </div>
                     </div>
-                @endif
             </div>
             <div class="col-md-12">
-                @if(!empty($finished->schedule_pdf))
-                    <a href="/documents/{{ $finished->schedule_pdf }}"
-                       target="_blank"
-                       class="btn btn-gray btn-transparent btn-xs">Programa curs</a>
-                @endif
-
-                @if(!empty($finished->requirement_description))
                     | <a href="javascript:void(0)"
                          data-toggle="modal"
                          data-target=".bs-example-modal-lg2"
@@ -82,9 +70,10 @@
                             </div>
                         </div>
                     </div>
-                @endif
+                | <a href="{{ $baseUrl }}/feedback?id={{ $finished->id }}&student_id={{ $finished->student_id }}" target="_blank" class="btn btn-gray btn-transparent btn-xs">Feedback curs</a>
+                | <a href="{{ $baseUrl }}/certificat?id={{ $finished->id }}&student_id={{ $finished->student_id }}" target="_blank" class="btn btn-gray btn-transparent btn-xs">Certificat de ablosvire curs</a>
             </div>
         </div>
-    @endforeach
     <hr />
+    @endforeach
 </div>

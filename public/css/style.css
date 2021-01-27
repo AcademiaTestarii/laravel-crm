@@ -10212,10 +10212,15 @@ tr.group:hover {
     min-height: 355px;
 }
 
-.trainer-bio {
-    min-height: 301px;
-    max-height: 310px;
+.trainer-bio-top {
+    min-height: 280px;
+    max-height: 280px;
     overflow: auto;
+    border-bottom: none;
+}
+
+.trainer-bio-bottom {
+    border-top: none;
 }
 
 .trainer-details {

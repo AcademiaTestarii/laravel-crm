@@ -29,8 +29,8 @@
                             ?>
                             <div class="upt-catalogbox">
                                 <span class="upt-catalogbox__image"><img src="{{$class->getImage()}}" /></span>
-                                <div class="upt-catalogbox__title">{{ $class->getTitle() }}</div>
-                                <p class="upt-catalogbox__autor">George Stan</p>
+                                <div class="upt-catalogbox__title">{{ $class->mainClass->getTitle() }}</div>
+                                <p class="upt-catalogbox__autor">{{$class->classTrainer->trainer->getName()}}</p>
                                 <p class="upt-catalogbox__text">{{ $class->getShortDescription() }}</p>
                                 <div class="upt-catalogbox__subtitle">NEXT COURSE</div>
                                 <div class="upt-catalogbox__description">
@@ -41,6 +41,15 @@
                                         <span class="mb-0 text-gray-darkgray mr-10 font-13">
                                             <i class="fa fa-calendar mr-5 text-theme-colored"></i>
                                             {{ $class->getRegistrationStartDate()->formatLocalized("%e %B, %Y") }} - {{ $class->getRegistrationEndDate()->formatLocalized("%e %B, %Y") }}
+                                            @if(!is_null($class->getWeekdaysSchedule()))
+                                                <br>
+                                                {{$class->getWeekdaysSchedule()}}
+                                            @endif
+                                            @if(!is_null($class->getWeekendSchedule()))
+                                                <br>
+                                               {{$class->getWeekendSchedule()}}
+                                            @endif
+
                                             @endif
                                         </span> <br>
                                         {{$class->getStudents() - $class->classStudents()->count()}} Spots Available<br>

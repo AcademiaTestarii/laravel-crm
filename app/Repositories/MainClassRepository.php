@@ -70,8 +70,6 @@ class MainClassRepository extends Repository
     {
         $model = $this->model;
         if (!is_null(auth()->user())) {
-
-
             if (auth()->user()->isTrainerProvider()) {
                 $model = $model->where('trainer_provider_id', auth()->user()->trainerProvider->getId());
             }

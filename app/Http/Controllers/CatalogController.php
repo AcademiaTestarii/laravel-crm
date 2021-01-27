@@ -125,6 +125,7 @@ class CatalogController extends Controller
                 'ms_office'      => 'nullable',
                 'web'            => 'required',
                 'payment_type'   => 'required',
+                'classId' => 'required'
             ],
             [
                 'first_name.required' => 'prenumele este obligatoriu',
@@ -151,6 +152,7 @@ class CatalogController extends Controller
 
                 'payment_type.in'       => 'bifeaza una dintre optiuni :values',
                 'payment_type.required' => 'bifeaza una dintre optiunile de plata',
+                'classId.required' => 'selecteaza un curs'
 
             ]
 

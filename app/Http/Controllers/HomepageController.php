@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Content;
 use App\Repositories\ActivityRepository;
+use App\Repositories\ClassesRepository;
 use App\Repositories\ContentRepository;
 use App\Services\ContentService;
 use App\Services\SliderService;
@@ -67,9 +68,15 @@ class HomepageController extends Controller
         ]);
     }
 
-    public function getBlankIndex()
-    {
-        return view('hp');
+    public function getHomepageIndex(ClassesRepository $classesRepository) {
+
+          $classes = $classesRepository->findAllBy(
+            ['is_active' => 1],
+            '=',
+            'registration_start_date'
+        );
+
+        return view('hp')->with(['classes' => $classes]);
     }
 
     public function update(Request $request)
