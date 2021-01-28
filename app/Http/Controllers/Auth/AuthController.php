@@ -141,7 +141,6 @@ class AuthController extends Controller
         }
 
         if (auth()->user()->isStudent()) {
-
             if ($request->get('mainClassId') != null) {
                 return redirect('/catalog/' . $request->get('mainClassId') . '/class_signup');
             }

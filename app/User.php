@@ -91,8 +91,7 @@ class User extends Authenticatable
 
     public function getHashUrl(): ?string
     {
-        return request()->getSchemeAndHttpHost() . '/account/activate/' . $this->getAttribute('hash');
-    }
+        return request()->getSchemeAndHttpHost() . '/account/activate/' . $this->getAttribute('hash').'?mainClassId=' . request()->get('mainClassId');    }
 
     public function getResetPasswordHashUrl(): ?string
     {
