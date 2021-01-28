@@ -63,11 +63,8 @@ class AuthController extends Controller
             ]
         );
 
-        return redirect()->route('login')->with(['activate_email' => ($role->isTrainer()) ? false : true]);
-
         $mainClassId = $request->get('mainClassId');
-
-        return redirect()->route('login')->with(['activate_email' => true, 'mainClassId' => $mainClassId]);
+        return redirect()->route('login')->with(['activate_email' => ($role->isTrainer()) ? false : true, 'mainClassId' => $mainClassId]);
     }
 
     public function postEmailPasswordReset(Request $request)
