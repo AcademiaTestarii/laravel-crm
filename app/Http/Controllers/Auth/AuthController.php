@@ -19,16 +19,17 @@ class AuthController extends Controller
         RoleRepository $roleRepository,
         UserRepository $userRepository,
         RegisterService $registerService
-    ) {
-        $this->roleRepository = $roleRepository;
-        $this->userRepository = $userRepository;
+    )
+    {
+        $this->roleRepository  = $roleRepository;
+        $this->userRepository  = $userRepository;
         $this->registerService = $registerService;
     }
 
     public function getRegister()
     {
         auth()->logout();
-        $roles = $this->roleRepository->getAllRolesExcept(['admin', 'trainer']);
+        $roles       = $this->roleRepository->getAllRolesExcept(['admin', 'trainer']);
         $trainerRole = $this->roleRepository->findOneBy(['code' => Role::ROLE_TRAINER]);
 
         return view('auth.register')->with(['roles' => $roles, 'roleTrainer' => $trainerRole]);
@@ -43,10 +44,10 @@ class AuthController extends Controller
     {
         $validatedData = $request->validate(
             [
-                'name' => 'required|max:255',
-                'email' => 'required|email|max:255|unique:users',
+                'name'     => 'required|max:255',
+                'email'    => 'required|email|max:255|unique:users',
                 'password' => 'required|min:6|confirmed',
-                'role' => 'required|int',
+                'role'     => 'required|int',
             ]
         );
 
@@ -55,15 +56,16 @@ class AuthController extends Controller
         $this->registerService->register(
             $role,
             [
-                'name' => $request->name,
-                'email' => $request->email,
+                'name'      => $request->name,
+                'email'     => $request->email,
                 'is_active' => null,
-                'password' => md5($request->password),
-                'hash' => $this->generateHash($request->email),
+                'password'  => md5($request->password),
+                'hash'      => $this->generateHash($request->email),
             ]
         );
 
         $mainClassId = $request->get('mainClassId');
+
         return redirect()->route('login')->with(['activate_email' => ($role->isTrainer()) ? false : true, 'mainClassId' => $mainClassId]);
     }
 
@@ -85,7 +87,7 @@ class AuthController extends Controller
     {
         $validatedData = $request->validate(
             [
-                'password' => 'required|min:6|confirmed',
+                'password'              => 'required|min:6|confirmed',
                 'password_confirmation' => 'required|min:6',
             ]
         );
@@ -94,7 +96,7 @@ class AuthController extends Controller
 
         $this->registerService->resetPassword(
             [
-                'email' => $user->getEmail(),
+                'email'    => $user->getEmail(),
                 'password' => md5($request->get('password')),
             ],
             false
@@ -124,15 +126,25 @@ class AuthController extends Controller
 
         $loginData = $request->validate(
             [
-                'email' => 'email|required',
+                'email'    => 'email|required',
                 'password' => 'required',
             ]
         );
 
-        $loginData['password'] = md5($loginData['password']);
+        $loginData['password']  = md5($loginData['password']);
         $loginData['is_active'] = 1;
 
         if (!auth()->attempt($loginData)) {
+                if ($request->get('mainClassId') != null) {
+                    return redirect('/login?mainClassId=' . $request->get('mainClassId'))->withErrors(
+                        [
+                            'email_password_mismatch' => 'Email and password do not match',
+                        ]
+                    );
+                }
+
+
+
             return redirect()->route('login')->withErrors(
                 [
                     'email_password_mismatch' => 'Email and password do not match',
