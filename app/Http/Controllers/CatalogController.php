@@ -90,8 +90,6 @@ class CatalogController extends Controller
 
     public function getData(Request $request, $mainClassId)
     {
-
-
         $selectedMainClass = $this->mainClassRepository->findOneBy(['id' => $mainClassId]);
         if (Auth::guest()) {
             return redirect('/login?mainClassId='.$selectedMainClass->getId());

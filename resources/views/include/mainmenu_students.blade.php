@@ -17,7 +17,6 @@
 <li> @if (Request::is('for_companies'))" @endif>
     <a href="/blog_list"><i class="fa fa-newspaper-o"></i> <span class="nav-label">Blog</span></a>
 </li>
-
 <li> @if (Request::is('contact'))" @endif>
     <a href="/contact"><i class="fa fa-newspaper-o"></i> <span class="nav-label">Contact</span></a>
 </li>--}}
