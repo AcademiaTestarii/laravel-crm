@@ -87,7 +87,7 @@
               </div>
               <div class="col-sm-12 col-md-4">
                 <div class="form-group">
-                  <label for="phone" class="control-label">Educatie *</label>
+                  <label for="education" class="control-label">Educatie *</label>
                   <input id="education" type="text" class="form-control" name="education" value="{{ $student->getEducation() }}">
                 </div>
               </div>
