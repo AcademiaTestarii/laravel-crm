@@ -132,6 +132,10 @@ h5 {
     text-align: left;
     font-weight: normal;
 }
+.navbar-default.navbar-static-side {
+  height: 100vh;
+  background: #273a4a;
+}
 
 .dropdown-menu > .active > a,
 .dropdown-menu > .active > a:focus,

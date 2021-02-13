@@ -42,6 +42,7 @@ RUN chown -R www-data:www-data \
   && chown -R www-data /var/www/public \
   && chmod -R 777 public/documents/ \
   && chmod -R 777 public/trainers/ \
+  && chmod -R 777 public/slider/ \
   && chmod -R 777 public/partners/ \
   && chmod -R 777 public/classes/ \
   && chmod -R 777 public/news/ \
