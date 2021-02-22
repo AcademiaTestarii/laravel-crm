@@ -47,6 +47,7 @@ RUN chown -R www-data:www-data \
   && chmod -R 777 public/classes/ \
   && chmod -R 777 public/news/ \
   &&  chmod -R 777 public/ \
+  && chown -R www-data:www-data storage/ \
   &&  chmod -R 777 storage/
 
 RUN php artisan route:clear \
