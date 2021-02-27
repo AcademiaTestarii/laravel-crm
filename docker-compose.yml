@@ -15,7 +15,5 @@ services:
       context: .
       dockerfile: ./docker/php/Dockerfile
     working_dir: /var/www
-    volumes:
-      - ./public:/var/www/public
     networks:
       - default

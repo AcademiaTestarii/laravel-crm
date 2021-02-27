@@ -445,9 +445,12 @@
       var today = new Date();
       var y = today.getFullYear();
 
-      $('#mdp-demo').multiDatesPicker({
-        addDates: [<?php echo $classDates; ?>],
-      });
+      <?php if ($classDates) { ?>
+        $('#mdp-demo').multiDatesPicker({
+          addDates: [<?php echo $classDates; ?>],
+        });
+      <?php }; ?>
+
 
       $("#removeDates").click(function() {
         $('#mdp-demo').multiDatesPicker('resetDates');
