@@ -299,6 +299,9 @@
                 <h5>Data desfasurare</h5>
               </div>
               <div class="form-group">
+                <label> <input type="checkbox" id="in-curand" name="bucharest" value="1"> In curand? </label>
+              </div>
+              <div class="form-group" id="calendar-dates">
                 <label class="col-sm-2 control-label">Calendar: <br /><small>ll/zz/yyyy</small></label>
                 <div class="col-sm-10">
                   <input type="text" name="deployment" id="mdp-demo" class="form-control" value="">
@@ -441,6 +444,16 @@
       // Perioada inscriere
       $('input[name="perioada"]').daterangepicker();
 
+      $('#in-curand').change(function() {
+        if ($(this).is(":checked")) {
+          $("#calendar-dates").hide();
+          $("#mdp-demo").val("In Curand");
+        } else {
+          $("#calendar-dates").show();
+          $("#mdp-demo").val("");
+        }
+      });
+
       // Desfasurare curs
       var today = new Date();
       var y = today.getFullYear();
@@ -449,7 +462,9 @@
         $('#mdp-demo').multiDatesPicker({
           addDates: [<?php echo $classDates; ?>],
         });
-      <?php }; ?>
+      <?php } else { ?>
+        $('#mdp-demo').multiDatesPicker();
+      <?php } ?>
 
 
       $("#removeDates").click(function() {
