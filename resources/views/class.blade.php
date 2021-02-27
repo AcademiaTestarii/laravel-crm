@@ -299,7 +299,7 @@
                 <h5>Data desfasurare</h5>
               </div>
               <div class="form-group">
-                <div class="col-sm-2">In curand ?</div>
+                <label class="col-sm-2 control-label">In curand ?</label>
                 <div class="col-sm-10"> <label> <input type="checkbox" id="in-curand" name="bucharest" value="1"> </label></div>
 
               </div>
