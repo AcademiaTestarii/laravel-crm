@@ -136,7 +136,7 @@
               <div class="hr-line-dashed"></div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">Pret redus/cursant:</label>
-                <div class="col-sm-10"><input value="@if($class){{$class->getDiscountPrice()}}@endif" name="discount_price" type="text" placeholder="doar cifre" class="form-control">
+                <div class="col-sm-10"><input value="@if($class){{$class->getDiscountPrice()}}@endif" name="discount_price" type="number" placeholder="doar cifre" class="form-control">
                 </div>
               </div>
 
@@ -455,12 +455,16 @@
           $("#mdp-demo").val("");
         }
       });
-
+      console.log(<?php echo $classDates; ?>)
+      <?php if ($classDates == '01/01/2121') { ?>
+        $('#in-curand').prop("checked", true);
+      <?php } ?>
       // Desfasurare curs
       var today = new Date();
       var y = today.getFullYear();
 
       <?php if ($classDates) { ?>
+
         $('#mdp-demo').multiDatesPicker({
           addDates: [<?php echo $classDates; ?>],
         });
@@ -497,6 +501,10 @@
           },
           price: {
             required: true,
+            number: true
+          },
+          discount_price: {
+            required: false,
             number: true
           },
           trainer: {
