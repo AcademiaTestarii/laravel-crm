@@ -455,9 +455,9 @@
           $("#mdp-demo").val("");
         }
       });
-      console.log(<?php echo $classDates; ?>)
-      <?php if ($classDates == '01/01/2121') { ?>
+      <?php if ($classDates == "'01/01/2121'") { ?>
         $('#in-curand').prop("checked", true);
+        $("#calendar-dates").hide();
       <?php } ?>
       // Desfasurare curs
       var today = new Date();
