@@ -1,4 +1,4 @@
-FROM php:7.3-fpm
+FROM php:7.4-fpm
 
 # Copy composer.lock and composer.json
 COPY . /var/www
@@ -23,15 +23,18 @@ RUN apt-get update && apt-get install -y \
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install extensions
-RUN docker-php-ext-install pdo pdo_mysql mbstring zip exif pcntl
-RUN docker-php-ext-configure gd --with-gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ --with-png-dir=/usr/include/
-RUN docker-php-ext-install gd
-RUN pecl install -o -f redis \
-  &&  rm -rf /tmp/pear \
-  &&  docker-php-ext-enable redis
+RUN docker-php-ext-install pdo pdo_mysql zip exif pcntl
+RUN apt-get update && apt-get install -y \
+    libfreetype6-dev \
+    libjpeg62-turbo-dev \
+    libpng-dev \
+    && docker-php-ext-configure gd --with-jpeg=/usr/include/ --with-freetype=/usr/include/ \
+    && docker-php-ext-install -j$(nproc) gd
 
 RUN curl --silent --show-error https://getcomposer.org/installer | php \
-  && php composer.phar install --no-dev --no-scripts
+  && php composer.phar install --no-dev --no-scripts \
+  && php composer.phar dump-autoload
+
 
 RUN chown -R www-data:www-data \
   /var/www/storage \
@@ -39,8 +42,15 @@ RUN chown -R www-data:www-data \
   && chown -R www-data /var/www/public \
   && chmod -R 777 public/documents/ \
   && chmod -R 777 public/trainers/ \
+  && chmod -R 777 public/slider/ \
+  && chmod -R 777 public/partners/ \
+  && chmod -R 777 public/classes/ \
+  && chmod -R 777 public/news/ \
   &&  chmod -R 777 public/ \
+  && chown -R www-data:www-data storage/ \
   &&  chmod -R 777 storage/
 
-RUN php artisan optimize
-RUN php artisan passport:keys
+RUN php artisan route:clear \
+  && php artisan optimize \
+  && php artisan migrate \
+  && php artisan passport:keys

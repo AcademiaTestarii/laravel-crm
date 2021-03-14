@@ -12,14 +12,17 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/', 'HomepageController@getHomepageIndex')->name('hp');
+
 Route::get('register', 'Auth\AuthController@getRegister');
 Route::post('register', 'Auth\AuthController@postRegister');
 
-Route::get('password/reset', 'Auth\AuthController@getPasswordReset');
+Route::get('password/reset', 'Auth\AuthController@getPasswordReset')->name('email_reset');
 Route::post('password/reset', 'Auth\AuthController@postPasswordReset');
+Route::post('password/email_reset', 'Auth\AuthController@postEmailPasswordReset');
+Route::get('password/reset/{hash}', 'Auth\AuthController@getEmailPasswordReset');
 
 Route::get('login', 'Auth\AuthController@getLogin')->name('login');
-Route::get('/', 'Auth\AuthController@getLogin');
 Route::post('login', 'Auth\AuthController@postLogin');
 
 Route::get('/account/activate/{hash}', 'Auth\AuthController@activate');
@@ -29,7 +32,6 @@ Route::get('certificate/{id}', 'FeedbackController@getCertificateDetails');
 
 Route::middleware('auth:api')->group(function () {
     Route::get('logout', 'Auth\AuthController@logOut')->name('logout');
-    Route::get('blank_dashboard', 'DashboardController@getBlankDashboard')->name('blank-dashboard');
 
     Route::group(['middleware' => ['ability:can-view-all']], function () {
         Route::get('dashboard', 'DashboardController@index')->name('dashboard');
@@ -79,33 +81,27 @@ Route::middleware('auth:api')->group(function () {
         Route::post('blog/{id}/uploadImage', 'BlogController@uploadImage');
 
         Route::get('search', 'SearchController@index');
+
+
+        //STUDENTS
+        Route::get('student_dashboard', 'DashboardController@studentDashboard')->name('student_dashboard');
+        Route::post('student_dashboard', 'DashboardController@update')->name('update_student_dashboard');
     });
-});
 
-Route::get('account', function() {
+});
+Route::get('catalog/{mainClassId}/class_signup', 'CatalogController@getData')->name('class_signup');
+Route::post('catalog/student/class_signup', 'CatalogController@update')->name('update_student');
+Route::get('catalog', 'CatalogController@index')->name('catalog');
+Route::get('catalog/{mainClassId}', 'CatalogController@get')->name('class_description');
+
+Route::get('trainer/settings/', function () {
     return '';
 });
 
-Route::get('trainer/settings/', function() {
+Route::get('trainer/calendar/', function () {
     return '';
 });
 
-Route::get('trainer/calendar/', function() {
-    return '';
-});
-
-Route::get('resources', function() {
-    return '';
-});
-
-Route::get('/student/catalog', function() {
-    return '';
-});
-
-Route::get('/student/classes', function() {
-    return '';
-});
-
-Route::get('/student/my_classes', function() {
+Route::get('resources', function () {
     return '';
 });

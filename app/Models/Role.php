@@ -79,9 +79,9 @@ class Role extends Model
         return $this->getAttribute('code');
     }
 
-    public function isStudent(): bool
+    public function isTrainer(): bool
     {
-        if ($this->getAttribute('code') == self::ROLE_STUDENT) {
+        if ($this->getAttribute('code') == self::ROLE_TRAINER) {
             return true;
         }
 

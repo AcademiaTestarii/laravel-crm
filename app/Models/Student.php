@@ -7,15 +7,18 @@ use Illuminate\Database\Eloquent\Model;
 
 class Student extends Model
 {
+    protected $hidden   = ['id'];
+    protected $guarded = ['id'];
+  //  protected $fillable = ['name', 'user_id','first_name','last_name','email','password','is_active', 'city'];
+
     public function classStudents()
     {
         return $this->hasMany(ClassStudent::class);
     }
 
-    /* public function classStudent($classId)
-     {
-         return $this->hasOne(ClassStudent::class)->where('class_id', $classId);
-     }*/
+    public function isSignedUpToClass($classId) {
+        return $this->hasOne(ClassStudent::class)->where('class_id', $classId)->first();
+    }
 
     public function feedbacks()
     {
@@ -86,7 +89,12 @@ class Student extends Model
 
     public function getJob()
     {
-        return $this->getAttribute('job');
+        return $this->getAttribute('job_title');
+    }
+
+    public function getCompany()
+    {
+        return $this->getAttribute('company');
     }
 
     public function getDateOfBirth()
@@ -122,5 +130,20 @@ class Student extends Model
     public function getPassword()
     {
         return $this->getAttribute('password');
+    }
+
+    public function getPromotions()
+    {
+        return $this->getAttribute('promotions');
+    }
+
+    public function getNewsletter()
+    {
+        return $this->getAttribute('newsletter');
+    }
+
+    public function getNotifications()
+    {
+        return $this->getAttribute('notifications');
     }
 }

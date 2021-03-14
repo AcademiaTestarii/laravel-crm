@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\Role;
 use App\User;
 
 class UserRepository extends Repository
@@ -12,4 +13,5 @@ class UserRepository extends Repository
     {
         $this->model = $user;
     }
+
 }

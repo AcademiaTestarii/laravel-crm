@@ -132,6 +132,10 @@ h5 {
     text-align: left;
     font-weight: normal;
 }
+.navbar-default.navbar-static-side {
+  height: 100vh;
+  background: #273a4a;
+}
 
 .dropdown-menu > .active > a,
 .dropdown-menu > .active > a:focus,
@@ -4032,9 +4036,9 @@ body.tour-open .animated {
 
 body {
     font-family: "open sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    background-color: #2f4050;
+    background-color: #FFFFFF;
     font-size: 13px;
-    color: #676a6c;
+    color: black;
     overflow-x: hidden;
 }
 
@@ -10212,10 +10216,15 @@ tr.group:hover {
     min-height: 355px;
 }
 
-.trainer-bio {
-    min-height: 301px;
-    max-height: 310px;
+.trainer-bio-top {
+    min-height: 280px;
+    max-height: 280px;
     overflow: auto;
+    border-bottom: none;
+}
+
+.trainer-bio-bottom {
+    border-top: none;
 }
 
 .trainer-details {

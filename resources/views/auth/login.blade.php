@@ -1,96 +1,81 @@
-@extends('layouts.app')
-@section('content')
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8 col-md-offset-2">
-                <div class="panel panel-default">
-                    <div class="panel-heading">Login</div>
-                    <div class="panel-body">
-                        <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
-                            {{ csrf_field() }}
+<!DOCTYPE html>
+<html>
 
-                            @if(session()->get('activate_email'))
-                                <div class="form-group">
-                                    <label class="col-md-2 control-label"></label>
-                                    <div class="col-md-8 alert alert-info" role="alert">
-                                        A confirmation email was sent to the provided email address.
-                                    </div>
-                                </div>
-                            @endif
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Up-grade.tech</title>
+    <link href="{{asset('css/design.css')}}" rel="stylesheet">
+    <link href="/css/app.css" rel="stylesheet">
+</head>
 
-                            @if(session()->get('activated'))
-                                <div class="form-group">
-                                    <label class="col-md-2 control-label"></label>
-                                    <div class="col-md-8 alert alert-info" role="alert">
-                                        Your account has been activated. You may login
-                                    </div>
-                                </div>
-                            @endif
-
-                            @if($errors->has('email_password_mismatch'))
-                                <div class="form-group">
-                                    <label class="col-md-2 control-label"></label>
-                                    <div class="col-md-8 alert alert-danger" role="alert">
-                                        {{ $errors->first('email_password_mismatch') }}
-                                    </div>
-                                </div>
-                            @endif
-                            <div class="form-group{{ ($errors->has('email') || $errors->has('email_password_mismatch')) ? ' has-error' : '' }}">
-                                <label for="email" class="col-md-4 control-label">E-Mail Address</label>
-
-                                <div class="col-md-6">
-                                    <input id="email" type="email" class="form-control" name="email"
-                                           value="{{ old('email') }}" autofocus>
-
-                                    @if ($errors->has('email'))
-                                        <span class="help-block">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="form-group{{ ($errors->has('password') || $errors->has('email_password_mismatch')) ? ' has-error' : '' }}">
-                                <label for="password" class="col-md-4 control-label">Password</label>
-
-                                <div class="col-md-6">
-                                    <input id="password" type="password" class="form-control" name="password">
-
-                                    @if ($errors->has('password'))
-                                        <span class="help-block">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-md-6 col-md-offset-4">
-                                    {{--  <div class="checkbox">
-                                          <label>
-                                              <input type="checkbox" name="remember"> Remember Me
-                                          </label>
-                                      </div>--}}
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-md-8 col-md-offset-4">
-                                    <button type="submit" class="btn btn-primary">
-                                        Login
-                                    </button>
-                                    <a class="btn btn-link" href="{{ url('/password/reset') }}">
-                                        Forgot Your Password?
-                                    </a>
-                                    <a class="btn btn-link" href="{{ url('/register') }}">
-                                        Register new account
-                                    </a>
-                                </div>
-                            </div>
-                        </form>
+<body>
+@include('include/header-new')
+<main>
+    <div class="upt-form upt-form--login">
+        <form class="form-horizontal" role="form" method="POST" action="{{ url('/login') }}">
+            @csrf
+            <input type="hidden" value="{{ app('request')->input('mainClassId') }}" name='mainClassId'>
+            @if(session()->get('activate_email'))
+                <div class="form-group">
+                    <label class="col-md-2 control-label"></label>
+                    <div class="col-md-8 alert alert-info" role="alert">
+                        A confirmation email was sent to the provided email address.
                     </div>
                 </div>
-            </div>
-        </div>
+            @endif
+
+            @if(session()->get('activated'))
+                <div class="form-group">
+                    <label class="col-md-2 control-label"></label>
+                    <div class="col-md-8 alert alert-info" role="alert">
+                        Your account has been activated. You may login.
+                    </div>
+                </div>
+
+            @endif @if(session()->get('reset_password'))
+                <div class="form-group">
+                    <label class="col-md-2 control-label"></label>
+                    <div class="col-md-8 alert alert-info" role="alert">
+                        Your password has been updated. You may login.
+                    </div>
+                </div>
+            @endif
+
+            @if($errors->has('email_password_mismatch'))
+                <div class="form-group">
+                    <label class="col-md-2 control-label"></label>
+                    <div class="col-md-8 alert alert-danger" role="alert">
+                        {{ $errors->first('email_password_mismatch') }}
+                    </div>
+                </div>
+            @endif
+            <input id="email" type="email" name="email" value="{{ old('email') }}" autofocus class="upt-form__input"
+                   placeholder="Enter your e-mail">
+            @if ($errors->has('email'))
+                <span class="help-block">
+          <strong>{{ $errors->first('email') }}</strong>
+        </span>
+            @endif
+            <input id="password" type="password" class="upt-form__input" name="password"
+                   placeholder="Enter your password">
+            @if ($errors->has('password'))
+                <span class="help-block">
+          <strong>{{ $errors->first('password') }}</strong>
+        </span>
+            @endif
+            <button type="submit" class="upt-form__button">LOGIN</button>
+            <p class="upt-form__text">Don’t have an account?
+                <a class="upt-form__text__link" href="/register?mainClassId={{ app('request')->input('mainClassId') }}">Sign
+                    Up</a>
+            </p>
+            <p class="upt-form__text">Forgot Password?
+                <a class="upt-form__text__link" href="/password/reset">Reset it here</a>
+            </p>
+        </form>
     </div>
-@endsection
+</main>
+@include('include/footer-new')
+</body>
+
+</html>

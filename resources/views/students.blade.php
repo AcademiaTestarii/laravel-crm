@@ -163,7 +163,8 @@
                     </div>
                 </div>
                 <div class="col-sm-4">
-                    <!-- here -->
+                    <div class="ibox ">
+                    </div>
                 </div>
             </div>
         </div>
@@ -213,13 +214,6 @@
             }
         });
     });
-
-    /**
-     *     var id = this.id;
-     var rightWidgetHtml =  $("#student_hidden_widget-".id).html();
-     console.log(rightWidgetHtml);
-     $(".student-right").html(rightWidgetHtml);
-     */
 </script>
 </body>
 </html>

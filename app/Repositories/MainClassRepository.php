@@ -25,11 +25,11 @@ class MainClassRepository extends Repository
     public function allOrderedBy(string $column = 'id', string $order = 'ASC')
     {
         $model = $this->model;
-
-        if (auth()->user()->isTrainerProvider()) {
-            $model = $model->where('trainer_provider_id', auth()->user()->trainerProvider->getId());
+        if (!is_null(auth()->user())) {
+            if (auth()->user()->isTrainerProvider()) {
+                $model = $model->where('trainer_provider_id', auth()->user()->trainerProvider->getId());
+            }
         }
-
         return $model->orderBy($column, $order)->get();
     }
 
@@ -45,9 +45,12 @@ class MainClassRepository extends Repository
         foreach ($criteria as $column => $value) {
             $model = $model->where($column, '=', $value);
         }
+        if (!is_null(auth()->user())) {
 
-        if (auth()->user()->isTrainerProvider()) {
-            $model = $model->where('trainer_provider_id', auth()->user()->trainerProvider->getId());
+
+            if (auth()->user()->isTrainerProvider()) {
+                $model = $model->where('trainer_provider_id', auth()->user()->trainerProvider->getId());
+            }
         }
 
         if (!empty($orderBy)) {
@@ -66,9 +69,10 @@ class MainClassRepository extends Repository
     public function findAllWithRelationsBy(string $relationName, array $relationFields, array $orderBy = [])
     {
         $model = $this->model;
-
-        if (auth()->user()->isTrainerProvider()) {
-            $model = $model->where('trainer_provider_id', auth()->user()->trainerProvider->getId());
+        if (!is_null(auth()->user())) {
+            if (auth()->user()->isTrainerProvider()) {
+                $model = $model->where('trainer_provider_id', auth()->user()->trainerProvider->getId());
+            }
         }
 
         $model = $model->whereHas($relationName, function ($query) use ($relationFields, $orderBy) {
@@ -90,15 +94,20 @@ class MainClassRepository extends Repository
     public function findAllBy(array $criteria, string $operator = '=', string $orderBy = 'id', string $order = 'ASC')
     {
         $model = $this->model;
+        if (!is_null(auth()->user())) {
 
-        if (auth()->user()->isTrainerProvider()) {
-            $model = $model->where('trainer_provider_id', auth()->user()->trainerProvider->getId());
+
+            if (auth()->user()->isTrainerProvider()) {
+                $model = $model->where('trainer_provider_id', auth()->user()->trainerProvider->getId());
+            }
         }
-
         foreach ($criteria as $column => $value) {
             $model = $model->where($column, $operator, $value)->orderBy($orderBy, $order);
         }
 
         return $model->get();
     }
+
 }
+
+

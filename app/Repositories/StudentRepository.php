@@ -3,6 +3,8 @@
 namespace App\Repositories;
 
 use App\Models\Student;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class StudentRepository extends Repository
 {
@@ -59,5 +61,23 @@ class StudentRepository extends Repository
         $students = \DB::select("$query");
 
         return $this->model::hydrate($students);
+    }
+
+    public function findOneBy(array $criteria, array $orderBy = [])
+    {
+        $model = $this->model;
+
+        foreach ($criteria as $column => $value) {
+            $model = $model->where($column, '=', $value);
+        }
+
+        return $model->first();
+    }
+
+    public function findByAuthId($authId)
+    {
+        $model = $this->model;
+
+        return $model->where('students.user_id', $authId)->first();
     }
 }

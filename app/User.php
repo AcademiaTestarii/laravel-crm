@@ -91,7 +91,11 @@ class User extends Authenticatable
 
     public function getHashUrl(): ?string
     {
-        return request()->getSchemeAndHttpHost() . '/account/activate/' . $this->getAttribute('hash');
+        return request()->getSchemeAndHttpHost() . '/account/activate/' . $this->getAttribute('hash').'?mainClassId=' . request()->get('mainClassId');    }
+
+    public function getResetPasswordHashUrl(): ?string
+    {
+        return request()->getSchemeAndHttpHost() . '/password/reset/' . $this->getAttribute('hash');
     }
 
     public function isAcademiaTestarii(): bool
@@ -124,4 +128,17 @@ class User extends Authenticatable
 
         return false;
     }
+    public function isStudent(): bool
+    {
+        foreach ($this->roles()->get() as $role) {
+            if ($role->getCode() == Role::ROLE_STUDENT) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }
+
+

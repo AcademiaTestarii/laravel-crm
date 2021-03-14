@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Role;
+use App\Repositories\StudentRepository;
 use App\Repositories\TrainerProviderRepository;
 use App\Repositories\TrainerRepository;
 use App\Repositories\UserRepository;
@@ -15,20 +16,24 @@ class RegisterService
     protected $userRepository;
     protected $trainerProviderRepository;
     protected $trainerRepository;
+    private $studentRepository;
 
     public function __construct(
         UserRepository $userRepository,
         TrainerProviderRepository $trainerProviderRepository,
-        TrainerRepository $trainerRepository
+        TrainerRepository $trainerRepository,
+        StudentRepository $studentRepository
     ) {
         $this->userRepository = $userRepository;
         $this->trainerProviderRepository = $trainerProviderRepository;
         $this->trainerRepository = $trainerRepository;
+        $this->studentRepository = $studentRepository;
     }
 
     /**
      * @param Role $role
      * @param array $userData
+     * @throws \Exception
      */
     public function register(Role $role, array $userData)
     {
@@ -38,54 +43,85 @@ class RegisterService
 
     /**
      * @param array $userData
+     * @param bool $withEmail
      */
-    public function resetPassword(array $userData)
+    public function resetPassword(array $userData, $withEmail = true)
     {
         $user = $this->userRepository->findOneBy(['email' => $userData['email']]);
-        $user->update([
-            'password' => bcrypt($userData['password'])
-        ]);
+        $user->update(
+            [
+                'password' => bcrypt($userData['password']),
+            ]
+        );
 
-        $this->sendUserPasswordResetEmail($user);
+        if ($withEmail) {
+            $this->sendUserPasswordResetEmail($user);
+        }
     }
 
     /**
      * @param Role $role
      * @param array $userData
+     *
      * @return mixed
      * @throws \Exception
      */
     protected function createUserAndRole(Role $role, array $userData)
     {
-        $user = $this->userRepository->create([
-            'name' => $userData['name'],
-            'email' => $userData['email'],
-            'password' => bcrypt($userData['password']),
-            'is_active' => $userData['is_active'],
-            'hash' => $userData['hash']
-        ]);
+        $user = $this->userRepository->create(
+            [
+                'name' => $userData['name'],
+                'email' => $userData['email'],
+                'password' => bcrypt($userData['password']),
+                'is_active' => $userData['is_active'],
+                'hash' => $userData['hash'],
+            ]
+        );
 
         $user->roleUser()->create(['role_id' => $role->id]);
 
         if ($user->isTrainerProvider()) {
-            $this->trainerProviderRepository->create([
-                'name' => $user->getName(),
-                'user_id' => $user->getId()
-            ]);
+            $this->trainerProviderRepository->create(
+                [
+                    'name' => $user->getName(),
+                    'user_id' => $user->getId(),
+                ]
+            );
         }
 
         if ($user->isTrainer()) {
-            $this->trainerRepository->findOneBy([
-                'email' => $userData['email']
-            ])->update([
-                'user_id' => $user->getId()
-            ]);
+            $this->trainerRepository->findOneBy(
+                [
+                    'email' => $userData['email'],
+                ]
+            )->update(
+                [
+                    'user_id' => $user->getId(),
+                ]
+            );
 
             $this->activateUser($user);
+        }
+        $userLastName = null;
+        if (!empty(explode(" ", ($user["name"]))[1])) {
+            $userLastName = explode(" ", ($user["name"]))[1];
+        }
+
+        if ($user->isStudent()) {
+            $this->studentRepository->create(
+                [
+                    'user_id' => $user->getId(),
+                    'first_name' => explode(" ", ($user["name"]))[0],
+                    'last_name' => $userLastName,
+                    'email' => $user['email'],
+
+                ]
+            );
         }
 
         return $user;
     }
+
 
     /**
      * @param User $user
@@ -118,7 +154,7 @@ class RegisterService
     /**
      * @param User $user
      */
-    protected function sendUserPasswordResetEmail(User $user)
+    public function sendUserPasswordResetEmail(User $user)
     {
         $emailTemplate = 'register_reset_password';
 
@@ -135,13 +171,16 @@ class RegisterService
 
     /**
      * @param User $user
+     *
      * @throws \Exception
      */
     public function activateUser(User $user)
     {
-        $user->update([
-            'is_active' => 1,
-            'email_verified_at' => (new Carbon())->toDateTimeString()
-        ]);
+        $user->update(
+            [
+                'is_active' => 1,
+                'email_verified_at' => (new Carbon())->toDateTimeString(),
+            ]
+        );
     }
 }
